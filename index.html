@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KenGo OS — Birthdate OS Map</title>
+  <meta name="description" content="KenGo OS: Wind/Circle/Rubber — birthdate-based OS snapshot (client-only, no data sent)" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <h1>KenGo OS — Birthdate OS Map</h1>
+    <p class="sub">Wind / Circle / Rubber（クライアントのみ・送信なし）</p>
+
+    <form id="form">
+      <label for="dob">Birthdate（YYYY-MM-DD）</label>
+      <input id="dob" name="dob" type="date" required />
+      <button type="submit">Analyze</button>
+    </form>
+
+    <section id="result" class="card hidden"></section>
+
+    <footer>
+      <p class="mini">© KenGo System • Client-only • Shareable link supported.</p>
+    </footer>
+  </main>
+
+  <script src="os.js"></script>
+</body>
+</html>
