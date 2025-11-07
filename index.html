@@ -3,52 +3,46 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>KenGo式：風×円×ゴム 診断（相性つき・自由入力）</title>
-<meta name="description" content="KenGo式 Elastic Human OS（風×円×ゴム）の簡易診断＆相性チェッカー。iPhone最適化／自由入力日付。">
+<title>KenGo式：風×円×ゴム 診断（6式％・円環可視化つき）</title>
 <meta name="color-scheme" content="light dark" />
+<meta name="description" content="KenGo式 Elastic Human OS（風×円×ゴム）簡易診断。6式を％で表示・相性の円環可視化。iPhone最適化。">
 <style>
-/* ===== iPhone最適化：でかボタン・高コントラスト・軽量UI ===== */
 :root{
   --bg:#f7f8fa; --ink:#0b1220; --sub:#5a6a86; --card:#ffffff; --line:#e5e9f2;
   --acc:#2dd4bf; --acc2:#60a5fa; --bad:#ef476f; --ok:#16a34a;
+  --wind:#22d3ee; --fire:#fb7185; --water:#60a5fa; --earth:#a3e635;
+  --bar:#dbe4f3;
 }
 @media (prefers-color-scheme: dark){
   :root{
     --bg:#0b0e12; --ink:#eaf2ff; --sub:#9bb1cc; --card:#121722; --line:#1f2a3c;
     --acc:#2dd4bf; --acc2:#60a5fa; --bad:#ff8fa6; --ok:#4ade80;
+    --bar:#203048;
   }
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial;
-  -webkit-text-size-adjust:100%;
-  line-height:1.6;
-  font-size:18px;
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;
+  -webkit-text-size-adjust:100%; line-height:1.6; font-size:18px;
 }
 .wrap{padding:20px}
 .card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:20px;
-  max-width:720px;
-  margin:16px auto;
+  background:var(--card); border:1px solid var(--line); border-radius:18px;
+  padding:20px; max-width:860px; margin:16px auto;
 }
 h1{font-size:24px; margin:0 0 6px}
 .lead{color:var(--sub); margin:0 0 10px}
 .kv{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
 .kv .big{font-size:30px}
 .grid{display:grid; grid-template-columns:1fr; gap:14px; margin: 12px 0}
-@media (min-width:720px){ .grid{grid-template-columns:1fr 1fr} }
+@media (min-width:860px){ .grid{grid-template-columns:1fr 1fr} }
 label{display:block; margin: 10px 4px 6px; font-size:18px}
 .input{
   width:100%; padding:14px 16px; border-radius:14px;
   border:1.5px solid var(--line); background:transparent; color:var(--ink);
-  font-size:18px; line-height:1; min-height:52px;
+  font-size:18px; min-height:52px;
 }
 .input::placeholder{color:var(--sub)}
 .input:focus{outline:none; border-color:var(--acc2); box-shadow:0 0 0 3px color-mix(in oklab, var(--acc2) 20%, transparent)}
@@ -74,6 +68,23 @@ h3{font-size:18px; margin: 6px 0 4px}
 .footer{color:var(--sub); font-size:13px; margin-top: 6px}
 .langtoggle{color:var(--acc2); text-decoration:underline; background:none; border:none; cursor:pointer; font-size:16px}
 .center{display:flex; justify-content:center; gap:8px; flex-wrap:wrap}
+
+/* ===== 6式％バー ===== */
+.six{display:grid; grid-template-columns:1fr; gap:10px; margin-top:10px}
+.six-row{display:grid; grid-template-columns:120px 1fr 64px; align-items:center; gap:10px}
+.six-name{font-size:14px; color:var(--sub)}
+.bar{height:14px; background:var(--bar); border-radius:999px; overflow:hidden; position:relative}
+.bar>i{display:block; height:100%; width:0; border-radius:999px; transition:width .7s ease}
+.pct{font-variant-numeric:tabular-nums; text-align:right; font-size:14px}
+
+/* ===== “飛ぶ”アニメ（結果） ===== */
+.fly{opacity:0; transform: translateY(12px) scale(.98); transition: all .38s cubic-bezier(.2,.8,.2,1)}
+.fly.in{opacity:1; transform: translateY(0) scale(1)}
+
+/* ===== A/B 円環SVG ===== */
+.ringbox{display:grid; place-items:center; padding:10px}
+.ring-labels{display:flex; justify-content:center; gap:8px; flex-wrap:wrap}
+.rtag{padding:6px 10px; border-radius:10px; border:1px solid var(--line); font-size:14px}
 </style>
 </head>
 <body>
@@ -83,7 +94,7 @@ h3{font-size:18px; margin: 6px 0 4px}
         <div class="big">🌀</div>
         <div>
           <h1 id="t_title">KenGo式：風 × 円 × ゴム 診断</h1>
-          <p class="lead" id="t_lead">生年月日は「19900504 / 1990-05-04 / 1990/05/04」。ニックネームは任意。相性も同画面で。</p>
+          <p class="lead" id="t_lead">生年月日は「19900504 / 1990-05-04 / 1990/05/04」。ニックネームは任意。6式％と相性の円環も出るよ。</p>
           <button class="langtoggle" id="langBtn" aria-label="switch language">日本語 / English</button>
         </div>
       </div>
@@ -100,7 +111,7 @@ h3{font-size:18px; margin: 6px 0 4px}
           <div class="hint" id="t_hintA">数字8桁、または区切りつきでもOK。全角も自動変換。</div>
           <div class="err" id="errA">日付の形式を確認してください。</div>
           <div class="badges">
-            <span class="badge"><span class="emo">💨</span><span id="t_hint1">OSタイプ（風×円×ゴム）を算出</span></span>
+            <span class="badge"><span class="emo">💨</span><span id="t_hint1">OSタイプ（風×円×ゴム）＋6式％</span></span>
           </div>
           <button id="btnSelf">診断 / Analyze</button>
         </div>
@@ -113,7 +124,7 @@ h3{font-size:18px; margin: 6px 0 4px}
           <label id="t_birth2">相手の生年月日（自由入力）</label>
           <input class="input" id="dateB" inputmode="numeric" pattern="[0-9]*" autocomplete="bday"
                  placeholder="19940322 / 1994-03-22 / 1994/03/22" />
-          <div class="hint" id="t_hintB">両方あれば相性を表示します。</div>
+          <div class="hint" id="t_hintB">両方あれば「相性％＋A/B円環」を表示。</div>
           <div class="err" id="errB">相手の日付の形式を確認してください。</div>
           <button id="btnBoth">相性まで診断 / Analyze Both</button>
         </div>
@@ -121,17 +132,40 @@ h3{font-size:18px; margin: 6px 0 4px}
 
       <div class="sep"></div>
 
-      <!-- 結果 -->
-      <div class="result" id="selfBox" hidden>
+      <!-- 結果（自分） -->
+      <div class="result fly" id="selfBox" hidden>
         <h2 id="t_self_title">あなたの結果 / Your Result</h2>
         <div class="badges" id="selfBadges"></div>
         <p class="kawaii" id="selfText"></p>
+
+        <h3 style="margin-top:14px" id="t_six_title">6式（円環の6方向）％</h3>
+        <div class="six" id="sixRows"></div>
       </div>
 
-      <div class="result" id="pairBox" hidden>
+      <!-- 結果（相性） -->
+      <div class="result fly" id="pairBox" hidden>
         <h2 id="t_pair_title">相性結果 / Compatibility</h2>
         <div class="badges" id="pairBadges"></div>
         <p class="kawaii" id="pairText"></p>
+
+        <div class="ringbox">
+          <svg id="ring" width="240" height="240" viewBox="0 0 240 240" role="img" aria-label="Compatibility Rings">
+            <!-- 円環：外A / 内B -->
+            <defs>
+              <linearGradient id="gradA" x1="0" x2="1"><stop offset="0%" stop-color="var(--acc2)"/><stop offset="100%" stop-color="var(--wind)"/></linearGradient>
+              <linearGradient id="gradB" x1="0" x2="1"><stop offset="0%" stop-color="var(--earth)"/><stop offset="100%" stop-color="var(--water)"/></linearGradient>
+            </defs>
+            <!-- 背景円 -->
+            <circle cx="120" cy="120" r="90" stroke="var(--line)" stroke-width="12" fill="none" opacity=".6"/>
+            <circle cx="120" cy="120" r="65" stroke="var(--line)" stroke-width="12" fill="none" opacity=".6"/>
+            <!-- 可変アーク -->
+            <path id="arcA" d="" stroke="url(#gradA)" stroke-width="12" fill="none" stroke-linecap="round"/>
+            <path id="arcB" d="" stroke="url(#gradB)" stroke-width="12" fill="none" stroke-linecap="round"/>
+            <!-- 中央ラベル -->
+            <text id="ringScore" x="120" y="126" text-anchor="middle" font-size="24" fill="currentColor" font-weight="700">--%</text>
+          </svg>
+          <div class="ring-labels" id="ringLabels"></div>
+        </div>
       </div>
 
       <div class="sep"></div>
@@ -146,35 +180,57 @@ h3{font-size:18px; margin: 6px 0 4px}
   </div>
 
 <script>
-(() => {
+(()=>{
   // ===== i18n =====
   const jp = {
     title:"KenGo式：風×円×ゴム 診断",
-    lead:"生年月日は「19900504 / 1990-05-04 / 1990/05/04」。ニックネームは任意。相性も同画面で。",
+    lead:"生年月日は「19900504 / 1990-05-04 / 1990/05/04」。ニックネームは任意。6式％と相性の円環も出るよ。",
     you:"あなた / You", nick1:"ニックネーム（任意）", birth1:"生年月日（自由入力）",
     hintA:"数字8桁、または区切りつきでもOK。全角も自動変換。",
     partner:"相性チェック（任意） / Compatibility (Optional)",
     nick2:"相手のニックネーム（任意）", birth2:"相手の生年月日（自由入力）",
-    hintB:"両方あれば相性を表示します。",
-    hint1:"OSタイプ（風×円×ゴム）を算出",
+    hintB:"両方あれば「相性％＋A/B円環」を表示。",
+    hint1:"OSタイプ（風×円×ゴム）＋6式％",
     btnSelf:"診断 / Analyze", btnBoth:"相性まで診断 / Analyze Both",
     selfTitle:"あなたの結果 / Your Result", pairTitle:"相性結果 / Compatibility",
+    sixTitle:"6式（円環の6方向）％",
     footer:"エンタメ診断。体感（B→A）をたのしんでね。/ This is for fun & reflection.",
-    err:"日付の形式を確認してください。"
+    err:"日付の形式を確認してください。",
+    sixNames:[
+      "Circle-Being（人は円）",
+      "Arrow-World（矢印世界）",
+      "Return-Growth（寝る子は育つ）",
+      "Top-View Identity（上視点の顔）",
+      "Wind Outflow → Return（風の呼吸）",
+      "Rubber Return Key（儀式＝帰還キー）"
+    ],
+    compHow:"使い方",
+    ritual:"合図づくり：①合図のことば ②一度深呼吸 ③“やっとだね”"
   };
   const en = {
     title:"KenGo Method: Wind × Circle × Rubber — Typing",
-    lead:"Enter 19900504 / 1990-05-04 / 1990/05/04. Nickname optional. Same screen shows compatibility.",
+    lead:"Enter 19900504 / 1990-05-04 / 1990/05/04. Nickname optional. Shows 6-axis % and A/B ring.",
     you:"You", nick1:"Nickname (optional)", birth1:"Date of Birth (free input)",
     hintA:"8 digits or with separators are OK. Full-width digits are auto-normalized.",
     partner:"Compatibility (Optional)",
     nick2:"Partner Nickname (optional)", birth2:"Partner Date of Birth (free input)",
-    hintB:"If both birthdays exist, compatibility will be shown.",
-    hint1:"Computes your OS (Wind × Circle × Rubber)",
+    hintB:"If both exist: Compatibility % + A/B ring.",
+    hint1:"OS type (Wind × Circle × Rubber) + 6-axis %",
     btnSelf:"Analyze", btnBoth:"Analyze Both",
     selfTitle:"Your Result", pairTitle:"Compatibility",
+    sixTitle:"6 Axes (Circle-Integration) %",
     footer:"This is for fun & reflection. Enjoy the B→A flow.",
-    err:"Please check the date format."
+    err:"Please check the date format.",
+    sixNames:[
+      "Circle-Being",
+      "Arrow-World",
+      "Return-Growth",
+      "Top-View Identity",
+      "Wind Outflow → Return",
+      "Rubber Return Key"
+    ],
+    compHow:"How to play",
+    ritual:"Ritual cues: (1) signal word (2) deep breath (3) “Finally.”"
   };
   let isJP = (navigator.language || "ja").startsWith("ja");
   const $ = (id)=>document.getElementById(id);
@@ -187,13 +243,13 @@ h3{font-size:18px; margin: 6px 0 4px}
     $("t_birth2").textContent=T().birth2; $("t_hintB").textContent=T().hintB;
     $("t_hint1").textContent=T().hint1; $("btnSelf").textContent=T().btnSelf;
     $("btnBoth").textContent=T().btnBoth; $("t_self_title").textContent=T().selfTitle;
-    $("t_pair_title").textContent=T().pairTitle; $("t_footer").textContent=T().footer;
-    $("errA").textContent=T().err; $("errB").textContent=T().err;
+    $("t_pair_title").textContent=T().pairTitle; $("t_six_title").textContent=T().sixTitle;
+    $("t_footer").textContent=T().footer; $("errA").textContent=T().err; $("errB").textContent=T().err;
   }
   $("langBtn").addEventListener("click", ()=>{ isJP=!isJP; applyLang(); });
   applyLang();
 
-  // ===== Flexible Date Parser（全角→半角／記号無視） =====
+  // ===== Flexible Date Parser =====
   function parseFlexibleDate(str){
     if(!str) return null;
     const z2h = String(str).trim().replace(/[０-９／－－ー−]/g, ch=>{
@@ -210,10 +266,11 @@ h3{font-size:18px; margin: 6px 0 4px}
   }
   function setError(id, show){ const el=$(id); el.style.display=show?"block":"none"; }
 
-  // ===== ファンタジー要素タイプ & 相性 =====
+  // ===== 元素タイプ・説明 =====
   const ELEMENTS=["WIND","FIRE","WATER","EARTH"];
   const EMOJI={WIND:"💨", FIRE:"🔥", WATER:"🌊", EARTH:"🪨"};
   const JP_NAME={WIND:"風", FIRE:"火", WATER:"水", EARTH:"地"};
+  const COLOR={WIND:"var(--wind)", FIRE:"var(--fire)", WATER:"var(--water)", EARTH:"var(--earth)"};
   const TAG_JP={
     WIND:"風が通ると世界が軽い。合図は“深い呼吸”。",
     FIRE:"火は意志。点火すれば周囲も温かく明るい。",
@@ -226,6 +283,8 @@ h3{font-size:18px; margin: 6px 0 4px}
     WATER:"Water is space. You dissolve pressure and fill quietly.",
     EARTH:"Earth is stability. With foundation set, everything grows."
   };
+
+  // ===== 相性ランク =====
   const COMP={
     WIND:{WIND:"GOOD",FIRE:"GREAT",WATER:"GOOD",EARTH:"NEUTRAL"},
     FIRE:{WIND:"GREAT",FIRE:"SPICY",WATER:"GOOD",EARTH:"GOOD"},
@@ -233,23 +292,29 @@ h3{font-size:18px; margin: 6px 0 4px}
     EARTH:{WIND:"NEUTRAL",FIRE:"GOOD",WATER:"GREAT",EARTH:"GOOD"}
   };
   const COMP_EMO={GREAT:"💞",GOOD:"💫",NEUTRAL:"🌗",SPICY:"🌶️"};
-  const COMP_JP={
-    GREAT:"最高の追い風。放っておいても回る相性。",
-    GOOD:"心地よく伸びる関係。小さな合図で十分。",
-    NEUTRAL:"可も不可もなし。合図の“儀式”を決めると安定。",
-    SPICY:"刺激的。ペース配慮と“合図の約束”が鍵。"
-  };
-  const COMP_EN={
-    GREAT:"Top-tier tailwind. It turns by itself.",
-    GOOD:"Comfortable growth. Small signals are enough.",
-    NEUTRAL:"So-so. Set a little ritual cue to stabilize.",
-    SPICY:"Spicy & fun. Pace care + signal pact are keys."
-  };
+  const COMP_TXT_JP={GREAT:"最高の追い風。放っておいても回る相性。",GOOD:"心地よく伸びる。小さな合図で十分。",NEUTRAL:"可も不可もなし。合図の“儀式”を決めると安定。",SPICY:"刺激的。ペース配慮と合図の約束が鍵。"};
+  const COMP_TXT_EN={GREAT:"Top-tier tailwind. It turns by itself.",GOOD:"Comfortable growth. Small signals are enough.",NEUTRAL:"So-so. Set a small ritual cue.",SPICY:"Spicy & fun. Pace care + signal pact."};
+  const COMP_SCORE={GREAT:88,GOOD:72,NEUTRAL:55,SPICY:66}; // 楽しいのでSPICYは中高め
 
-  function elementFromYMD(ymd){
-    // シンプルな“遊び”の分類： (month + day) % 4
-    return ELEMENTS[(ymd.m + ymd.d) % 4];
+  // ===== 要素判定：遊びロジック（同一入力で常に同じ） =====
+  function elementFromYMD(ymd){ return ELEMENTS[(ymd.m + ymd.d) % 4]; }
+
+  // ===== 6式％の擬似スコア（DOBから決定的に生成→正規化して100%） =====
+  // Circle-Being / Arrow-World / Return-Growth / Top-View / WindFlow / RubberKey
+  function sixVector(ymd){
+    // 軽いLCGで6値生成
+    let seed = ymd.y*10000 + ymd.m*100 + ymd.d;
+    function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967295; }
+    const raw = [rnd(),rnd(),rnd(),rnd(),rnd(),rnd()].map(x=>0.6 + x*0.9); // 0.6〜1.5の幅
+    // 風×円×ゴムの傾斜：月日で少し重み
+    raw[0] *= 1 + ((ymd.d%5)-2)*0.03; // Circle
+    raw[4] *= 1 + ((ymd.m%4)-1)*0.04; // Wind
+    raw[5] *= 1 + (((ymd.y%10)-5)*0.01); // Rubber ritual
+    // 正規化→百分率
+    const sum = raw.reduce((a,b)=>a+b,0);
+    return raw.map(v=>Math.round((v/sum)*100));
   }
+
   function fancyName(el){ return isJP ? `${JP_NAME[el]}（${el}）` : el; }
   function buildSelfText(name, el){
     const line = isJP ? TAG_JP[el] : TAG_EN[el];
@@ -268,29 +333,78 @@ h3{font-size:18px; margin: 6px 0 4px}
   function buildSelfBadges(el){
     const box=$("selfBadges"); box.innerHTML="";
     const add=(html)=>{ const s=document.createElement("span"); s.className="badge"; s.innerHTML=html; box.appendChild(s); };
-    add(`<span class="emo">${EMOJI[el]}</span> <b>${fancyName(el)}</b>`);
+    add(`<span class="emo">${EMOJI[el]}</span> <b style="color:${COLOR[el]}">${fancyName(el)}</b>`);
     add(`<span class="emo">💠</span> Core=Rubber`);
     add(`<span class="emo">💨</span> Wind=Flow`);
     add(`<span class="emo">⭕</span> Circle=Return`);
   }
+
+  // 6式バー生成
+  function renderSix(rows, pct){
+    rows.innerHTML="";
+    const names = T().sixNames;
+    const colors = ["#8b5cf6","#22d3ee","#f97316","#10b981","#60a5fa","#f472b6"]; // 見やすい6色
+    names.forEach((nm,i)=>{
+      const row=document.createElement("div"); row.className="six-row";
+      const nmEl=document.createElement("div"); nmEl.className="six-name"; nmEl.textContent=nm;
+      const bar=document.createElement("div"); bar.className="bar";
+      const fill=document.createElement("i"); fill.style.background=colors[i]; bar.appendChild(fill);
+      const pc=document.createElement("div"); pc.className="pct"; pc.textContent=pct[i]+"%";
+      row.append(nmEl,bar,pc); rows.appendChild(row);
+      // アニメ幅
+      requestAnimationFrame(()=>{ fill.style.width=pct[i]+"%"; });
+    });
+  }
+
+  // 円環SVGアーク
+  function arcPath(cx,cy,r,startDeg,spanDeg){
+    const toXY=(deg)=>[cx + r*Math.cos((deg-90)*Math.PI/180), cy + r*Math.sin((deg-90)*Math.PI/180)];
+    const endDeg = startDeg + spanDeg;
+    const largeArc = spanDeg > 180 ? 1 : 0;
+    const [sx,sy]=toXY(startDeg), [ex,ey]=toXY(endDeg);
+    return `M ${sx} ${sy} A ${r} ${r} 0 ${largeArc} 1 ${ex} ${ey}`;
+  }
+
+  // ランク→スコア％とアーク角度
+  function compVisual(rank){
+    const score = COMP_SCORE[rank];
+    // アーク角は 180〜330度の間で変化（見栄え）
+    const span = {GREAT:300, GOOD:240, SPICY:220, NEUTRAL:180}[rank] || 220;
+    return {score, span};
+  }
+
   function buildPair(elA, elB, nameA, nameB){
     const rank = COMP[elA][elB];
     const emo = COMP_EMO[rank];
-    const line = isJP ? COMP_JP[rank] : COMP_EN[rank];
+    const line = isJP ? COMP_TXT_JP[rank] : COMP_TXT_EN[rank];
     const whoA = nameA || (isJP?"あなた":"You");
     const whoB = nameB || (isJP?"相手":"Partner");
-    const lead = isJP ? "ふたりの元素" : "Elements";
-    const cue = isJP
-      ? "合図づくり：①合図のことば ②一度深呼吸 ③“戻る”の合言葉（やっとだね）"
-      : "Ritual cues: (1) signal word, (2) shared deep breath, (3) a return password (Finally.)";
+    const lead = isJP ? "元素" : "Elements";
+    const cue = isJP ? jp.ritual : en.ritual;
+
     $("pairBadges").innerHTML =
-      `<span class="badge"><span class="emo">${EMOJI[elA]}</span>${whoA}: ${fancyName(elA)}</span>
-       <span class="badge"><span class="emo">${EMOJI[elB]}</span>${whoB}: ${fancyName(elB)}</span>
-       <span class="badge"><span class="emo">${emo}</span>${lead}: ${rank}</span>`;
-    $("pairText").innerHTML =
-      `${emo} <b>${rank}</b> — ${line}<br><br><b>${isJP?"使い方":"How to play"}</b>：${cue}`;
+      `<span class="badge"><span class="emo">${EMOJI[elA]}</span>${whoA}: <b style="color:${COLOR[elA]}">${fancyName(elA)}</b></span>
+       <span class="badge"><span class="emo">${EMOJI[elB]}</span>${whoB}: <b style="color:${COLOR[elB]}">${fancyName(elB)}</b></span>
+       <span class="badge"><span class="emo">${emo}</span>${lead}: <b>${rank}</b></span>`;
+    $("pairText").innerHTML = `${emo} <b>${rank}</b> — ${line}<br><br><b>${isJP?jp.compHow:en.compHow}</b>：${cue}`;
+
+    // 円環アーク描画
+    const {score, span} = compVisual(rank);
+    const start = 20; // 起点
+    $("arcA").setAttribute("d", arcPath(120,120,90,start, span));
+    $("arcA").setAttribute("stroke", "url(#gradA)");
+    $("arcB").setAttribute("d", arcPath(120,120,65,start+10, Math.max(160, span-40)));
+    $("arcB").setAttribute("stroke", "url(#gradB)");
+    $("ringScore").textContent = score + "%";
+
+    // ラベル
+    $("ringLabels").innerHTML = `
+      <span class="rtag">${whoA}: <b style="color:${COLOR[elA]}">${fancyName(elA)}</b></span>
+      <span class="rtag">${whoB}: <b style="color:${COLOR[elB]}">${fancyName(elB)}</b></span>
+    `;
   }
 
+  // バリデーション
   function hookValidate(inputId, errId){
     const el=$(inputId);
     el.addEventListener("blur", ()=>{
@@ -300,6 +414,18 @@ h3{font-size:18px; margin: 6px 0 4px}
   }
   hookValidate("dateA","errA"); hookValidate("dateB","errB");
 
+  // スクロール＆“飛び”アニメ
+  function revealBox(id){
+    const box=$(id); box.hidden=false;
+    // リフロー後にin付与
+    requestAnimationFrame(()=> box.classList.add("in"));
+    box.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+  function resetBox(id){
+    const box=$(id); box.hidden=true; box.classList.remove("in");
+  }
+
+  // イベント
   $("btnSelf").addEventListener("click", ()=>{
     const ymd=parseFlexibleDate($("dateA").value);
     if(!ymd){ setError("errA", true); return; }
@@ -307,26 +433,5 @@ h3{font-size:18px; margin: 6px 0 4px}
     const el=elementFromYMD(ymd);
     buildSelfBadges(el);
     $("selfText").innerHTML = buildSelfText($("nickA").value.trim(), el);
-    $("selfBox").hidden=false; $("pairBox").hidden=true;
-  });
-
-  $("btnBoth").addEventListener("click", ()=>{
-    const A=parseFlexibleDate($("dateA").value), B=parseFlexibleDate($("dateB").value);
-    if(!A){ setError("errA", true); } if(!B){ setError("errB", true); }
-    if(!A||!B) return;
-    setError("errA", false); setError("errB", false);
-    const elA=elementFromYMD(A), elB=elementFromYMD(B);
-    buildSelfBadges(elA);
-    $("selfText").innerHTML = buildSelfText($("nickA").value.trim(), elA);
-    $("selfBox").hidden=false;
-    buildPair(elA, elB, $("nickA").value.trim(), $("nickB").value.trim());
-    $("pairBox").hidden=false;
-    setTimeout(()=>{ $("pairBox").scrollIntoView({behavior:"smooth"}); }, 80);
-  });
-
-  // 言語切替
-  $("langBtn").addEventListener("click", ()=>{ isJP=!isJP; applyLang(); });
-})();
-</script>
-</body>
-</html>
+    // 6式％
+    const vec = sixVe
