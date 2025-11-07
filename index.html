@@ -3,196 +3,192 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KenGo OS — IKI STATUS</title>
-<meta name="theme-color" content="#eaf6ff">
+<title>粋風録 IKI CARD｜KenGo式（生年月日だけでOK）</title>
+<meta name="theme-color" content="#e9f6ff">
 <style>
 :root{
-  --sky:#eaf6ff; --ink:#0e1a2b; --mut:#5e6a7a; --line:#dfe7ef; --card:#ffffff;
-  --accent:#2b86ff; --gold:#cfa84a; --sun:#ffcc33; --night:#0d1b2a; --dawn:#fff7e3;
+  --sky:#e9f6ff; --paper:#ffffff; --soft:#223048; --mut:#6f8296;
+  --line:#dfe9f2; --blue:#2b86ff; --gold:#caa236; --bar:#f2f8ff; --badge:#f7fbff;
 }
-*{box-sizing:border-box}
-html,body{margin:0;height:100%;font-family:Inter, system-ui, -apple-system, "Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--ink);background:var(--sky);letter-spacing:.2px}
-h1,h2,p{margin:0}
-.wrap{max-width:980px;margin:0 auto;padding:18px}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.brand{font-size:20px;font-weight:900;display:flex;align-items:center;gap:10px}
-.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-weight:800;font-size:12px}
-.mode{display:flex;gap:8px;flex-wrap:wrap}
-.mode button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-weight:800;cursor:pointer}
-.mode .on{border-color:var(--accent);box-shadow:0 0 0 2px #2b86ff22}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
-.grid{display:grid;gap:14px}
-@media(min-width:900px){.grid2{grid-template-columns:360px 1fr}}
-label{display:block;margin:6px 4px 6px 2px;font-weight:800;color:var(--mut)}
-.input{width:100%;font-size:18px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
-.input::placeholder{color:#9aa6b2}
-.btn{width:100%;border:0;border-radius:12px;padding:14px 16px;font-size:18px;font-weight:900;background:var(--accent);color:#fff;cursor:pointer}
+*{box-sizing:border-box} html,body{height:100%;margin:0;background:var(--sky);color:var(--soft);
+  font-family:"Hiragino Sans","Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:18px 14px}
+.header{display:flex;justify-content:space-between;align-items:end;margin-bottom:10px}
+.brand{display:flex;align-items:end;gap:10px}
+.logo{font-weight:900;font-size:22px;color:#0f2f5a}
+.sub{font-size:12px;color:var(--mut)}
+.kintsugi{height:28px;width:2px;background:linear-gradient(180deg,transparent,var(--gold) 20%,transparent 80%);border-radius:2px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 6px 20px #0000000b}
+.grid{display:grid;gap:12px} @media(min-width:880px){.form{grid-template-columns:1fr 1fr}}
+.title{font-size:13px;color:var(--mut);margin:0 0 6px 4px}
+label{display:block;font-weight:700;margin:6px 4px 4px;font-size:14px}
+.input,select{width:100%;font-size:18px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff}
+.input::placeholder{color:#9eb0be}
+.btn{width:100%;border:1.5px solid var(--blue);color:#0c2d66;background:#fff;font-weight:900;padding:12px 14px;border-radius:12px;cursor:pointer}
 .btn:active{transform:translateY(1px)}
-.help{font-size:12px;color:var(--mut);margin-top:6px}
-.err{color:#c62828;font-size:13px;margin-top:6px;display:none}
-
-.title{font-size:14px;color:var(--mut);margin:0 0 8px 2px}
-.kv{display:grid;grid-template-columns:106px 1fr;gap:12px;align-items:center}
-.emblem{width:106px;height:106px;border-radius:999px;border:2px solid var(--line);display:grid;place-items:center;background:#fff;position:relative}
-.crown{position:absolute;top:-18px;left:50%;transform:translateX(-50%) rotate(-8deg);font-size:28px;filter:drop-shadow(0 2px 0 #b48a2a)}
-.emblem svg{width:86%;height:86%}
-.stats{display:grid;gap:10px}
-.row{display:grid;grid-template-columns:130px 1fr 52px;gap:10px;align-items:center}
-.bar{height:14px;background:#f3f6fa;border:1px solid var(--line);border-radius:9px;overflow:hidden}
-.fill{height:100%;width:0;background:linear-gradient(90deg,#8ec5ff,#2b86ff);transition:width .5s ease}
+.small{font-size:12px;color:#8a99a8}
+.modes{display:flex;gap:8px}.mode{flex:1 1 80px;padding:8px 10px;text-align:center;border:1px solid var(--line);background:#fff;border-radius:12px;cursor:pointer;font-weight:800}
+.mode.on{border-color:var(--blue);background:#f5fbff}
+.stat{display:grid;grid-template-columns:110px 1fr 52px;gap:8px;align-items:center;margin:7px 0}
+.bar{height:14px;background:var(--bar);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.fill{height:100%;width:0;transition:width .45s ease;background:linear-gradient(90deg,#9ed1ff,#2b86ff)}
 .pct{text-align:right;font-variant-numeric:tabular-nums}
-.tabs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.tab{flex:1 1 140px;text-align:center;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff;font-weight:900;cursor:pointer}
-.tab.on{border-color:var(--accent);background:#f3f9ff}
+.tabs{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+.tab{flex:1 1 120px;text-align:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font-weight:800}
+.tab.on{border-color:var(--blue);background:#f5fbff}
 .panel{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;margin-top:8px}
-.list{display:grid;gap:8px}
-.rank{display:grid;grid-template-columns:36px 1fr 64px;gap:10px;align-items:center;border:1px dashed var(--line);border-radius:12px;padding:10px}
-.tag{font-size:12px;color:var(--mut)}
-.top{border-color:#ffd67a;background:linear-gradient(0deg,#fff9e6,#fff)}
-.share{display:flex;gap:8px;flex-wrap:wrap}
-.share .ghost{background:#fff;color:var(--accent);border:1.5px solid var(--accent)}
-.note{font-size:12px;color:var(--mut)}
-.toast{position:fixed;left:50%;top:12px;transform:translateX(-50%) translateY(-10px);background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;opacity:0;transition:.35s;font-weight:900;z-index:5}
+.rank{margin-top:8px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{background:var(--badge);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12px}
+.ring{display:grid;place-items:center} svg#ring{filter:drop-shadow(0 3px 6px #0000000a)}
+.toast{position:fixed;left:50%;top:10px;transform:translateX(-50%) translateY(-14px);background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;opacity:0;transition:.35s;font-weight:800;z-index:5}
 .toast.in{opacity:1;transform:translateX(-50%) translateY(0)}
-/* 背景モード */
-body.morning{background:var(--dawn)}
-body.day{background:var(--sky)}
-body.night{background:linear-gradient(180deg,#0d1b2a,#14243a);color:#e9f2ff}
-body.night .card,body.night .panel{background:#0f2035;color:#e9f2ff;border-color:#254060}
-body.night .input{background:#0b1a2a;color:#e9f2ff;border-color:#254060}
-body.night .bar{background:#0b1d2f;border-color:#254060}
-small{color:var(--mut)}
+/* 背景：世界地図＋世界樹 */
+.bg{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.bg .map{position:absolute;inset:0;background:
+  radial-gradient(1200px 800px at 50% 55%,#9fd3ff33,transparent 60%),
+  repeating-linear-gradient(to right,#2b86ff10 0 1px,transparent 1px 58px),
+  repeating-linear-gradient(to bottom,#2b86ff10 0 1px,transparent 1px 58px);
+  mask-image:radial-gradient(1100px 760px at 50% 55%,#000 30%,transparent 90%)}
+.bg svg{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);opacity:.18}
+#ygg .trunk{fill:#2b86ff} #ygg .leaf{fill:#8ec5ff}
+.rItem{display:grid;grid-template-columns:40px 1fr 64px;align-items:center;gap:10px;padding:10px;border:1px dashed #ffefc7;border-radius:12px;margin:10px 0;background:#fffdf6}
+.rItem:nth-child(n+2){border-style:solid;border-color:#eaf2fb;background:#ffffff}
+.rNo{font-weight:900;color:#0f2f5a;text-align:center}.rName{font-size:17px;font-weight:800}
+.rCat{font-size:12px;color:#7a8a98}.rPct{font-weight:900;text-align:right}
 </style>
 </head>
-<body class="day">
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="map"></div>
+  <svg id="ygg" width="760" height="540" viewBox="0 0 760 540">
+    <g class="trunk" opacity="0.7">
+      <path d="M375 500c-8-62 10-114-12-156-14-26-47-44-70-50 33-3 62 3 83 22-12-42-42-72-86-89 53 6 93 28 116 64 8-34 1-71-20-112 33 37 51 78 54 122 20-28 47-47 80-58-32 25-53 54-62 86 24-18 51-24 83-20-27 7-61 27-74 54-19 42-3 89-13 130z"/>
+    </g>
+    <g class="leaf" opacity="0.7">
+      <circle cx="280" cy="118" r="26"/><circle cx="330" cy="84" r="22"/>
+      <circle cx="396" cy="96" r="24"/><circle cx="450" cy="142" r="28"/>
+      <circle cx="238" cy="182" r="24"/><circle cx="500" cy="190" r="26"/>
+      <circle cx="312" cy="212" r="20"/><circle cx="436" cy="222" r="22"/>
+    </g>
+  </svg>
+</div>
+
 <div id="toast" class="toast" aria-live="polite">カードを生成しました。</div>
 
 <div class="wrap">
-  <!-- ヘッダー -->
   <div class="header">
-    <div class="brand">KenGo OS — <span class="badge">IKI STATUS</span></div>
-    <div class="mode" role="tablist" aria-label="sky mode">
-      <button class="on" data-mode="morning">🌅 朝</button>
-      <button data-mode="day">☀️ 昼</button>
-      <button data-mode="night">🌌 夜</button>
+    <div class="brand">
+      <div class="logo">粋風録 <span class="sub">— IKI CARD</span></div>
+      <div class="kintsugi" aria-hidden="true"></div>
+    </div>
+    <div class="modes" role="group" aria-label="tone">
+      <button class="mode on" data-t="morning">朝</button>
+      <button class="mode" data-t="noon">昼</button>
+      <button class="mode" data-t="night">夜</button>
     </div>
   </div>
 
   <!-- 入力 -->
-  <div class="grid grid2 card">
+  <div class="card grid form">
     <div>
-      <p class="title">▶ スタート（生年月日だけでOK）</p>
-      <label>生年月日 <small>19900504 / 1990-05-04 / 1990/05/04</small></label>
-      <input id="dob" class="input" inputmode="numeric" placeholder="例）19900504">
-      <label>ニックネーム <small>任意</small></label>
-      <input id="nick" class="input" placeholder="例）KenGo / 旅人">
-      <div class="help">「診断する」を押すと “円” が光で描かれて、ランキングが出ます。</div>
-      <div id="err" class="err">日付の形式が正しくありません。</div>
-      <button id="run" class="btn" style="margin-top:10px">診断する</button>
+      <p class="title">▶ あなた（生年月日だけでOK）</p>
+      <label>生年月日（必須）</label>
+      <input id="dob" class="input" inputmode="numeric" placeholder="19900504 / 1990-05-04 / 1990/05/04">
+      <label>呼び名（任意）</label>
+      <input id="nick" class="input" placeholder="KenGo / 旅人（任意）">
+      <label>ユニバース選択（任意）</label>
+      <select id="univ">
+        <option value="auto">おまかせ</option>
+        <option value="op">ONE PIECE</option>
+        <option value="hxh">HUNTER×HUNTER</option>
+        <option value="dq">ドラゴンクエスト</option>
+        <option value="db">ドラゴンボール</option>
+        <option value="nrt">NARUTO</option>
+        <option value="dis">Disney</option>
+      </select>
+      <button id="go" class="btn" style="margin-top:10px">ゲームスタート</button>
+      <div id="err" class="small" style="display:none;color:#b03f53">日付の形式が正しくありません。</div>
     </div>
 
-    <!-- プレビュー（円のアニメ） -->
     <div>
-      <p class="title">▶ 円（光の刻印）</p>
-      <div class="emblem" id="emblem" aria-label="circle emblem">
-        <!-- 王冠は閾値で表示 -->
-        <div id="crown" class="crown" style="display:none">👑</div>
-        <svg viewBox="0 0 120 120" id="halo" aria-hidden="true">
-          <defs>
-            <radialGradient id="glow" cx="50%" cy="50%">
-              <stop offset="0%" stop-color="#fff" stop-opacity="0.95"/>
-              <stop offset="60%" stop-color="#fff" stop-opacity="0.25"/>
-              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="beam" x1="0" x2="1">
-              <stop offset="0%" stop-color="#8ec5ff"/><stop offset="100%" stop-color="#2b86ff"/>
-            </linearGradient>
-          </defs>
-          <circle cx="60" cy="60" r="47" fill="url(#glow)"/>
-          <circle cx="60" cy="60" r="47" fill="none" stroke="#eef5ff" stroke-width="3"/>
-          <path id="arc" d="" stroke="url(#beam)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <p class="title">▶ 円の星</p>
+      <div class="ring">
+        <svg id="ring" width="240" height="240" viewBox="0 0 240 240">
+          <circle cx="120" cy="120" r="90" fill="none" stroke="#e9f2ff" stroke-width="10"/>
+          <path id="arc" d="" stroke="url(#g)" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="#2b86ff"/><stop offset="100%" stop-color="#caa236"/></linearGradient></defs>
+          <text id="score" x="120" y="129" text-anchor="middle" font-size="26" font-family="Inter,system-ui" fill="#0e1a2b" font-weight="800">--%</text>
         </svg>
       </div>
-      <div class="help">完成時に👑が現れる日があります。（今日の追い風ボーナス）</div>
+      <div class="badges" id="tags"></div>
     </div>
   </div>
 
-  <!-- 結果 -->
-  <div id="board" class="grid grid2" style="margin-top:14px" hidden>
-    <div class="card">
-      <p class="title">▶ ステータス</p>
-      <div class="kv" style="margin-bottom:6px">
-        <div></div>
-        <div>
-          <div id="who" style="font-weight:900;font-size:20px">—</div>
-          <div class="tag" id="element">—</div>
-        </div>
-      </div>
-      <div class="stats">
-        <div class="row"><div>安定（HP）</div><div class="bar"><div id="hp" class="fill"></div></div><div id="hpv" class="pct">—%</div></div>
-        <div class="row"><div>視点（MP）</div><div class="bar"><div id="mp" class="fill"></div></div><div id="mpv" class="pct">—%</div></div>
-        <div class="row"><div>機動（SP）</div><div class="bar"><div id="sp" class="fill"></div></div><div id="spv" class="pct">—%</div></div>
-      </div>
+  <!-- 出力 -->
+  <div id="out" class="card" style="margin-top:12px;display:none">
+    <p class="title">▶ 基本</p>
+    <div class="stat"><div>安定（HP）</div><div class="bar"><div id="hp" class="fill"></div></div><div id="hpv" class="pct">—%</div></div>
+    <div class="stat"><div>視点（MP）</div><div class="bar"><div id="mp" class="fill"></div></div><div id="mpv" class="pct">—%</div></div>
+    <div class="stat"><div>機動（SP）</div><div class="bar"><div id="sp" class="fill" style="background:linear-gradient(90deg,#7ee3c1,#2fa37a)"></div></div><div id="spv" class="pct">—%</div></div>
+
+    <div class="tabs">
+      <div id="t1" class="tab on">ランキング</div>
+      <div id="t2" class="tab">６式（％）</div>
+      <div id="t3" class="tab">習得テーブル</div>
     </div>
 
-    <div>
-      <div class="tabs">
-        <div class="tab on" data-tab="r">ランキング</div>
-        <div class="tab" data-tab="s">6式（％）</div>
-        <div class="tab" data-tab="share">シェア</div>
-      </div>
+    <div id="p1" class="panel">
+      <div class="small">似てるOSランキング（固有名詞）</div>
+      <div id="rank" class="rank"></div>
+    </div>
 
-      <div id="pan-r" class="panel">
-        <p class="title">▶ 似てるOSランキング（人以外）</p>
-        <div id="list" class="list"></div>
-        <div class="note" style="margin-top:8px">※AIの“OSっぽさ”推定。作品は敬意を込めたオマージュ。</div>
-      </div>
+    <div id="p2" class="panel" style="display:none">
+      <div id="six" class="six"></div>
+    </div>
 
-      <div id="pan-s" class="panel" style="display:none">
-        <div class="list" id="six"></div>
-      </div>
-
-      <div id="pan-share" class="panel" style="display:none">
-        <div class="share">
-          <button id="save" class="btn">画像を保存</button>
-          <button id="share" class="btn ghost">端末の共有を使う</button>
-        </div>
-        <canvas id="card" width="1200" height="630" style="display:none"></canvas>
-        <div class="help">OG画像サイズで生成します。円・名前・本日の要素を描き込み。</div>
-      </div>
+    <div id="p3" class="panel" style="display:none">
+      <div id="learn" class="rank"></div>
+      <div id="rel" class="small" style="margin-top:6px"></div>
     </div>
   </div>
+
+  <div class="small" style="text-align:center;margin:14px 0">© KenGo System — 風は外に、円は内に。</div>
 </div>
 
 <script>
-/* ========= ユーティリティ ========= */
+/* トーン切替 */
+document.querySelectorAll(".mode").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".mode").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    const t=b.dataset.t;
+    if(t==="morning") document.documentElement.style.setProperty('--sky','#e9f6ff');
+    if(t==="noon")    document.documentElement.style.setProperty('--sky','#f8fcff');
+    if(t==="night")   document.documentElement.style.setProperty('--sky','#0f1b2c');
+  };
+});
 const $=id=>document.getElementById(id);
-const toast=(t)=>{const el=$("toast"); el.textContent=t; el.classList.add("in"); setTimeout(()=>el.classList.remove("in"),1200);};
-const modes = document.querySelectorAll('[data-mode]');
-modes.forEach(b=>b.onclick=()=>{modes.forEach(x=>x.classList.remove('on')); b.classList.add('on'); document.body.className=b.dataset.mode;});
 
-/* ========= 入力処理 ========= */
+/* 入力＆乱数 */
 function parseDate(v){
   if(!v) return null; v=v.trim();
-  if(/^\d{8}$/.test(v)){ const y=+v.slice(0,4), m=+v.slice(4,6)-1, d=+v.slice(6,8);
-    const dt=new Date(Date.UTC(y,m,d)); if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m&&dt.getUTCDate()===d) return dt;}
+  if(/^\d{8}$/.test(v)){const y=+v.slice(0,4),m=+v.slice(4,6)-1,d=+v.slice(6,8);
+    const dt=new Date(Date.UTC(y,m,d)); if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m&&dt.getUTCDate()===d)return dt;}
   const vv=v.replace(/\//g,"-"); if(/^\d{4}-\d{2}-\d{2}$/.test(vv)){
     const [y,m,d]=vv.split("-").map(Number); const dt=new Date(Date.UTC(y,m-1,d));
-    if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m-1&&dt.getUTCDate()===d) return dt;}
+    if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m-1&&dt.getUTCDate()===d)return dt;}
   return null;
 }
-function rngFromDate(dt){
-  let s = dt.getUTCFullYear()*10000 + (dt.getUTCMonth()+1)*100 + dt.getUTCDate();
-  s = (s ^ 0x9e3779b9)>>>0; // mix
-  return ()=> (s = Math.imul(1664525, s) + 1013904223 >>> 0) / 2**32;
-}
+function rngFromDate(dt){ let s = dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate();
+  s = (s ^ 0x9e3779b9)>>>0; return ()=> (s = Math.imul(1664525,s)+1013904223>>>0) / 2**32; }
 
-/* ========= 6式と基本値 ========= */
-const SIX_JA = ["円","風","核","間","和","返"];
+/* 六式・基本 */
+const KEYS = ["円","風","核","間","和","返"];
 function six(dt){
   const R=rngFromDate(dt), w=dt.getUTCDay(), m=dt.getUTCMonth()+1;
   return Array.from({length:6},(_,i)=>{
-    const base=0.55+R()*0.28;
+    const base=0.52+R()*0.30;
     const twist=((w+i)%3===0?0.04:0)+((m%6===i?0.03:0))+(R()-0.5)*0.06;
     return Math.max(0,Math.min(1,base+twist))*100|0;
   });
@@ -202,195 +198,145 @@ function base(s){ return {
   mp:Math.round(s[3]*0.5+s[4]*0.3+s[2]*0.2),
   sp:Math.round(s[1]*0.6+s[3]*0.25+s[4]*0.15)
 };}
-function elementFromSix(s){
-  const score = {
-    wind: s[1]*0.6 + s[3]*0.4,
-    fire: s[5]*0.6 + s[1]*0.4,
-    earth: s[2]*0.6 + s[0]*0.4,
-    water: s[4]*0.7 + s[0]*0.3
-  };
-  const key = Object.entries(score).sort((a,b)=>b[1]-a[1])[0][0];
-  const label = {wind:"WIND（風）",fire:"FIRE（火）",earth:"EARTH（地）",water:"WATER（水）"}[key];
-  return {key,label};
-}
-
-/* ========= OSランキング・候補プール ========= */
-/* 各カテゴリの代表名（OS的雰囲気ラベル／人名は不使用） */
-const POOL = [
-  // ディズニー
-  ["Disney","灯台の案内人","自由を歌う航海者","森の守り手","発明好きな小さな英雄"],
-  // ワンピース
-  ["ONE PIECE","ゴムの冒険者","剣を極める相棒","航海を導く学者","料理で場を上げる人"],
-  // 鬼滅
-  ["鬼滅の刃","水の呼吸の使い手","炎の柱の心","音で場を読む隊士","蟲のように繊細な癒し"],
-  // NARUTO
-  ["NARUTO","影分身の戦術家","医療忍の冷静さ","風遁の俊足","写輪眼の観察者"],
-  // ジブリ
-  ["Ghibli","風とともに動く少女","森のトトロ的安心感","空賊の陽気さ","湯屋の現場監督力"],
-  // サンリオ
-  ["Sanrio","キキの空気感","ララの調和","ばつ丸の反骨","シナモンのやさしさ"],
-  // マーベル
-  ["Marvel","スーツで状況を反転する人","盾で守る司令塔","雷で流れを変える者","スパイダーな機動"],
-  // FF
-  ["FF","白魔の支援","黒魔の一撃","竜騎の跳躍","吟遊詩のバフ"],
-  // ドラクエ
-  ["DQ","賢者の全体把握","武闘家の間合い","遊び人の場ほぐし","勇者の均整"],
-  // H×H
-  ["HxH","具現化の職人","変化系の瞬発","特質の不可思議","放出の清流"],
-  // 天使・悪魔・神話
-  ["Myth","加護を配る天使","叡智の女神","狩りの神の集中","冥界の扉番"],
-  // 動物・虫
-  ["Nature","鷹の俯瞰","イルカの連携","狐の切り返し","蜂の勤勉"]
-];
-
-/* 類似度％を決める（生年月日ベース・安定） */
-function ranking(dt, sixArr){
-  const R=rngFromDate(dt);
-  const boostIdx = sixArr.indexOf(Math.max(...sixArr)); // その日の強みで少し上げる
-  const list=[];
-  POOL.forEach(([cat,...names])=>{
-    names.forEach((name,i)=>{
-      let p = 60 + Math.floor(R()*35);        // 60–95% 基本
-      if((i%6)===boostIdx) p += 3;            // 強み一致で+3
-      p = Math.min(p, 99);
-      list.push({cat,name,p});
-    });
-  });
-  return list.sort((a,b)=>b.p-a.p).slice(0,10);
-}
-
-/* ========= 円アニメ ========= */
 function drawArc(pct){
-  const C=60,R=47;
-  const a = Math.PI*2*pct;
-  const x=C + R*Math.sin(a), y=C - R*Math.cos(a);
-  const large = pct>0.5?1:0;
-  const d = `M ${C} ${C-R} A ${R} ${R} 0 ${large} 1 ${x} ${y}`;
-  $("arc").setAttribute("d", d);
+  const C=120,R=90,a=Math.PI*2*pct,x=C+R*Math.sin(a),y=C-R*Math.cos(a),large=pct>0.5?1:0;
+  $("arc").setAttribute("d",`M ${C} ${C-R} A ${R} ${R} 0 ${large} 1 ${x} ${y}`);
+  $("score").textContent=Math.round(pct*100)+"%";
 }
 
-/* ========= 実行 ========= */
-$("run").onclick=()=>{
-  const dt=parseDate($("dob").value);
-  if(!dt){ $("err").style.display='block'; return; }
-  $("err").style.display='none';
-
-  // 6式と基本
-  const s = six(dt);
-  const b = base(s);
-  const elem = elementFromSix(s);
-
-  // 円アニメ（1.1秒で光が刻まれる）
-  let t=0; const T=60;
-  const tick=()=>{ t++; drawArc(t/T); if(t<T) requestAnimationFrame(tick); };
-  drawArc(0); requestAnimationFrame(tick);
-
-  // 👑 たまに王冠
-  $("crown").style.display = (Math.max(...s)>=90)?'block':'none';
-
-  // ステータス更新
-  const nick = $("nick").value.trim() || "旅人";
-  $("who").textContent = `${nick} ／ ${elem.label}`;
-  $("element").textContent = `円:${s[0]} 風:${s[1]} 核:${s[2]} 間:${s[3]} 和:${s[4]} 返:${s[5]}`;
-
-  const setBar=(id,val)=>{$(id).style.width=val+"%"; $(id+"v").textContent = val+"%";}
-  setBar("hp", b.hp); setBar("mp", b.mp); setBar("sp", b.sp);
-
-  // ランキング
-  const top = ranking(dt, s);
-  const list = $("list"); list.innerHTML="";
-  top.forEach((r,idx)=>{
-    const div=document.createElement("div"); div.className="rank"+(idx===0?" top":"");
-    div.innerHTML=`<div style="font-weight:900;font-size:18px">${idx+1}</div>
-      <div><div style="font-weight:900">${r.name}</div><div class="tag">${r.cat}</div></div>
-      <div class="pct" style="font-weight:900">${r.p}%</div>`;
-    list.appendChild(div);
-  });
-
-  // 6式パネル
-  const sixUl=$("six"); sixUl.innerHTML="";
-  s.forEach((v,i)=>{
-    const row=document.createElement("div"); row.className="row";
-    row.innerHTML=`<div>${SIX_JA[i]}</div><div class="bar"><div class="fill" style="width:${v}%;background:linear-gradient(90deg,#ffd67a,#ffb300)"></div></div><div class="pct">${v}%</div>`;
-    sixUl.appendChild(row);
-  });
-
-  // 共有画像の下準備
-  prepShareCanvas(nick, elem.label, s, top);
-
-  $("board").hidden=false;
-  toast("カードを生成しました。");
-};
-
-/* ========= タブ ========= */
-document.querySelectorAll('.tab').forEach(t=>{
-  t.onclick=()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-    t.classList.add('on');
-    const id=t.dataset.tab;
-    ["r","s","share"].forEach(k=>$("pan-"+k).style.display = (k===id)?"block":"none");
-  };
-});
-
-/* ========= 共有（画像生成＆Web Share） ========= */
-function prepShareCanvas(name, elem, s, top){
-  const cvs=$("card"), g=cvs.getContext("2d");
-  const W=cvs.width, H=cvs.height;
-  // 背景
-  g.fillStyle="#eaf6ff"; g.fillRect(0,0,W,H);
-  // タイトル
-  g.fillStyle="#0e1a2b"; g.font="700 44px Inter, system-ui"; g.fillText("KenGo OS — IKI STATUS", 48, 88);
-  // 円
-  g.save(); g.translate(220, 315);
-  // 外枠
-  g.beginPath(); g.arc(0,0,120,0,Math.PI*2); g.strokeStyle="#bcd7f8"; g.lineWidth=4; g.stroke();
-  // 光アーク
-  const pct=0.92; g.beginPath(); g.arc(0,0,120,-Math.PI/2,-Math.PI/2+Math.PI*2*pct);
-  const grd=g.createLinearGradient(-120,0,120,0); grd.addColorStop(0,"#8ec5ff"); grd.addColorStop(1,"#2b86ff");
-  g.strokeStyle=grd; g.lineWidth=10; g.lineCap="round"; g.stroke();
-  // 内側グロー
-  const rg=g.createRadialGradient(0,0,0,0,0,120); rg.addColorStop(0,"#ffffffee"); rg.addColorStop(0.6,"#ffffff55"); rg.addColorStop(1,"#ffffff00");
-  g.fillStyle=rg; g.beginPath(); g.arc(0,0,120,0,Math.PI*2); g.fill();
-  g.restore();
-
-  // 名前と要素
-  g.font="900 40px Inter, system-ui"; g.fillStyle="#0e1a2b"; g.fillText(`${name}`, 380, 190);
-  g.font="700 28px Inter, system-ui"; g.fillStyle="#2b86ff"; g.fillText(`${elem}`, 380, 230);
-
-  // 6式
-  g.font="700 22px Inter, system-ui"; g.fillStyle="#5e6a7a";
-  const L=["円","風","核","間","和","返"];
-  L.forEach((t,i)=>{ g.fillText(`${t}  ${s[i]}%`, 380, 280+28*i); });
-
-  // ランキング上位5
-  g.font="700 24px Inter, system-ui"; g.fillStyle="#0e1a2b"; g.fillText("似てるOSランキング", 48, 468);
-  g.font="700 22px Inter, system-ui"; g.fillStyle="#0e1a2b";
-  top.slice(0,5).forEach((r,i)=>{ g.fillText(`${i+1}. ${r.name}  —  ${r.p}%`, 48, 508+34*i); });
-
-  // フッター
-  g.font="600 18px Inter, system-ui"; g.fillStyle="#5e6a7a"; g.fillText("© KenGo System — 風は外に、円は内に。", 48, 604);
-}
-
-$("save").onclick=()=>{
-  const url=$("card").toDataURL("image/png");
-  const a=document.createElement("a"); a.href=url; a.download="KenGo-IKI-STATUS.png"; a.click();
-};
-
-$("share").onclick=async()=>{
-  try{
-    const blob=await new Promise(res=>$("card").toBlob(res));
-    const file=new File([blob],"KenGo-IKI-STATUS.png",{type:"image/png"});
-    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], title:"KenGo OS — IKI STATUS", text:"円ができた。"});
-    }else{
-      $("save").click();
-      toast("端末共有が未対応のため保存しました。");
+/* 固有名詞ランキング（短縮） */
+const POOL=[
+ ["ONE PIECE","モンキー・D・ルフィ","ロロノア・ゾロ","ナミ","サンジ","ニコ・ロビン","ウソップ"],
+ ["Ghibli","ナウシカ","シータ","キキ","アシタカ","サン","ハク"],
+ ["Disney","モアナ","エルサ","ラプンツェル","アリエル"],
+ ["HxH","ゴン","キルア","クラピカ","レオリオ","ヒソカ"],
+ ["Marvel","アイアンマン","キャプテン・アメリカ","ソー","スパイダーマン"],
+ ["FF","クラウド","ティナ","ユウナ","白魔道士","竜騎士"],
+ ["DQ","勇者","賢者","武闘家","盗賊","遊び人"],
+ ["NARUTO","うずまきナルト","はたけカカシ","春野サクラ","うちはサスケ","日向ヒナタ"],
+ ["Nature","鷹","イルカ","狐","蜂","狼","梟"]
+];
+function rankList(dt,s){
+  const R=rngFromDate(dt), peak=Math.max(...s);
+  const list=[];
+  for(const g of POOL){ const cat=g[0];
+    for(let i=1;i<g.length;i++){
+      let p=70+(R()*20-10)+(peak-70)*0.15;
+      if(cat==="ONE PIECE"&&s[1]>s[2]) p+=6;
+      if(cat==="HxH"&&s[3]>s[1]) p+=6;
+      if(cat==="DQ"&&s[0]>s[5]) p+=4;
+      if(cat==="NARUTO"&&s[3]>70) p+=5;
+      if(cat==="Disney"&&s[4]>75) p+=6;
+      p=Math.max(50,Math.min(99,Math.round(p)));
+      list.push({cat,name:g[i],pct:p});
     }
-  }catch(e){ toast("共有に失敗しました"); }
-};
+  }
+  list.sort((a,b)=>b.pct-a.pct||a.name.localeCompare(b.name));
+  return list.slice(0,10);
+}
 
-/* 初期円 */
-drawArc(0);
+/* ユニバース提案テーブル */
+const SUGGEST={
+  op:{ // 悪魔の実：相性MAX / すぐ覚え
+    max:[["風","ゴロゴロの実"],["核","ダイヤモンドの実"],["円","ホビホビの実"],["間","ドアドアの実"],["和","オペオペの実"],["返","モチモチの実"]],
+    now:[["風","スベスベの実"],["核","バリバリの実"],["円","ソルソルの実"],["間","カゲカゲの実"],["和","ホロホロの実"],["返","ネツネツの実"]]
+  },
+  hxh:{ // 念系統＆技
+    max:[["風","放出系：神速"],["核","強化系：硬＋剛"],["円","特質系：円熟"],["間","操作系：リズム刻み"],["和","具現化系：結界具現"],["返","変化系：雷掌"]],
+    now:[["風","放出：疾風弾"],["核","強化：鉄壁"],["円","特質：共鳴"],["間","操作：ステップ制御"],["和","具現：架け橋"],["返","変化：反転刃"]]
+  },
+  dq:{ // 呪文/特技
+    max:[["風","バイキルト"],["核","スクルト"],["円","リベホイム"],["間","フバーハ"],["和","マホカンタ"],["返","メガンテ（反転氣）"]],
+    now:[["風","ピオリム"],["核","スカラ"],["円","ベホイミ"],["間","マジックバリア"],["和","リホイミ"],["返","かえん斬り"]]
+  },
+  db:{ // 技
+    max:[["風","瞬間移動"],["核","元気玉"],["円","界王拳（持続型）"],["間","時間差残像拳"],["和","気円斬（調停刃）"],["返","かめはめ波・逆流"]],
+    now:[["風","舞空術"],["核","岩石割"],["円","気の盾"],["間","残像拳"],["和","気の流し"],["返","気合弾"]]
+  },
+  nrt:{ // 忍術
+    max:[["風","風遁・螺旋手裏剣"],["核","土遁・岩牢"],["円","影分身・完全制御"],["間","時空間マーキング"],["和","封印術・和紋"],["返","雷遁・千鳥返し"]],
+    now:[["風","風遁・真空玉"],["核","土遁・土流壁"],["円","影分身"],["間","瞬身の術"],["和","医療忍術（安定）"],["返","雷遁・雷光掌"]]
+  },
+  dis:{ // ロール
+    max:[["風","Wayfinder（風の航路開拓者）"],["核","Guardian（守護者）"],["円","Circle Maker（輪を生む人）"],["間","Time Dancer（間の踊り手）"],["和","Harmony Weaver（調和の織り手）"],["返","Light Reverser（反転する光）"]],
+    now:[["風","Messenger"],["核","Keeper"],["円","Friend Maker"],["間","Guide"],["和","Mediator"],["返","Spark"]]
+  }
+};
+/* 六式→主属性キー */
+function mainKey(s){ const i=s.indexOf(Math.max(...s)); return ["円","風","核","間","和","返"][i]; }
+
+/* 習得テーブル生成＋相対性 */
+function learnBlock(univ,s){
+  const mk=mainKey(s);
+  const table=SUGGEST[univ];
+  const pick=(arr)=> (arr.find(([k])=>k===mk)||arr[0])[1];
+  const now=pick(table.now), max=pick(table.max);
+
+  // 相対性ボーナス：MPと間の合成
+  const mp=s[3], interval=s[3]; // 間＝index3
+  const bonus=Math.round((s[3]+s[1]*0.2)/6); // “視点”と“風”で時間の伸縮を感じる
+  let rel="";
+  if(s[3]>=78 || s[3]>=72 && s[1]>=72){
+    rel=`⏱ 相対性ボーナス：時間の伸縮 +${bonus}%（視点×間の同調）`;
+  }else{
+    rel=`⏱ 相対性ボーナス候補：視点（MP）と間が上がる日、技の発動猶予が伸びます。`;
+  }
+
+  const box=$("learn"); box.innerHTML="";
+  const mkTag = `<span class="badge">主属性：${mk}</span>`;
+  const b1=document.createElement("div"); b1.className="rItem";
+  b1.innerHTML=`<div class="rNo">★</div><div><div class="rName">相性MAX</div><div class="rCat">${mkTag}</div></div><div class="rPct">${max}</div>`;
+  const b2=document.createElement("div"); b2.className="rItem";
+  b2.innerHTML=`<div class="rNo">▶</div><div><div class="rName">今すぐ覚えられそう</div><div class="rCat">${mkTag}</div></div><div class="rPct">${now}</div>`;
+  box.appendChild(b1); box.appendChild(b2);
+  $("rel").textContent=rel;
+}
+
+/* UI描画 */
+function fillBars(s){
+  const b=base(s);
+  $("hp").style.width=b.hp+"%"; $("hpv").textContent=b.hp+"%";
+  $("mp").style.width=b.mp+"%"; $("mpv").textContent=b.mp+"%";
+  $("sp").style.width=b.sp+"%"; $("spv").textContent=b.sp+"%";
+  const box=$("six"); box.innerHTML="";
+  s.forEach((v,i)=>{
+    const row=document.createElement("div"); row.className="stat";
+    row.innerHTML=`<div>${KEYS[i]}</div><div class="bar"><div class="fill" style="width:${v}%"></div></div><div class="pct">${v}%</div>`;
+    box.appendChild(row);
+  });
+  // バッジ
+  const tags=$("tags"); tags.innerHTML="";
+  const highs=KEYS.map((k,i)=>({k,v:s[i]})).filter(x=>x.v>=75).map(x=>x.k+"75+");
+  (highs.length?highs:["均整"]).forEach(t=>{const b=document.createElement("div");b.className="badge";b.textContent=t;tags.appendChild(b);});
+}
+function showTab(n){[1,2,3].forEach(i=>{$("t"+i).classList.toggle("on",i===n);$("p"+i).style.display=(i===n?"block":"none");});}
+$("t1").onclick=()=>showTab(1); $("t2").onclick=()=>showTab(2); $("t3").onclick=()=>showTab(3);
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("in");setTimeout(()=>t.classList.remove("in"),1300);}
+
+/* スタート */
+function start(){
+  const dt=parseDate($("dob").value);
+  if(!dt){$("err").style.display="block";return;} $("err").style.display="none";
+  const s=six(dt); fillBars(s);
+  const avg=s.reduce((a,b)=>a+b,0)/600; drawArc(avg);
+  // ランキング
+  const list=rankList(dt,s), box=$("rank"); box.innerHTML="";
+  list.forEach((r,i)=>{const item=document.createElement("div");item.className="rItem";
+    item.innerHTML=`<div class="rNo">${i+1}</div>
+      <div><div class="rName">${i===0?"👑 ":""}${r.name}</div><div class="rCat">${r.cat}</div></div>
+      <div class="rPct">${r.pct}%</div>`; box.appendChild(item);});
+  // 習得（ユニバース）
+  const u=$("univ").value==="auto" ? (list[0].cat==="ONE PIECE"?"op":
+    list[0].cat==="HxH"?"hxh": list[0].cat==="NARUTO"?"nrt":
+    list[0].cat==="DQ"?"dq": list[0].cat==="FF"||list[0].cat==="DB"?"db":
+    list[0].cat==="Disney"?"dis":"op")
+    : $("univ").value;
+  learnBlock(u,s);
+  $("out").style.display="block"; showTab(1); toast("カードを生成しました。");
+}
+$("go").onclick=start;
+
+/* 円の星 初期化（URL復元なしの軽量版） */
 </script>
 </body>
 </html>
