@@ -3,391 +3,191 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>粋風録 IKI CARD｜KenGo式（生年月日だけでOK）</title>
-<meta name="theme-color" content="#fdfcf7">
+<title>粋風録 — IKI CARD（Birthdate only）</title>
+<meta name="theme-color" content="#f7fbff">
 <style>
-/* ===== 明るい快晴トーン＋やわらかフォント ===== */
 :root{
-  --sky:#f7fbff; --paper:#fffef9; --ink:#14202e; --mut:#6a7686;
-  --line:#e8eef5; --gold:#f1c85b; --gold2:#b48a2a;
-  --breeze:#dff2ff; --sea:#97c6ff; --leaf:#bde4c7; --rose:#ffd0e1; --vio:#e4dcff;
-  --wind:#5fb0e0; --fire:#ea7a58; --earth:#a8905e; --water:#53c4c9;
+  --sky:#f7fbff; --ink:#0b2540; --sub:#5c6b7a; --line:#e7eff7;
+  --btn:#1f6feb; --btn2:#0ea5a5; --gold:#b48a2a;
+  --blue:#2a74db; --green:#23a37a; --rose:#b5486d; --vio:#6b5bcd;
+  --wind:#4fb0e3; --fire:#e0754d; --earth:#8c7b58; --water:#42b3b9;
 }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--sky);color:var(--ink);
-  font-family:ui-rounded, "Hiragino Maru Gothic ProN","Noto Sans JP",system-ui,sans-serif;letter-spacing:.2px}
-a{color:inherit}
+html,body{margin:0;background:var(--sky);color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",Segoe UI,Roboto,sans-serif;letter-spacing:.2px}
+.wrap{max-width:980px;margin:0 auto;padding:20px 14px}
+.hero{display:flex;align-items:center;gap:10px}
+.logo{width:28px;height:28px;border-radius:8px;background:
+  radial-gradient(60% 60% at 50% 35%,#fff 0,#fff 60%,#ffe9a8 61%,#fffbe0 75%,transparent 76%),
+  conic-gradient(from 0deg,#d9a73a 0 25%,#f3d57a 25% 50%,#d9a73a 50% 75%,#f3d57a 75% 100%);
+  border:1px solid #f0e4b8;box-shadow:0 2px 0 #e4d596 inset}
+h1{margin:0;font-size:22px;font-weight:800}
+.note{color:var(--sub);font-size:12px;margin:4px 0 14px}
 
-/* 背景：薄い世界地図＋世界樹の根のイメージ（SVG/グラデのみ） */
-body::before{
-  content:""; position:fixed; inset:0; z-index:-2;
-  background:
-    radial-gradient(1200px 800px at 70% -10%, #ffffff80, transparent 70%),
-    radial-gradient(900px 600px at 20% 110%, #e9fff280, transparent 70%),
-    linear-gradient(180deg,#fafdff 0%, #f2f9ff 40%, #ffffff 100%);
-}
-body::after{
-  /* 世界樹の根：うっすら曲線 */
-  content:""; position:fixed; inset:0; z-index:-1; opacity:.25;
-  background:
-    radial-gradient(1200px 800px at 50% 0%, #bde4c733, transparent 60%),
-    repeating-radial-gradient( circle at 50% 0%,
-      transparent 0 30px, #d6ecff33 31px 32px);
-}
-
-/* ヘッダー */
-.wrap{max-width:980px;margin:0 auto;padding:18px 16px}
-.header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:10px}
-.brand{display:flex;align-items:center;gap:12px}
-.crown{
-  width:28px;height:22px;border-radius:3px 3px 0 0; position:relative;
-  background:linear-gradient(180deg,#ffe9a3,#ffd159);
-  box-shadow:0 2px 0 #e8b94a inset, 0 1px 0 #fff8ce inset, 0 2px 6px #00000014;
-}
-.crown:before,.crown:after{
-  content:""; position:absolute; top:-10px; width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:10px solid #ffd159; filter:drop-shadow(0 1px 0 #e8b94a);
-}
-.crown:before{left:2px} .crown:after{right:2px}
-.sig{font-size:22px;font-weight:800;line-height:1}
-.sub{color:var(--mut);font-size:12px;margin-top:6px}
-.lang button{border:0;background:none;color:var(--mut);font-weight:800;margin-left:10px;cursor:pointer;padding:6px 8px;border-radius:8px}
-.lang .on{color:#0f3a5a;background:#eef6ff;border:1px solid #cde4ff}
-
-/* カード / 入力 */
-.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 8px 20px #0000000a}
-.title{font-size:14px;color:var(--mut);margin:0 0 8px 4px}
-label{display:block;margin:10px 4px 6px;font-weight:800;font-size:14px}
-.input,select{width:100%;font-family:inherit;font-size:18px;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff}
-.input::placeholder{color:#a8aeb8}
-.btn{width:100%;border:0;border-radius:14px;padding:14px 16px;margin-top:12px;
-  background:#0f3a5a; color:#fff; font-weight:900; font-size:17px;letter-spacing:.3px}
-.btn:active{transform:translateY(1px)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
 .grid{display:grid;gap:12px}
-@media(min-width:860px){.grid2{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+
+label{display:block;margin:8px 4px 4px;font-size:14px;font-weight:700;color:var(--sub)}
+.input,select{width:100%;font:600 17px/1.4 inherit;border:1.6px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.input::placeholder{color:#9fb0bf}
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.pillBtn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:900;font-size:14px}
-.pillBtn.on{border-color:#0f3a5a;background:#f1f7ff}
+.pill{border:1.6px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-weight:800;cursor:pointer}
+.pill.on{border-color:var(--blue);background:#eef6ff}
+.btn{width:100%;border:0;border-radius:12px;padding:14px 16px;margin-top:10px;
+  background:var(--btn);color:#fff;font-weight:900;font-size:18px}
+.btn:active{transform:translateY(1px)}
+.small{font-size:12px;color:#b22;margin-top:4px;display:none}
 
-/* 結果ボード */
-.section{display:grid;gap:12px;margin-top:14px}
-@media(min-width:980px){.board{grid-template-columns:360px 1fr}}
-.kv{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center}
-.mon{width:88px;height:88px;border-radius:14px;border:1px solid var(--line);display:grid;place-items:center;
-  background:
-   radial-gradient(100% 100% at 50% 50%,#fff 0,#fff 62%,#f8f7ed 63%,#fff 75%),
-   conic-gradient(from 0turn at 50% 50%, #ffd159 0turn, #ffe89b .2turn, #ffd159 .4turn, #ffd159);
-  font-size:34px;color:#0f3a5a;font-weight:900; position:relative;
-}
-.mon i{position:absolute; top:-8px; right:-6px; width:22px;height:16px; background:linear-gradient(180deg,#ffe9a3,#ffd159); border-radius:3px 3px 0 0; box-shadow:0 1px 0 #e8b94a inset}
-dl{margin:0} dt{color:var(--mut);font-size:12px} dd{margin:0 0 6px 0;font-size:18px}
-.badges{display:flex;gap:8px;flex-wrap:wrap}
-.badge{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:12px;background:#f6fbff}
-
-/* ステータスバー */
-.stat{display:grid;grid-template-columns:120px 1fr 56px;gap:12px;align-items:center;margin:10px 0}
-.bar{height:16px;background:#edf5ff;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
-.fill{height:100%;width:0;transition:width .45s ease;background:linear-gradient(90deg,#a8d5ff,#6db6ff)}
-.pct{text-align:right;font-variant-numeric:tabular-nums}
-
-/* 6指標 */
-.six{display:grid;gap:10px}
-.row{display:grid;grid-template-columns:110px 1fr 44px;gap:10px;align-items:center}
-.name{color:var(--mut);font-size:13px}
-.thin{height:12px;background:#f4f8ff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.tfill{height:100%;width:0;transition:width .5s ease;background:linear-gradient(90deg,#9ad3ff,#f1c85b)}
-
-/* タブ */
-.tabs{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
-.tab{flex:1 1 120px;text-align:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:900;cursor:pointer}
-.tab.on{border-color:#0f3a5a;background:#eef6ff}
+.tabs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.tab{flex:1 1 140px;text-align:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font-weight:900}
+.tab.on{border-color:var(--blue);background:#eef6ff}
 .panel{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;margin-top:8px}
 
-/* 円グラフ（相性） */
-.ring{display:grid;place-items:center}
-.small{color:var(--mut);font-size:12px}
-.hint{border-left:3px solid var(--gold2);padding:8px 10px;background:#fff8dc;border-radius:8px}
+.stat{display:grid;grid-template-columns:110px 1fr 56px;gap:10px;align-items:center;margin:10px 0}
+.bar{height:16px;background:#f0f6fd;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.fill{height:100%;width:0;transition:width .45s ease}
+.pct{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
 
-.footer{color:var(--mut);font-size:12px;text-align:center;margin:18px 0 6px}
-.toast{position:fixed;left:50%;top:10px;transform:translateX(-50%) translateY(-14px);
-  background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 12px;opacity:0;transition:.35s;font-weight:900;z-index:5}
-.toast.in{opacity:1;transform:translateX(-50%) translateY(0)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.badge{border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;background:#fbfdff}
 
-.flex2{display:grid;gap:12px}
-@media(min-width:980px){.flex2{grid-template-columns:1fr 1fr}}
-.kv2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.k{font-weight:900}
-
-.elem{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-weight:900}
-.e-wind{color:#0b3a52;background:linear-gradient(90deg,#eaf6ff,#f9fbff)}
-.e-fire{color:#552216;background:linear-gradient(90deg,#fff1ea,#fffaf6)}
-.e-earth{color:#3d341d;background:linear-gradient(90deg,#fbf6e6,#fffdf7)}
-.e-water{color:#083a3e;background:linear-gradient(90deg,#e9fbfd,#f7ffff)}
+.rank{display:grid;gap:10px}
+.item{display:grid;grid-template-columns:36px 1fr 56px;gap:10px;align-items:center;border:1px dashed #efe7c9;background:#fffdf5;padding:10px;border-radius:12px}
+.num{font-weight:900;color:#b48a2a;text-align:center}
+.cat{font-size:12px;color:var(--sub)}
+.kv{display:grid;grid-template-columns:92px 1fr;gap:12px;align-items:center}
+.mon{width:92px;height:92px;border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;
+  background:radial-gradient(100% 100% at 50% 50%,#fff 0,#fff 62%,#f3faff 63%,#fff 70%); font-size:34px;color:var(--ink);font-weight:900}
+.elem{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:900}
 .dot{width:8px;height:8px;border-radius:999px}
 .dot.wind{background:var(--wind)} .dot.fire{background:var(--fire)}
 .dot.earth{background:var(--earth)} .dot.water{background:var(--water)}
+.e-wind{color:#063b56;background:linear-gradient(90deg,#eaf6ff,#fbfeff)}
+.e-fire{color:#5a2719;background:linear-gradient(90deg,#fff0ec,#fff8f6)}
+.e-earth{color:#3f3721;background:linear-gradient(90deg,#faf6ea,#fffdf7)}
+.e-water{color:#083a3e;background:linear-gradient(90deg,#e9fbfd,#f7ffff)}
+.hint{border-left:3px solid var(--gold);padding:8px 10px;background:#fffbea;border-radius:8px}
+.footer{color:var(--sub);font-size:12px;text-align:center;margin:18px 0 6px}
+a.share{display:inline-block;margin-top:8px;border:1px solid var(--line);padding:8px 12px;border-radius:10px;font-weight:800;color:var(--blue);text-decoration:none;background:#fff}
 </style>
 </head>
 <body>
-<div id="toast" class="toast" aria-live="polite">生成しました。</div>
-
 <div class="wrap">
-  <div class="header">
-    <div class="brand">
-      <div class="crown" aria-hidden="true"></div>
-      <div>
-        <div class="sig">粋風録 — IKI CARD</div>
-        <div class="sub">世界樹×世界地図モード / Birthdate only</div>
-      </div>
-    </div>
-    <div class="lang">
-      <button id="jaBtn" class="on">日本語</button>
-      <button id="enBtn">EN</button>
-    </div>
-  </div>
+  <div class="hero"><div class="logo" aria-hidden="true"></div><h1>粋風録 — IKI CARD</h1></div>
+  <div class="note">世界樹×世界地図モード / Birthdate only（生年月日8桁でもOK）</div>
 
-  <div class="card grid grid2">
+  <!-- 入力 -->
+  <div class="card grid grid2" id="form">
     <div>
-      <p class="title" id="t_you">▶ あなた（生年月日だけでOK）</p>
-      <label id="t_birth">生年月日（必須）</label>
-      <!-- iPhone配慮：自由入力＋数値8桁/ハイフン対応 -->
-      <input id="dateA" class="input" inputmode="numeric" placeholder="19900504 / 1990-05-04 / 1990/05/04">
-      <label id="t_nick">呼び名（任意）</label>
-      <input id="nickA" class="input" placeholder="KenGo / 旅人（任意）">
-      <label id="t_gender">性別（任意・記号）</label>
-      <div class="pills" role="group" aria-label="gender">
-        <button class="pillBtn on" data-g="◎">◎</button>
-        <button class="pillBtn" data-g="♂">♂</button>
-        <button class="pillBtn" data-g="♀">♀</button>
-        <button class="pillBtn" data-g="⚧">⚧</button>
+      <label>生年月日（必須）</label>
+      <input id="dob" class="input" inputmode="numeric" autocomplete="off" placeholder="19900504 / 1990-05-04 / 1990/05/04">
+      <div id="err" class="small">日付の形式が正しくありません。</div>
+
+      <label>呼び名（任意）</label>
+      <input id="nick" class="input" placeholder="KenGo / 旅人（任意）">
+
+      <label>性別（任意・記号）</label>
+      <div class="pills">
+        <button class="pill on" data-g="◎">◎</button>
+        <button class="pill" data-g="♂">♂</button>
+        <button class="pill" data-g="♀">♀</button>
+        <button class="pill" data-g="⚧">⚧</button>
       </div>
 
-      <label id="t_story">物語（任意・雰囲気）</label>
-      <select id="storySel">
-        <option value="none">標準（粋）</option>
-        <option value="one">ワンピース</option>
-        <option value="ninja">NARUTO</option>
-        <option value="slayer">鬼滅の刃</option>
-        <option value="sphere">ドラゴンボール</option>
+      <label>物語（任意・雰囲気）</label>
+      <select id="story" class="input">
+        <option value="std">標準（粋）</option>
+        <option value="one">ONE PIECE</option>
+        <option value="nrt">NARUTO</option>
+        <option value="slay">鬼滅の刃</option>
+        <option value="ghb">ジブリ</option>
+        <option value="db">ドラゴンボール</option>
         <option value="dq">ドラゴンクエスト</option>
-        <option value="hxh">HUNTER×HUNTER</option>
-        <option value="disney">ディズニー</option>
-        <option value="sanrio">サンリオ</option>
-        <option value="marvel">マーベル</option>
-        <option value="ghibli">ジブリ</option>
-        <option value="history">歴史上の人物</option>
-        <option value="myth">天使／悪魔／神話</option>
+        <option value="hxh">H×H</option>
+        <option value="mvl">マーベル</option>
+        <option value="hist">歴史偉人</option>
       </select>
 
-      <button id="btnSelf" class="btn">ゲームスタート（診断）</button>
-      <div id="errA" class="small" style="color:#a2273b;display:none">日付の形式が正しくありません。</div>
+      <button id="go" class="btn">ゲームスタート（診断）</button>
     </div>
 
     <div>
-      <p class="title" id="t_pair">▶ 相性（任意）</p>
-      <label id="t_birth2">相手の生年月日（任意）</label>
-      <input id="dateB" class="input" inputmode="numeric" placeholder="19940322 など">
-      <label id="t_nick2">相手の呼び名（任意）</label>
+      <label>相手の生年月日（任意）</label>
+      <input id="dobB" class="input" inputmode="numeric" placeholder="19940322 など">
+      <label>相手の呼び名（任意）</label>
       <input id="nickB" class="input" placeholder="相棒 / 友人（任意）">
-      <label id="t_gender2">相手の性別（任意）</label>
-      <div class="pills" role="group" aria-label="genderB">
-        <button class="pillBtn on" data-gb="◎">◎</button>
-        <button class="pillBtn" data-gb="♂">♂</button>
-        <button class="pillBtn" data-gb="♀">♀</button>
-        <button class="pillBtn" data-gb="⚧">⚧</button>
-      </div>
-      <button id="btnBoth" class="btn" style="background:#146c43">診断＋相性を見る</button>
-      <div id="errB" class="small" style="color:#a2273b;display:none">日付の形式が正しくありません。</div>
+      <button id="match" class="btn" style="background:var(--btn2)">相性もみる</button>
     </div>
   </div>
 
-  <div id="board" class="section board" hidden>
-    <div>
-      <div class="card">
-        <p class="title" id="t_char">▶ しつらえ</p>
-        <div class="kv">
-          <div id="mon" class="mon">◎<i aria-hidden="true"></i></div>
-          <div>
-            <dl>
-              <dt id="t_name">名</dt><dd id="cName">—</dd>
-              <dt id="t_class">流儀</dt><dd id="cClass">—</dd>
-              <dt id="t_title">称</dt><dd id="cTitle">—</dd>
-            </dl>
-            <div id="badges" class="badges"></div>
+  <!-- 結果 -->
+  <div id="result" hidden>
+    <div class="card">
+      <div class="kv">
+        <div id="crest" class="mon">◎</div>
+        <div>
+          <div style="font-weight:900;font-size:18px" id="rname">—</div>
+          <div class="badges" id="badge"></div>
+          <div style="margin-top:6px">
+            <span id="elemTag" class="elem e-wind">
+              <span class="dot wind"></span><span id="elemText">WIND（風）</span>
+            </span>
           </div>
         </div>
-        <div style="margin-top:8px">
-          <span id="elemTag" class="elem e-wind"><span class="dot wind"></span><span id="elemText">WIND（風）</span></span>
-        </div>
-      </div>
-
-      <div class="card">
-        <p class="title" id="t_basic">▶ 基本</p>
-        <div class="stat"><div id="l_hp">安定（HP）</div><div class="bar"><div id="hp" class="fill"></div></div><div id="hpv" class="pct">—%</div></div>
-        <div class="stat"><div id="l_mp">視点（MP）</div><div class="bar"><div id="mp" class="fill"></div></div><div id="mpv" class="pct">—%</div></div>
-        <div class="stat"><div id="l_sp">機動（SP）</div><div class="bar"><div id="sp" class="fill"></div></div><div id="spv" class="pct">—%</div></div>
       </div>
     </div>
 
-    <div>
-      <div class="tabs">
-        <div id="tabS" class="tab on">指標</div>
-        <div id="tabE" class="tab">専用カード</div>
-        <div id="tabC" class="tab">相性</div>
-      </div>
+    <div class="card">
+      <div class="stat"><div>安定（HP）</div><div class="bar"><div id="hp" class="fill" style="background:linear-gradient(90deg,#d5c38e,#2a74db)"></div></div><div id="hpv" class="pct">—%</div></div>
+      <div class="stat"><div>視点（MP）</div><div class="bar"><div id="mp" class="fill" style="background:linear-gradient(90deg,#8fb5d6,#2a74db)"></div></div><div id="mpv" class="pct">—%</div></div>
+      <div class="stat"><div>機動（SP）</div><div class="bar"><div id="sp" class="fill" style="background:linear-gradient(90deg,#67c3a7,#23a37a)"></div></div><div id="spv" class="pct">—%</div></div>
+    </div>
 
-      <div id="panS" class="panel">
-        <p class="title" id="t_six">▶ 六つの気配（％）</p>
-        <div id="six" class="six"></div>
-        <div class="hint" style="margin-top:8px"><div id="hint" class="small">—</div></div>
-      </div>
+    <div class="tabs">
+      <div id="tabR" class="tab on">ランキング</div>
+      <div id="tabS" class="tab">6式（%）</div>
+      <div id="tabC" class="tab">シェア</div>
+    </div>
 
-      <div id="panE" class="panel" style="display:none">
-        <div class="flex2">
-          <div class="card">
-            <p class="title">▶ あだ名</p>
-            <div id="aka" style="font-size:20px;font-weight:900">—</div>
-            <div class="small" id="akaNote">—</div>
-          </div>
-          <div class="card">
-            <p class="title">▶ 専用わざ / アイテム</p>
-            <div id="combo" style="font-size:18px;font-weight:900">—</div>
-            <div class="small" id="comboNote">—</div>
-          </div>
-        </div>
-        <div class="flex2">
-          <div class="card">
-            <p class="title">▶ こういうの気をつけて</p>
-            <ul id="care" style="margin:6px 0 0 18px;padding:0"></ul>
-          </div>
-          <div class="card">
-            <p class="title">▶ 人と違う特徴</p>
-            <div id="uniq" class="kv2">
-              <div><span class="k">強み</span><div id="uStrong">—</div></div>
-              <div><span class="k">出方</span><div id="uShow">—</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <p class="title">▶ 偉人OSマッチ（雰囲気が近い）</p>
-          <div id="greats"></div>
-          <div class="small">※歴史考証ではなく「OSの雰囲気の近さ」推定。</div>
-        </div>
-        <div class="card">
-          <button id="shareBtn" class="btn" style="background:#0b5ed7">結果をシェア</button>
-        </div>
-      </div>
+    <div id="panR" class="panel">
+      <p class="hint" id="storyLine" style="margin-top:0">—</p>
+      <div id="rank" class="rank"></div>
+    </div>
 
-      <div id="panC" class="panel" style="display:none">
-        <p class="title">▶ 縁の環</p>
-        <div class="ring">
-          <svg id="ring" width="240" height="240" viewBox="0 0 240 240">
-            <circle cx="120" cy="120" r="90" fill="none" stroke="#eef2f8" stroke-width="10"/>
-            <path id="arc" d="" stroke="url(#g)" stroke-width="10" fill="none" stroke-linecap="round"/>
-            <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="#6db6ff"/><stop offset="100%" stop-color="#f1c85b"/></linearGradient></defs>
-            <text id="score" x="120" y="129" text-anchor="middle" font-size="26" font-family="Inter,system-ui" fill="#14202e" font-weight="900">--%</text>
-          </svg>
-        </div>
-        <div class="small" id="pairText" style="margin-top:8px">—</div>
-      </div>
+    <div id="panS" class="panel" style="display:none">
+      <div id="sixList"></div>
+    </div>
+
+    <div id="panC" class="panel" style="display:none">
+      <a id="share" class="share" href="#" target="_blank" rel="noopener">結果をシェア</a>
+      <div class="note">URLに生年月日を含みません。数字のみの安全設計。</div>
     </div>
   </div>
 
-  <div class="footer">© KenGo System — 人は円と風。核はゴム。世界樹は中に、地図は外に。</div>
+  <div class="footer">© KenGo System — 世界樹に風、地図に円。追い風でいこう。</div>
 </div>
 
 <script>
-/* ===== 多言語（簡易） ===== */
-const L = {
-  ja:{
-    you:"▶ あなた（生年月日だけでOK）", pair:"▶ 相性（任意）",
-    birth:"生年月日（必須）", nick:"呼び名（任意）", nick2:"相手の呼び名（任意）",
-    birth2:"相手の生年月日（任意）", gen:"ゲームスタート（診断）", gen2:"診断＋相性を見る",
-    g:"性別（任意・記号）", g2:"相手の性別（任意）", story:"物語（任意・雰囲気）",
-    badDate:"日付の形式が正しくありません。", char:"▶ しつらえ", name:"名", cls:"流儀", ttl:"称",
-    basic:"▶ 基本", hp:"安定（HP）", mp:"視点（MP）", sp:"機動（SP）",
-    tabS:"指標", tabE:"専用カード", tabC:"相性", six:"▶ 六つの気配（％）",
-    pair:(a,b,p)=>`${a} × ${b} は <b>${p}%</b>。— 合わせ方は「間」。高い日は歩幅が勝手に揃う。`,
-    bars:["円","風","核","間","和","返"],
-    hints:[
-      "円が高い。拠り所を自分に置けば景色が澄む。",
-      "風が良い。まず一歩、流れは後から整う。",
-      "核が堅牢。折れぬ前提で設計を。",
-      "間が美しい。速度より“間合”。",
-      "和が広い。場の通訳が似合う。",
-      "返が速い。痛み→糧の反転が得意。"
-    ],
-    elems:{
-      wind:{name:"WIND（風）",desc:"軽やかに場を動かす追い風体質。まず一歩、空気が変わる。"},
-      fire:{name:"FIRE（火）",desc:"熱で突破し反転力が高い。勢いを一拍で制御すると最強。"},
-      earth:{name:"EARTH（地）",desc:"核と円が強く、場の柱。丁寧に置けば全員が安心する。"},
-      water:{name:"WATER（水）",desc:"和と循環で整える。翻訳と調停が武器。"}
-    },
-    toasts:["生成しました。","相性を更新しました。","クリップボードにコピーしました。","共有しました。"]
-  },
-  en:{
-    you:"▶ You (Birthdate only is fine)", pair:"▶ Compatibility (optional)",
-    birth:"Birthdate (required)", nick:"Nickname (optional)", nick2:"Partner nickname (optional)",
-    birth2:"Partner birthdate (optional)", gen:"Start (Diagnose)", gen2:"Diagnose + Match",
-    g:"Gender (optional, symbol)", g2:"Partner gender (optional)", story:"Story (optional flavor)",
-    badDate:"Invalid date format.", char:"▶ Character", name:"Name", cls:"Class", ttl:"Title",
-    basic:"▶ Basics", hp:"HP (Stability)", mp:"MP (Top View)", sp:"SP (Mobility)",
-    tabS:"Status", tabE:"Special", tabC:"Compatibility", six:"▶ Six Indicators (%)",
-    pair:(a,b,p)=>`${a} × ${b} : <b>${p}%</b> — Mind the interval; on high days strides sync by themselves.`,
-    bars:["Circle","Wind","Core","Interval","Harmony","Return"],
-    elems:{
-      wind:{name:"WIND",desc:"Light starter who shifts air quickly. Step first; flow follows."},
-      fire:{name:"FIRE",desc:"Breakthrough by heat and reversal. Add one beat to master power."},
-      earth:{name:"EARTH",desc:"Strong core & circle; becomes the pillar. Calm placement brings safety."},
-      water:{name:"WATER",desc:"Harmonizer; cycles and connects. Translation & mediation are weapons."}
-    },
-    toasts:["Card generated.","Pair updated.","Copied to clipboard.","Shared."]
-  }
-};
-let JA = (navigator.language||"ja").toLowerCase().startsWith("ja");
+/* ===== 小さく堅実なユーティリティ ===== */
 const $=id=>document.getElementById(id);
-function T(){ const t = JA?L.ja:L.en;
-  $("t_you").textContent=t.you; $("t_pair").textContent=t.pair;
-  $("t_birth").textContent=t.birth; $("t_birth2").textContent=t.birth2;
-  $("t_nick").textContent=t.nick; $("t_nick2").textContent=t.nick2;
-  $("btnSelf").textContent=t.gen; $("btnBoth").textContent=t.gen2;
-  $("t_char").textContent=t.char; $("t_name").textContent=t.name;
-  $("t_class").textContent=t.cls; $("t_title").textContent=t.ttl;
-  $("t_basic").textContent=t.basic; $("l_hp").textContent=t.hp;
-  $("l_mp").textContent=t.mp; $("l_sp").textContent=t.sp;
-  $("tabS").textContent=t.tabS; $("tabE").textContent=t.tabE; $("tabC").textContent=t.tabC;
-  $("t_six").textContent=t.six; $("t_gender").textContent=t.g; $("t_gender2").textContent=t.g2; $("t_story").textContent=t.story;
-}
-$("jaBtn").onclick=()=>{JA=true;T();$("jaBtn").classList.add("on");$("enBtn").classList.remove("on");};
-$("enBtn").onclick=()=>{JA=false;T();$("enBtn").classList.add("on");$("jaBtn").classList.remove("on");};
-if(!JA){$("enBtn").classList.add("on");$("jaBtn").classList.remove("on");} T();
-
-/* ===== 性別ピル ===== */
-let G="◎", GB="◎";
-document.querySelectorAll('[data-g]').forEach(btn=>{
-  btn.onclick=()=>{document.querySelectorAll('[data-g]').forEach(b=>b.classList.remove("on")); btn.classList.add("on"); G=btn.getAttribute("data-g");};
-});
-document.querySelectorAll('[data-gb]').forEach(btn=>{
-  btn.onclick=()=>{document.querySelectorAll('[data-gb]').forEach(b=>b.classList.remove("on")); btn.classList.add("on"); GB=btn.getAttribute("data-gb");};
-});
-
-/* ===== 日付処理（iPhone配慮の自由入力） ===== */
+let G="◎"; document.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-g]').forEach(x=>x.classList.remove('on'));b.classList.add('on');G=b.dataset.g;});
 function parseDate(v){
   if(!v) return null; v=v.trim();
-  if(/^\d{8}$/.test(v)){const y=+v.slice(0,4),m=+v.slice(4,6)-1,d=+v.slice(6,8);
-    const dt=new Date(Date.UTC(y,m,d)); if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m&&dt.getUTCDate()===d)return dt;}
+  if(/^\d{8}$/.test(v)){ const y=+v.slice(0,4),m=+v.slice(4,6)-1,d=+v.slice(6,8);
+    const dt=new Date(Date.UTC(y,m,d)); if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m&&dt.getUTCDate()===d) return dt; }
   const vv=v.replace(/\//g,"-"); if(/^\d{4}-\d{2}-\d{2}$/.test(vv)){
     const [y,m,d]=vv.split("-").map(Number); const dt=new Date(Date.UTC(y,m-1,d));
-    if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m-1&&dt.getUTCDate()===d)return dt;}
+    if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===(m-1)&&dt.getUTCDate()===d) return dt;}
   return null;
 }
-function rngFromDate(dt){ let s = dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate();
-  s = (s ^ 0x9e3779b9)>>>0; return ()=> (s = Math.imul(1664525,s)+1013904223>>>0) / 2**32; }
+function rngFromDate(dt){ let s=dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); s=(s^0x9e3779b9)>>>0; return ()=> (s=Math.imul(1664525,s)+1013904223>>>0)/4294967296; }
 
-const KEYS_JA=["円","風","核","間","和","返"], KEYS_EN=["Circle","Wind","Core","Interval","Harmony","Return"];
+/* 6指標（円/風/核/間/和/返） */
+const KEYS=["円","風","核","間","和","返"];
 function six(dt){
   const R=rngFromDate(dt), w=dt.getUTCDay(), m=dt.getUTCMonth()+1;
   return Array.from({length:6},(_,i)=>{
-    const base=0.52+R()*0.30;
+    const base=0.50+R()*0.30;
     const twist=((w+i)%3===0?0.05:0)+((m%6===i?0.03:0))+(R()-0.5)*0.06;
     return Math.max(0,Math.min(1,base+twist))*100|0;
   });
@@ -397,30 +197,149 @@ function base(s){ return {
   mp:Math.round(s[3]*0.5+s[4]*0.3+s[2]*0.2),
   sp:Math.round(s[1]*0.6+s[3]*0.25+s[4]*0.15)
 };}
-
-/* ===== 四大エレメント推定 ===== */
 function elementFromSix(s){
-  const score = {
-    wind: s[1]*0.6 + s[3]*0.4,
-    fire: s[5]*0.6 + s[1]*0.4,
-    earth: s[2]*0.6 + s[0]*0.4,
-    water: s[4]*0.7 + s[0]*0.3
+  const score={wind:s[1]*0.6+s[3]*0.4, fire:s[5]*0.6+s[1]*0.4, earth:s[2]*0.6+s[0]*0.4, water:s[4]*0.7+s[0]*0.3};
+  return Object.entries(score).sort((a,b)=>b[1]-a[1])[0][0];
+}
+const ETXT={wind:["WIND（風）","e-wind","wind"], fire:["FIRE（火）","e-fire","fire"], earth:["EARTH（地）","e-earth","earth"], water:["WATER（水）","e-water","water"]};
+
+/* 物語テンプレ：おすすめ表示（OS→提案）*/
+const STORY = {
+  std:{line:e=>`世界樹座標：<b>${e}</b>気質。世界地図に“追い風”を描こう。`,
+       offers:e=>[{t:"世界樹の枝章（金冠）",c:"最上位ギフト。器が満ちた日に降りる印。"},
+                   {t:"円の星バッジ",c:"自分へ還る合図。迷ったら掌を円に。"}]},
+  one:{line:e=>`ONE PIECEモード：<b>${e}</b>タイプ。`,
+       offers:e=>{
+         const map={wind:["あなたに合う悪魔の実","ゴムゴム（自由変形）"],
+                    fire:["あなたに合う悪魔の実","メラメラ（反転突破）"],
+                    earth:["あなたに合う悪魔の実","グラグラ（大地の柱）"],
+                    water:["あなたに合う悪魔の実","スナスナ（流転調停）"]};
+         const [a,b]=map[e.split("（")[0].toLowerCase()]||map.wind;return[{t:a,c:b}];
+       }},
+  nrt:{line:e=>`NARUTOモード：<b>${e}</b>気質。`,
+       offers:e=>[{t:"習得しやすい術",c:({wind:"風遁：真空波",fire:"火遁：豪火球",earth:"土遁：土流壁",water:"水遁：水陣壁"})[e.split("（")[0].toLowerCase()]||"体術：間合一拍"}]},
+  slay:{line:e=>`鬼滅モード：<b>${e}</b>体質。`,offers:e=>[{t:"合う呼吸",c:({wind:"風の呼吸",fire:"炎の呼吸",earth:"岩の呼吸",water:"水の呼吸"})[e.split("（")[0].toLowerCase()]||"日の呼吸（基）"}]},
+  ghb:{line:e=>`ジブリモード：<b>${e}</b>気配。`,offers:e=>[{t:"心の守り神",c:({wind:"トトロの風",fire:"カルシファーの火",earth:"樹の御守",water:"海の精"})[e.split("（")[0].toLowerCase()]||"風の谷"}]},
+  db:{line:e=>`ドラゴンボール：<b>${e}</b>寄り。`,offers:e=>[{t:"得意になりやすい技",c:({wind:"舞空術／気円斬",fire:"界王拳／かめはめ波（瞬発）",earth:"元気玉（貯め）",water:"残像拳／気の感知"})[e.split("（")[0].toLowerCase()]||"気のコントロール"}]},
+  dq:{line:e=>`ドラクエ：<b>${e}</b>資質。`,offers:e=>[{t:"職業適性",c:({wind:"レンジャー",fire:"バトルマスター",earth:"パラディン",water:"賢者"})[e.split("（")[0].toLowerCase()]||"旅芸人"}]},
+  hxh:{line:e=>`H×H：<b>${e}</b>系統に近い。`,offers:e=>[{t:"念系統",c:({wind:"操作系",fire:"強化系",earth:"具現化系",water:"放出系"})[e.split("（")[0].toLowerCase()]||"特質系"}]},
+  mvl:{line:e=>`MARVEL：<b>${e}</b>雰囲気。`,offers:e=>[{t:"相性の良い資質",c:({wind:"スパイディの機動",fire:"ヒューマントーチの熱",earth:"キャプテンの芯",water:"ドクターの調停"})[e.split("（")[0].toLowerCase()]||"Xの特質"}]},
+  hist:{line:e=>`歴史偉人OS：<b>${e}</b>帯。`,offers:e=>[{t:"近いOS（雰囲気）",c:({wind:"空海／ライト兄弟",fire:"織田信長／坂本龍馬",earth:"徳川家康／ナイチンゲール",water:"聖徳太子／リンカーン"})[e.split("（")[0].toLowerCase()]||"紫式部"}]}
+};
+
+/* ランキング（人以外中心＋偉人） */
+function buildRanking(elem){
+  const base={
+    wind:[["航海を導く学者","ONE PIECE",91],["風を読む旅人","DQ",88],["空の機動兵","MARVEL",86],["森のトトロ的安息","Ghibli",86],["共鳴する狐","Nature",85],["空海の発想","偉人",84]],
+    fire:[["返しで切り拓く闘士","MARVEL",90],["炎柱の型","鬼滅",89],["雷で流れを変える者","MARVEL",86],["龍の心（界王拳）","DB",86],["織田の起動力","偉人",85]],
+    earth:[["場の柱となる守人","DQ",90],["剣を極める相棒","ONE PIECE",87],["宮大工のような芯","Ghibli",86],["徳川の安定設計","偉人",85],["巨岩の呼吸","鬼滅",85]],
+    water:[["湯屋の現場監督力","Ghibli",90],["調停する賢者","DQ",88],["水遁の陣","NARUTO",87],["聖徳の翻訳力","偉人",86],["潮目を変える人魚","Myth",85]]
   };
-  const key = Object.entries(score).sort((a,b)=>b[1]-a[1])[0][0];
-  return key;
+  return (base[elem]||base.wind);
 }
 
-/* ===== 偉人OS（雰囲気マッチ）簡易テーブル ===== */
-const GREATS = [
-  {name:"徳川家康", tag:"安定×間", k:[0,1]}, {name:"織田信長", tag:"火×返", k:[5,1]},
-  {name:"豊臣秀吉", tag:"和×風", k:[4,1]}, {name:"坂本龍馬", tag:"風×円", k:[1,0]},
-  {name:"紫式部",   tag:"間×和", k:[3,4]}, {name:"宮本武蔵", tag:"核×間", k:[2,3]}
-];
+/* ===== 画面束ね ===== */
+function animateBars(hp,mp,sp){
+  $("hp").style.width=hp+"%"; $("hpv").textContent=hp+"%";
+  $("mp").style.width=mp+"%"; $("mpv").textContent=mp+"%";
+  $("sp").style.width=sp+"%"; $("spv").textContent=sp+"%";
+}
+function badgesFromSix(s){
+  const arr=[]; s.forEach((v,i)=>{ if(v>=70) arr.push(KEYS[i]+"70+"); });
+  return arr.length?arr:["均整"];
+}
+function showSixList(s){
+  const wrap=document.createElement("div");
+  s.forEach((v,i)=>{
+    const row=document.createElement("div");
+    row.className="stat";
+    row.innerHTML=`<div>${KEYS[i]}</div>
+      <div class="bar"><div class="fill" style="width:${v}%;background:linear-gradient(90deg,#8fb5d6,#d6c28a)"></div></div>
+      <div class="pct">${v}%</div>`;
+    wrap.appendChild(row);
+  });
+  const host=$("sixList"); host.innerHTML=""; host.appendChild(wrap);
+}
 
-/* ===== 物語ごとの“専用わざ / アイテム”生成 ===== */
-function topIdxs(arr,n=2){return [...arr].map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v).slice(0,n).map(o=>o.i);}
-function pick(arr,seed){ return arr[Math.floor(seed()*arr.length)] }
+/* タブ */
+function showTab(key){
+  const tabs=[["tabR","panR"],["tabS","panS"],["tabC","panC"]];
+  tabs.forEach(([t,p])=>{ $(t).classList.remove("on"); $(p).style.display="none"; });
+  const cur = key==="S"?["tabS","panS"]:key==="C"?["tabC","panC"]:["tabR","panR"];
+  $(cur[0]).classList.add("on"); $(cur[1]).style.display="";
+}
+$("tabR").onclick=()=>showTab("R");
+$("tabS").onclick=()=>showTab("S");
+$("tabC").onclick=()=>showTab("C");
 
-const STORY = {
-  none:(s,elem,seed,ja=true)=>({
-    aka:`${["風眼","円歩","静芯","間合","
+/* メイン実行 */
+function run(coreOnly=false){
+  const dt=parseDate($("dob").value);
+  if(!dt){ $("err").style.display="block"; return; } else $("err").style.display="none";
+  const s=six(dt); const b=base(s);
+  const elemKey=elementFromSix(s); const [eText, eClass, eDot]=ETXT[elemKey];
+  // ヘッダ
+  $("result").hidden=false;
+  $("rname").textContent = ($("nick").value.trim()||"名無し") + `（${G}）`;
+  $("crest").textContent = G;
+  $("badge").innerHTML=""; badgesFromSix(s).forEach(x=>{const t=document.createElement("span");t.className="badge";t.textContent=x;$("badge").appendChild(t);});
+  $("elemTag").className="elem "+eClass; $("elemTag").innerHTML = `<span class="dot ${eDot}"></span><span id="elemText">${eText}</span>`;
+  animateBars(b.hp,b.mp,b.sp);
+  showSixList(s);
+
+  // 物語ライン＆ランキング
+  const elemName=eText; const storyKey=$("story").value;
+  const story=STORY[storyKey]||STORY.std;
+  $("storyLine").innerHTML = story.line(elemName);
+  const offers=story.offers(elemName);
+  const rk = buildRanking(elemKey);
+  const host=$("rank"); host.innerHTML="";
+  // 上位にオファー1〜2個
+  offers.forEach((o,ix)=>{
+    const div=document.createElement("div"); div.className="item";
+    div.innerHTML=`<div class="num">★</div><div><div style="font-weight:900">${o.t}</div><div class="cat">${o.c}</div></div><div></div>`;
+    host.appendChild(div);
+  });
+  rk.forEach(([title,cat,pct],i)=>{
+    const div=document.createElement("div"); div.className="item";
+    div.innerHTML=`<div class="num">${i+1}</div><div><div style="font-weight:900">${title}</div><div class="cat">${cat}</div></div><div class="pct">${pct}%</div>`;
+    host.appendChild(div);
+  });
+
+  // シェア
+  const params = new URLSearchParams({n:($("nick").value||""), g:G, st:storyKey});
+  $("share").href = location.origin+location.pathname+"#"+btoa(unescape(encodeURIComponent(params.toString())));
+  // 相性（任意）
+  if(!coreOnly && $("dobB").value.trim()){
+    const dtB=parseDate($("dobB").value.trim()); if(dtB){
+      const sB=six(dtB);
+      const score = 60 + Math.round( ( (s[0]-sB[0])**2 + (s[1]-sB[1])**2 + (s[2]-sB[2])**2 + (s[3]-sB[3])**2 + (s[4]-sB[4])**2 + (s[5]-sB[5])**2 )**-0.5 * 12000 );
+      const div=document.createElement("div"); div.className="item"; div.style.borderColor="#d7f7f2"; div.style.background="#f6fffd";
+      const mate=($("nickB").value.trim()||"相棒");
+      div.innerHTML=`<div class="num">∞</div><div><div style="font-weight:900">${($("nick").value||"名無し")} × ${mate}</div><div class="cat">縁の環（推定）</div></div><div class="pct">${Math.max(65,Math.min(98,score))}%</div>`;
+      $("rank").prepend(div);
+    }
+  }
+  // 結果へスクロール（iPhoneでも確実に）
+  setTimeout(()=>{document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});},20);
+}
+
+/* ボタン */
+$("go").onclick=()=>run(true);
+$("match").onclick=()=>run(false);
+
+/* ハッシュ復元（シェア受け取り） */
+(function restore(){
+  if(location.hash.length>1){
+    try{
+      const txt=decodeURIComponent(escape(atob(location.hash.slice(1))));
+      const qs=new URLSearchParams(txt);
+      $("nick").value=qs.get("n")||"";
+      G=qs.get("g")||"◎"; document.querySelectorAll('[data-g]').forEach(b=>{b.classList.toggle('on', b.dataset.g===G)});
+      $("story").value=qs.get("st")||"std";
+    }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
