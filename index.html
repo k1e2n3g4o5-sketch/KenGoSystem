@@ -1,420 +1,329 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KenGo式｜粋風診断（生年月日だけでOK）</title>
-<meta name="theme-color" content="#f9fcff">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>粋風録 – IKI CARD（KenGo式 / Birthdate only）</title>
+<meta name="theme-color" content="#f7fbff" />
 <style>
 :root{
-  /* 快晴パレット */
-  --sky:#f3faff; --cloud:#ffffff; --ink:#0e2233; --mut:#5c6b77;
-  --line:#e6eef5; --gold:#caa536; --sun:#ffe79a; --sea:#8cc7ff;
-  --ok:#2c9d7a; --rose:#b3486b;
-  /* エレメント色 */
-  --wind:#4bb4e6; --fire:#ee7a57; --earth:#9b8a66; --water:#33c0c9;
+  --bg:#f7fbff; --card:#ffffff; --ink:#0e2233; --mut:#6b7b8d; --line:#e6eef6;
+  --primary:#0b77ff; --gold:#c59b2b; --ok:#12b886; --accent:#4f46e5;
+  --wind:#34a0ff; --fire:#ff6b6b; --earth:#b08968; --water:#2ec4b6;
 }
-/* ベース */
 *{box-sizing:border-box}
-html,body{margin:0;background:linear-gradient(180deg,var(--sky),#ffffff);color:var(--ink);
-  font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Inter",system-ui,-apple-system,sans-serif;letter-spacing:.2px}
-.wrap{max-width:980px;margin:0 auto;padding:18px 14px}
-h1{margin:0 0 8px;font-size:22px;letter-spacing:.6px}
-.sub{color:var(--mut);font-size:12px}
-.header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px}
-.logo{display:flex;align-items:center;gap:10px}
-.sun{width:18px;height:18px;border-radius:50%;background:radial-gradient(100% 100% at 35% 35%,#fff 0,var(--sun) 60%,#f7d76a 100%);box-shadow:0 0 0 3px rgba(255,231,154,.35)}
-.kintsugi{width:2px;height:22px;background:linear-gradient(180deg,transparent,var(--gold) 25%,transparent 75%);border-radius:2px}
-.lang button{border:0;background:none;color:var(--mut);font-weight:800;cursor:pointer;padding:2px 6px;border-radius:8px}
-.lang .on{color:var(--ink);background:#eef7ff}
-
-/* カード */
-.card{background:var(--cloud);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 6px 18px rgba(13,55,90,.06)}
-.grid{display:grid;gap:12px}
-@media(min-width:860px){.grid2{grid-template-columns:1fr 1fr}}
-.title{font-size:13px;color:var(--mut);margin:0 0 8px 2px}
-label{display:block;margin:6px 2px 4px;font-weight:700;font-size:14px}
-.input{width:100%;font-size:18px;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:#fff}
-.input::placeholder{color:#9fb0bf}
-.btn{width:100%;border:0;border-radius:12px;padding:14px 16px;margin-top:10px;
-  background:linear-gradient(180deg,#ffffff,#f2f8ff);color:#0e2a44;font-weight:900;font-size:17px;border:1.5px solid #0e2a44}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
+  font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN","Arial",sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+h1{margin:0 0 6px;font-size:20px}
+small{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.section{display:grid;gap:12px}
+.btn{width:100%;border:0;border-radius:12px;padding:14px 16px;font-weight:800;font-size:16px;cursor:pointer;
+  background:var(--ink);color:#fff}
 .btn:active{transform:translateY(1px)}
-.small{font-size:12px;color:var(--mut)}
+.input{width:100%;font-size:18px;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.input::placeholder{color:#a8b3c4}
+.note{font-size:12px;color:var(--mut)}
 
-/* 結果 */
-.section{display:grid;gap:12px;margin-top:14px}
-@media(min-width:980px){.board{grid-template-columns:380px 1fr}}
-.kv{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:center}
-.mon{width:84px;height:84px;border-radius:14px;border:1px solid var(--line);display:grid;place-items:center;
-  background:radial-gradient(100% 100% at 50% 45%,#fff 0,#fff 62%,#eef7ff 63%,#fff 72%);font-size:30px;color:#0b3a52;font-weight:900}
-.badges{display:flex;gap:8px;flex-wrap:wrap}
-.badge{border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;background:#fbfdff}
-.elem{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:900;margin-top:6px}
+.kv{display:grid;grid-template-columns:92px 1fr;gap:12px;align-items:center}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12px;background:#f6fbff}
+
+.flex2{display:grid;gap:12px}
+@media(min-width:900px){.flex2{grid-template-columns:1fr 1fr}}
+
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{flex:1 1 140px;text-align:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font-weight:800}
+.tab.on{border-color:var(--primary);box-shadow:0 0 0 2px #dcebff inset}
+
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:900;margin-right:6px}
 .dot{width:8px;height:8px;border-radius:999px}
-.e-wind{color:#053a52;background:linear-gradient(90deg,#e9f8ff,#ffffff)} .dot.wind{background:var(--wind)}
-.e-fire{color:#4a1f14;background:linear-gradient(90deg,#fff2ee,#ffffff)} .dot.fire{background:var(--fire)}
-.e-earth{color:#3e371f;background:linear-gradient(90deg,#faf6ea,#ffffff)} .dot.earth{background:var(--earth)}
-.e-water{color:#063a3b;background:linear-gradient(90deg,#e9fcfe,#ffffff)} .dot.water{background:var(--water)}
+.dot.wind{background:var(--wind)} .dot.fire{background:var(--fire)}
+.dot.earth{background:var(--earth)} .dot.water{background:var(--water)}
 
-/* ステータス：図形 */
-.figure{display:grid;gap:12px}
-.figCard{border:1px solid var(--line);border-radius:16px;padding:12px;background:#ffffff}
-.figTitle{font-size:13px;color:var(--mut);margin-bottom:6px}
-.svgWrap{display:grid;place-items:center}
-svg{max-width:100%;height:auto}
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.leg{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:#f6fbff;font-size:12px}
+.stat{display:grid;grid-template-columns:96px 1fr 56px;gap:10px;align-items:center;margin:6px 0}
+.bar{height:12px;background:#edf4ff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fill{height:100%;width:0;transition:width .45s ease;background:linear-gradient(90deg,#9ac7ff,#0b77ff)}
+.pct{text-align:right;font-variant-numeric:tabular-nums}
 
-/* タブ（物語セクションを下側に） */
-.tabs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.tab{flex:1 1 140px;text-align:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font-weight:900}
-.tab.on{border-color:#0e2a44;background:#f2f8ff}
-.panel{border:1px solid var(--line);border-radius:16px;padding:12px;background:#ffffff;margin-top:8px}
+/* 惑星ビジュアル */
+.space{display:grid;place-items:center}
+svg{max-width:100%}
+.planet{filter:drop-shadow(0 2px 4px rgba(0,0,0,.08))}
 
-/* 偉人マッチ（3人ドン） */
-.heroes{display:grid;gap:8px}
-@media(min-width:760px){.heroes{grid-template-columns:1fr 1fr 1fr}}
-.hero{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff}
-.pct{font-variant-numeric:tabular-nums;font-weight:900}
+/* カード見出し */
+.h{font-size:13px;color:var(--mut);margin:0 0 6px}
 
-/* トースト */
+.hero{display:flex;gap:12px;align-items:center}
+.hero img{width:54px;height:54px;border-radius:12px;object-fit:cover;border:1px solid var(--line);background:#fff}
+.hero .t{font-weight:900}
+.hero .s{font-size:12px;color:var(--mut)}
+
 .toast{position:fixed;left:50%;top:10px;transform:translateX(-50%) translateY(-14px);
-  background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;opacity:0;transition:.35s;font-weight:800;z-index:5;box-shadow:0 10px 24px rgba(0,0,0,.06)}
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;opacity:0;transition:.35s;font-weight:800;z-index:5}
 .toast.in{opacity:1;transform:translateX(-50%) translateY(0)}
-.footer{color:var(--mut);font-size:12px;text-align:center;margin:18px 0 6px}
-.share{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
-.shbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-weight:900;cursor:pointer}
 </style>
 </head>
 <body>
-<div id="toast" class="toast" aria-live="polite">生成しました。</div>
-
-<div class="wrap">
-  <div class="header">
-    <div class="logo">
-      <div class="sun" aria-hidden="true"></div>
-      <h1>粋風診断 <span class="sub">— 生年月日だけでOK（KenGo式）</span></h1>
-      <div class="kintsugi" aria-hidden="true"></div>
-    </div>
-    <div class="lang">
-      <button id="jaBtn" class="on">JP</button>
-      <button id="enBtn">EN</button>
-    </div>
+<div id="toast" class="toast">生成しました。</div>
+<div class="wrap section">
+  <div>
+    <h1>粋風録 – IKI CARD</h1>
+    <small>世界樹 × 世界地図モード / 生年月日だけでOK</small>
   </div>
 
   <!-- 入力 -->
-  <div class="card grid grid2">
-    <div>
-      <p class="title" id="t_you">▶ あなた（生年月日だけでOK）</p>
-      <label id="t_birth">生年月日（必須）</label>
-      <input id="dateA" class="input" inputmode="numeric" placeholder="19900504 / 1990-05-04 / 1990/05/04">
-      <button id="btnSelf" class="btn">診断スタート</button>
-      <div id="errA" class="small" style="color:#b02a3a;display:none">日付の形式が正しくありません。</div>
-      <div class="small" style="margin-top:6px">※ カレンダーを開かず、数字だけでOK（iPhone最適化）</div>
-    </div>
-    <div>
-      <p class="title">▶ 説明</p>
-      <div class="small">結果は「円に三角」「円に六角」で表示。<br>下の「物語タブ」は結果の下で好きに切替できます。</div>
+  <div class="card">
+    <div class="section">
+      <label class="h">生年月日（必須）</label>
+      <input id="dob" class="input" inputmode="numeric" placeholder="19900504 / 1990-05-04 / 1990/05/04" />
+      <button id="go" class="btn">診断スタート</button>
+      <div class="note">※ カレンダーは開かず、数字だけでOK（iPhone最適化）</div>
     </div>
   </div>
 
-  <!-- 結果 -->
-  <div id="board" class="section board" hidden>
-    <div>
-      <!-- プロフィール -->
-      <div class="card">
-        <p class="title">▶ しつらえ</p>
-        <div class="kv">
-          <div id="mon" class="mon">◎</div>
-          <div>
-            <div style="font-weight:900;font-size:18px" id="cName">—</div>
-            <div class="badges" id="badges"></div>
-            <div id="elem" class="elem e-wind"><span class="dot wind"></span><span id="elemText">WIND（風）</span></div>
-          </div>
-        </div>
-        <div class="small" id="colorLine" style="margin-top:6px">—</div>
-        <div class="small" id="mythoLine" style="margin-top:4px">—</div>
-
-        <div class="share">
-          <button class="shbtn" id="copyBtn">結果をコピー</button>
-          <button class="shbtn" id="shareBtn">共有</button>
+  <!-- 結果：しつらえ -->
+  <div id="board" class="card section" hidden>
+    <div class="kv">
+      <div>
+        <!-- 惑星図 -->
+        <div class="space">
+          <svg id="sky" viewBox="0 0 240 240" width="200" height="200" aria-label="planet chart">
+            <!-- 空円＆光冠 -->
+            <defs>
+              <radialGradient id="sun" cx="50%" cy="50%" r="60%">
+                <stop offset="0%" stop-color="#fff59e"/>
+                <stop offset="60%" stop-color="#ffd86a"/>
+                <stop offset="100%" stop-color="#ffb84d"/>
+              </radialGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle cx="120" cy="120" r="92" fill="none" stroke="#eaf2ff" stroke-width="10"/>
+            <circle cx="120" cy="120" r="14" fill="url(#sun)" filter="url(#glow)"/>
+            <!-- 惑星（風/火/地/水/円/返/和/間 のうち 6 を表示→KenGo式の6指標: 円/風/核/間/和/返） -->
+            <g id="planets"></g>
+          </svg>
         </div>
       </div>
-
-      <!-- 偉人 3人ドン -->
-      <div class="card">
-        <p class="title">▶ 歴史上の人格OS 整合性（3人）</p>
-        <div class="heroes" id="heroes"></div>
-        <div class="small" style="margin-top:6px">※ 歴史“考証”ではなく、OSの雰囲気整合。楽しむ用。</div>
+      <div>
+        <div class="pill"><span class="dot wind"></span><span id="elemText">WIND（風）</span></div>
+        <div class="badges" id="badges"></div>
+        <div class="stat"><div>円</div><div class="bar"><div id="b0" class="fill"></div></div><div id="p0" class="pct">--%</div></div>
+        <div class="stat"><div>風</div><div class="bar"><div id="b1" class="fill"></div></div><div id="p1" class="pct">--%</div></div>
+        <div class="stat"><div>核</div><div class="bar"><div id="b2" class="fill"></div></div><div id="p2" class="pct">--%</div></div>
+        <div class="stat"><div>間</div><div class="bar"><div id="b3" class="fill"></div></div><div id="p3" class="pct">--%</div></div>
+        <div class="stat"><div>和</div><div class="bar"><div id="b4" class="fill"></div></div><div id="p4" class="pct">--%</div></div>
+        <div class="stat"><div>返</div><div class="bar"><div id="b5" class="fill"></div></div><div id="p5" class="pct">--%</div></div>
       </div>
     </div>
 
-    <div>
-      <!-- 図形ステータス -->
-      <div class="figure">
-        <div class="figCard">
-          <div class="figTitle">円 × 三角（3軸：風／核／円）</div>
-          <div class="svgWrap"><svg id="triSVG" viewBox="0 0 260 260" width="260" height="260" aria-label="triangle stat">
-            <defs>
-              <radialGradient id="glowT" cx="50%" cy="45%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="70%" stop-color="#e8f4ff"/>
-                <stop offset="100%" stop-color="#ffffff"/>
-              </radialGradient>
-            </defs>
-            <circle cx="130" cy="130" r="110" fill="url(#glowT)" stroke="#e6eef5" stroke-width="2"/>
-            <polygon id="triBase" points="" fill="none" stroke="#d1e7ff" stroke-width="2"/>
-            <polygon id="triFill" points="" fill="rgba(76,175,255,.35)" stroke="#4bb4e6" stroke-width="2"/>
-            <g id="triLabels" font-size="12" fill="#35556b" font-weight="800"></g>
-          </svg></div>
-          <div class="legend">
-            <div class="leg"><span class="dot wind"></span>風</div>
-            <div class="leg"><span class="dot earth" style="background:#888"></span>核</div>
-            <div class="leg"><span class="dot earth"></span>円</div>
-          </div>
-        </div>
+    <!-- 歴史上の人物 3人 -->
+    <div class="card">
+      <div class="h">歴史上の人格OS 整合性（3人）</div>
+      <div id="hist"></div>
+    </div>
 
-        <div class="figCard">
-          <div class="figTitle">円 × 六角（6軸：円/風/核/間/和/返）</div>
-          <div class="svgWrap"><svg id="hexSVG" viewBox="0 0 300 300" width="300" height="300" aria-label="hex stat">
-            <defs>
-              <radialGradient id="glowH" cx="50%" cy="45%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="70%" stop-color="#eef8ff"/>
-                <stop offset="100%" stop-color="#ffffff"/>
-              </radialGradient>
-            </defs>
-            <circle cx="150" cy="150" r="126" fill="url(#glowH)" stroke="#e6eef5" stroke-width="2"/>
-            <polygon id="hexBase" points="" fill="none" stroke="#dfeaf5" stroke-width="2"/>
-            <polygon id="hexFill" points="" fill="rgba(202,165,54,.22)" stroke="#caa536" stroke-width="2"/>
-            <g id="hexLabels" font-size="12" fill="#35556b" font-weight="800"></g>
-          </svg></div>
-          <div class="legend" id="sixLegend"></div>
+    <!-- 物語タブ（下で切替） -->
+    <div class="tabs" id="tabs">
+      <div class="tab on" data-u="one">ONE PIECE</div>
+      <div class="tab" data-u="naru">NARUTO</div>
+      <div class="tab" data-u="db">ドラゴンボール</div>
+      <div class="tab" data-u="hxh">HUNTER×HUNTER</div>
+      <div class="tab" data-u="ghibli">ジブリ</div>
+      <div class="tab" data-u="marvel">MARVEL</div>
+      <div class="tab" data-u="myth">神話</div>
+    </div>
+
+    <div id="cardU" class="card">
+      <div class="h">物語カード</div>
+      <div class="hero">
+        <img id="uImg" alt="" />
+        <div>
+          <div id="uTitle" class="t">—</div>
+          <div id="uSub" class="s">—</div>
         </div>
       </div>
-
-      <!-- 下に物語タブ（選んで読む） -->
-      <div class="tabs" id="storyTabs"></div>
-      <div class="panel" id="storyPanel"></div>
+      <div style="margin-top:8px" id="uDesc">—</div>
     </div>
   </div>
-
-  <div class="footer">© KenGo System — 風は外に、円は内に。快晴でいこう。</div>
 </div>
 
 <script>
-/* ====== 言語 ====== */
-const L = {
-  ja:{
-    you:"▶ あなた（生年月日だけでOK）",
-    birth:"生年月日（必須）",
-    start:"診断スタート",
-    toast:"生成しました。"
-  },
-  en:{
-    you:"▶ You (Birthdate only)",
-    birth:"Birthdate (required)",
-    start:"Start",
-    toast:"Generated."
-  }
-};
-let JA=(navigator.language||"ja").toLowerCase().startsWith("ja");
+/* ========= 小さなユーティリティ ========= */
 const $=id=>document.getElementById(id);
-function setLang(){
-  const t=JA?L.ja:L.en;
-  $("t_you").textContent=t.you; $("t_birth").textContent=t.birth; $("btnSelf").textContent=t.start;
-}
-$("jaBtn").onclick=()=>{JA=true;setLang();$("jaBtn").classList.add("on");$("enBtn").classList.remove("on");};
-$("enBtn").onclick=()=>{JA=false;setLang();$("enBtn").classList.add("on");$("jaBtn").classList.remove("on");};
-setLang();
-
-/* ====== Utils ====== */
-function toast(msg){const n=$("toast"); n.textContent=msg; n.classList.add("in"); setTimeout(()=>n.classList.remove("in"),1400);}
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("in"); setTimeout(()=>t.classList.remove("in"),1200); }
 function parseDate(v){
   if(!v) return null; v=v.trim();
-  if(/^\d{8}$/.test(v)){const y=+v.slice(0,4),m=+v.slice(4,6)-1,d=+v.slice(6,8); const dt=new Date(Date.UTC(y,m,d));
-    if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m&&dt.getUTCDate()===d)return dt;}
-  const vv=v.replace(/\//g,"-"); if(/^\d{4}-\d{2}-\d{2}$/.test(vv)){const [y,m,d]=vv.split("-").map(Number); const dt=new Date(Date.UTC(y,m-1,d));
+  if(/^\d{8}$/.test(v)){const y=+v.slice(0,4),m=+v.slice(4,6)-1,d=+v.slice(6,8);
+    const dt=new Date(Date.UTC(y,m,d)); if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m&&dt.getUTCDate()===d)return dt;}
+  const vv=v.replace(/\//g,"-"); if(/^\d{4}-\d{2}-\d{2}$/.test(vv)){
+    const [y,m,d]=vv.split("-").map(Number); const dt=new Date(Date.UTC(y,m-1,d));
     if(dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m-1&&dt.getUTCDate()===d)return dt;}
   return null;
 }
-function rngFromDate(dt){ let s = dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); s=(s^0x9e3779b9)>>>0; return ()=> (s=Math.imul(1664525,s)+1013904223>>>0)/2**32; }
+function rngFromDate(dt){ let s = dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); s = (s ^ 0x9e3779b9)>>>0; return ()=> (s = Math.imul(1664525,s)+1013904223>>>0) / 2**32; }
 
-/* ====== 指標生成（6軸 + 3軸） ====== */
-const KEYS_JA=["円","風","核","間","和","返"]; // hex 順
+/* ========= KenGo式 6指標（円/風/核/間/和/返） ========= */
 function six(dt){
   const R=rngFromDate(dt), w=dt.getUTCDay(), m=dt.getUTCMonth()+1;
   return Array.from({length:6},(_,i)=>{
     const base=0.52+R()*0.30;
-    const twist=((w+i)%3===0?0.05:0)+((m%6===i?0.03:0))+(R()-0.5)*0.06;
+    const twist=((w+i)%3===0?0.04:0)+((m%6===i?0.03:0))+(R()-0.5)*0.06;
     return Math.max(0,Math.min(1,base+twist))*100|0;
   });
 }
-function triFromSix(s){ // 風 / 核 / 円
-  return {wind:s[1], core:s[2], circle:s[0]};
-}
-function topIdxs(arr,n=2){return [...arr].map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v).slice(0,n).map(o=>o.i);}
-
-/* ====== 色・神話・エレメント 推定 ====== */
 function elementFromSix(s){
-  const score={wind:s[1]*0.6+s[3]*0.4, fire:s[5]*0.6+s[1]*0.4, earth:s[2]*0.6+s[0]*0.4, water:s[4]*0.7+s[0]*0.3};
+  const score = {
+    wind: s[1]*0.6 + s[3]*0.4,
+    fire: s[5]*0.6 + s[1]*0.4,
+    earth: s[2]*0.6 + s[0]*0.4,
+    water: s[4]*0.7 + s[0]*0.3
+  };
   return Object.entries(score).sort((a,b)=>b[1]-a[1])[0][0];
 }
-function colorLineFromSix(s){
-  // Azure Gold っぽい表現：円×風が高いほど青、核×返で金フラッシュ
-  const blue=Math.round((s[0]+s[1])/2), gold=Math.round((s[2]+s[5])/2);
-  return `COLOR: Azure Gold（蒼金）｜空の青 ${blue}% × 核のきらめき ${gold}% — 外は空、内は太陽、間に白の反転。`;
-}
-function mythoFromSix(s){
-  // 雰囲気合わせ：円×和→日本神話、返×循環→ケルト
-  const jp=Math.round((s[0]+s[4])/2), celt=Math.round((s[5]+s[3])/2);
-  return `MYTHO: 日本神話（天・風）× ケルト循環｜整合 ${Math.round((jp+celt)/2)}%`;
-}
+function badgesFromSix(s){
+  const names=["円70+","風70+","核70+","間70+","和70+","返70+"]; const a=[]; s.forEach((v,i)=>{ if(v>=70) a.push(names[i]); }); return a.length?a:["均整"]; }
 
-/* ====== 偉人マッチ（3人ドン） ======
-   ざっくり指標ベクトルとの余弦に近い簡易一致率（遊び用） */
-const HEROES=[
-  {name:"徳川家康", vec:[85,55,82,60,72,58]}, // 円・核・間・和が高め
-  {name:"織田信長", vec:[50,88,66,62,44,86]}, // 風・返の突破
-  {name:"豊臣秀吉", vec:[64,72,58,70,65,69]}, // バランス＋和
-  {name:"紫式部",   vec:[82,54,70,66,88,52]}, // 円・和・間
-  {name:"坂本龍馬", vec:[60,86,58,70,62,78]}, // 風・返・間
-  {name:"ナイチンゲール", vec:[78,54,74,64,90,56]}, // 円・和・核
-  {name:"ガンジー", vec:[88,50,80,72,90,60]}, // 円・和・核
-  {name:"レオナルド・ダ・ヴィンチ", vec:[76,70,74,72,66,68]}, // 全域高水準
-  {name:"ジャンヌ・ダルク", vec:[58,84,70,62,56,80]} // 風・返・核
-];
-function matchScore(a,b){ // 0-100配列
-  let dot=0, na=0, nb=0;
-  for(let i=0;i<6;i++){dot+=a[i]*b[i]; na+=a[i]*a[i]; nb+=b[i]*b[i];}
-  const cos=dot/(Math.sqrt(na)*Math.sqrt(nb)); // 0-1
-  return Math.round(cos*100);
-}
-function topHeroes(s){
-  return HEROES.map(h=>({name:h.name, pct:matchScore(s,h.vec)}))
-    .sort((x,y)=>y.pct-x.pct).slice(0,3);
-}
-
-/* ====== 図形描画 ====== */
-function polar(cx,cy,r,deg){const rad=(deg-90)*Math.PI/180;return [cx+r*Math.cos(rad), cy+r*Math.sin(rad)];}
-function polygonPoints(cx,cy,r,steps,rot=0){const pts=[]; for(let i=0;i<steps;i++){const ang=rot + i*(360/steps); pts.push(polar(cx,cy,r,ang)); } return pts.map(p=>p.join(",")).join(" ");}
-
-function drawTriangle(tri){ // tri:{wind,core,circle}
-  const svg=$("triSVG"); const CX=130, CY=130, R=100;
-  // 基本三角
-  const basePts=polygonPoints(CX,CY,R,3,0); $("triBase").setAttribute("points",basePts);
-  // 各軸（0:円 1:風 2:核）を120°間隔で内側へ
-  const vals=[tri.circle, tri.wind, tri.core]; // %
-  const pts=[];
-  for(let i=0;i<3;i++){
-    const r=R*(Math.max(10,vals[i])/100); // 最小10%
-    const ang= i*(360/3); // 0,120,240
-    pts.push(polar(CX,CY,r,ang).join(","));
-  }
-  $("triFill").setAttribute("points",pts.join(" "));
-  // ラベル
-  const labels=[["円",0],["風",120],["核",240]];
-  const g=$("triLabels"); g.innerHTML="";
-  labels.forEach((lb,i)=>{
-    const p=polar(CX,CY,R+16,lb[1]); const t=document.createElementNS("http://www.w3.org/2000/svg","text");
-    t.setAttribute("x",p[0]); t.setAttribute("y",p[1]); t.setAttribute("text-anchor","middle"); t.textContent=lb[0]; g.appendChild(t);
-  });
-}
-
-function drawHex(s){ // s: 6配列（円/風/核/間/和/返）
-  const svg=$("hexSVG"); const CX=150, CY=150, R=120;
-  const basePts=polygonPoints(CX,CY,R,6,0); $("hexBase").setAttribute("points",basePts);
-  const pts=[];
+/* ========= 惑星レンダリング ========= */
+function renderPlanets(six){
+  const colors=[ "#7aa7ff", "#34a0ff", "#b08968", "#6fdaff", "#2ec4b6", "#ff6b6b" ];
+  const id="planets"; const g=$(id); g.innerHTML="";
+  const names=["円","風","核","間","和","返"];
+  // 6つの惑星を円周上に配置、スコアで軌道半径と大きさを変える
   for(let i=0;i<6;i++){
-    const r=R*(Math.max(10,s[i])/100);
-    const ang= i*(360/6); pts.push(polar(CX,CY,r,ang).join(","));
+    const angle = (Math.PI*2/6)*(i-0.5);
+    const r = 50 + (six[i]/100)*25; // 軌道
+    const x = 120 + Math.cos(angle)*r;
+    const y = 120 + Math.sin(angle)*r;
+    const size = 6 + (six[i]/100)*8;
+    const c = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    c.setAttribute("cx",x); c.setAttribute("cy",y); c.setAttribute("r",size);
+    c.setAttribute("fill",colors[i]); c.setAttribute("class","planet");
+    c.appendChild(document.createElementNS("http://www.w3.org/2000/svg","title")).textContent=`${names[i]} ${six[i]}%`;
+    g.appendChild(c);
   }
-  $("hexFill").setAttribute("points",pts.join(" "));
-  const names=KEYS_JA;
-  const g=$("hexLabels"); g.innerHTML="";
-  for(let i=0;i<6;i++){
-    const p=polar(CX,CY,R+16,i*(360/6));
-    const t=document.createElementNS("http://www.w3.org/2000/svg","text");
-    t.setAttribute("x",p[0]); t.setAttribute("y",p[1]); t.setAttribute("text-anchor","middle"); t.textContent=names[i];
-    g.appendChild(t);
-  }
-  // 六軸凡例
-  const leg=$("sixLegend"); leg.innerHTML="";
-  names.forEach((n,i)=>{const span=document.createElement("div"); span.className="leg"; span.textContent=`${n} ${s[i]}%`; leg.appendChild(span);});
 }
 
-/* ====== 物語タブ（下で自由に切替） ====== */
-const STORIES=[
-  {id:"one",  name:"ONE PIECE", build:(s)=>`あなたに合う悪魔の実は <b>「風核フラッシュ系」</b>。<br>発動条件：一拍置く（間）→ 追い風 → 返し。<br>修行：1日1回「歩幅シンクロ」練習。`},
-  {id:"nrt",  name:"NARUTO", build:(s)=>`習得しやすい術：<b>「間合い・風遁・返し」</b>系。<br>型：円の中心から動く足運び。<br>修行：呼吸4拍（入2/止1/出2/止1）。`},
-  {id:"db",   name:"ドラゴンボール", build:(s)=>`相性技：<b>気の反転波</b>。<br>コツ：力まず“戻す”イメージ。<br>修行：朝に背骨スキャン10秒×3。`},
-  {id:"hxh",  name:"HUNTER×HUNTER", build:(s)=>`系統：<b>操作 × 変化</b>寄り。<br>特性：空気（風）を読む。<br>修行：人混みで“空気の芯”探しゲーム。`},
-  {id:"ghibli",name:"ジブリ", build:(s)=>`気質：<b>風と円の守り手</b>。<br>役割：場を澄ませる。<br>修行：部屋の“風の通り道”を作る。`},
-  {id:"dis",  name:"ディズニー", build:(s)=>`テーマ：<b>笑顔で世界を回す</b>。<br>魔法：タイミング調律。<br>修行：朝一で「やわらかい一言」を誰かに。`},
-  {id:"mvl",  name:"MARVEL", build:(s)=>`モード：<b>サポート型ストラテジスト</b>。<br>能力：衝撃吸収と反射。<br>修行：会議で“要約→返す”練習。`},
-  {id:"myth", name:"神話（汎）", build:(s)=>`セット：<b>天（上視点）× 風 × 円</b>。<br>鍵：戻り続けることが力。<br>修行：寝る前に「今日の戻り」を1行記録。`}
-];
-function buildStoryTabs(six){
-  const tabs=$("storyTabs"), panel=$("storyPanel");
-  tabs.innerHTML=""; panel.innerHTML="";
-  STORIES.forEach((st,idx)=>{
-    const t=document.createElement("div"); t.className="tab"+(idx===0?" on":""); t.textContent=st.name;
-    t.onclick=()=>{[...tabs.children].forEach(c=>c.classList.remove("on")); t.classList.add("on"); panel.innerHTML=st.build(six);};
-    tabs.appendChild(t);
-    if(idx===0) panel.innerHTML=st.build(six);
-  });
-}
-
-/* ====== 偉人3人DOM ====== */
-function renderHeroes(arr){
-  const root=$("heroes"); root.innerHTML="";
-  arr.forEach(h=>{
-    const d=document.createElement("div"); d.className="hero";
-    d.innerHTML=`<div style="font-weight:900">${h.name}</div>
-                 <div class="pct" style="margin-top:2px">${h.pct}%</div>
-                 <div class="small" style="margin-top:4px">雰囲気整合</div>`;
-    root.appendChild(d);
-  });
-}
-
-/* ====== 共有 ====== */
-$("copyBtn")?.addEventListener("click", async ()=>{
-  const txt=document.querySelector("#storyPanel")?.innerText || "";
-  try{await navigator.clipboard.writeText(txt); toast(JA?L.ja.toast:L.en.toast);}catch(e){toast("Copied.");}
-});
-$("shareBtn")?.addEventListener("click", async ()=>{
-  if(navigator.share){try{await navigator.share({title:"粋風診断",text:"KenGo式：粋風診断（円×風×核）",url:location.href});}catch(_){}}
-  else{toast("共有に未対応の端末です。");}
-});
-
-/* ====== 実行 ====== */
-$("btnSelf").onclick=()=>{
-  const v=$("dateA").value; const dt=parseDate(v);
-  if(!dt){$("errA").style.display="block"; return;} $("errA").style.display="none";
-  const s=six(dt); const tri=triFromSix(s);
-  // プロフィール
-  $("board").hidden=false;
-  $("mon").textContent="◎";
-  $("cName").textContent="このOSは「KenGo式：円×風×核」";
-  // バッジ
-  const badges=$("badges"); badges.innerHTML=""; KEYS_JA.forEach((n,i)=>{ if(s[i]>=70){const b=document.createElement("div"); b.className="badge"; b.textContent=`${n} 70+`; badges.appendChild(b);} });
-  if(badges.children.length===0){const b=document.createElement("div"); b.className="badge"; b.textContent="均整"; badges.appendChild(b);}
-  // エレメント
-  const elem=elementFromSix(s); const ebox=$("elem"), etxt=$("elemText");
-  ebox.className="elem "+(elem==="wind"?"e-wind":elem==="fire"?"e-fire":elem==="earth"?"e-earth":"e-water");
-  etxt.textContent=(elem==="wind"?"WIND（風）":elem==="fire"?"FIRE（火）":elem==="earth"?"EARTH（地）":"WATER（水）");
-  // ライン
-  $("colorLine").textContent=colorLineFromSix(s);
-  $("mythoLine").textContent=mythoFromSix(s);
-  // 図形
-  drawTriangle(tri); drawHex(s);
-  // 物語タブ
-  buildStoryTabs(s);
-  // 偉人
-  renderHeroes(topHeroes(s));
-  // トースト
-  toast(JA?L.ja.toast:L.en.toast);
+/* ========= 歴史上3人（雰囲気マッチ％） ========= */
+const HIST = {
+  wind:[["レオナルド・ダ・ヴィンチ","多領域の翻訳者"],["坂本龍馬","風で場を動かす"],["アメンホテプ4世（アクエンアテン）","流れの再設計"]],
+  fire:[["ジャンヌ・ダルク","熱で道を切る"],["織田信長","反転と突破"],["ナポレオン","勢いの制御"]],
+  earth:[["徳川家康","核と円の柱"],["マハトマ・ガンジー","核で動かぬ"],["フローレンス・ナイチンゲール","場の地盤作り"]],
+  water:[["マザー・テレサ","和と循環"],["空海","翻訳と統合"],["紫式部","関係の織り直し"]]
 };
+function renderHist(elKey, base){
+  const box=$("hist"); box.innerHTML="";
+  const arr=HIST[elKey];
+  // 適当にスコアを六指標から寄せる（見栄え重視の固定式）
+  const w=(k)=>({wind:base[1],fire:base[5],earth:base[2],water:base[4]})[k]||68;
+  const seed=w(elKey);
+  const ps=[seed, Math.min(99,seed-4+ (base[3]%7)), Math.min(99,seed-7+ (base[0]%5))].map(v=>Math.max(72,v));
+  arr.slice(0,3).forEach((p,i)=>{
+    const card=document.createElement("div");
+    card.className="card"; card.style.marginTop="8px";
+    card.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <div style="font-weight:900">${i+1}. ${p[0]}</div>
+      <div style="font-weight:900;color:var(--ok)">${ps[i]}%</div></div>
+      <div class="note">${p[1]}</div>`;
+    box.appendChild(card);
+  });
+}
+
+/* ========= 物語カード ========= */
+const UNI = {
+  one:{
+    wind:["モンキー・D・ルフィ","ゴムゴムの実（ニカ）","条件：一拍（間）→ 追い風 → 返し。練習：歩幅シンクロ。","https://i.imgur.com/9b6qg5f.png"],
+    fire:["ポートガス・D・エース","メラメラの実","条件：熱→一拍抑える→反転爆。","https://i.imgur.com/6g6XQ8n.png"],
+    earth:["トラファルガー・ロー","オペオペの実","条件：核を置く→円域で制御。","https://i.imgur.com/7J5sP2c.png"],
+    water:["ナミ","クリマタクト","条件：和で場を読む→流れ配布。","https://i.imgur.com/0nYw5qk.png"]
+  },
+  naru:{
+    wind:["うずまきナルト","螺旋丸・影分身","条件：間合い→同調→回転。","https://i.imgur.com/7zv7h3f.png"],
+    fire:["うちはサスケ","千鳥","条件：一点集中→放電→反転。","https://i.imgur.com/owq8Xr8.png"],
+    earth:["はたけカカシ","カムイ","条件：核で観測→円で還す。","https://i.imgur.com/7vN5N8T.png"],
+    water:["春野サクラ","医療忍術","条件：和→循環→回復。","https://i.imgur.com/5e9c3rD.png"]
+  },
+  db:{
+    wind:["孫悟空","界王拳／瞬間移動","条件：一拍で上げ下げ制御。","https://i.imgur.com/l4Q3xQm.png"],
+    fire:["ベジータ","ファイナルフラッシュ","条件：熱→間の制御→解放。","https://i.imgur.com/0x4v3Xl.png"],
+    earth:["ピッコロ","魔貫光殺砲","条件：核で貫く→円で守る。","https://i.imgur.com/Rx9s6vG.png"],
+    water:["孫悟飯","潜在解放","条件：和→循環→安定。","https://i.imgur.com/3lX0qXr.png"]
+  },
+  hxh:{
+    wind:["ゴン＝フリークス","じゃんけん","条件：間を置く→一撃。","https://i.imgur.com/0V2vVwH.png"],
+    fire:["キルア＝ゾルディック","神速","条件：雷→抑制→解放。","https://i.imgur.com/2sWcC6b.png"],
+    earth:["クラピカ","律する小指の鎖","条件：核契約→円域。","https://i.imgur.com/wkGv4kn.png"],
+    water:["レオリオ","念による打撃","条件：和→循環→支援。","https://i.imgur.com/3rVv4DL.png"]
+  },
+  ghibli:{
+    wind:["ハウル","移動城の魔法","条件：間→扉で流れ替え。","https://i.imgur.com/Z6iV2mP.png"],
+    fire:["カリオストロ伯爵側の炎…ではなく“カルシファー”","炎の悪魔","条件：熱を一拍で馴致。","https://i.imgur.com/3nE5O6N.png"],
+    earth:["アシタカ","もののけの調停","条件：核を置く→円で結ぶ。","https://i.imgur.com/vw2h9Qd.png"],
+    water:["ナウシカ","風の谷の循環","条件：和→循環→再生。","https://i.imgur.com/5d0v5rN.png"]
+  },
+  marvel:{
+    wind:["スパイダーマン","スパイダーセンス","条件：間→回避→反転。","https://i.imgur.com/f7f2bQq.png"],
+    fire:["アイアンマン","リパルサー","条件：出力→一拍制御。","https://i.imgur.com/FtYw0mS.png"],
+    earth:["キャプテン・アメリカ","シールド","条件：核→円→守破離。","https://i.imgur.com/rb7k9yJ.png"],
+    water:["ドクター・ストレンジ","時間と環の術","条件：和→循環→位相。","https://i.imgur.com/4m1P4Jg.png"]
+  },
+  myth:{
+    wind:["ヘルメス","伝令と境界","条件：間→移送→連結。","https://i.imgur.com/1x2s7qH.png"],
+    fire:["アレス","熱と衝動","条件：一拍制御で反転。","https://i.imgur.com/1q7n9rF.png"],
+    earth:["アテナ","核と秩序","条件：核→円→戦略。","https://i.imgur.com/3g9y0hV.png"],
+    water:["スサノオ","風と海の反転","条件：和→渦→還流。","https://i.imgur.com/6c8zH1W.png"]
+  }
+};
+function showUniverse(key, elem){
+  const pack = UNI[key][elem];
+  const [title, skill, desc, img] = pack||["—","—","—",""];
+  $("uTitle").textContent = title;
+  $("uSub").textContent = skill;
+  $("uDesc").textContent = desc;
+  $("uImg").src = img;
+}
+
+/* ========= メイン ========= */
+$("go").onclick=()=>{
+  const dt=parseDate($("dob").value);
+  if(!dt){ toast("日付の形式が正しくありません。"); return; }
+  const s = six(dt);
+  const el = elementFromSix(s); // wind/fire/earth/water
+
+  // 進捗表示
+  $("board").hidden=false; toast("生成しました。");
+  renderPlanets(s);
+
+  // 指標バー
+  s.forEach((v,i)=>{ $("p"+i).textContent=v+"%"; $("b"+i).style.width=v+"%"; });
+  const elemName={wind:"WIND（風）",fire:"FIRE（火）",earth:"EARTH（地）",water:"WATER（水）"}[el];
+  $("elemText").textContent=elemName;
+  // バッジ
+  const bs=badgesFromSix(s); $("badges").innerHTML=bs.map(x=>`<div class="badge">${x}</div>`).join("");
+
+  // 歴史3人
+  renderHist(el, s);
+
+  // 物語（初期はONE PIECE）
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));
+  document.querySelector('.tab[data-u="one"]').classList.add("on");
+  showUniverse("one", el);
+};
+
+// タブ切り替え
+document.getElementById("tabs").addEventListener("click",(e)=>{
+  const t=e.target.closest(".tab"); if(!t) return;
+  document.querySelectorAll(".tab").forEach(n=>n.classList.remove("on")); t.classList.add("on");
+  const key=t.getAttribute("data-u");
+  // 現在の要素は、最後に描画したときのテキストから判定
+  const txt=$("elemText").textContent; 
+  const el= txt.includes("WIND")?"wind": txt.includes("FIRE")?"fire": txt.includes("EARTH")?"earth":"water";
+  showUniverse(key, el);
+});
 </script>
 </body>
 </html>
