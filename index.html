@@ -3,279 +3,279 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KenGoSystem – 生年月日診断ツール（Elastic Human OS）</title>
+<title>KenGoSystem — Fantasy Birthdate Analyzer</title>
 <style>
-  :root{
-    --bg:#0b0f14; --card:#121822; --ink:#eaf2ff; --muted:#9bb3cc; --accent:#49a7ff; --ok:#79f2b7; --warn:#ffd166;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:#0b0f14;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-  .wrap{max-width:720px;margin:0 auto;padding:18px}
-  .card{background:var(--card);border:1px solid #1b2a3a;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:22px}
-  h1{font-size:22px;margin:4px 6px 14px}
-  .muted{color:var(--muted)}
-  .grid{display:grid;gap:12px;margin:14px 0}
-  label{display:block;margin:4px 6px}
-  input[type="text"],input[type="date"]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #223046;background:#0f1520;color:var(--ink)}
-  button{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #1e3952;background:var(--accent);color:#001018;font-weight:700;font-size:18px;margin-top:8px;cursor:pointer}
-  button:disabled{opacity:.6;cursor:not-allowed}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
-  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid #1f2c3c;border-radius:999px;background:#0e1520;font-size:13px}
-  .ok{border-color:#0f3;color:#9ff;background:#092415}
-  .warn{border-color:#835b00;color:#ffd166;background:#241a00}
-  .result{display:none;margin-top:14px}
-  .result.show{display:block}
-  .kicker{font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
-  .box{background:#0f1520;border:1px solid #1f2c3c;border-radius:14px;padding:14px;margin-top:10px}
-  .share{display:inline-flex;align-items:center;gap:8px;color:#89c8ff}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  footer{color:#7d93a8;font-size:12px;margin-top:18px}
+:root{
+  --bg:#0e0f14; --card:#131829; --ink:#eef6ff; --sub:#a9c3e6;
+  --acc:#8be9fd; --ok:#a6ffcb; --rose:#ffb3c7; --vio:#cbb6ff; --sun:#ffe08a;
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{margin:0;background:radial-gradient(1200px 800px at 70% -10%,#1b2240 0%,#0e0f14 60%);color:var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial}
+.wrap{padding:20px}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:22px;
+  max-width:760px; margin:24px auto; box-shadow:0 20px 50px rgba(0,0,0,.45);
+  backdrop-filter: blur(6px);
+}
+h1{font-size:22px;margin:2px 0 14px}
+p.m{color:var(--sub);margin:6px 2px 0}
+.grid{display:grid; grid-template-columns:1fr; gap:14px; margin:10px 0 8px}
+@media (min-width:560px){ .grid{grid-template-columns:1fr 1fr} }
+label{display:block;margin:6px 8px}
+input[type="text"], input[type="date"]{
+  width:100%; padding:12px 14px; border-radius:14px; border:1px solid #23304d;
+  background:#0c1224; color:#fff; font-size:16px; outline:none;
+}
+input::placeholder{color:#6f87a8}
+button{
+  width:100%; margin-top:10px; padding:14px 16px; border:0; border-radius:14px;
+  background:linear-gradient(90deg,var(--acc),var(--vio)); color:#001018; font-weight:800; font-size:18px; cursor:pointer;
+}
+button:active{transform:translateY(1px)}
+.badges{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 6px}
+.badge{
+  background:#101834; border:1px solid rgba(255,255,255,.08); padding:8px 12px; border-radius:999px;
+  display:inline-flex; align-items:center; gap:8px; font-size:14px
+}
+.emo{font-size:18px}
+.result{
+  margin-top:18px; padding:16px; border-radius:16px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.08);
+}
+h2{font-size:18px; margin:6px 0 10px}
+h3{font-size:16px; margin:14px 0 6px}
+.kawaii{line-height:1.65}
+.kawaii b{color:var(--ok)}
+.kv{display:flex; gap:10px; align-items:center; margin:4px 0 10px}
+.kv .big{font-size:26px}
+.tag{background:#1a213e; border:1px solid rgba(255,255,255,.08); padding:6px 10px; border-radius:10px; font-size:13px}
+.sharebtn{color:var(--acc); text-decoration:underline}
+small.mini{color:var(--sub)}
+.sep{height:1px;background:rgba(255,255,255,.08); margin:12px 0}
+.footer{color:var(--sub); font-size:12px; margin-top:8px}
+@supports (padding: max(0px)) {.wrap{padding-bottom:max(18px, env(safe-area-inset-bottom))}}
+input,button,a{-webkit-tap-highlight-color:transparent}
+input[type="date"]{appearance:none;-webkit-appearance:none}
 </style>
+<script>
+// --- Language decide (query > device) ---
+(function(){
+  const qs=new URLSearchParams(location.search);
+  const auto=(navigator.language||"").toLowerCase().startsWith("ja")?"ja":"en";
+  window.APP_LANG=qs.get("lang")||auto;
+  document.documentElement.setAttribute("lang",window.APP_LANG);
+})();
+</script>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div class="kicker">KenGoSystem</div>
-      <h1 id="title">生年月日診断ツール</h1>
+  <main class="wrap">
+    <section class="card">
+      <h1 id="title"></h1>
+      <p id="subtitle" class="m"></p>
 
       <div class="grid">
         <div>
-          <label id="label_name">ニックネーム</label>
-          <input id="name" type="text" placeholder="KenGo">
+          <label id="label_name" for="name"></label>
+          <input id="name" type="text" inputmode="latin-name" placeholder="KenGo" autocomplete="nickname">
         </div>
         <div>
-          <label id="label_birth">生年月日</label>
-          <input id="dob" type="date" placeholder="YYYY-MM-DD">
+          <label id="label_birth" for="dob"></label>
+          <input id="dob" type="date" inputmode="numeric" autocomplete="bday" placeholder="YYYY-MM-DD">
         </div>
       </div>
 
-      <button id="run">診断する</button>
-
-      <div id="out" class="result">
-        <div class="row" id="badges"></div>
-
-        <div class="box">
-          <div class="kicker" id="res_title">診断結果</div>
-          <div id="summary"></div>
-        </div>
-
-        <div class="box">
-          <div class="kicker">本質（核）/ 流れ（風）/ 外形（円）</div>
-          <div id="tri"></div>
-        </div>
-
-        <div class="box">
-          <div class="kicker">今日のWCG（世界圧）とムード</div>
-          <div id="mood"></div>
-        </div>
-
-        <div class="box">
-          <div class="kicker">アクション&フォーム</div>
-          <div id="advice"></div>
-        </div>
-
-        <div class="box">
-          <div class="kicker">シェアリンク</div>
-          <a id="share" class="share" href="#" target="_blank" rel="noopener">リンクをコピー/共有</a>
-          <div class="muted mono" id="shareurl" style="margin-top:6px;word-break:break-all"></div>
-        </div>
+      <div class="badges">
+        <span class="badge"><span class="emo">🧭</span><span id="tip1"></span></span>
+        <span class="badge"><span class="emo">🌬️</span><span id="tip2"></span></span>
+        <span class="badge"><span class="emo">🔒</span><span id="tip3"></span></span>
       </div>
 
-      <footer>© 2025 KenGoSystem – Elastic Human OS / Wind Protocol</footer>
-    </div>
-  </div>
+      <button id="run"></button>
+
+      <div id="out" class="result" style="display:none">
+        <div class="kv"><span class="big" id="emoji_core">✨</span><div><h2 id="result_title"></h2><div class="tag" id="summary_tag"></div></div></div>
+        <p class="kawaii" id="line_core"></p>
+        <p class="kawaii" id="line_flow"></p>
+        <p class="kawaii" id="line_form"></p>
+
+        <div class="sep"></div>
+
+        <h3 id="share_title"></h3>
+        <p>
+          <a id="share" href="#" class="sharebtn"></a><br>
+          <small id="shareurl" class="mini"></small>
+        </p>
+        <p class="footer" id="disclaimer"></p>
+      </div>
+    </section>
+  </main>
 
 <script>
-/* ---------- i18n（自動・?lang=ja/en で上書き） ---------- */
-const qs = new URLSearchParams(location.search);
-const sys = (navigator.language||"").toLowerCase();
-const lang = (qs.get("lang") || (sys.startsWith("ja")?"ja":"en"));
-document.documentElement.lang = lang;
+// ===== iOS date fallback (text mask) =====
+(function iosDateFallback(){
+  const ua=navigator.userAgent||""; const isiOS=/iP(hone|ad|od)/i.test(ua);
+  const dob=document.getElementById("dob"); if(!dob) return;
+  if(isiOS){ dob.type="text"; dob.placeholder="YYYY-MM-DD"; dob.maxLength=10;
+    dob.addEventListener("input",(e)=>{
+      let v=e.target.value.replace(/\D/g,"").slice(0,8);
+      if(v.length>=5) v=v.slice(0,4)+"-"+v.slice(4);
+      if(v.length>=8) v=v.slice(0,7)+"-"+v.slice(7);
+      e.target.value=v;
+    });
+    dob.addEventListener("blur",()=>{ if(!/^\d{4}-\d{2}-\d{2}$/.test(dob.value)) dob.value=""; });
+  }
+})();
 
-const T = {
+// ===== Language texts =====
+const TEXT={
   ja:{
-    title:"KenGoSystem – 生年月日診断ツール",
-    name:"ニックネーム",
-    birth:"生年月日",
-    run:"診断する",
+    title:"KenGoSystem — ファンタジー生年月日診断",
+    subtitle:"風・円・ゴムの三精をベースに、あなたの“可愛い属性”を占うよ。",
+    name:"ニックネーム", birth:"生年月日",
+    tip1:"端末言語に自動対応", tip2:"非強制・外輪サポート", tip3:"個人の核は不可侵",
+    btn:"診断する",
     result:"診断結果",
-    type_wind:"風",
-    type_circle:"円",
-    type_rubber:"ゴム",
-    mood_light:"軽い",
-    mood_mid:"標準",
-    mood_heavy:"重い",
-    share:"リンクをコピー/共有",
+    tag:(r)=>`属性：${r.coreName}｜流れ：${r.flowName}｜形：${r.formName}`,
+    core:(r)=>`<b>${r.coreEmoji} ${r.coreName}</b> — きみの“核”はこの属性！ どんな衝撃もぷにっと受け止め、やわらかく跳ね返す体質。無理に変わろうとせず、いまの丸さを可愛がって◎`,
+    flow:(r)=>`<b>今日の風向き：</b> ${r.flowEmoji} ${r.flowName}。呼吸を合わせるほど世界がスムーズ。深呼吸→ゆっくり一歩で魔法が発動するよ。`,
+    form:(r)=>`<b>見た目のオーラ：</b> ${r.formEmoji} ${r.formName}。姿勢をちょっと整えるとキラ度が+1。肩と首を“くるり円”で回すと吉♪`,
+    shareTitle:"シェア／リンク",
+    shareBtn:"リンクをコピー / 共有",
+    empty:"生年月日を入力してね",
+    disclaimer:"※KenGoSystemの原則：押さない・導かない・やさしく整える。表示は軽量診断です。"
   },
   en:{
-    title:"KenGoSystem – Birthdate Analyzer",
-    name:"Nickname",
-    birth:"Birthdate",
-    run:"Analyze",
-    result:"Result",
-    type_wind:"Wind",
-    type_circle:"Circle",
-    type_rubber:"Rubber",
-    mood_light:"Light",
-    mood_mid:"Neutral",
-    mood_heavy:"Heavy",
-    share:"Copy/Share link",
+    title:"KenGoSystem — Fantasy Birthdate Analyzer",
+    subtitle:"Based on Wind • Circle • Rubber spirits, we reveal your cute fantasy vibe.",
+    name:"Nickname", birth:"Birthdate",
+    tip1:"Auto language by device", tip2:"Non-force outer wind", tip3:"Core is inviolable",
+    btn:"Analyze",
+    result:"Your Fantasy Result",
+    tag:(r)=>`Affinity: ${r.coreName} | Flow: ${r.flowName} | Form: ${r.formName}`,
+    core:(r)=>`<b>${r.coreEmoji} ${r.coreName}</b> — Your inner “core” loves to absorb bumps and bounce back softly. No need to force change—pamper that roundness ✨`,
+    flow:(r)=>`<b>Today's breeze:</b> ${r.flowEmoji} ${r.flowName}. Match your breath and pace—one gentle step triggers the magic.`,
+    form:(r)=>`<b>Aura form:</b> ${r.formEmoji} ${r.formName}. Tiny posture tune (shoulders/neck in a soft circle) boosts sparkle +1.`,
+    shareTitle:"Share / Link",
+    shareBtn:"Copy / Share link",
+    empty:"Please enter your birthdate",
+    disclaimer:"*KenGoSystem principle: no push, no lead—only gentle alignment. Lightweight readout."
   }
-}[lang];
+};
+const L=TEXT[window.APP_LANG||"ja"];
 
-function i18n(){
-  document.title = T.title;
-  document.getElementById("title").textContent = T.title.replace("KenGoSystem – ","");
-  document.getElementById("label_name").textContent = T.name;
-  document.getElementById("label_birth").textContent = T.birth;
-  document.getElementById("run").textContent = T.run;
-  document.getElementById("res_title").textContent = T.result;
-  document.getElementById("share").textContent = T.share;
-}
-i18n();
+// ===== UI text set =====
+document.getElementById("title").innerText=L.title;
+document.getElementById("subtitle").innerText=L.subtitle;
+document.getElementById("label_name").innerText=L.name;
+document.getElementById("label_birth").innerText=L.birth;
+document.getElementById("tip1").innerText=L.tip1;
+document.getElementById("tip2").innerText=L.tip2;
+document.getElementById("tip3").innerText=L.tip3;
+document.getElementById("run").innerText=L.btn;
+document.getElementById("result_title").innerText=L.result;
+document.getElementById("share_title").innerText=L.shareTitle;
+document.getElementById("disclaimer").innerText=L.disclaimer;
 
-/* ---------- Core Engine（KenGo式ライト版） ---------- */
-/* 数理は“ KenGo OS 三層：核/風/円 ”を生む擬似座標。
-   - ライフパス（LP）＝全桁和を1桁へ（0は特例で9扱い）
-   - tri(核/風/円) は LP と月/日 から 0-100 バランスを生成
-   - WCG（今日の世界圧）は “年日 + LP + 月” を 0-100 へ正規化
-   全てクライアントのみ・固定ロジックで再現性あり。 */
-
-function parseDOB(d){
-  if(!d) return null;
-  const m = d.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if(!m) return null;
-  const [_,Y,Mo,Da] = m;
-  return {Y:+Y, M:+Mo, D:+Da};
-}
-function digitSum(n){ return (n+"").split("").reduce((a,b)=>a+ +b,0); }
-function reduce1(n){
-  let x = n;
-  while(x>9) x = digitSum(x);
-  if(x===0) x=9;
-  return x;
-}
-function dayOfYear(y,m,d){
-  const dt = new Date(Date.UTC(y,m-1,d));
-  const start = new Date(Date.UTC(y,0,1));
-  return Math.floor((dt-start)/86400000)+1;
-}
-function triBalance(lp, m, d){
-  // 0-100 を3つ出す（合計100）
-  // 配分キーをLPと月日で回す
-  const a = (lp*11 + m*7 + d*3) % 100;
-  const b = (lp*7  + m*5 + d*11) % 100;
-  const c = (lp*5  + m*13 + d*7) % 100;
-  const s = a+b+c || 1;
-  return {
-    core: Math.round(a/s*100),
-    wind: Math.round(b/s*100),
-    circle: 100 - Math.round(a/s*100) - Math.round(b/s*100)
-  };
-}
-function wcgToday(lp, dob){
-  const now = new Date();
-  const yd = dayOfYear(now.getUTCFullYear(), now.getUTCMonth()+1, now.getUTCDate());
-  const base = (yd + lp*9 + dob.M*3 + dob.D) % 101;
-  // 0-33:軽い / 34-66:標準 / 67-100:重い
-  const level = base<=33 ? "light" : (base<=66 ? "mid" : "heavy");
-  return {score:base, level};
-}
-
-/* ---------- 文面生成（KenGo語） ---------- */
-function genSummary(name, tri){
-  const lead = `${name||"あなた"}は、${T.type_circle}・${T.type_wind}・${T.type_rubber}の三層で動くKenGo式ヒト型。`;
-  let main;
-  const top = Object.entries({核:tri.core, 風:tri.wind, 円:tri.circle})
-                   .sort((a,b)=>b[1]-a[1])[0][0];
-  if(top==="核"){
-    main = "核が強い日常。ブレない中心を先に置くと、流れは勝手に整う。約束→実行→余白の順。";
-  }else if(top==="風"){
-    main = "風が主導。まず体感してから意味づける“B→A”。移動・会話・試作が吉。";
-  }else{
-    main = "円（外形）が主導。見せ方・型作りに運が乗る。衣食住の“形”を整えると内側も回る。";
-  }
-  return `${lead} 今日は <b>${top}</b> 優勢。${main}`;
-}
-function genMoodText(wcg){
-  const tag = wcg.level==="light" ? T.mood_light : (wcg.level==="mid"?T.mood_mid:T.mood_heavy);
-  const tip = wcg.level==="light"
-    ? "世界圧が軽い。挑戦や移動に◎。決めるより撒く。"
-    : wcg.level==="mid"
-    ? "標準圧。基礎の積み上げ日。1つだけ濃く。"
-    : "重め。守りと深呼吸。手放す/寝る/温めるが正解。";
-  return `WCG=${wcg.score}（<b>${tag}</b>）。${tip}`;
-}
-function genAdvice(tri){
-  const act = tri.wind>=40 ? "動いて決める/会って決める" : "決めてから動く/一人時間を確保";
-  const form = tri.circle>=40 ? "服・部屋・持ち物を“丸く・柔らかく”整える" : "道具は最低限。黒/紺で統一";
-  const core = tri.core>=40 ? "“核＝命ライン”を守る。不要な約束は飲まない" : "“核”を削らない小タスクから着手";
-  return `<ul>
-    <li>FLOW（風）: ${act}</li>
-    <li>FORM（円）: ${form}</li>
-    <li>CORE（核）: ${core}</li>
-  </ul>`;
-}
-
-/* ---------- UI動作 ---------- */
-function badge(txt, cls=""){
-  return `<span class="pill ${cls}">${txt}</span>`;
-}
-function run(){
-  const name = document.getElementById("name").value.trim() || "KenGo";
-  const dstr = document.getElementById("dob").value;
-  const dob = parseDOB(dstr);
-  if(!dob){ alert(lang==="ja"?"生年月日を入れてね。":"Please enter your birthdate."); return; }
-
-  const lp = reduce1(digitSum(dob.Y)+digitSum(dob.M)+digitSum(dob.D));
-  const tri = triBalance(lp, dob.M, dob.D);
-  const wcg = wcgToday(lp, dob);
-
-  // バッジ
-  const b = [];
-  b.push(badge(`LP:${lp}`,"ok"));
-  b.push(badge(`${T.type_wind}:${tri.wind}%`));
-  b.push(badge(`${T.type_circle}:${tri.circle}%`));
-  b.push(badge(`${T.type_rubber}:${tri.core}%`)); // “ゴム”＝核の弾力比喩
-  b.push(badge(`WCG:${wcg.score}` , wcg.level==="light"?"ok":(wcg.level==="heavy"?"warn":"")));
-  document.getElementById("badges").innerHTML = b.join(" ");
-
-  // 本文
-  document.getElementById("summary").innerHTML = genSummary(name, {core:tri.core, wind:tri.wind, circle:tri.circle});
-  document.getElementById("tri").innerHTML =
-    `${badge("核 "+tri.core+"%")} ${badge("風 "+tri.wind+"%")} ${badge("円 "+tri.circle+"%")}`;
-  document.getElementById("mood").innerHTML = genMoodText(wcg);
-  document.getElementById("advice").innerHTML = genAdvice(tri);
-
-  // シェア
-  const shareUrl = new URL(location.href);
-  shareUrl.searchParams.set("d", dstr);
-  shareUrl.searchParams.set("n", name);
-  shareUrl.searchParams.set("lang", lang);
-  document.getElementById("shareurl").textContent = shareUrl.toString();
-  const a = document.getElementById("share");
-  a.href = shareUrl.toString();
-  a.onclick = async (e)=>{
-    e.preventDefault();
-    try{
-      await navigator.clipboard.writeText(shareUrl.toString());
-      a.textContent = (lang==="ja")?"コピーしました！":"Copied!";
-      setTimeout(()=>a.textContent=T.share,1800);
-    }catch(_){ location.href = shareUrl.toString(); }
-  };
-
-  document.getElementById("out").classList.add("show");
-}
-
-document.getElementById("run").addEventListener("click", run);
-
-// URLパラメータから自動入力 (?d=YYYY-MM-DD&n=Name&lang=ja)
-(function autofill(){
-  const d = qs.get("d"); const n = qs.get("n");
-  if(d) document.getElementById("dob").value = d;
-  if(n) document.getElementById("name").value = n;
-  if(d) run();
+// Auto fill from query (?d=YYYY-MM-DD&n=Name)
+(function autoFill(){
+  const qs=new URLSearchParams(location.search);
+  const d=qs.get("d"); const n=qs.get("n");
+  if(n) document.getElementById("name").value=decodeURIComponent(n);
+  if(d) document.getElementById("dob").value=d;
 })();
+
+// ===== Fantasy dictionaries =====
+const CORE_NAMES={
+  ja:["円環の賢者","風の妖精","ゴムの守り手"],
+  en:["Circle Sage","Wind Sprite","Elastic Guardian"]
+};
+const CORE_EMOJI=["🟡","🌬️","🫧"];
+
+const FLOW_WEEK_JA=[
+  ["日輪の静水","🫧"],["月光の上昇","🌙"],["星巡りの循環","🌀"],
+  ["陽炎の加速","⚡"],["群青の協調","🤝"],["創星のひらめき","✨"],["余白の魔法","🌿"]
+];
+const FLOW_WEEK_EN=[
+  ["Solar Stillness","🫧"],["Moonrise Lift","🌙"],["Stellar Loop","🌀"],
+  ["Sunflare Boost","⚡"],["Cobalt Sync","🤝"],["Creative Spark","✨"],["Magic of Margin","🌿"]
+];
+
+const FORM_MAP_JA=[
+  ["雲輪（ふわふわ円）","☁️"],["渦輪（くるりん波）","🌀"]
+];
+const FORM_MAP_EN=[
+  ["Cloud Ring (fluffy)","☁️"],["Vortex Ring (swirly)","🌀"]
+];
+
+// ===== Analyzer =====
+function analyze(dstr){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(dstr)) return null;
+  const y=+dstr.slice(0,4), m=+dstr.slice(5,7)-1, d=+dstr.slice(8,10);
+  const sum=dstr.replace(/\D/g,"").split("").reduce((s,c)=>s+ +c,0);
+  const coreIdx=sum%3;
+  const coreName=(window.APP_LANG==="ja"?CORE_NAMES.ja:CORE_NAMES.en)[coreIdx];
+  const coreEmoji=CORE_EMOJI[coreIdx];
+
+  const dt=new Date(y,m,d); const wd=dt.getDay();
+  const FARR=window.APP_LANG==="ja"?FLOW_WEEK_JA:FLOW_WEEK_EN;
+  const [flowName,flowEmoji]=FARR[wd];
+
+  const formSeed=y%100; const pair=window.APP_LANG==="ja"?FORM_MAP_JA:FORM_MAP_EN;
+  const [formName,formEmoji]=pair[formSeed%2];
+
+  // Cute core emoji pick for heading
+  const head = coreIdx===0?"🔮":(coreIdx===1?"🍃":"🍬");
+
+  return {coreName, coreEmoji, flowName, flowEmoji, formName, formEmoji, head};
+}
+
+// ===== Share helpers =====
+function attachShare(url){
+  const a=document.getElementById("share");
+  a.textContent=L.shareBtn; a.href=url.toString();
+  a.onclick=async(e)=>{
+    e.preventDefault();
+    try{ if(navigator.share){ await navigator.share({title:"KenGoSystem", url:url.toString()}); return; } }catch(_){}
+    try{
+      await navigator.clipboard.writeText(url.toString());
+      a.textContent=(window.APP_LANG==="ja")?"コピーしたよ！":"Copied!";
+      setTimeout(()=>a.textContent=L.shareBtn,1600);
+    }catch(_){ location.href=url.toString(); }
+  };
+}
+
+// ===== Run =====
+document.getElementById("run").addEventListener("click",()=>{
+  const name=(document.getElementById("name").value||"Guest").trim();
+  const dob=(document.getElementById("dob").value||"").trim();
+  if(!dob){ alert(L.empty); return; }
+  const r=analyze(dob); if(!r){ alert(L.empty); return; }
+
+  document.getElementById("emoji_core").textContent=r.head;
+  document.getElementById("summary_tag").textContent=L.tag(r);
+  document.getElementById("line_core").innerHTML=L.core(r);
+  document.getElementById("line_flow").innerHTML=L.flow(r);
+  document.getElementById("line_form").innerHTML=L.form(r);
+
+  const out=document.getElementById("out"); out.style.display="block";
+
+  // Make shareable link (?d=...&n=...&lang=..)
+  const url=new URL(location.href.split("#")[0]);
+  url.search=""; url.searchParams.set("d",dob);
+  url.searchParams.set("n",encodeURIComponent(name));
+  url.searchParams.set("lang",window.APP_LANG);
+  document.getElementById("shareurl").textContent=url.toString();
+  attachShare(url);
+});
+
+// focus tweak
+["name","dob"].forEach(id=>{
+  const el=document.getElementById(id);
+  el && el.addEventListener("focus",()=>setTimeout(()=>window.scrollBy(0,-40),80));
+});
 </script>
 </body>
 </html>
