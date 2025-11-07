@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TAILWIND CARD｜追い風カード（KenGo式）</title>
+<meta name="theme-color" content="#ffffff">
+<style>
+/* ======== Clean Royal (white & gold & indigo) ======== */
+:root{
+  --ink:#0b1330; --mut:#51618f; --soft:#7b8bbb;
+  --bg:#f7f9ff; --card:#ffffff; --line:#e7edff;
+  --gold:#d6b049; --gold2:#9c7d2a; --blue:#3652e3; --bluelt:#eaf0ff;
+  --bar:#ecf2ff; --ok:#11c27a; --warn:#f6b23e; --bad:#ee5b7b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:linear-gradient(180deg,#fff, var(--bg) 60%);}
+body{color:var(--ink);font-family:Inter,"Hiragino Sans","Noto Sans JP",system-ui,Segoe UI,Roboto,Helvetica,Arial}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 14px}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{width:40px;height:40px;border-radius:10px;border:2px solid var(--line);display:grid;place-items:center;
+  background:conic-gradient(from 0deg,#fff,#fff 40%,#ffe9a8 41%,#ffe9a8 60%,#fff 61%,#fff);font-weight:900;color:var(--gold2)}
+h1{font-size:18px;margin:0;font-weight:900;letter-spacing:.3px}
+.sub{margin:2px 0 0;color:var(--mut);font-size:13px}
+.lang{display:flex;gap:8px;align-items:center}
+.lang button{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:700}
+.lang button.active{border-color:var(--gold);color:#564100;background:#fff9e6}
+
+/* Card */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 28px #101a2a0e;padding:14px}
+.section-title{font-size:14px;color:var(--mut);margin:0 0 8px 2px}
+.grid{display:grid;gap:12px}
+@media(min-width:860px){.grid2{grid-template-columns:1fr 1fr}}
+label{display:block;margin:8px 4px 6px;font-weight:700;font-size:14px}
+.input{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;font-size:18px;background:#fff}
+.input::placeholder{color:#9aa8cf}
+.btn{width:100%;padding:14px 14px;margin-top:10px;cursor:pointer;
+  border:0;border-radius:12px;background:linear-gradient(#ffe79d,#f4cf63);
+  color:#3b2b00;font-weight:900;font-size:18px;box-shadow:0 4px 0 #ba982f}
+.btn:active{transform:translateY(1px);box-shadow:0 3px 0 #ba982f}
+.row{display:flex;gap:8px;align-items:center}
+.err{color:#cc1f4c;font-size:13px;margin-top:6px;display:none}
+
+/* Result */
+.board{display:grid;gap:12px;margin-top:14px}
+@media(min-width:980px){.board{grid-template-columns:380px 1fr}}
+.kv{display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center}
+.emblem{width:90px;height:90px;border-radius:12px;border:2px solid var(--line);display:grid;place-items:center;
+  background:radial-gradient(100% 100% at 50% 50%,#fff 0,#fff 60%,#ffeaa8 61%,#ffeaa8 70%,#fff 71%,#fff);
+  font-size:34px;color:#745b10;font-weight:900}
+.kv dl{margin:0}
+.kv dt{color:var(--mut);font-size:12px}
+.kv dd{margin:0 0 6px 0;font-size:18px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bluelt);color:#2d3f91;font-size:12px}
+
+/* Bars */
+.stat-row{display:grid;grid-template-columns:128px 1fr 64px;gap:10px;align-items:center;margin:10px 0}
+.bar{height:18px;background:var(--bar);border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+.fill{height:100%;width:0;transition:width .55s ease}
+.pct{text-align:right;font-variant-numeric:tabular-nums}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-top:6px}
+.tab{flex:1;text-align:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);cursor:pointer;font-weight:800;background:#fff}
+.tab.active{background:#f0f4ff;border-color:#cfd9ff}
+.tabpan{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;margin-top:8px}
+
+/* Six */
+.skill{display:grid;grid-template-columns:140px 1fr 52px;gap:10px;align-items:center;margin:8px 0}
+.sname{color:var(--mut);font-size:13px}
+
+/* Ring */
+.ring{display:grid;place-items:center}
+.ring text{font-weight:900}
+
+/* Toast */
+.toast{position:fixed;left:50%;top:12px;transform:translateX(-50%) translateY(-16px);
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;box-shadow:0 10px 28px #00000018;
+  opacity:0;transition:.35s;font-weight:800;z-index:10}
+.toast.in{opacity:1;transform:translateX(-50%) translateY(0)}
+.small{color:var(--mut);font-size:12px}
+.hint{background:#fff9e6;border:1px solid #ffe6a9;padding:10px;border-radius:10px}
+.center{text-align:center}
+.footer{color:var(--mut);font-size:12px;text-align:center;margin:18px 0 6px}
+</style>
+</head>
+<body>
+<div id="toast" class="toast" aria-live="polite">Card generated.</div>
+
+<div class="wrap">
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <div class="logo">TW</div>
+      <div>
+        <h1 id="t_title">TAILWIND CARD｜追い風カード（KenGo式）</h1>
+        <div class="sub" id="t_sub">Birthdate → RPG-style status, six indicators %, compatibility ring — 1 tap.</div>
+      </div>
+    </div>
+    <div class="lang">
+      <button id="btnJA">日本語</button>
+      <button id="btnEN" class="active">English</button>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="card grid grid2">
+    <div>
+      <p class="section-title" id="t_you">▶ You</p>
+      <label id="t_nick">Nickname (optional)</label>
+      <input id="nickA" class="input" placeholder="KenGo / Hero (optional)">
+      <label id="t_birth">Birthdate</label>
+      <input id="dateA" class="input" inputmode="numeric" placeholder="19900504 / 1990-05-04 / 1990/05/04">
+      <div id="errA" class="err">Invalid date format.</div>
+      <button id="btnSelf" class="btn" title="Generate status">Generate</button>
+      <div class="small" id="t_freefmt" style="margin-top:6px;">Free format input (no calendar): <code>YYYYMMDD</code> or <code>YYYY-MM-DD</code></div>
+    </div>
+    <div>
+      <p class="section-title" id="t_pair">▶ Compatibility (optional)</p>
+      <label id="t_nick2">Partner nickname (optional)</label>
+      <input id="nickB" class="input" placeholder="Priest / Friend (optional)">
+      <label id="t_birth2">Partner birthdate (optional)</label>
+      <input id="dateB" class="input" inputmode="numeric" placeholder="19940322 / 1994-03-22 etc.">
+      <div id="errB" class="err">Invalid date format.</div>
+      <button id="btnBoth" class="btn" title="Generate status + compatibility">Generate + Match</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="board" class="board" hidden>
+    <div>
+      <div class="card">
+        <p class="section-title" id="t_char">▶ Character</p>
+        <div class="kv">
+          <div class="emblem" id="emblem">◆</div>
+          <div>
+            <dl>
+              <dt id="t_name">Name</dt><dd id="cName">—</dd>
+              <dt id="t_class">Class</dt><dd id="cClass">—</dd>
+              <dt id="t_title2">Title</dt><dd id="cTitle">—</dd>
+            </dl>
+            <div class="tags" id="badges"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="section-title" id="t_basic">▶ Basic Stats</p>
+        <div class="stat-row">
+          <div id="t_hp">HP (Circle stability)</div>
+          <div class="bar"><div id="hpFill" class="fill" style="background:linear-gradient(90deg,#ffd56e,#f0b94a)"></div></div>
+          <div id="hpPct" class="pct">—%</div>
+        </div>
+        <div class="stat-row">
+          <div id="t_mp">MP (Top-view focus)</div>
+          <div class="bar"><div id="mpFill" class="fill" style="background:linear-gradient(90deg,#7fb3ff,#3652e3)"></div></div>
+          <div id="mpPct" class="pct">—%</div>
+        </div>
+        <div class="stat-row">
+          <div id="t_sp">SP (Wind mobility)</div>
+          <div class="bar"><div id="spFill" class="fill" style="background:linear-gradient(90deg,#35dcc1,#0fb28f)"></div></div>
+          <div id="spPct" class="pct">—%</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tabs">
+        <div id="tabStatus" class="tab active">Status</div>
+        <div id="tabCompat" class="tab">Compatibility</div>
+      </div>
+
+      <div id="panStatus" class="tabpan">
+        <p class="section-title">▶ Six Indicators (%)</p>
+        <div id="sixRows"></div>
+        <div class="hint" style="margin-top:10px">
+          <div id="hints" class="small">—</div>
+        </div>
+      </div>
+
+      <div id="panCompat" class="tabpan" style="display:none">
+        <p class="section-title">▶ Compatibility Ring</p>
+        <div class="ring">
+          <svg id="ring" width="260" height="260" viewBox="0 0 260 260" aria-label="Compatibility">
+            <defs>
+              <linearGradient id="gA" x1="0" x2="1"><stop offset="0%" stop-color="#3652e3"/><stop offset="100%" stop-color="#7bd6c3"/></linearGradient>
+              <linearGradient id="gB" x1="0" x2="1"><stop offset="0%" stop-color="#f6b23e"/><stop offset="100%" stop-color="#c3ceff"/></linearGradient>
+            </defs>
+            <circle cx="130" cy="130" r="96" stroke="#e8edff" stroke-width="12" fill="none"/>
+            <circle cx="130" cy="130" r="70" stroke="#e8edff" stroke-width="12" fill="none"/>
+            <path id="arcA" d="" stroke="url(#gA)" stroke-width="12" fill="none" stroke-linecap="round"/>
+            <path id="arcB" d="" stroke="url(#gB)" stroke-width="12" fill="none" stroke-linecap="round"/>
+            <text id="ringScore" x="130" y="137" text-anchor="middle" font-size="26" fill="#0b1330">--%</text>
+          </svg>
+        </div>
+        <div class="card" style="margin-top:8px">
+          <div id="pairText" class="small">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">© KenGo System — “Wind outside, Circle within.”</div>
+</div>
+
+<script>
+/* ================== i18n ================== */
+const I = {
+  en:{
+    title:"TAILWIND CARD｜KenGo-style",
+    sub:"Birthdate → RPG-style status, six indicators %, compatibility ring — 1 tap.",
+    you:"▶ You", pair:"▶ Compatibility (optional)",
+    nick:"Nickname (optional)", birth:"Birthdate",
+    nick2:"Partner nickname (optional)", birth2:"Partner birthdate (optional)",
+    freefmt:"Free format input (no calendar): YYYYMMDD or YYYY-MM-DD",
+    gen:"Generate", gen2:"Generate + Match",
+    invalid:"Invalid date format.",
+    char:"▶ Character", name:"Name", cls:"Class", ttl:"Title",
+    basic:"▶ Basic Stats", hp:"HP (Circle stability)", mp:"MP (Top-view focus)", sp:"SP (Wind mobility)",
+    statusTab:"Status", compatTab:"Compatibility",
+    sixTitle:"▶ Six Indicators (%)",
+    toast1:"Card generated.",
+    pairHint:(a,b,p)=>`${a} × ${b} compatibility is <b>${p}%</b>.<br>
+    • 80%+: natural stride sync.<br>
+    • 60–79%: share goal → accelerate.<br>
+    • ≤59%: mind the “interval” and roles.`,
+  },
+  ja:{
+    title:"TAILWIND CARD｜追い風カード（KenGo式）",
+    sub:"生年月日→RPG風ステータス／6指標％／相性リングを1タップ。",
+    you:"▶ あなた", pair:"▶ 相性（任意）",
+    nick:"ニックネーム（任意）", birth:"生年月日",
+    nick2:"相手のニックネーム（任意）", birth2:"相手の生年月日（任意）",
+    freefmt:"カレンダーなし自由入力：YYYYMMDD または YYYY-MM-DD",
+    gen:"ステータスを生成", gen2:"ステータス＋相性",
+    invalid:"日付の形式が正しくありません。",
+    char:"▶ キャラクター", name:"名前", cls:"クラス", ttl:"称号",
+    basic:"▶ 基本ステータス", hp:"HP（円の安定）", mp:"MP（上視点の集中）", sp:"SP（風の移動）",
+    statusTab:"ステータス", compatTab:"相性",
+    sixTitle:"▶ 6指標（％）",
+    toast1:"カードを生成しました。",
+    pairHint:(a,b,p)=>`${a} × ${b} の相性は <b>${p}%</b>。<br>
+    ・80%以上：歩幅が自然に揃う日。<br>
+    ・60–79%：目的共有で一気に加速。<br>
+    ・～59%：“間”と役割分担を意識。`,
+  }
+};
+let CUR = (navigator.language||"en").toLowerCase().startsWith("ja") ? "ja" : "en";
+function t(){
+  const L=I[CUR];
+  document.documentElement.lang=CUR==="ja"?"ja":"en";
+  byId("t_title").textContent=L.title;
+  byId("t_sub").textContent=L.sub;
+  byId("t_you").textContent=L.you;
+  byId("t_pair").textContent=L.pair;
+  byId("t_nick").textContent=L.nick;
+  byId("t_birth").textContent=L.birth;
+  byId("t_nick2").textContent=L.nick2;
+  byId("t_birth2").textContent=L.birth2;
+  byId("btnSelf").textContent=L.gen;
+  byId("btnBoth").textContent=L.gen2;
+  byId("t_freefmt").textContent=L.freefmt;
+  byId("t_char").textContent=L.char;
+  byId("t_name").textContent=L.name;
+  byId("t_class").textContent=L.cls;
+  byId("t_title2").textContent=L.ttl;
+  byId("t_basic").textContent=L.basic;
+  byId("t_hp").textContent=L.hp;
+  byId("t_mp").textContent=L.mp;
+  byId("t_sp").textContent=L.sp;
+  byId("tabStatus").textContent=L.statusTab;
+  byId("tabCompat").textContent=L.compatTab;
+  byId("panStatus").querySelector(".section-title").textContent=L.sixTitle;
+}
+byId("btnJA").onclick=()=>{CUR="ja";byId("btnJA").classList.add("active");byId("btnEN").classList.remove("active");t();}
+byId("btnEN").onclick=()=>{CUR="en";byId("btnEN").classList.add("active");byId("btnJA").classList.remove("active");t();}
+function byId(id){return document.getElementById(id)}
+t();
+
+/* ================== Date parsing ================== */
+function parseDateInput(v){
+  if(!v) return null; v=v.trim();
+  if(/^\d{8}$/.test(v)){ const y=+v.slice(0,4), m=+v.slice(4,6)-1, d=+v.slice(6,8);
+    const dt=new Date(Date.UTC(y,m,d)); return (dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m&&dt.getUTCDate()===d)?dt:null;}
+  const vv=v.replace(/\//g,"-");
+  if(/^\d{4}-\d{2}-\d{2}$/.test(vv)){ const [y,m,d]=vv.split("-").map(Number);
+    const dt=new Date(Date.UTC(y,m-1,d)); return (dt&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m-1&&dt.getUTCDate()===d)?dt:null;}
+  return null;
+}
+
+/* ============== Deterministic profile ============== */
+function seedFromDate(dt){
+  let s = dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate();
+  s = (s ^ 0x9e3779b9)>>>0;
+  const rnd = ()=> (s = Math.imul(1664525,s)+1013904223>>>0) / 2**32;
+  return rnd;
+}
+const SIX = [
+  {key:"circle", name_ja:"円（安定）", name_en:"Circle (Stability)"},
+  {key:"wind", name_ja:"風（移動）", name_en:"Wind (Mobility)"},
+  {key:"core", name_ja:"核（復元）", name_en:"Core (Resilience)"},
+  {key:"interval", name_ja:"間（リズム）", name_en:"Interval (Rhythm)"},
+  {key:"reson", name_ja:"共振（調和）", name_en:"Resonance (Harmony)"},
+  {key:"return", name_ja:"戻り（反転）", name_en:"Return (Reversal)"},
+];
+function sixFromDate(dt){
+  const r=seedFromDate(dt), w=dt.getUTCDay(), m=dt.getUTCMonth()+1;
+  const arr=SIX.map((_,i)=>{
+    const base=0.48+r()*0.36; // 48–84%
+    const tweak=((i%2)?0.03:0.00)+((w+i)%3===0?0.03:0)+(m%6===i?0.04:0)+(r()-0.5)*0.06;
+    return Math.round(Math.max(0,Math.min(1,base+tweak))*100);
+  });
+  return arr;
+}
+function baseStatsFromSix(a){
+  const hp=Math.round(a[0]*0.45+a[2]*0.35+a[5]*0.20);
+  const mp=Math.round(a[3]*0.50+a[4]*0.30+a[2]*0.20);
+  const sp=Math.round(a[1]*0.60+a[3]*0.25+a[4]*0.15);
+  return {hp,mp,sp};
+}
+function classFromSix(s){
+  const c={circle:s[0],wind:s[1],core:s[2],interval:s[3],reson:s[4],ret:s[5]};
+  const list=[
+    {ja:"賢導士",en:"Sage-Navigator",score:c.interval+c.reson+c.core*0.5},
+    {ja:"守円士",en:"Circle-Guardian",score:c.circle+c.core+c.ret},
+    {ja:"風行士",en:"Wind-Runner",score:c.wind*1.2+c.interval},
+    {ja:"調律士",en:"Resonance-Tuner",score:c.reson+c.interval+c.ret*0.6},
+    {ja:"反転士",en:"Return-Master",score:c.ret*1.2+c.core*0.6},
+  ].sort((a,b)=>b.score-a.score)[0];
+  return CUR==="ja"?list.ja:`${list.en}`;
+}
+function titleFromSix(s){
+  const i=s.reduce((bi,v,idx)=>v>s[bi]?idx:bi,0);
+  const ja=["円環の核","追い風の歩者","折れぬ心核","間合の設計者","共振の調停者","帰還の使い"];
+  const en=["Core of the Circle","Walker of Tailwind","Unbreakable Heart","Architect of Interval","Mediator of Resonance","Herald of Return"];
+  return CUR==="ja"?ja[i]:en[i];
+}
+function badgesFromSix(s){
+  const tags=[];
+  const L=CUR==="ja"?["円70+","風70+","核70+","間70+","調和70+","反転70+"]:
+                      ["Circle70+","Wind70+","Core70+","Interval70+","Harmony70+","Return70+"];
+  s.forEach((v,i)=>{ if(v>=70) tags.push(L[i]); });
+  if(tags.length===0) tags.push(CUR==="ja"?"バランス型":"Balanced");
+  return tags;
+}
+function hintFromSix(s){
+  const Lja=[
+    "円の安定が高い。基準点を自分に置くと最強。",
+    "動き出しが吉。歩けば風が整う。",
+    "復元力が高い。“折れない前提”で設計を。",
+    "間の取り方が美しい。速度よりタイミング。",
+    "場の調和を作れる。翻訳役が得意。",
+    "反転上手。痛み→学び→糧が速い。"
+  ];
+  const Len=[
+    "High circle stability. Anchor to self = strongest.",
+    "Move first; wind aligns as you walk.",
+    "High resilience. Design on ‘unbreakable’ premise.",
+    "Beautiful timing—rhythm over speed.",
+    "You harmonize rooms; natural translator.",
+    "Skilled reversal: pain→lesson→fuel fast."
+  ];
+  const L = CUR==="ja"?Lja:Len;
+  const tops = s.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v).slice(0,2).map(o=>o.i);
+  return "• "+tops.map(i=>L[i]).join("<br>• ");
+}
+
+/* ============== Compatibility ============== */
+function compatScore(a,b){
+  const dot=a.reduce((x,_,i)=>x+a[i]*b[i],0);
+  const na=Math.hypot(...a), nb=Math.hypot(...b);
+  const cos=(na&&nb)?dot/(na*nb):0;
+  const comp=((a[0]+b[1])+(a[2]+b[5]))/400; // complement bonus
+  let sc=Math.max(0,Math.min(1,cos*0.7+comp*0.3));
+  return Math.round(sc*100);
+}
+function arcPath(cx,cy,r,ratio){
+  const end=Math.max(0.02,Math.min(0.98,ratio))*Math.PI*2;
+  const x=(ang)=>cx+r*Math.cos(-Math.PI/2+ang);
+  const y=(ang)=>cy+r*Math.sin(-Math.PI/2+ang);
+  return `M ${x(0)} ${y(0)} A ${r} ${r} 0 ${end>Math.PI?1:0} 1 ${x(end)} ${y(end)}`;
+}
+
+/* ============== UI helpers ============== */
+const $=q=>document.querySelector(q);
+function toast(msg){
+  const el=byId("toast"); el.textContent=msg; el.classList.add("in");
+  setTimeout(()=>el.classList.remove("in"),1400);
+}
+function renderSix(container,arr){
+  container.innerHTML="";
+  arr.forEach((v,i)=>{
+    const row=document.createElement("div");
+    row.className="skill";
+    const name = CUR==="ja"?SIX[i].name_ja:SIX[i].name_en;
+    row.innerHTML = `
+      <div class="sname">${name}</div>
+      <div class="bar"><div class="fill" style="background:${i%2? 'linear-gradient(90deg,#7fb3ff,#11c27a)':'linear-gradient(90deg,#ffd56e,#c3ceff)'}"></div></div>
+      <div class="pct">0%</div>`;
+    container.appendChild(row);
+    requestAnimationFrame(()=>{
+      row.querySelector(".fill").style.width=Math.min(100,Math.max(0,v))+"%";
+      row.querySelector(".pct").textContent=`${v}%`;
+    });
+  });
+}
+function fillBars(base){
+  byId("hpFill").style.width=base.hp+"%";
+  byId("mpFill").style.width=base.mp+"%";
+  byId("spFill").style.width=base.sp+"%";
+  byId("hpPct").textContent=base.hp+"%";
+  byId("mpPct").textContent=base.mp+"%";
+  byId("spPct").textContent=base.sp+"%";
+}
+function scrollToBoard(){ byId("board").hidden=false; byId("board").scrollIntoView({behavior:"smooth",block:"start"}); }
+function setTab(which){
+  const tS=byId("tabStatus"), tC=byId("tabCompat");
+  const pS=byId("panStatus"), pC=byId("panCompat");
+  if(which==="status"){ tS.classList.add("active"); tC.classList.remove("active"); pS.style.display="block"; pC.style.display="none"; }
+  else { tC.classList.add("active"); tS.classList.remove("active"); pC.style.display="block"; pS.style.display="none"; }
+}
+function formatName(dt){ const y=dt.getUTCFullYear(),m=String(dt.getUTCMonth()+1).padStart(2,"0"),d=String(dt.getUTCDate()).padStart(2,"0"); return `${y}.${m}.${d}`; }
+
+/* ============== Actions ============== */
+function genSelf(){
+  const L=I[CUR];
+  const dA=parseDateInput(byId("dateA").value);
+  byId("errA").style.display=dA?"none":"block";
+  if(!dA) return;
+  const sixA=sixFromDate(dA);
+  const base=baseStatsFromSix(sixA);
+  // profile
+  byId("cName").textContent=byId("nickA").value || formatName(dA);
+  byId("cClass").textContent=classFromSix(sixA);
+  byId("cTitle").textContent=titleFromSix(sixA);
+  // emblem
+  const marks=["◆","◇","■","▲","△","●"]; byId("emblem").textContent=marks[dA.getUTCMonth()%6];
+  // badges
+  const b=byId("badges"); b.innerHTML=""; badgesFromSix(sixA).forEach(t=>{const s=document.createElement("span"); s.className="tag"; s.textContent=t; b.appendChild(s);});
+  // six + bars + hint
+  renderSix(byId("sixRows"),sixA);
+  fillBars(base);
+  byId("hints").innerHTML=hintFromSix(sixA);
+  setTab("status"); toast(L.toast1); scrollToBoard();
+}
+function genBoth(){
