@@ -4,6 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KenGoSystem — 生年月日診断ツール（Elastic Human OS）</title>
+<script>
+  const lang = navigator.language.startsWith("ja") ? "ja" : "en";
+
+  const text = {
+    ja: {
+      title: "KenGoSystem – 生年月日診断ツール",
+      label_name: "名前",
+      label_birth: "生年月日",
+      btn: "診断する",
+      result_title: "診断結果"
+    },
+    en: {
+      title: "KenGoSystem – Birthdate Analyzer",
+      label_name: "Name",
+      label_birth: "Birthdate",
+      btn: "Run",
+      result_title: "Result"
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector("#title").innerText = text[lang].title;
+    document.querySelector("#label-name").innerText = text[lang].label_name;
+    document.querySelector("#label-birth").innerText = text[lang].label_birth;
+    document.querySelector("#run").innerText = text[lang].btn;
+  });
+</script>
 <style>
   :root{--bg:#0b0f14;--card:#121822;--ink:#e8f0ff;--muted:#9fb3cc;--accent:#5ee1ff;--ok:#7cffb7;}
   *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#0b0f14,#0e1420 60%,#0b0f14);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
@@ -24,6 +51,32 @@
 </style>
 </head>
 <body>
+<script>
+const userLang = navigator.language || navigator.userLanguage;
+const isJP = userLang.startsWith("ja");
+
+// 各テキストを書き換える
+if(!isJP){
+  document.querySelector("h1").textContent = "KenGoSystem – Birthday Diagnosis Tool";
+
+  document.querySelector('label[for="name"]')?.remove();
+  document.querySelector('#name').placeholder = "Name";
+
+  document.querySelector('label[for="dob"]')?.remove();
+  document.querySelector('#dob').placeholder = "YYYY-MM-DD";
+
+  document.getElementById("run").textContent = "Analyze";
+
+  // 説明
+  document.querySelectorAll("p")[0].innerHTML =
+    "<b>Core = GUM</b>, <b>Outer = WIND</b>, <b>Main body = CIRCLE</b> — This model visualizes your OS bias.";
+
+  document.querySelectorAll("h2")[0].textContent = "About this tool";
+
+  document.querySelectorAll("p")[1].innerHTML =
+    "Based on the global standard Core / Flow / Circle model, adapted to KenGo’s GUM × WIND × CIRCLE.";
+}
+</script>
   <div class="wrap">
     <div class="card">
       <h1>KenGoSystem — 生年月日診断ツール</h1>
