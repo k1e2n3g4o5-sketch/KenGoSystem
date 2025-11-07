@@ -3,121 +3,208 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>KenGo式 簡易診断（やり直し安定版）</title>
+<title>KenGo式：異世界ステータス鑑定</title>
 <style>
-  :root{
-    --bg:#0d1117; --card:#111827; --ink:#e5ecff; --sub:#9bb1cc; --line:#1f2937;
-    --acc:#38bdf8; --acc2:#22d3ee; --ok:#4ade80; --bar:#334155;
-  }
-  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6}
-  .wrap{max-width:860px;margin:0 auto;padding:20px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0}
-  h1{font-size:26px;margin:0 0 6px}
-  p.lead{color:var(--sub);margin:0 0 6px}
-  label{display:block;margin:10px 4px 6px;font-size:18px}
-  .input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:18px}
-  .input::placeholder{color:var(--sub)}
-  .row{display:grid;grid-template-columns:1fr;gap:12px}
-  @media(min-width:820px){.row{grid-template-columns:1fr 1fr}}
-  button{width:100%;padding:14px 18px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#001014;font-size:20px;font-weight:800;cursor:pointer;margin-top:10px}
-  .hint,.err{font-size:14px;margin:6px 4px 0}
-  .hint{color:var(--sub)} .err{color:#ff7a90;display:none}
-  .result{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#0b1320aa}
-  .fly{opacity:0;transform:translateY(12px) scale(.985);transition:all .35s ease}
-  .in{opacity:1;transform:translateY(0) scale(1)}
-  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-  .badge{border:1px solid var(--line);padding:8px 10px;border-radius:999px;font-size:15px}
-  h2{font-size:22px;margin:8px 0}
-  .six{display:grid;gap:10px;margin-top:8px}
-  .six-row{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center}
-  .six-name{color:var(--sub);font-size:14px}
-  .bar{height:16px;background:var(--bar);border-radius:999px;overflow:hidden}
-  .bar>i{display:block;height:100%;width:0;border-radius:999px;transition:width .6s ease}
-  .pct{text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
-  .ring{display:grid;place-items:center;margin-top:8px}
-  .ringtips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
-  .tag{border:1px solid var(--line);padding:6px 8px;border-radius:10px;font-size:14px}
-  .foot{color:var(--sub);font-size:13px;margin-top:8px}
+/* ===== THEME (Isekai Status Screen) ===== */
+:root{
+  --bg0:#0a0e17; --bg1:#0e1422; --panel:#0f1b2e; --ink:#eaf3ff; --mut:#a7b6d1;
+  --edge:#22324d; --acc:#7dd3fc; --acc2:#a78bfa; --ok:#4ade80; --warn:#fbbf24;
+  --bar:#1e2a3f; --grid:#152038; --hp:#ef4444; --mp:#60a5fa; --sp:#22d3ee;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:radial-gradient(1200px 900px at 70% -10%,#11223a 0%,var(--bg0) 35%,var(--bg1) 100%);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,"Hiragino Sans","Noto Sans JP",Helvetica,Arial;line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:18px}
+.header{display:flex;align-items:center;gap:14px;margin:8px 0 12px}
+.logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#1b2a44,#0f172a);border:1px solid var(--edge);display:grid;place-items:center;box-shadow:0 0 0 4px #0a1222 inset,0 8px 22px #0007}
+.logo b{font-size:18px;letter-spacing:.5px;color:#9dd7ff}
+h1{margin:0;font-size:24px}
+.sub{color:var(--mut);margin-top:-2px}
+
+/* control card */
+.card{background:linear-gradient(180deg,rgba(18,27,47,.9),rgba(13,19,33,.88));border:1px solid var(--edge);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.grid{display:grid;gap:12px}
+@media(min-width:860px){.grid{grid-template-columns:1.2fr 1fr}}
+label{display:block;margin:8px 6px 6px}
+.input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--edge);background:rgba(2,6,23,.6);color:var(--ink);font-size:18px}
+.input::placeholder{color:var(--mut)}
+.btn{width:100%;padding:14px 18px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#001018;font-size:18px;font-weight:800;cursor:pointer;margin-top:8px}
+.err{color:#ff7a90;font-size:14px;display:none}
+
+/* status layout */
+.board{display:grid;gap:14px}
+@media(min-width:860px){.board{grid-template-columns:320px 1fr}}
+.panel{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:14px;box-shadow:0 6px 18px #0009}
+h2{font-size:20px;margin:0 0 8px}
+.small{color:var(--mut);font-size:13px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+.avatar{width:90px;height:90px;border-radius:14px;background:linear-gradient(135deg,#17233b,#0c1424);border:1px solid var(--edge);display:grid;place-items:center;font-size:40px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.tag{border:1px solid var(--edge);padding:8px 10px;border-radius:999px;font-size:14px;background:#0a1221}
+.kv dl{margin:0}
+.kv dt{font-size:13px;color:var(--mut)}
+.kv dd{margin:0 0 6px 0;font-size:18px}
+
+/* hp/mp/sp bars */
+.stat{margin:8px 0}
+.stat-row{display:grid;grid-template-columns:92px 1fr 64px;gap:10px;align-items:center}
+.bar{height:16px;background:var(--bar);border-radius:999px;overflow:hidden}
+.fill{height:100%;width:0;border-radius:999px;transition:width .6s}
+.pct{text-align:right;font-variant-numeric:tabular-nums}
+
+/* six skills */
+.six{display:grid;gap:10px;margin-top:4px}
+.skill-name{color:var(--mut);font-size:13px}
+
+/* tabs */
+.tabs{display:flex;gap:8px;margin-top:6px}
+.tab{flex:1;padding:10px 12px;border:1px solid var(--edge);border-bottom:0;border-radius:12px 12px 0 0;background:#0d1728;color:var(--mut);text-align:center;cursor:pointer}
+.tab.active{background:#13223a;color:var(--ink);font-weight:700}
+.tabpan{border:1px solid var(--edge);border-radius:0 12px 12px 12px;padding:12px;background:#0e1a2e}
+
+/* ring */
+.ring{display:grid;place-items:center;margin-top:6px}
+.ringtips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.chip{border:1px solid var(--edge);padding:6px 8px;border-radius:10px;font-size:13px;background:#0a1221}
+
+/* footer */
+.foot{color:var(--mut);font-size:12px;text-align:center;margin:12px 0 2px}
+.fly{opacity:0;transform:translateY(8px);transition:.35s ease}
+.in{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="card">
-    <h1>KenGo式 簡易診断（やり直し安定版）</h1>
-    <p class="lead">生年月日だけで “6式％” と “相性リング（任意）” を表示。iPhone向けに大きめ＆シンプル。</p>
-
-    <div class="row">
-      <div class="card" style="margin:0">
-        <label>ニックネーム（任意）</label>
-        <input id="nickA" class="input" placeholder="KenGo（任意）">
-        <label>生年月日（自由入力）</label>
-        <input id="dateA" class="input" inputmode="numeric" placeholder="19900504 / 1990-05-04 / 1990/05/04">
-        <div id="errA" class="err">日付の形式を確認してね。</div>
-        <button id="btnSelf">診断する</button>
-      </div>
-
-      <div class="card" style="margin:0">
-        <label>相手のニックネーム（任意）</label>
-        <input id="nickB" class="input" placeholder="Rin（任意）">
-        <label>相手の生年月日（任意）</label>
-        <input id="dateB" class="input" inputmode="numeric" placeholder="19940322 / 1994-03-22 など">
-        <div id="errB" class="err">相手の日付の形式を確認してね。</div>
-        <button id="btnBoth">相性も出す</button>
-      </div>
+  <div class="header">
+    <div class="logo"><b>OS</b></div>
+    <div>
+      <h1>KenGo式：異世界ステータス鑑定</h1>
+      <div class="sub">生年月日→属性・HP/MP/SP・スキル（6式）/ パーティ相性。iPhone最適化。</div>
     </div>
-
-    <div id="selfBox" class="result fly" hidden>
-      <h2>あなたの結果</h2>
-      <div id="selfBadges" class="badges"></div>
-      <p id="selfText" style="margin:8px 0 0"></p>
-      <h3 style="margin:12px 0 6px">6式（円環の6方向）％</h3>
-      <div id="sixRows" class="six"></div>
-    </div>
-
-    <div id="pairBox" class="result fly" hidden>
-      <h2>相性結果</h2>
-      <div id="pairBadges" class="badges"></div>
-      <p id="pairText" style="margin:8px 0 0"></p>
-      <div class="ring">
-        <svg id="ring" width="240" height="240" viewBox="0 0 240 240" aria-label="Compatibility Rings">
-          <defs>
-            <linearGradient id="gA" x1="0" x2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient>
-            <linearGradient id="gB" x1="0" x2="1"><stop offset="0%" stop-color="#a3e635"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
-          </defs>
-          <circle cx="120" cy="120" r="90" stroke="#1f2937" stroke-width="12" fill="none" opacity=".6"/>
-          <circle cx="120" cy="120" r="65" stroke="#1f2937" stroke-width="12" fill="none" opacity=".6"/>
-          <path id="arcA" d="" stroke="url(#gA)" stroke-width="12" fill="none" stroke-linecap="round"/>
-          <path id="arcB" d="" stroke="url(#gB)" stroke-width="12" fill="none" stroke-linecap="round"/>
-          <text id="ringScore" x="120" y="126" text-anchor="middle" font-size="26" fill="currentColor" font-weight="700">--%</text>
-        </svg>
-        <div id="ringTips" class="ringtips"></div>
-      </div>
-    </div>
-
-    <p class="foot">※エンタメ用。感じる→わかる（B→A）で遊んでね。</p>
   </div>
+
+  <div class="card grid">
+    <div>
+      <label>ニックネーム（任意）</label>
+      <input id="nickA" class="input" placeholder="勇者 KenGo など（任意）">
+      <label>生年月日</label>
+      <input id="dateA" class="input" inputmode="numeric" placeholder="19900504 / 1990-05-04 / 1990/05/04">
+      <div id="errA" class="err">日付の形式を確認してね。</div>
+      <button id="btnSelf" class="btn">▶ ステータス生成</button>
+    </div>
+    <div>
+      <label>相手のニックネーム（任意）</label>
+      <input id="nickB" class="input" placeholder="僧侶 Rin など（任意）">
+      <label>相手の生年月日（任意）</label>
+      <input id="dateB" class="input" inputmode="numeric" placeholder="19940322 / 1994-03-22 など">
+      <div id="errB" class="err">相手の日付の形式を確認してね。</div>
+      <button id="btnBoth" class="btn">▶ パーティ相性も表示</button>
+    </div>
+  </div>
+
+  <div id="board" class="board fly" hidden>
+    <!-- LEFT: Avatar & base -->
+    <div class="panel">
+      <h2>キャラクター / Character</h2>
+      <div class="kv">
+        <div id="avatar" class="avatar">?</div>
+        <div>
+          <dl>
+            <dt>名前 / Name</dt>
+            <dd id="cName">—</dd>
+            <dt>クラス / Class（属性）</dt>
+            <dd id="cClass">—</dd>
+            <dt>称号 / Title</dt>
+            <dd id="cTitle">—</dd>
+          </dl>
+          <div class="tags" id="badges"></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:12px">
+        <h2>基礎ステータス / Base Stats</h2>
+        <div class="stat">
+          <div class="stat-row">
+            <div>HP（生命）</div>
+            <div class="bar"><div id="hpFill" class="fill" style="background:var(--hp)"></div></div>
+            <div id="hpPct" class="pct">—%</div>
+          </div>
+          <div class="stat-row">
+            <div>MP（集中）</div>
+            <div class="bar"><div id="mpFill" class="fill" style="background:var(--mp)"></div></div>
+            <div id="mpPct" class="pct">—%</div>
+          </div>
+          <div class="stat-row">
+            <div>SP（流速）</div>
+            <div class="bar"><div id="spFill" class="fill" style="background:var(--sp)"></div></div>
+            <div id="spPct" class="pct">—%</div>
+          </div>
+        </div>
+        <div class="small">HP=円の安定、MP=理解の集中、SP=風の移動速度（B→A規格）</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Tabs -->
+    <div>
+      <div class="tabs">
+        <div id="tabStatus" class="tab active">ステータス</div>
+        <div id="tabCompat" class="tab">パーティ相性</div>
+      </div>
+      <div class="tabpan" id="panStatus">
+        <h2>スキル / Skills（6式％）</h2>
+        <div class="six" id="sixRows"></div>
+        <div class="panel" style="margin-top:12px">
+          <h2>ヒント / Hints</h2>
+          <div id="hints" class="small">—</div>
+        </div>
+      </div>
+      <div class="tabpan" id="panCompat" style="display:none">
+        <h2>パーティ適性 / Party Synergy</h2>
+        <div class="ring">
+          <svg id="ring" width="260" height="260" viewBox="0 0 260 260" aria-label="Compatibility Rings">
+            <defs>
+              <linearGradient id="gA" x1="0" x2="1"><stop offset="0%" stop-color="#7dd3fc"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient>
+              <linearGradient id="gB" x1="0" x2="1"><stop offset="0%" stop-color="#a3e635"/><stop offset="100%" stop-color="#7dd3fc"/></linearGradient>
+            </defs>
+            <circle cx="130" cy="130" r="96" stroke="#1e2a3f" stroke-width="14" fill="none" opacity=".7"/>
+            <circle cx="130" cy="130" r="70" stroke="#1e2a3f" stroke-width="14" fill="none" opacity=".7"/>
+            <path id="arcA" d="" stroke="url(#gA)" stroke-width="14" fill="none" stroke-linecap="round"/>
+            <path id="arcB" d="" stroke="url(#gB)" stroke-width="14" fill="none" stroke-linecap="round"/>
+            <text id="ringScore" x="130" y="137" text-anchor="middle" font-size="28" fill="currentColor" font-weight="800">--%</text>
+          </svg>
+          <div class="ringtips" id="ringTips"></div>
+        </div>
+        <div class="panel" style="margin-top:12px">
+          <h2>相性メモ / Notes</h2>
+          <div id="pairText">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">※エンタメ用。感じる→わかる（B→A）で遊ぼう。/ KenGo OS 風プロトタイプ</div>
 </div>
 
 <script>
 (()=>{
-// ===== ユーティリティ：日付を柔軟に解釈 =====
+// ====== Utils: Parse date flexibly ======
 function parseDate(s){
   if(!s) return null;
-  const z2h = String(s).trim().replace(/[０-９／－－ー−]/g, c=>({"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","／":"/","－":"-","ー":"-","−":"-"}[c]??c));
-  const digits = z2h.replace(/[^\d]/g,"");
+  const z2h=String(s).trim().replace(/[０-９／－－ー−]/g,c=>({"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","／":"/","－":"-","ー":"-","−":"-"}[c]??c));
+  const digits=z2h.replace(/[^\d]/g,"");
   if(digits.length!==8) return null;
   const y=+digits.slice(0,4), m=+digits.slice(4,6), d=+digits.slice(6,8);
   const md=[31,(y%4===0&&(y%100!==0||y%400===0))?29:28,31,30,31,30,31,31,30,31,30,31];
   if(m<1||m>12||d<1||d>md[m-1]) return null;
   return {y,m,d};
 }
-function showErr(id, on){ const el=document.getElementById(id); el.style.display=on?"block":"none"; }
+function err(id,on){const e=document.getElementById(id); e.style.display=on?"block":"none";}
 
-// ===== 元素 & 相性（簡易） =====
+// ====== Isekai model ======
 const ELEMENTS=["WIND","FIRE","WATER","EARTH"];
 const EMOJI={WIND:"💨",FIRE:"🔥",WATER:"🌊",EARTH:"🪨"};
 const JP={WIND:"風",FIRE:"火",WATER:"水",EARTH:"地"};
 const COLOR={WIND:"#22d3ee",FIRE:"#fb7185",WATER:"#60a5fa",EARTH:"#a3e635"};
+const TITLES={WIND:"風読みの旅人",FIRE:"炉の守り手",WATER:"鏡の庭の賢者",EARTH:"大地の楯"};
 const COMP={
   WIND:{WIND:"GOOD",FIRE:"GREAT",WATER:"GOOD",EARTH:"NEUTRAL"},
   FIRE:{WIND:"GREAT",FIRE:"SPICY",WATER:"GOOD",EARTH:"GOOD"},
@@ -125,91 +212,139 @@ const COMP={
   EARTH:{WIND:"NEUTRAL",FIRE:"GOOD",WATER:"GREAT",EARTH:"GOOD"}
 };
 const COMP_EMO={GREAT:"💞",GOOD:"💫",NEUTRAL:"🌗",SPICY:"🌶️"};
-const COMP_TXT={GREAT:"最高の追い風。放っておいても回る。",GOOD:"心地よく伸びる。小さな合図で十分。",NEUTRAL:"可も不可もなし。小さな“儀式”で安定。",SPICY:"刺激と楽しさ。ペース配慮＋合図の約束。"};
-const COMP_SCORE={GREAT:88,GOOD:72,NEUTRAL:55,SPICY:66};
+const COMP_TXT={
+  GREAT:"最高の追い風。立つだけで進む。",
+  GOOD:"静かな相乗。短い合図で十分。",
+  NEUTRAL:"可も不可もなし。小さな儀式を共有すると安定。",
+  SPICY:"刺激多め。ペース配慮と合図の約束が鍵。"
+};
+const COMP_SCORE={GREAT:90,GOOD:76,NEUTRAL:58,SPICY:68};
 
-// 決定的に要素を出す
 function pickElement(ymd){ return ELEMENTS[(ymd.m + ymd.d) % 4]; }
 
-// 6式％（DOBから安定生成）
+// 6式％（決定論的）
 function sixVector(ymd){
   let seed=ymd.y*10000+ymd.m*100+ymd.d;
   function rnd(){ seed=(seed*1664525+1013904223)>>>0; return seed/4294967295; }
   const raw=[rnd(),rnd(),rnd(),rnd(),rnd(),rnd()].map(x=>0.6+x*0.9);
   raw[0]*=1+((ymd.d%5)-2)*0.03; // Circle
   raw[4]*=1+((ymd.m%4)-1)*0.04; // Wind
-  raw[5]*=1+(((ymd.y%10)-5)*0.01); // Rubber ritual
+  raw[5]*=1+(((ymd.y%10)-5)*0.01); // Ritual/Rubber
   const sum=raw.reduce((a,b)=>a+b,0);
   return raw.map(v=>Math.round((v/sum)*100));
 }
-const SIXNAMES=["Circle-Being（人は円）","Arrow-World（矢印世界）","Return-Growth（寝る子は育つ）","Top-View Identity（上視点）","Wind Outflow → Return（風の呼吸）","Rubber Return Key（帰還キー）"];
+const SIXNAMES=[
+  "Circle-Being（円の体）",
+  "Arrow-World（矢印世界耐性）",
+  "Return-Growth（寝る子は育つ）",
+  "Top-View（上視点）",
+  "Wind Flow（風の呼吸）",
+  "Rubber Key（帰還キー）"
+];
 
-function badge(html){
-  const s=document.createElement("span"); s.className="badge"; s.innerHTML=html; return s;
+// HP/MP/SP を 6式から合成
+function baseStats(vec){
+  const HP=Math.round((vec[0]+vec[2]+vec[5]) / 3); // 円・回復・ゴム
+  const MP=Math.round((vec[3]+vec[1]) / 2);        // 上視点・矢印世界理解
+  const SP=Math.round((vec[4]+vec[0]) / 2);        // 風・円の移動
+  return {HP,MP,SP};
 }
-function renderSelf(name, el, ymd){
-  const b=document.getElementById("selfBadges"); b.innerHTML="";
-  b.append(badge(`${EMOJI[el]} <b style="color:${COLOR[el]}">${JP[el]}（${el}）</b>`));
-  b.append(badge("💠 Core=Rubber")); b.append(badge("💨 Wind=Flow")); b.append(badge("⭕ Circle=Return"));
-  const who = name?`${name} は`:"あなたは";
-  document.getElementById("selfText").innerHTML = `🪄 <b>${who} ${JP[el]}（${el}）</b>。<br>合図：深呼吸・姿勢リセット・小休止。外圧は「吸収→調整→返す」。`;
-  const vec=sixVector(ymd);
-  const rows=document.getElementById("sixRows"); rows.innerHTML="";
+
+function badge(html){ const s=document.createElement("span"); s.className="tag"; s.innerHTML=html; return s; }
+
+function renderBars(vec){
   const colors=["#8b5cf6","#22d3ee","#f97316","#10b981","#60a5fa","#f472b6"];
+  const rows=document.getElementById("sixRows"); rows.innerHTML="";
   SIXNAMES.forEach((nm,i)=>{
-    const row=document.createElement("div"); row.className="six-row";
-    const n=document.createElement("div"); n.className="six-name"; n.textContent=nm;
+    const row=document.createElement("div"); row.className="stat-row";
+    const nmv=document.createElement("div"); nmv.className="skill-name"; nmv.textContent=nm;
     const bar=document.createElement("div"); bar.className="bar";
-    const fill=document.createElement("i"); fill.style.background=colors[i]; bar.appendChild(fill);
+    const fill=document.createElement("div"); fill.className="fill"; fill.style.background=colors[i]; bar.appendChild(fill);
     const pct=document.createElement("div"); pct.className="pct"; pct.textContent=vec[i]+"%";
-    row.append(n,bar,pct); rows.appendChild(row);
+    row.append(nmv,bar,pct); rows.appendChild(row);
     requestAnimationFrame(()=>{ fill.style.width=vec[i]+"%"; });
   });
 }
+
+function renderBase(hp,mp,sp){
+  const set=(id,val)=>{ document.getElementById(id+"Pct").textContent = val+"%";
+                        const el=document.getElementById(id+"Fill"); requestAnimationFrame(()=> el.style.width = val+"%"); };
+  set("hp",hp); set("mp",mp); set("sp",sp);
+}
+
 function arcPath(cx,cy,r,startDeg,spanDeg){
   const toXY=(deg)=>[cx + r*Math.cos((deg-90)*Math.PI/180), cy + r*Math.sin((deg-90)*Math.PI/180)];
   const end=startDeg+spanDeg, large=spanDeg>180?1:0;
   const [sx,sy]=toXY(startDeg), [ex,ey]=toXY(end);
   return `M ${sx} ${sy} A ${r} ${r} 0 ${large} 1 ${ex} ${ey}`;
 }
-function renderPair(elA, elB, nameA, nameB){
+
+function renderCompat(elA, elB, nameA, nameB){
   const rank=COMP[elA][elB], emo=COMP_EMO[rank], text=COMP_TXT[rank], score=COMP_SCORE[rank];
-  const pb=document.getElementById("pairBadges"); pb.innerHTML="";
-  pb.append(badge(`${EMOJI[elA]} ${(nameA||"あなた")}: <b style="color:${COLOR[elA]}">${JP[elA]}</b>`));
-  pb.append(badge(`${EMOJI[elB]} ${(nameB||"相手")}: <b style="color:${COLOR[elB]}">${JP[elB]}</b>`));
-  pb.append(badge(`${emo} <b>${rank}</b>`));
   document.getElementById("pairText").textContent = `${emo} ${rank} — ${text}`;
-  const span={GREAT:300,GOOD:240,SPICY:220,NEUTRAL:180}[rank]||220;
-  document.getElementById("arcA").setAttribute("d", arcPath(120,120,90,20,span));
-  document.getElementById("arcB").setAttribute("d", arcPath(120,120,65,30,Math.max(160,span-40)));
+  const span={GREAT:310,GOOD:250,SPICY:220,NEUTRAL:180}[rank]||240;
+  document.getElementById("arcA").setAttribute("d", arcPath(130,130,96,18,span));
+  document.getElementById("arcB").setAttribute("d", arcPath(130,130,70,28,Math.max(160,span-40)));
   document.getElementById("ringScore").textContent = score+"%";
   document.getElementById("ringTips").innerHTML =
-    `<span class="tag">${nameA||"あなた"}: <b style="color:${COLOR[elA]}">${JP[elA]}</b></span>
-     <span class="tag">${nameB||"相手"}: <b style="color:${COLOR[elB]}">${JP[elB]}</b></span>`;
+    `<span class="chip">${nameA||"あなた"}：<b style="color:${COLOR[elA]}">${JP[elA]}</b></span>
+     <span class="chip">${nameB||"相手"}：<b style="color:${COLOR[elB]}">${JP[elB]}</b></span>`;
 }
 
-// ===== クリック =====
-function reveal(id){ const box=document.getElementById(id); box.hidden=false; requestAnimationFrame(()=>box.classList.add("in")); box.scrollIntoView({behavior:"smooth",block:"start"}); }
-function reset(id){ const box=document.getElementById(id); box.hidden=true; box.classList.remove("in"); }
+// Tabs
+const tabStatus=document.getElementById("tabStatus");
+const tabCompat=document.getElementById("tabCompat");
+const panStatus=document.getElementById("panStatus");
+const panCompat=document.getElementById("panCompat");
+tabStatus.onclick=()=>{tabStatus.classList.add("active");tabCompat.classList.remove("active");panStatus.style.display="block";panCompat.style.display="none";}
+tabCompat.onclick=()=>{tabCompat.classList.add("active");tabStatus.classList.remove("active");panCompat.style.display="block";panStatus.style.display="none";}
 
+function revealBoard(){ const b=document.getElementById("board"); b.hidden=false; requestAnimationFrame(()=>b.classList.add("in")); }
+
+function buildStatus(name, ymd){
+  // element & titles
+  const el=pickElement(ymd);
+  document.getElementById("avatar").textContent = EMOJI[el];
+  document.getElementById("cName").textContent = name||"ななしの転生者";
+  document.getElementById("cClass").innerHTML = `${JP[el]}（${el}）`;
+  document.getElementById("cTitle").textContent = TITLES[el];
+
+  const badges=document.getElementById("badges"); badges.innerHTML="";
+  badges.append(badge("💠 Core=Rubber"));
+  badges.append(badge("💨 Wind=Flow"));
+  badges.append(badge("⭕ Circle=Return"));
+  badges.append(badge(`🎚 属性：<b style="color:${COLOR[el]}">${JP[el]}</b>`));
+
+  // six & base
+  const vec=sixVector(ymd);
+  renderBars(vec);
+  const {HP,MP,SP}=baseStats(vec);
+  renderBase(HP,MP,SP);
+
+  // hints
+  const hints = [
+    "HP↑：寝る／温浴／塩＆水／ゆっくり深呼吸",
+    "MP↑：視点を“上”へ（俯瞰）→短いメモで要約",
+    "SP↑：姿勢を丸→円、肩・骨盤を同時に“ふっ”",
+    "衝突時：吸収→整形→返す（受け返し）",
+  ];
+  document.getElementById("hints").textContent = hints.join(" ／ ");
+  return el;
+}
+
+// Buttons
 document.getElementById("btnSelf").addEventListener("click", ()=>{
-  const a=parseDate(document.getElementById("dateA").value);
-  if(!a){ showErr("errA",true); return; } showErr("errA",false);
-  const elA=pickElement(a);
-  renderSelf(document.getElementById("nickA").value.trim(), elA, a);
-  reset("pairBox"); reveal("selfBox");
+  const a=parseDate(document.getElementById("dateA").value); err("errA",!a); if(!a) return;
+  buildStatus(document.getElementById("nickA").value.trim(), a);
+  tabStatus.click(); revealBoard();
 });
 document.getElementById("btnBoth").addEventListener("click", ()=>{
-  const a=parseDate(document.getElementById("dateA").value);
-  const b=parseDate(document.getElementById("dateB").value);
-  showErr("errA",!a); showErr("errB",!b);
-  if(!a||!b) return;
-  const elA=pickElement(a), elB=pickElement(b);
-  renderSelf(document.getElementById("nickA").value.trim(), elA, a);
-  const nA=document.getElementById("nickA").value.trim();
-  const nB=document.getElementById("nickB").value.trim();
-  renderPair(elA, elB, nA, nB);
-  reveal("selfBox"); reveal("pairBox");
+  const a=parseDate(document.getElementById("dateA").value), b=parseDate(document.getElementById("dateB").value);
+  err("errA",!a); err("errB",!b); if(!a||!b) return;
+  const elA=buildStatus(document.getElementById("nickA").value.trim(), a);
+  const elB=pickElement(b);
+  renderCompat(elA, elB, document.getElementById("nickA").value.trim(), document.getElementById("nickB").value.trim());
+  tabCompat.click(); revealBoard();
 });
 })();
 </script>
