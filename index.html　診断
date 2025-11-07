@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KenGoSystem — 生年月日診断ツール（Elastic Human OS）</title>
 <script>
-  const lang = navigator.language.startsWith("ja") ? "ja" : "en";
+ const qs = new URLSearchParams(location.search);
+const sys = (navigator.language || "").toLowerCase();
+const auto = sys.startsWith("ja") ? "ja" : "en";
+const lang = qs.get("lang") || auto; navigator.language.startsWith("ja") ? "ja" : "en";
 
   const text = {
     ja: {
