@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KenGoSystem — 生年月日診断ツール（Elastic Human OS）</title>
+<style>
+  :root{--bg:#0b0f14;--card:#121822;--ink:#e8f0ff;--muted:#9fb3cc;--accent:#5ee1ff;--ok:#7cffb7;}
+  *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#0b0f14,#0e1420 60%,#0b0f14);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:720px;margin:0 auto;padding:24px}
+  .card{background:var(--card);border:1px solid #1a2330;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:20px}
+  h1{font-size:22px;margin:6px 0 14px} h2{font-size:18px;margin:18px 0 8px}
+  p{color:var(--muted);margin:4px 0 10px}
+  label{display:block;margin:10px 0 6px}
+  input[type="date"],input[type="text"]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #223047;background:#0c1220;color:var(--ink)}
+  button{width:100%;margin-top:14px;border:0;border-radius:14px;padding:14px 16px;font-weight:700;font-size:16px;background:linear-gradient(135deg,#29b0ff,#5ee1ff);color:#041018}
+  button:active{transform:translateY(1px)}
+  .result{margin-top:18px;padding:16px;border:1px dashed #26465e;border-radius:12px}
+  .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0b2532;border:1px solid #1c4d63;color:#c8f3ff;margin:4px 6px 0 0;font-size:12px}
+  .grid{display:grid;gap:12px}@media(min-width:680px){.grid{grid-template-columns:1fr 1fr}}
+  .pill{display:inline-block;border-radius:10px;padding:6px 10px;background:#0e1b2a;border:1px solid #1f3047;margin:4px 6px 0 0;color:#a9c6e8;font-size:13px}
+  footer{margin:28px 0 8px;text-align:center;color:#86a4c5;font-size:12px}
+  .ok{color:var(--ok)} .accent{color:var(--accent)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>KenGoSystem — 生年月日診断ツール</h1>
+      <p>「<b>核＝ゴム</b>」「<b>外周＝風</b>」「<b>本体＝円</b>」の三層モデルで、あなたの<b>OSバイアス</b>を可視化します。押さない／導かない設計（KenGo-WIND準拠）。</p>
+      <div class="grid">
+        <div>
+          <label>ニックネーム（任意）</label>
+          <input id="name" type="text" placeholder="例：KenGo">
+        </div>
+        <div>
+          <label>生年月日</label>
+          <input id="dob" type="date" placeholder="YYYY-MM-DD">
+        </div>
+      </div>
+      <button id="run">診断する</button>
+
+      <div id="out" class="result" style="display:none"></div>
+
+      <h2>このツールについて</h2>
+      <p>世界AI標準の <span class="accent">Core / Flow / Circle</span> に、KenGo式の <span class="accent">GUM（Elastic）× WIND（Flow）× CIRCLE</span> を対応付けています。数理は軽量な“ライフパス数”＋補助軸で表現。</p>
+    </div>
+    <footer>© 2025 KenGoSystem — Elastic Human OS / Wind Protocol</footer>
+  </div>
+
+<script>
+  // --- Utility: digit reduction (1-9). 11/22 はそのまま保持（任意の拡張点）
+  function reduceToDigit(n){
+    let s = String(n).replace(/\D/g,"");
+    let sum = 0;
+    for(const ch of s) sum += Number(ch);
+    // keep master 11 or 22 (optional)
+    if(sum===11 || sum===22) return sum;
+    while(sum>9){ sum = String(sum).split("").reduce((a,b)=>a+Number(b),0); }
+    return sum;
+  }
+
+  // Life Path Number from DOB (YYYY-MM-DD)
+  function lifePathFromDob(dobStr){
+    const nums = dobStr.replace(/\D/g,"");
+    return reduceToDigit(nums);
+  }
+
+  // Maps for archetype (Wind-themed, simple & friendly)
+  const ARCH = {
+    1:{title:"SUN / CORE-LEAD（核のリード）", tagline:"中心を作る点。始まりを担う。"},
+    2:{title:"MOON / WATER（調和）", tagline:"受容と共鳴。間をつなぐ。"},
+    3:{title:"WIND / PLAY（遊び）", tagline:"軽やかな循環。場を明るく回す。"},
+    4:{title:"EARTH / FOUNDATION（基盤）", tagline:"形を整える。土台と継続。"},
+    5:{title:"VORTEX / CHANGE（渦・変化）", tagline:"変化の推進。反転の使い手。"},
+    6:{title:"TREE / HARMONY（世界樹）", tagline:"保護と調整。安心を育てる。"},
+    7:{title:"SKY / INSIGHT（洞察）", tagline:"上視点の観察。静かに深掘る。"},
+    8:{title:"MOUNTAIN / POWER（山）", tagline:"外圧を受け切る器。責任と実行。"},
+    9:{title:"OCEAN / UNIVERSAL（海）", tagline:"全体性。手放しと循環完了。"},
+    11:{title:"RAY / TRANSPARENCY（透明の光）", tagline:"直観で結ぶ。場をクリアにする。"},
+    22:{title:"BRIDGE / GREAT FORM（大工）", tagline:"世界仕様に落とす建築力。"}
+  };
+
+  // Secondary axes (KenGo式の軽量近似)：月×日で Wind/Circle/Gum バイアスを出す
+  function secondaryAxes(d){
+    const dt = new Date(d);
+    const m = dt.getUTCMonth()+1, day = dt.getUTCDate(), w = dt.getUTCDay();
+    // Wind-Circle-Gum index
+    const idx = (m + day) % 3; // 0/1/2
+    const wcg = ["WIND（風）","CIRCLE（円）","GUM（ゴム）"][idx];
+
+    // Flow level（誕生日の曜日で軽い遊び指標）
+    const flow = ["Calm","Light","Adaptive","Bright","Focused","Deep","Free"][w];
+
+    // Formアライメント（奇数日=可動性/偶数日=安定性の遊び）
+    const form = (day % 2 === 0) ? "安定寄り（姿勢・型がハマる）" : "可動寄り（動いて整う）";
+
+    return {wcg, flow, form};
+  }
+
+  // Guidance texts mapped to Core/Flow/Form
+  const adviceCore = {
+    1:"核＝ゴムを意識。勝手に中心になるので“押さない”。",
+    2:"受容は強み。判断を急がず“間”を置くほど安定。",
+    3:"遊びが燃料。笑い→流れ→成果の順でOK。",
+    4:"小さく刻むと最強。型で守ってから風を入れる。",
+    5:"反転の名手。衝突は 吸収→整形→返す で芸になる。",
+    6:"安心を配る人。境界を柔らかく、でも薄くしすぎない。",
+    7:"上から観る力。言語化は“短く・核心だけ”。",
+    8:"責任を背負える器。休息も“責任”として確保。",
+    9:"手放すほど循環。終わらせる勇気が新陳代謝。",
+    11:"透明管理。場のノイズ除去だけで十分機能する。",
+    22:"具体に落とす天才。仕様書→試作→公開の三拍子。"
+  };
+
+  function run(){
+    const name = document.getElementById('name').value.trim() || "あなた";
+    const dob  = document.getElementById('dob').value;
+    const out  = document.getElementById('out');
+
+    if(!dob){ out.style.display='block'; out.innerHTML='<span class="accent">生年月日</span>を選んでね。'; return; }
+
+    const lp = lifePathFromDob(dob);
+    const arch = ARCH[lp] || ARCH[reduceToDigit(lp)];
+    const ax   = secondaryAxes(dob);
+
+    // Create shareable URL (?d=YYYY-MM-DD&n=Name)
+    const share = `${location.origin}${location.pathname}?d=${encodeURIComponent(dob)}&n=${encodeURIComponent(name)}`;
+
+    out.style.display='block';
+    out.innerHTML = `
+      <div class="badge">LifePath: <b>${lp}</b></div>
+      <div class="badge">${ax.wcg}</div>
+      <div class="badge">FLOW: ${ax.flow}</div>
+      <h2>${name} のアーキタイプ</h2>
+      <p class="ok"><b>${arch.title}</b> — ${arch.tagline}</p>
+
+      <h2>KenGo式 三層まとめ</h2>
+      <p><span class="pill">CORE（核）</span> <span>${adviceCore[lp]||"核＝命ラインを守る。押さない・導かない。"}</span></p>
+      <p><span class="pill">FLOW（風）</span> <span>今日のバイアス：<b>${ax.wcg}</b>／ムード：<b>${ax.flow}</b>。呼吸・速度・余白を合わせよう。</span></p>
+      <p><span class="pill">FORM（形）</span> <span>${ax.form}</span></p>
+
+      <h2>シェアリンク</h2>
+      <p><a href="${share}" style="color:var(--accent);word-break:break-all">${share}</a></p>
+      <p class="muted">※この診断はKenGoSystemの“非誘導・非強制”原則に基づく軽量表示です。</p>
+    `;
+  }
+
+  document.getElementById('run').addEventListener('click', run);
+
+  // Auto-fill from query (?d=YYYY-MM-DD&n=Name)
+  const qs = new URLSearchParams(location.search);
+  if(qs.get('d')) document.getElementById('dob').value = qs.get('d');
+  if(qs.get('n')) document.getElementById('name').value = qs.get('n');
+  if(qs.get('d')) run();
+</script>
+</body>
+</html>
