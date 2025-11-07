@@ -3,80 +3,77 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>KenGo式：風×円×ゴム 診断（相性つき・自由入力日付）</title>
-<meta name="description" content="KenGo式 Elastic Human OS（風×円×ゴム）の簡易診断＆相性チェッカー。生年月日は19900504 / 1990-05-04 / 1990/05/04など自由入力。">
+<title>KenGo式：風×円×ゴム 診断（相性つき・自由入力）</title>
+<meta name="description" content="KenGo式 Elastic Human OS（風×円×ゴム）の簡易診断＆相性チェッカー。iPhone最適化／自由入力日付。">
+<meta name="color-scheme" content="light dark" />
 <style>
+/* ===== iPhone最適化：でかボタン・高コントラスト・軽量UI ===== */
 :root{
-  --bg:#0d1017; --card:#151b2e; --ink:#eef6ff; --sub:#a9c3e6;
-  --acc:#8be9fd; --ok:#a6ffcb; --rose:#ffb3c7; --vio:#cbb6ff; --sun:#ffe08a;
-  --line: rgba(255,255,255,.10);
+  --bg:#f7f8fa; --ink:#0b1220; --sub:#5a6a86; --card:#ffffff; --line:#e5e9f2;
+  --acc:#2dd4bf; --acc2:#60a5fa; --bad:#ef476f; --ok:#16a34a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b0e12; --ink:#eaf2ff; --sub:#9bb1cc; --card:#121722; --line:#1f2a3c;
+    --acc:#2dd4bf; --acc2:#60a5fa; --bad:#ff8fa6; --ok:#4ade80;
+  }
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
-  background: radial-gradient(1200px 800px at 70% -10%, #1a2144 0%, var(--bg) 60%);
-  color: var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-  font-size: 20px;
-  line-height: 1.7;
+  background:var(--bg);
+  color:var(--ink);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial;
+  -webkit-text-size-adjust:100%;
+  line-height:1.6;
+  font-size:18px;
 }
-.wrap{padding: 22px}
+.wrap{padding:20px}
 .card{
-  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: 26px;
-  max-width: 860px;
-  margin: 26px auto;
-  box-shadow: 0 20px 50px rgba(0,0,0,.45);
-  backdrop-filter: blur(6px);
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  max-width:720px;
+  margin:16px auto;
 }
-h1{font-size: 28px; margin: 6px 0 16px}
-.lead{color:var(--sub); margin: 6px 2px 16px}
-.kv{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-.kv .big{font-size: 36px}
-.grid{display:grid; grid-template-columns:1fr; gap:16px; margin: 16px 0}
-@media (min-width:680px){ .grid{grid-template-columns:1fr 1fr} }
-label{display:block; margin: 6px 8px; font-size: 20px}
+h1{font-size:24px; margin:0 0 6px}
+.lead{color:var(--sub); margin:0 0 10px}
+.kv{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.kv .big{font-size:30px}
+.grid{display:grid; grid-template-columns:1fr; gap:14px; margin: 12px 0}
+@media (min-width:720px){ .grid{grid-template-columns:1fr 1fr} }
+label{display:block; margin: 10px 4px 6px; font-size:18px}
 .input{
-  width:100%; padding:14px 16px; border-radius:16px;
-  border:1px solid #23304d; background:#0c1224; color:#fff; font-size:20px;
+  width:100%; padding:14px 16px; border-radius:14px;
+  border:1.5px solid var(--line); background:transparent; color:var(--ink);
+  font-size:18px; line-height:1; min-height:52px;
 }
-.input::placeholder{color:#6f87a8}
-.hint{font-size:14px; color:var(--sub); margin:6px 8px 0}
-.err{font-size:14px; color:#ff9aa5; margin:6px 8px 0; display:none}
+.input::placeholder{color:var(--sub)}
+.input:focus{outline:none; border-color:var(--acc2); box-shadow:0 0 0 3px color-mix(in oklab, var(--acc2) 20%, transparent)}
+.hint{font-size:14px; color:var(--sub); margin:6px 4px 0}
+.err{font-size:14px; color:var(--bad); margin:6px 4px 0; display:none}
 button{
-  width:100%; padding:16px 18px; border:0; border-radius:16px;
-  background: linear-gradient(90deg, var(--acc), var(--vio));
-  color:#001018; font-weight:800; font-size:22px; cursor:pointer; margin-top: 10px;
+  width:100%; min-height:56px; padding:14px 16px; border:0; border-radius:14px;
+  background: linear-gradient(90deg, var(--acc), var(--acc2));
+  color:#001014; font-weight:800; font-size:20px; cursor:pointer; margin-top:12px;
+  -webkit-tap-highlight-color: transparent;
 }
-.smallbtn{
-  width:auto; padding:10px 14px; font-size:18px; border-radius:12px; margin-left:8px
-}
+button:active{transform:translateY(1px)}
+.smallbtn{width:auto; min-height:44px; font-size:16px; padding:10px 12px; border-radius:10px; background:none; border:1px solid var(--line); color:var(--ink)}
 .sep{height:1px; background:var(--line); margin:18px 0}
-.badges{display:flex; flex-wrap:wrap; gap:10px; margin:6px 0}
-.badge{
-  background:#101834; border:1px solid var(--line);
-  padding:8px 12px; border-radius:999px; display:inline-flex; align-items:center; gap:8px; font-size:18px;
-}
-.emo{font-size:22px}
-.result{
-  margin-top: 14px;
-  padding: 18px; border-radius:18px;
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  border: 1px solid var(--line);
-}
-h2{font-size:24px; margin: 6px 0 10px}
-h3{font-size:20px; margin: 12px 0 6px}
+.badges{display:flex; flex-wrap:wrap; gap:8px; margin:6px 0}
+.badge{border:1px solid var(--line); padding:8px 10px; border-radius:999px; font-size:16px}
+.emo{font-size:20px}
+.result{margin-top: 10px; padding:16px; border-radius:14px; border:1px solid var(--line); background: color-mix(in oklab, var(--card) 85%, transparent)}
+h2{font-size:22px; margin: 4px 0 8px}
+h3{font-size:18px; margin: 6px 0 4px}
 .kawaii b{color:var(--ok)}
-.tag{
-  background:#1a213e; border:1px solid var(--line);
-  padding:8px 12px; border-radius:12px; font-size:16px; display:inline-block; margin-right:8px; margin-bottom:6px;
-}
-.footer{color:var(--sub); font-size:14px; margin-top: 8px}
-.langtoggle{color:#cfe7ff; text-decoration:underline; background:none; border:none; cursor:pointer; font-size:18px}
-.center{display:flex; justify-content:center; gap:12px; flex-wrap:wrap}
+.tag{border:1px solid var(--line); padding:8px 10px; border-radius:12px; font-size:15px; display:inline-block; margin-right:6px; margin-bottom:6px;}
+.footer{color:var(--sub); font-size:13px; margin-top: 6px}
+.langtoggle{color:var(--acc2); text-decoration:underline; background:none; border:none; cursor:pointer; font-size:16px}
+.center{display:flex; justify-content:center; gap:8px; flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -86,37 +83,37 @@ h3{font-size:20px; margin: 12px 0 6px}
         <div class="big">🌀</div>
         <div>
           <h1 id="t_title">KenGo式：風 × 円 × ゴム 診断</h1>
-          <p class="lead" id="t_lead">生年月日は「19900504 / 1990-05-04 / 1990/05/04」形式でOK。ニックネームは任意。相性も同画面で。</p>
+          <p class="lead" id="t_lead">生年月日は「19900504 / 1990-05-04 / 1990/05/04」。ニックネームは任意。相性も同画面で。</p>
           <button class="langtoggle" id="langBtn" aria-label="switch language">日本語 / English</button>
         </div>
       </div>
 
-      <!-- 自分の入力 -->
       <div class="grid">
+        <!-- 自分 -->
         <div class="card" style="margin:0">
           <h3 id="t_you">あなた / You</h3>
           <label id="t_nick1">ニックネーム（任意）</label>
           <input class="input" type="text" id="nickA" placeholder="例：KenGo / Optional" />
           <label id="t_birth1">生年月日（自由入力）</label>
-          <input class="input" id="dateA" inputmode="numeric" autocomplete="bday"
+          <input class="input" id="dateA" inputmode="numeric" pattern="[0-9]*" autocomplete="bday"
                  placeholder="19900504 / 1990-05-04 / 1990/05/04" />
-          <div class="hint" id="t_hintA">8桁または区切りつきでもOK。自動で認識します。</div>
+          <div class="hint" id="t_hintA">数字8桁、または区切りつきでもOK。全角も自動変換。</div>
           <div class="err" id="errA">日付の形式を確認してください。</div>
           <div class="badges">
-            <span class="badge"><span class="emo">💨</span><span id="t_hint1">風×円×ゴムの“OSタイプ”を算出</span></span>
+            <span class="badge"><span class="emo">💨</span><span id="t_hint1">OSタイプ（風×円×ゴム）を算出</span></span>
           </div>
           <button id="btnSelf">診断 / Analyze</button>
         </div>
 
-        <!-- 相手の入力（任意） -->
+        <!-- 相手（任意） -->
         <div class="card" style="margin:0">
           <h3 id="t_partner">相性チェック（任意） / Compatibility (Optional)</h3>
           <label id="t_nick2">相手のニックネーム（任意）</label>
           <input class="input" type="text" id="nickB" placeholder="例：Rin / Optional" />
           <label id="t_birth2">相手の生年月日（自由入力）</label>
-          <input class="input" id="dateB" inputmode="numeric" autocomplete="bday"
+          <input class="input" id="dateB" inputmode="numeric" pattern="[0-9]*" autocomplete="bday"
                  placeholder="19940322 / 1994-03-22 / 1994/03/22" />
-          <div class="hint" id="t_hintB">両方の生年月日があれば相性を表示。</div>
+          <div class="hint" id="t_hintB">両方あれば相性を表示します。</div>
           <div class="err" id="errB">相手の日付の形式を確認してください。</div>
           <button id="btnBoth">相性まで診断 / Analyze Both</button>
         </div>
@@ -124,7 +121,7 @@ h3{font-size:20px; margin: 12px 0 6px}
 
       <div class="sep"></div>
 
-      <!-- 結果表示 -->
+      <!-- 結果 -->
       <div class="result" id="selfBox" hidden>
         <h2 id="t_self_title">あなたの結果 / Your Result</h2>
         <div class="badges" id="selfBadges"></div>
@@ -140,165 +137,128 @@ h3{font-size:20px; margin: 12px 0 6px}
       <div class="sep"></div>
       <div class="center">
         <span class="tag">🧩 Elastic Human OS</span>
-        <span class="tag">💠 Core = Rubber / 折れない核</span>
-        <span class="tag">💨 Wind = Flow / 風の循環</span>
-        <span class="tag">⭕ Circle = Return / 円に戻る</span>
+        <span class="tag">💠 Core = Rubber</span>
+        <span class="tag">💨 Wind = Flow</span>
+        <span class="tag">⭕ Circle = Return</span>
       </div>
-      <p class="footer" id="t_footer">
-        これはエンタメ診断です。体感（B→A）をたのしんでね。/ This is for fun & reflection.
-      </p>
+      <p class="footer" id="t_footer">エンタメ診断。体感（B→A）をたのしんでね。/ This is for fun & reflection.</p>
     </div>
   </div>
 
 <script>
 (() => {
-  // ====== i18n ======
+  // ===== i18n =====
   const jp = {
-    title: "KenGo式：風 × 円 × ゴム 診断",
-    lead: "生年月日は「19900504 / 1990-05-04 / 1990/05/04」形式でOK。ニックネームは任意。相性も同画面で。",
-    you: "あなた / You",
-    nick1: "ニックネーム（任意）",
-    birth1: "生年月日（自由入力）",
-    hintA: "8桁または区切りつきでもOK。自動で認識します。",
-    partner: "相性チェック（任意） / Compatibility (Optional)",
-    nick2: "相手のニックネーム（任意）",
-    birth2: "相手の生年月日（自由入力）",
-    hintB: "両方の生年月日があれば相性を表示。",
-    hint1: "風×円×ゴムの“OSタイプ”を算出",
-    btnSelf: "診断 / Analyze",
-    btnBoth: "相性まで診断 / Analyze Both",
-    selfTitle: "あなたの結果 / Your Result",
-    pairTitle: "相性結果 / Compatibility",
-    footer: "これはエンタメ診断です。体感（B→A）をたのしんでね。/ This is for fun & reflection.",
-    err: "日付の形式を確認してください。"
+    title:"KenGo式：風×円×ゴム 診断",
+    lead:"生年月日は「19900504 / 1990-05-04 / 1990/05/04」。ニックネームは任意。相性も同画面で。",
+    you:"あなた / You", nick1:"ニックネーム（任意）", birth1:"生年月日（自由入力）",
+    hintA:"数字8桁、または区切りつきでもOK。全角も自動変換。",
+    partner:"相性チェック（任意） / Compatibility (Optional)",
+    nick2:"相手のニックネーム（任意）", birth2:"相手の生年月日（自由入力）",
+    hintB:"両方あれば相性を表示します。",
+    hint1:"OSタイプ（風×円×ゴム）を算出",
+    btnSelf:"診断 / Analyze", btnBoth:"相性まで診断 / Analyze Both",
+    selfTitle:"あなたの結果 / Your Result", pairTitle:"相性結果 / Compatibility",
+    footer:"エンタメ診断。体感（B→A）をたのしんでね。/ This is for fun & reflection.",
+    err:"日付の形式を確認してください。"
   };
   const en = {
-    title: "KenGo Method: Wind × Circle × Rubber — Typing",
-    lead: "Enter your birthday in formats like 19900504 / 1990-05-04 / 1990/05/04. Nickname optional. Compatibility available.",
-    you: "You",
-    nick1: "Nickname (optional)",
-    birth1: "Date of Birth (free input)",
-    hintA: "8 digits or with separators — we parse it for you.",
-    partner: "Compatibility (Optional)",
-    nick2: "Partner Nickname (optional)",
-    birth2: "Partner Date of Birth (free input)",
-    hintB: "If both birthdays exist, compatibility will show.",
-    hint1: "Computes your Wind × Circle × Rubber OS",
-    btnSelf: "Analyze",
-    btnBoth: "Analyze Both",
-    selfTitle: "Your Result",
-    pairTitle: "Compatibility",
-    footer: "This is for fun & reflection. Enjoy the B→A flow.",
-    err: "Please check the date format."
+    title:"KenGo Method: Wind × Circle × Rubber — Typing",
+    lead:"Enter 19900504 / 1990-05-04 / 1990/05/04. Nickname optional. Same screen shows compatibility.",
+    you:"You", nick1:"Nickname (optional)", birth1:"Date of Birth (free input)",
+    hintA:"8 digits or with separators are OK. Full-width digits are auto-normalized.",
+    partner:"Compatibility (Optional)",
+    nick2:"Partner Nickname (optional)", birth2:"Partner Date of Birth (free input)",
+    hintB:"If both birthdays exist, compatibility will be shown.",
+    hint1:"Computes your OS (Wind × Circle × Rubber)",
+    btnSelf:"Analyze", btnBoth:"Analyze Both",
+    selfTitle:"Your Result", pairTitle:"Compatibility",
+    footer:"This is for fun & reflection. Enjoy the B→A flow.",
+    err:"Please check the date format."
   };
-  let isJP = (navigator.language || navigator.userLanguage || "ja").startsWith("ja");
-  const $ = (id) => document.getElementById(id);
-  const T = () => (isJP ? jp : en);
-
+  let isJP = (navigator.language || "ja").startsWith("ja");
+  const $ = (id)=>document.getElementById(id);
+  const T = ()=> isJP ? jp : en;
   function applyLang(){
-    $("t_title").textContent = T().title;
-    $("t_lead").textContent = T().lead;
-    $("t_you").textContent = T().you;
-    $("t_nick1").textContent = T().nick1;
-    $("t_birth1").textContent = T().birth1;
-    $("t_hintA").textContent = T().hintA;
-    $("t_partner").textContent = T().partner;
-    $("t_nick2").textContent = T().nick2;
-    $("t_birth2").textContent = T().birth2;
-    $("t_hintB").textContent = T().hintB;
-    $("t_hint1").textContent = T().hint1;
-    $("btnSelf").textContent = T().btnSelf;
-    $("btnBoth").textContent = T().btnBoth;
-    $("t_self_title").textContent = T().selfTitle;
-    $("t_pair_title").textContent = T().pairTitle;
-    $("t_footer").textContent = T().footer;
-    $("errA").textContent = T().err;
-    $("errB").textContent = T().err;
+    $("t_title").textContent=T().title; $("t_lead").textContent=T().lead;
+    $("t_you").textContent=T().you; $("t_nick1").textContent=T().nick1;
+    $("t_birth1").textContent=T().birth1; $("t_hintA").textContent=T().hintA;
+    $("t_partner").textContent=T().partner; $("t_nick2").textContent=T().nick2;
+    $("t_birth2").textContent=T().birth2; $("t_hintB").textContent=T().hintB;
+    $("t_hint1").textContent=T().hint1; $("btnSelf").textContent=T().btnSelf;
+    $("btnBoth").textContent=T().btnBoth; $("t_self_title").textContent=T().selfTitle;
+    $("t_pair_title").textContent=T().pairTitle; $("t_footer").textContent=T().footer;
+    $("errA").textContent=T().err; $("errB").textContent=T().err;
   }
-  $("langBtn").addEventListener("click", ()=>{ isJP = !isJP; applyLang(); });
+  $("langBtn").addEventListener("click", ()=>{ isJP=!isJP; applyLang(); });
   applyLang();
 
-  // ====== Flexible Date Parser ======
-  // 受け入れ：YYYYMMDD / YYYY-MM-DD / YYYY/MM/DD / 空白混じりも可
+  // ===== Flexible Date Parser（全角→半角／記号無視） =====
   function parseFlexibleDate(str){
     if(!str) return null;
-    const s = String(str).trim();
-    if(!s) return null;
-    // 全角→半角
-    const z2h = s.replace(/[０-９／－－ー−]/g, (ch)=>{
-      const map = {"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","／":"/","－":"-","ー":"-","−":"-"};
+    const z2h = String(str).trim().replace(/[０-９／－－ー−]/g, ch=>{
+      const map={"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","／":"/","－":"-","ー":"-","−":"-"};
       return map[ch] ?? ch;
     });
-    // 数字のみ取り出し
     const digits = z2h.replace(/[^\d]/g,"");
     if(digits.length !== 8) return null;
-    const y = +digits.slice(0,4);
-    const m = +digits.slice(4,6);
-    const d = +digits.slice(6,8);
+    const y=+digits.slice(0,4), m=+digits.slice(4,6), d=+digits.slice(6,8);
     if(m<1||m>12||d<1||d>31) return null;
-    // 簡易妥当性（2月・うるう年は簡便チェック）
-    const mdays = [31, (y%4===0 && (y%100!==0||y%400===0))?29:28,31,30,31,30,31,31,30,31,30,31];
-    if(d > mdays[m-1]) return null;
+    const md=[31,(y%4===0 && (y%100!==0||y%400===0))?29:28,31,30,31,30,31,31,30,31,30,31];
+    if(d>md[m-1]) return null;
     return {y,m,d};
   }
-  // 入力欄のエラーメッセージ表示制御
-  function setError(id, show){
-    const el = $(id);
-    el.style.display = show ? "block" : "none";
-  }
+  function setError(id, show){ const el=$(id); el.style.display=show?"block":"none"; }
 
-  // ====== Typing Logic ======
-  const ELEMENTS = ["WIND","FIRE","WATER","EARTH"];
-  const EMOJI = {WIND:"💨", FIRE:"🔥", WATER:"🌊", EARTH:"🪨"};
-  const JP_NAME = {WIND:"風", FIRE:"火", WATER:"水", EARTH:"地"};
-  const TAGLINES_JP = {
-    WIND: "風が通ると世界が軽い。合図は“呼吸の深さ”。",
-    FIRE: "火は意志。点火すれば周囲も明るく温かい。",
-    WATER: "水は余白。受けて溶かし、静かに満たす。",
+  // ===== ファンタジー要素タイプ & 相性 =====
+  const ELEMENTS=["WIND","FIRE","WATER","EARTH"];
+  const EMOJI={WIND:"💨", FIRE:"🔥", WATER:"🌊", EARTH:"🪨"};
+  const JP_NAME={WIND:"風", FIRE:"火", WATER:"水", EARTH:"地"};
+  const TAG_JP={
+    WIND:"風が通ると世界が軽い。合図は“深い呼吸”。",
+    FIRE:"火は意志。点火すれば周囲も温かく明るい。",
+    WATER:"水は余白。受けて溶かし、静かに満たす。",
     EARTH:"地は安定。土台が整えばすべてが育つ。"
   };
-  const TAGLINES_EN = {
-    WIND: "When wind flows, the world feels light. Your sign is deeper breathing.",
-    FIRE: "Fire is will. Once ignited, others warm and see further.",
+  const TAG_EN={
+    WIND:"When wind flows, the world feels light. Your cue is deeper breathing.",
+    FIRE:"Fire is will. Once ignited, others warm and see further.",
     WATER:"Water is space. You dissolve pressure and fill quietly.",
     EARTH:"Earth is stability. With foundation set, everything grows."
   };
-  const COMP = {
-    WIND:   {WIND:"GOOD", FIRE:"GREAT", WATER:"GOOD", EARTH:"NEUTRAL"},
-    FIRE:   {WIND:"GREAT", FIRE:"SPICY", WATER:"GOOD", EARTH:"GOOD"},
-    WATER:  {WIND:"GOOD", FIRE:"GOOD", WATER:"GOOD", EARTH:"GREAT"},
-    EARTH:  {WIND:"NEUTRAL", FIRE:"GOOD", WATER:"GREAT", EARTH:"GOOD"},
+  const COMP={
+    WIND:{WIND:"GOOD",FIRE:"GREAT",WATER:"GOOD",EARTH:"NEUTRAL"},
+    FIRE:{WIND:"GREAT",FIRE:"SPICY",WATER:"GOOD",EARTH:"GOOD"},
+    WATER:{WIND:"GOOD",FIRE:"GOOD",WATER:"GOOD",EARTH:"GREAT"},
+    EARTH:{WIND:"NEUTRAL",FIRE:"GOOD",WATER:"GREAT",EARTH:"GOOD"}
   };
-  const COMP_EMO = {GREAT:"💞", GOOD:"💫", NEUTRAL:"🌗", SPICY:"🌶️"};
-  const COMP_JP = {
+  const COMP_EMO={GREAT:"💞",GOOD:"💫",NEUTRAL:"🌗",SPICY:"🌶️"};
+  const COMP_JP={
     GREAT:"最高の追い風。放っておいても回る相性。",
-    GOOD:"心地よく伸びる関係。少しの合図で十分。",
-    NEUTRAL:"可も不可もなし。儀式（合図）を決めると安定。",
+    GOOD:"心地よく伸びる関係。小さな合図で十分。",
+    NEUTRAL:"可も不可もなし。合図の“儀式”を決めると安定。",
     SPICY:"刺激的。ペース配慮と“合図の約束”が鍵。"
   };
-  const COMP_EN = {
+  const COMP_EN={
     GREAT:"Top-tier tailwind. It turns by itself.",
     GOOD:"Comfortable growth. Small signals are enough.",
-    NEUTRAL:"So-so. Set a ritual cue and it stabilizes.",
+    NEUTRAL:"So-so. Set a little ritual cue to stabilize.",
     SPICY:"Spicy & fun. Pace care + signal pact are keys."
   };
 
   function elementFromYMD(ymd){
-    // 元素タイプ： (month + day) % 4 で簡易分類（ファンタジー）
-    const idx = (ymd.m + ymd.d) % 4;
-    return ELEMENTS[idx];
+    // シンプルな“遊び”の分類： (month + day) % 4
+    return ELEMENTS[(ymd.m + ymd.d) % 4];
   }
-  function fancyName(el){
-    return isJP ? `${JP_NAME[el]}（${el}）` : el;
-  }
+  function fancyName(el){ return isJP ? `${JP_NAME[el]}（${el}）` : el; }
   function buildSelfText(name, el){
-    const line = isJP ? TAGLINES_JP[el] : TAGLINES_EN[el];
-    const who = name ? (isJP ? `${name} は` : `${name} is`) : (isJP ? "あなたは" : "You are");
+    const line = isJP ? TAG_JP[el] : TAG_EN[el];
+    const who = name ? (isJP?`${name} は`:`${name} is`) : (isJP?`あなたは`:`You are`);
     const headline = {
-      WIND: isJP ? "しなやかな風／受け返す達人" : "Supple Wind / Master of Return",
-      FIRE: isJP ? "灯す火／点火の導線" : "Kindling Fire / Sparkline",
-      WATER:isJP ? "やわらかな水／余白の魔法" : "Gentle Water / Space Maker",
-      EARTH:isJP ? "ゆるぎない地／土台ビルダー" : "Steady Earth / Ground Builder",
+      WIND:isJP?"しなやかな風／受け返す達人":"Supple Wind / Master of Return",
+      FIRE:isJP?"灯す火／点火の導線":"Kindling Fire / Sparkline",
+      WATER:isJP?"やわらかな水／余白の魔法":"Gentle Water / Space Maker",
+      EARTH:isJP?"ゆるぎない地／土台ビルダー":"Steady Earth / Ground Builder",
     }[el];
     const tip = isJP
       ? "合図：呼吸・姿勢・一度立ち止まる。外圧は“吸収→調整→返す”。"
@@ -306,79 +266,66 @@ h3{font-size:20px; margin: 12px 0 6px}
     return `🪄 <b>${who} ${fancyName(el)}</b>。<br>${line}<br><br><b>【${headline}】</b><br>${tip}`;
   }
   function buildSelfBadges(el){
-    const box = $("selfBadges");
-    box.innerHTML = "";
-    const mk = (txt)=>{ const s=document.createElement("span"); s.className="badge"; s.innerHTML=txt; return s; };
-    box.append(
-      mk(`<span class="emo">${EMOJI[el]}</span> <b>${fancyName(el)}</b>`),
-      mk(`<span class="emo">💠</span> Core=Rubber`),
-      mk(`<span class="emo">💨</span> Wind=Flow`),
-      mk(`<span class="emo">⭕</span> Circle=Return`)
-    );
+    const box=$("selfBadges"); box.innerHTML="";
+    const add=(html)=>{ const s=document.createElement("span"); s.className="badge"; s.innerHTML=html; box.appendChild(s); };
+    add(`<span class="emo">${EMOJI[el]}</span> <b>${fancyName(el)}</b>`);
+    add(`<span class="emo">💠</span> Core=Rubber`);
+    add(`<span class="emo">💨</span> Wind=Flow`);
+    add(`<span class="emo">⭕</span> Circle=Return`);
   }
   function buildPair(elA, elB, nameA, nameB){
     const rank = COMP[elA][elB];
     const emo = COMP_EMO[rank];
     const line = isJP ? COMP_JP[rank] : COMP_EN[rank];
-    const whoA = nameA || (isJP ? "あなた" : "You");
-    const whoB = nameB || (isJP ? "相手" : "Partner");
+    const whoA = nameA || (isJP?"あなた":"You");
+    const whoB = nameB || (isJP?"相手":"Partner");
     const lead = isJP ? "ふたりの元素" : "Elements";
     const cue = isJP
       ? "合図づくり：①合図のことば ②一度深呼吸 ③“戻る”の合言葉（やっとだね）"
-      : "Ritual cues: (1) signal word, (2) shared deep breath, (3) “return” password (Finally.)";
+      : "Ritual cues: (1) signal word, (2) shared deep breath, (3) a return password (Finally.)";
     $("pairBadges").innerHTML =
       `<span class="badge"><span class="emo">${EMOJI[elA]}</span>${whoA}: ${fancyName(elA)}</span>
        <span class="badge"><span class="emo">${EMOJI[elB]}</span>${whoB}: ${fancyName(elB)}</span>
        <span class="badge"><span class="emo">${emo}</span>${lead}: ${rank}</span>`;
     $("pairText").innerHTML =
-      `${emo} <b>${rank}</b> — ${line}<br><br>
-       <b>${isJP ? "使い方" : "How to play"}</b>：${cue}`;
+      `${emo} <b>${rank}</b> — ${line}<br><br><b>${isJP?"使い方":"How to play"}</b>：${cue}`;
   }
 
-  // ====== UI validate on blur ======
   function hookValidate(inputId, errId){
-    const el = $(inputId);
+    const el=$(inputId);
     el.addEventListener("blur", ()=>{
       const ok = !!parseFlexibleDate(el.value);
       setError(errId, !ok && el.value.trim()!=="");
     });
   }
-  hookValidate("dateA","errA");
-  hookValidate("dateB","errB");
+  hookValidate("dateA","errA"); hookValidate("dateB","errB");
 
-  // ====== Actions ======
   $("btnSelf").addEventListener("click", ()=>{
-    const ymd = parseFlexibleDate($("dateA").value);
+    const ymd=parseFlexibleDate($("dateA").value);
     if(!ymd){ setError("errA", true); return; }
     setError("errA", false);
-    const el = elementFromYMD(ymd);
-    const name = $("nickA").value.trim();
+    const el=elementFromYMD(ymd);
     buildSelfBadges(el);
-    $("selfText").innerHTML = buildSelfText(name, el);
-    $("selfBox").hidden = false;
-    $("pairBox").hidden = true;
+    $("selfText").innerHTML = buildSelfText($("nickA").value.trim(), el);
+    $("selfBox").hidden=false; $("pairBox").hidden=true;
   });
 
   $("btnBoth").addEventListener("click", ()=>{
-    const ymdA = parseFlexibleDate($("dateA").value);
-    const ymdB = parseFlexibleDate($("dateB").value);
-    if(!ymdA){ setError("errA", true); }
-    if(!ymdB){ setError("errB", true); }
-    if(!ymdA || !ymdB) return;
+    const A=parseFlexibleDate($("dateA").value), B=parseFlexibleDate($("dateB").value);
+    if(!A){ setError("errA", true); } if(!B){ setError("errB", true); }
+    if(!A||!B) return;
     setError("errA", false); setError("errB", false);
-    const elA = elementFromYMD(ymdA);
-    const elB = elementFromYMD(ymdB);
-    const nameA = $("nickA").value.trim();
-    const nameB = $("nickB").value.trim();
-    // self
+    const elA=elementFromYMD(A), elB=elementFromYMD(B);
     buildSelfBadges(elA);
-    $("selfText").innerHTML = buildSelfText(nameA, elA);
-    $("selfBox").hidden = false;
-    // pair
-    buildPair(elA, elB, nameA, nameB);
-    $("pairBox").hidden = false;
-    setTimeout(()=>{ $("pairBox").scrollIntoView({behavior:"smooth", block:"start"}); }, 60);
+    $("selfText").innerHTML = buildSelfText($("nickA").value.trim(), elA);
+    $("selfBox").hidden=false;
+    buildPair(elA, elB, $("nickA").value.trim(), $("nickB").value.trim());
+    $("pairBox").hidden=false;
+    setTimeout(()=>{ $("pairBox").scrollIntoView({behavior:"smooth"}); }, 80);
   });
+
+  // 言語切替
+  $("langBtn").addEventListener("click", ()=>{ isJP=!isJP; applyLang(); });
 })();
 </script>
 </body>
