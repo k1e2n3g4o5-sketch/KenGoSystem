@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>KenGo式：風×円×ゴム 診断（相性つき）</title>
-<meta name="description" content="KenGo式 Elastic Human OS（風×円×ゴム）の簡易診断＆相性チェッカー。ニックネーム任意、スマホ最適化。">
+<title>KenGo式：風×円×ゴム 診断（相性つき・自由入力日付）</title>
+<meta name="description" content="KenGo式 Elastic Human OS（風×円×ゴム）の簡易診断＆相性チェッカー。生年月日は19900504 / 1990-05-04 / 1990/05/04など自由入力。">
 <style>
 :root{
   --bg:#0d1017; --card:#151b2e; --ink:#eef6ff; --sub:#a9c3e6;
@@ -18,7 +18,7 @@ body{
   background: radial-gradient(1200px 800px at 70% -10%, #1a2144 0%, var(--bg) 60%);
   color: var(--ink);
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-  font-size: 20px; /* 基準でか文字 */
+  font-size: 20px;
   line-height: 1.7;
 }
 .wrap{padding: 22px}
@@ -39,11 +39,13 @@ h1{font-size: 28px; margin: 6px 0 16px}
 .grid{display:grid; grid-template-columns:1fr; gap:16px; margin: 16px 0}
 @media (min-width:680px){ .grid{grid-template-columns:1fr 1fr} }
 label{display:block; margin: 6px 8px; font-size: 20px}
-input[type="text"], input[type="date"]{
+.input{
   width:100%; padding:14px 16px; border-radius:16px;
   border:1px solid #23304d; background:#0c1224; color:#fff; font-size:20px;
 }
-input::placeholder{color:#6f87a8}
+.input::placeholder{color:#6f87a8}
+.hint{font-size:14px; color:var(--sub); margin:6px 8px 0}
+.err{font-size:14px; color:#ff9aa5; margin:6px 8px 0; display:none}
 button{
   width:100%; padding:16px 18px; border:0; border-radius:16px;
   background: linear-gradient(90deg, var(--acc), var(--vio));
@@ -74,7 +76,6 @@ h3{font-size:20px; margin: 12px 0 6px}
 }
 .footer{color:var(--sub); font-size:14px; margin-top: 8px}
 .langtoggle{color:#cfe7ff; text-decoration:underline; background:none; border:none; cursor:pointer; font-size:18px}
-.notice{color:var(--sun)}
 .center{display:flex; justify-content:center; gap:12px; flex-wrap:wrap}
 </style>
 </head>
@@ -85,7 +86,7 @@ h3{font-size:20px; margin: 12px 0 6px}
         <div class="big">🌀</div>
         <div>
           <h1 id="t_title">KenGo式：風 × 円 × ゴム 診断</h1>
-          <p class="lead" id="t_lead">生年月日から “風OSタイプ” を推定し、ニックネーム（任意）とペア相性もチェック。</p>
+          <p class="lead" id="t_lead">生年月日は「19900504 / 1990-05-04 / 1990/05/04」形式でOK。ニックネームは任意。相性も同画面で。</p>
           <button class="langtoggle" id="langBtn" aria-label="switch language">日本語 / English</button>
         </div>
       </div>
@@ -95,9 +96,12 @@ h3{font-size:20px; margin: 12px 0 6px}
         <div class="card" style="margin:0">
           <h3 id="t_you">あなた / You</h3>
           <label id="t_nick1">ニックネーム（任意）</label>
-          <input type="text" id="nickA" placeholder="例：KenGo / Optional" />
-          <label id="t_birth1">生年月日</label>
-          <input type="date" id="dateA" />
+          <input class="input" type="text" id="nickA" placeholder="例：KenGo / Optional" />
+          <label id="t_birth1">生年月日（自由入力）</label>
+          <input class="input" id="dateA" inputmode="numeric" autocomplete="bday"
+                 placeholder="19900504 / 1990-05-04 / 1990/05/04" />
+          <div class="hint" id="t_hintA">8桁または区切りつきでもOK。自動で認識します。</div>
+          <div class="err" id="errA">日付の形式を確認してください。</div>
           <div class="badges">
             <span class="badge"><span class="emo">💨</span><span id="t_hint1">風×円×ゴムの“OSタイプ”を算出</span></span>
           </div>
@@ -108,12 +112,12 @@ h3{font-size:20px; margin: 12px 0 6px}
         <div class="card" style="margin:0">
           <h3 id="t_partner">相性チェック（任意） / Compatibility (Optional)</h3>
           <label id="t_nick2">相手のニックネーム（任意）</label>
-          <input type="text" id="nickB" placeholder="例：Rin / Optional" />
-          <label id="t_birth2">相手の生年月日</label>
-          <input type="date" id="dateB" />
-          <div class="badges">
-            <span class="badge"><span class="emo">💞</span><span id="t_hint2">両方の生年月日があれば相性を表示</span></span>
-          </div>
+          <input class="input" type="text" id="nickB" placeholder="例：Rin / Optional" />
+          <label id="t_birth2">相手の生年月日（自由入力）</label>
+          <input class="input" id="dateB" inputmode="numeric" autocomplete="bday"
+                 placeholder="19940322 / 1994-03-22 / 1994/03/22" />
+          <div class="hint" id="t_hintB">両方の生年月日があれば相性を表示。</div>
+          <div class="err" id="errB">相手の日付の形式を確認してください。</div>
           <button id="btnBoth">相性まで診断 / Analyze Both</button>
         </div>
       </div>
@@ -151,40 +155,43 @@ h3{font-size:20px; margin: 12px 0 6px}
   // ====== i18n ======
   const jp = {
     title: "KenGo式：風 × 円 × ゴム 診断",
-    lead: "生年月日から “風OSタイプ” を推定し、ニックネーム（任意）とペア相性もチェック。",
+    lead: "生年月日は「19900504 / 1990-05-04 / 1990/05/04」形式でOK。ニックネームは任意。相性も同画面で。",
     you: "あなた / You",
     nick1: "ニックネーム（任意）",
-    birth1: "生年月日",
-    hint1: "風×円×ゴムの“OSタイプ”を算出",
+    birth1: "生年月日（自由入力）",
+    hintA: "8桁または区切りつきでもOK。自動で認識します。",
     partner: "相性チェック（任意） / Compatibility (Optional)",
     nick2: "相手のニックネーム（任意）",
-    birth2: "相手の生年月日",
-    hint2: "両方の生年月日があれば相性を表示",
+    birth2: "相手の生年月日（自由入力）",
+    hintB: "両方の生年月日があれば相性を表示。",
+    hint1: "風×円×ゴムの“OSタイプ”を算出",
     btnSelf: "診断 / Analyze",
     btnBoth: "相性まで診断 / Analyze Both",
     selfTitle: "あなたの結果 / Your Result",
     pairTitle: "相性結果 / Compatibility",
     footer: "これはエンタメ診断です。体感（B→A）をたのしんでね。/ This is for fun & reflection.",
+    err: "日付の形式を確認してください。"
   };
   const en = {
     title: "KenGo Method: Wind × Circle × Rubber — Typing",
-    lead: "Estimate your “Wind OS type” from date of birth. Nickname optional. Compatibility available.",
+    lead: "Enter your birthday in formats like 19900504 / 1990-05-04 / 1990/05/04. Nickname optional. Compatibility available.",
     you: "You",
     nick1: "Nickname (optional)",
-    birth1: "Date of Birth",
-    hint1: "Calculates your Wind × Circle × Rubber OS",
+    birth1: "Date of Birth (free input)",
+    hintA: "8 digits or with separators — we parse it for you.",
     partner: "Compatibility (Optional)",
     nick2: "Partner Nickname (optional)",
-    birth2: "Partner Date of Birth",
-    hint2: "Shows compatibility if both birthdays exist",
+    birth2: "Partner Date of Birth (free input)",
+    hintB: "If both birthdays exist, compatibility will show.",
+    hint1: "Computes your Wind × Circle × Rubber OS",
     btnSelf: "Analyze",
     btnBoth: "Analyze Both",
     selfTitle: "Your Result",
     pairTitle: "Compatibility",
     footer: "This is for fun & reflection. Enjoy the B→A flow.",
+    err: "Please check the date format."
   };
   let isJP = (navigator.language || navigator.userLanguage || "ja").startsWith("ja");
-
   const $ = (id) => document.getElementById(id);
   const T = () => (isJP ? jp : en);
 
@@ -194,22 +201,53 @@ h3{font-size:20px; margin: 12px 0 6px}
     $("t_you").textContent = T().you;
     $("t_nick1").textContent = T().nick1;
     $("t_birth1").textContent = T().birth1;
-    $("t_hint1").textContent = T().hint1;
+    $("t_hintA").textContent = T().hintA;
     $("t_partner").textContent = T().partner;
     $("t_nick2").textContent = T().nick2;
     $("t_birth2").textContent = T().birth2;
-    $("t_hint2").textContent = T().hint2;
+    $("t_hintB").textContent = T().hintB;
+    $("t_hint1").textContent = T().hint1;
     $("btnSelf").textContent = T().btnSelf;
     $("btnBoth").textContent = T().btnBoth;
     $("t_self_title").textContent = T().selfTitle;
     $("t_pair_title").textContent = T().pairTitle;
     $("t_footer").textContent = T().footer;
+    $("errA").textContent = T().err;
+    $("errB").textContent = T().err;
   }
   $("langBtn").addEventListener("click", ()=>{ isJP = !isJP; applyLang(); });
   applyLang();
 
-  // ====== Typing Logic (fantasy but consistent) ======
-  // 元素タイプ：WIND / FIRE / WATER / EARTH を (month + day) % 4 で決める
+  // ====== Flexible Date Parser ======
+  // 受け入れ：YYYYMMDD / YYYY-MM-DD / YYYY/MM/DD / 空白混じりも可
+  function parseFlexibleDate(str){
+    if(!str) return null;
+    const s = String(str).trim();
+    if(!s) return null;
+    // 全角→半角
+    const z2h = s.replace(/[０-９／－－ー−]/g, (ch)=>{
+      const map = {"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","／":"/","－":"-","ー":"-","−":"-"};
+      return map[ch] ?? ch;
+    });
+    // 数字のみ取り出し
+    const digits = z2h.replace(/[^\d]/g,"");
+    if(digits.length !== 8) return null;
+    const y = +digits.slice(0,4);
+    const m = +digits.slice(4,6);
+    const d = +digits.slice(6,8);
+    if(m<1||m>12||d<1||d>31) return null;
+    // 簡易妥当性（2月・うるう年は簡便チェック）
+    const mdays = [31, (y%4===0 && (y%100!==0||y%400===0))?29:28,31,30,31,30,31,31,30,31,30,31];
+    if(d > mdays[m-1]) return null;
+    return {y,m,d};
+  }
+  // 入力欄のエラーメッセージ表示制御
+  function setError(id, show){
+    const el = $(id);
+    el.style.display = show ? "block" : "none";
+  }
+
+  // ====== Typing Logic ======
   const ELEMENTS = ["WIND","FIRE","WATER","EARTH"];
   const EMOJI = {WIND:"💨", FIRE:"🔥", WATER:"🌊", EARTH:"🪨"};
   const JP_NAME = {WIND:"風", FIRE:"火", WATER:"水", EARTH:"地"};
@@ -225,9 +263,6 @@ h3{font-size:20px; margin: 12px 0 6px}
     WATER:"Water is space. You dissolve pressure and fill quietly.",
     EARTH:"Earth is stability. With foundation set, everything grows."
   };
-
-  // 相性マトリクス（可愛いファンタジー判定）
-  // GREAT / GOOD / NEUTRAL / SPICY（要工夫）
   const COMP = {
     WIND:   {WIND:"GOOD", FIRE:"GREAT", WATER:"GOOD", EARTH:"NEUTRAL"},
     FIRE:   {WIND:"GREAT", FIRE:"SPICY", WATER:"GOOD", EARTH:"GOOD"},
@@ -248,16 +283,9 @@ h3{font-size:20px; margin: 12px 0 6px}
     SPICY:"Spicy & fun. Pace care + signal pact are keys."
   };
 
-  function parseYMD(s){
-    // s: "YYYY-MM-DD"
-    if(!s || !/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
-    const [y,m,d] = s.split("-").map(n=>parseInt(n,10));
-    return {y, m, d};
-  }
-  function elementFromDate(s){
-    const dt = parseYMD(s);
-    if(!dt) return null;
-    const idx = (dt.m + dt.d) % 4;
+  function elementFromYMD(ymd){
+    // 元素タイプ： (month + day) % 4 で簡易分類（ファンタジー）
+    const idx = (ymd.m + ymd.d) % 4;
     return ELEMENTS[idx];
   }
   function fancyName(el){
@@ -275,7 +303,7 @@ h3{font-size:20px; margin: 12px 0 6px}
     const tip = isJP
       ? "合図：呼吸・姿勢・一度立ち止まる。外圧は“吸収→調整→返す”。"
       : "Cue: breath, posture, tiny pause. Handle pressure with “absorb → modulate → reflect.”";
-    return `🪄 <b>${who} ${fancyName(el)}</b>。<br>${line}<br><br<b>【${headline}】</b><br>${tip}`;
+    return `🪄 <b>${who} ${fancyName(el)}</b>。<br>${line}<br><br><b>【${headline}】</b><br>${tip}`;
   }
   function buildSelfBadges(el){
     const box = $("selfBadges");
@@ -288,7 +316,6 @@ h3{font-size:20px; margin: 12px 0 6px}
       mk(`<span class="emo">⭕</span> Circle=Return`)
     );
   }
-
   function buildPair(elA, elB, nameA, nameB){
     const rank = COMP[elA][elB];
     const emo = COMP_EMO[rank];
@@ -308,14 +335,23 @@ h3{font-size:20px; margin: 12px 0 6px}
        <b>${isJP ? "使い方" : "How to play"}</b>：${cue}`;
   }
 
+  // ====== UI validate on blur ======
+  function hookValidate(inputId, errId){
+    const el = $(inputId);
+    el.addEventListener("blur", ()=>{
+      const ok = !!parseFlexibleDate(el.value);
+      setError(errId, !ok && el.value.trim()!=="");
+    });
+  }
+  hookValidate("dateA","errA");
+  hookValidate("dateB","errB");
+
   // ====== Actions ======
   $("btnSelf").addEventListener("click", ()=>{
-    const d = $("dateA").value;
-    const el = elementFromDate(d);
-    if(!el){
-      alert(isJP ? "生年月日を入力してね。" : "Please enter your date of birth.");
-      return;
-    }
+    const ymd = parseFlexibleDate($("dateA").value);
+    if(!ymd){ setError("errA", true); return; }
+    setError("errA", false);
+    const el = elementFromYMD(ymd);
     const name = $("nickA").value.trim();
     buildSelfBadges(el);
     $("selfText").innerHTML = buildSelfText(name, el);
@@ -324,25 +360,24 @@ h3{font-size:20px; margin: 12px 0 6px}
   });
 
   $("btnBoth").addEventListener("click", ()=>{
-    const dA = $("dateA").value;
-    const dB = $("dateB").value;
-    const elA = elementFromDate(dA);
-    const elB = elementFromDate(dB);
-    if(!elA || !elB){
-      alert(isJP ? "両方の生年月日を入れてね。" : "Enter both birthdays.");
-      return;
-    }
+    const ymdA = parseFlexibleDate($("dateA").value);
+    const ymdB = parseFlexibleDate($("dateB").value);
+    if(!ymdA){ setError("errA", true); }
+    if(!ymdB){ setError("errB", true); }
+    if(!ymdA || !ymdB) return;
+    setError("errA", false); setError("errB", false);
+    const elA = elementFromYMD(ymdA);
+    const elB = elementFromYMD(ymdB);
     const nameA = $("nickA").value.trim();
     const nameB = $("nickB").value.trim();
-    // show self
+    // self
     buildSelfBadges(elA);
     $("selfText").innerHTML = buildSelfText(nameA, elA);
     $("selfBox").hidden = false;
-    // show pair
+    // pair
     buildPair(elA, elB, nameA, nameB);
     $("pairBox").hidden = false;
-    // scroll to pair
-    setTimeout(()=>{ $("pairBox").scrollIntoView({behavior:"smooth", block:"start"}); }, 50);
+    setTimeout(()=>{ $("pairBox").scrollIntoView({behavior:"smooth", block:"start"}); }, 60);
   });
 })();
 </script>
