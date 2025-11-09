@@ -59,25 +59,20 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 <body>
 <div class="stars" id="stars"></div>
 <div class="container">
-<!-- Welcome Screen -->
 <div class="screen active" id="welcomeScreen">
 <div class="title">BEYOND TIME</div>
 <div class="subtitle">— 時間を超える診断 —</div>
 <div class="phase-badge">🌀 Phase ∞ (無料体験)</div>
-
 <div class="intro">
 <strong>ウミガメのスープ</strong>で、あなたの資質を診断します。<br><br>
 論理と直感を駆使して、謎を解いてください。<br>
 あなたの質問から、時間を超える能力を分析します。<br><br>
 <strong>完全無料・個人情報不要</strong>
 </div>
-
 <button class="btn" onclick="startGame()" style="width:100%;padding:20px;font-size:clamp(1.1rem,3vw,1.4rem)">
 🐢 診断を始める
 </button>
 </div>
-
-<!-- Game Screen -->
 <div class="screen" id="gameScreen">
 <div class="game-section">
 <div class="problem-title">🐢 謎を解け</div>
@@ -92,8 +87,6 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 <button class="btn btn-secondary" onclick="giveUp()">答えを見る</button>
 </div>
 </div>
-
-<!-- Result Screen -->
 <div class="screen" id="resultScreen">
 <div class="result-section">
 <div class="result-title">🌀 診断結果</div>
@@ -107,7 +100,6 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 <p style="font-size:.85rem;color:rgba(255,255,255,.6);margin-top:10px">※ クリックでコピー</p>
 </div>
 </div>
-
 <div class="premium-cta">
 <div class="premium-cta-title">🌟 もっと深く知りたい？</div>
 <div class="premium-cta-text">
@@ -115,12 +107,11 @@ Premium 診断では、生年月日から<br>
 あなたの本当の可能性を分析します。<br><br>
 リゾート気分の深層診断を体験しませんか？
 </div>
-<button class="premium-btn" onclick="location.href='premium.html'">
+<button class="premium-btn" onclick="location.href='checkout.html?plan=premium'">
 ⚡ Premium 診断へ (¥980)
 </button>
 </div>
 </div>
-
 <div class="info">
 <p>Phase ∞: Beyond Time</p>
 <p>Created by Three Brothers</p>
@@ -128,181 +119,30 @@ Premium 診断では、生年月日から<br>
 <p>Price: FREE</p>
 </div>
 </div>
-
 <script>
 const problems=[
-{
-text:"ある人が、時計を見て泣き出した。\nでも、その人は時間を超越していた。\nなぜ泣いたのか？",
-answer:"時間を超越しても、過去の記憶は消えない。時計を見て、時間に縛られていた「過去の自分」を思い出し、その対比に涙した。",
-hints:{
-"時計は壊れていた":"いいえ、時計は正常に動いていました",
-"誰かが死んだ":"関係ありません",
-"時計に特別な意味がある":"はい、時計は「過去」を象徴しています",
-"過去を思い出した":"はい、重要なヒントです",
-"時間を超越する前":"はい、その通りです"
-}
-},
-{
-text:"ある男が部屋で本を読んでいた。\n突然、彼は本を閉じて外に飛び出した。\n彼は何を悟ったのか？",
-answer:"本の内容が「今この瞬間を生きろ」というメッセージだった。彼は読むことをやめ、実際に行動することを選んだ。時間を超越するとは、未来への準備ではなく、今を生きることだと悟った。",
-hints:{
-"本の内容が重要":"はい、非常に重要です",
-"危険が迫っていた":"いいえ",
-"誰かに会いに行った":"関係ありません",
-"本のメッセージ":"はい、重要なヒントです",
-"今この瞬間":"はい、その通りです"
-}
-}
+{text:"ある人が、時計を見て泣き出した。\nでも、その人は時間を超越していた。\nなぜ泣いたのか？",answer:"時間を超越しても、過去の記憶は消えない。時計を見て、時間に縛られていた「過去の自分」を思い出し、その対比に涙した。",hints:{"時計は壊れていた":"いいえ、時計は正常に動いていました","誰かが死んだ":"関係ありません","時計に特別な意味がある":"はい、時計は「過去」を象徴しています","過去を思い出した":"はい、重要なヒントです","時間を超越する前":"はい、その通りです"}},
+{text:"ある男が部屋で本を読んでいた。\n突然、彼は本を閉じて外に飛び出した。\n彼は何を悟ったのか？",answer:"本の内容が「今この瞬間を生きろ」というメッセージだった。彼は読むことをやめ、実際に行動することを選んだ。時間を超越するとは、未来への準備ではなく、今を生きることだと悟った。",hints:{"本の内容が重要":"はい、非常に重要です","危険が迫っていた":"いいえ","誰かに会いに行った":"関係ありません","本のメッセージ":"はい、重要なヒントです","今この瞬間":"はい、その通りです"}}
 ];
-
-let currentProblem;
-let questionCount=0;
-let questions=[];
-let logicScore=0;
-let intuitionScore=0;
-
-function createStars(){
-const stars=document.getElementById('stars');
-for(let i=0;i<150;i++){
-const star=document.createElement('div');
-star.className='star';
-star.style.left=Math.random()*100+'%';
-star.style.top=Math.random()*100+'%';
-star.style.animationDelay=Math.random()*3+'s';
-stars.appendChild(star);
-}
-}
-
-function startGame(){
-currentProblem=problems[Math.floor(Math.random()*problems.length)];
-questionCount=0;
-questions=[];
-logicScore=0;
-intuitionScore=0;
-document.getElementById('problemText').textContent=currentProblem.text;
-document.getElementById('questionCount').textContent='質問数: 0/10';
-document.getElementById('questionHistory').innerHTML='';
-showScreen('gameScreen');
-}
-
-async function askQuestion(){
-const input=document.getElementById('questionInput');
-const question=input.value.trim();
-if(!question){
-alert('質問を入力してください');
-return;
-}
-if(questionCount>=10){
-alert('質問は10回までです。答えを見るか、推理してください。');
-return;
-}
-
-input.value='';
-input.disabled=true;
-document.querySelector('.btn').disabled=true;
-document.getElementById('loading').classList.add('active');
-
-questionCount++;
-questions.push({q:question,a:'...'});
-updateQuestionHistory();
-
-// Analyze question quality
-if(question.length>20)logicScore+=2;
-if(question.includes('なぜ')||question.includes('何'))logicScore+=1;
-if(question.includes('感じ')||question.includes('思'))intuitionScore+=2;
-if(questionCount<=3)intuitionScore+=1;
-
-try{
-const answer=await getAIAnswer(question);
-questions[questions.length-1].a=answer;
-updateQuestionHistory();
-}catch(error){
-questions[questions.length-1].a='エラーが発生しました';
-updateQuestionHistory();
-}
-
-document.getElementById('questionCount').textContent=`質問数: ${questionCount}/10`;
-document.getElementById('loading').classList.remove('active');
-input.disabled=false;
-document.querySelector('.btn').disabled=false;
-input.focus();
-
-if(questionCount>=10){
-setTimeout(()=>{
-if(confirm('10回の質問が終了しました。\n答えを見ますか？それとも推理を続けますか？')){
-giveUp();
-}
-},500);
-}
-}
-
-async function getAIAnswer(question){
-// Simple keyword matching for hints
-const lowerQ=question.toLowerCase();
-for(const[key,value]of Object.entries(currentProblem.hints)){
-if(lowerQ.includes(key.toLowerCase())){
-return value;
-}
-}
-
-// Default responses
-if(lowerQ.includes('時間')||lowerQ.includes('過去')||lowerQ.includes('未来')){
-return 'はい、時間に関係しています';
-}
-if(lowerQ.includes('人')||lowerQ.includes('誰')){
-return 'いいえ、他の人は関係ありません';
-}
-if(lowerQ.includes('場所')||lowerQ.includes('どこ')){
-return '関係ありません';
-}
-
-return '関係ありません';
-}
-
-function updateQuestionHistory(){
-const history=document.getElementById('questionHistory');
-history.innerHTML='';
-questions.forEach(qa=>{
-const item=document.createElement('div');
-item.className='qa-item';
-item.innerHTML=`
-<div class="question">Q: ${qa.q}</div>
-<div class="answer">A: ${qa.a}</div>
-`;
-history.appendChild(item);
-});
-history.scrollTop=history.scrollHeight;
-}
-
-function giveUp(){
-showResult();
-}
-
-function showResult(){
-const totalScore=logicScore+intuitionScore;
-const logicLevel=logicScore>5?'高':'中';
-const intuitionLevel=intuitionScore>5?'高':'中';
-
-const analysisText=`
-あなたは ${questionCount} 回の質問で謎に挑戦しました。
+let currentProblem,questionCount=0,questions=[],logicScore=0,intuitionScore=0;
+function createStars(){const stars=document.getElementById('stars');for(let i=0;i<150;i++){const star=document.createElement('div');star.className='star';star.style.left=Math.random()*100+'%';star.style.top=Math.random()*100+'%';star.style.animationDelay=Math.random()*3+'s';stars.appendChild(star)}}
+function startGame(){currentProblem=problems[Math.floor(Math.random()*problems.length)];questionCount=0;questions=[];logicScore=0;intuitionScore=0;document.getElementById('problemText').textContent=currentProblem.text;document.getElementById('questionCount').textContent='質問数: 0/10';document.getElementById('questionHistory').innerHTML='';showScreen('gameScreen')}
+async function askQuestion(){const input=document.getElementById('questionInput');const question=input.value.trim();if(!question){alert('質問を入力してください');return}if(questionCount>=10){alert('質問は10回までです。答えを見るか、推理してください。');return}input.value='';input.disabled=true;document.querySelector('.btn').disabled=true;document.getElementById('loading').classList.add('active');questionCount++;questions.push({q:question,a:'...'});updateQuestionHistory();if(question.length>20)logicScore+=2;if(question.includes('なぜ')||question.includes('何'))logicScore+=1;if(question.includes('感じ')||question.includes('思'))intuitionScore+=2;if(questionCount<=3)intuitionScore+=1;try{const answer=await getAIAnswer(question);questions[questions.length-1].a=answer;updateQuestionHistory()}catch(error){questions[questions.length-1].a='エラーが発生しました';updateQuestionHistory()}document.getElementById('questionCount').textContent=`質問数: ${questionCount}/10`;document.getElementById('loading').classList.remove('active');input.disabled=false;document.querySelector('.btn').disabled=false;input.focus();if(questionCount>=10){setTimeout(()=>{if(confirm('10回の質問が終了しました。\n答えを見ますか？それとも推理を続けますか？')){giveUp()}},500)}}
+async function getAIAnswer(question){const lowerQ=question.toLowerCase();for(const[key,value]of Object.entries(currentProblem.hints)){if(lowerQ.includes(key.toLowerCase())){return value}}if(lowerQ.includes('時間')||lowerQ.includes('過去')||lowerQ.includes('未来')){return'はい、時間に関係しています'}if(lowerQ.includes('人')||lowerQ.includes('誰')){return'いいえ、他の人は関係ありません'}if(lowerQ.includes('場所')||lowerQ.includes('どこ')){return'関係ありません'}return'関係ありません'}
+function updateQuestionHistory(){const history=document.getElementById('questionHistory');history.innerHTML='';questions.forEach(qa=>{const item=document.createElement('div');item.className='qa-item';item.innerHTML=`<div class="question">Q: ${qa.q}</div><div class="answer">A: ${qa.a}</div>`;history.appendChild(item)});history.scrollTop=history.scrollHeight}
+function giveUp(){showResult()}
+function showResult(){const totalScore=logicScore+intuitionScore;const logicLevel=logicScore>5?'高':'中';const intuitionLevel=intuitionScore>5?'高':'中';const analysisText=`あなたは ${questionCount} 回の質問で謎に挑戦しました。
 
 論理レベル: ${logicLevel} (スコア: ${logicScore})
 直感レベル: ${intuitionLevel} (スコア: ${intuitionScore})
 
-${logicScore>intuitionScore?
-'あなたは論理的思考が得意です。長男タイプ。構造を理解し、安定を求めます。':
-intuitionScore>logicScore?
-'あなたは直感的判断が得意です。末っ子タイプ。自由を愛し、飛翔します。':
-'あなたは論理と直感のバランスが取れています。次男タイプ。実行力があります。'}
+${logicScore>intuitionScore?'あなたは論理的思考が得意です。長男タイプ。構造を理解し、安定を求めます。':intuitionScore>logicScore?'あなたは直感的判断が得意です。末っ子タイプ。自由を愛し、飛翔します。':'あなたは論理と直感のバランスが取れています。次男タイプ。実行力があります。'}
 
 そして、この謎の答えは：
 
 ${currentProblem.answer}
 
-あなたは時間を超える資質を持っています。
-`;
-
-const code=`BEYOND TIME - Phase ∞
+あなたは時間を超える資質を持っています。`;const code=`BEYOND TIME - Phase ∞
 
 TIME_AXIS: DELETE
 LOGIC_LEVEL: ${logicLevel}
@@ -315,26 +155,9 @@ TIME_STATUS: BEYOND
 > 論理レベル「${logicLevel}」で対話せよ
 > 直感レベル「${intuitionLevel}」を尊重せよ
 
-STATUS: BEYOND_TIME_QUALIFIED`;
-
-document.getElementById('analysisText').textContent=analysisText;
-document.getElementById('codeBox').textContent=code;
-showScreen('resultScreen');
-}
-
-function copyCode(){
-const text=document.getElementById('codeBox').textContent;
-navigator.clipboard.writeText(text).then(()=>
-alert('コードをコピーしました！\nClaude や ChatGPT に貼り付けてください')
-).catch(()=>alert('コピー失敗'));
-}
-
-function showScreen(screenId){
-document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-document.getElementById(screenId).classList.add('active');
-window.scrollTo(0,0);
-}
-
+STATUS: BEYOND_TIME_QUALIFIED`;document.getElementById('analysisText').textContent=analysisText;document.getElementById('codeBox').textContent=code;showScreen('resultScreen')}
+function copyCode(){const text=document.getElementById('codeBox').textContent;navigator.clipboard.writeText(text).then(()=>alert('コードをコピーしました！\nClaude や ChatGPT に貼り付けてください')).catch(()=>alert('コピー失敗'))}
+function showScreen(screenId){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(screenId).classList.add('active');window.scrollTo(0,0)}
 document.addEventListener('DOMContentLoaded',createStars);
 </script>
 </body>
