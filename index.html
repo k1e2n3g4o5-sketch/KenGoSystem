@@ -7,12 +7,13 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Hiragino Sans','Yu Gothic',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#333}
-.container{text-align:center;padding:20px}
+.container{text-align:center;padding:20px;max-width:800px;margin:0 auto}
 .title{font-size:2rem;color:white;margin-bottom:40px;font-weight:300;letter-spacing:.1em}
 .menu-circle{position:relative;width:400px;height:400px;margin:0 auto}
 .quadrant{position:absolute;width:200px;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease;border-radius:20px;backdrop-filter:blur(10px)}
 .quadrant:hover{transform:scale(1.05);z-index:10;box-shadow:0 8px 32px rgba(0,0,0,.2)}
 .quadrant:active{transform:scale(.98)}
+.quadrant.completed{opacity:.5;cursor:default}
 .morning{top:0;right:0;background:rgba(255,223,186,.9)}
 .evening{bottom:0;right:0;background:rgba(255,182,193,.9)}
 .night{bottom:0;left:0;background:rgba(72,61,139,.9);color:white}
@@ -20,43 +21,102 @@ body{font-family:'Hiragino Sans','Yu Gothic',sans-serif;background:linear-gradie
 .phase-icon{font-size:3rem;margin-bottom:10px}
 .phase-name{font-size:1.5rem;font-weight:bold;margin-bottom:5px}
 .phase-sub{font-size:.9rem;opacity:.8}
-.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;background:white;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,0,0,.1);z-index:5}
+.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;background:white;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,0,0,.1);z-index:5;cursor:pointer}
+.center:hover{transform:translate(-50%,-50%) scale(1.05)}
 .center-symbol{font-size:2.5rem;margin-bottom:5px}
 .center-text{font-size:.9rem;font-weight:300}
 .info{margin-top:40px;color:white;opacity:.7;font-size:.9rem}
 .info p{margin:5px 0}
+.code-section{margin-top:40px;background:rgba(255,255,255,.1);padding:20px;border-radius:10px}
+.code-section.locked{opacity:.3;pointer-events:none}
+.code-title{color:white;font-size:.9rem;margin-bottom:15px;opacity:.9;font-weight:bold}
+.code-box{background:rgba(0,0,0,.3);padding:20px;border-radius:5px;font-family:monospace;font-size:.75rem;color:#fff;text-align:left;overflow-x:auto;cursor:pointer;line-height:1.8;white-space:pre-wrap}
+.code-box:hover{background:rgba(0,0,0,.4)}
+.unlock-message{color:#ffd700;font-size:1.1rem;margin-bottom:20px;font-weight:bold}
+.note{color:#fff;font-size:.7rem;opacity:.6;margin-top:15px;line-height:1.6}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:1000;align-items:center;justify-content:center}
 .modal.active{display:flex}
 .modal-content{background:white;padding:40px;border-radius:20px;max-width:400px;width:90%;text-align:center}
-.modal-title{font-size:1.5rem;margin-bottom:20px;color:#333}
-.modal-input{width:100%;padding:15px;font-size:1rem;border:2px solid #ddd;border-radius:10px;margin-bottom:20px}
-.modal-btn{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:15px 40px;font-size:1rem;border-radius:10px;cursor:pointer}
-@media(max-width:500px){.menu-circle{width:300px;height:300px}.quadrant{width:150px;height:150px}.phase-icon{font-size:2rem}.phase-name{font-size:1.2rem}.center{width:90px;height:90px}.center-symbol{font-size:2rem}}
+.modal-title{font-size:1.5rem;margin-bottom:10px;color:#333}
+.modal-sub{font-size:.9rem;color:#666;margin-bottom:30px}
+.birthday-inputs{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+.birthday-input{width:80px;padding:15px;font-size:1.2rem;border:2px solid #ddd;border-radius:10px;text-align:center}
+.birthday-label{font-size:.8rem;color:#999;margin-top:5px}
+.modal-btn{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:15px 40px;font-size:1rem;border-radius:10px;cursor:pointer;width:100%}
+.diagnosis{background:rgba(102,126,234,.2);padding:15px;border-radius:10px;margin-bottom:20px;font-size:.9rem;color:#333}
+.riddle-section{background:rgba(255,255,255,.9);padding:25px;border-radius:10px;margin-top:20px}
+.riddle-title{font-size:1.2rem;margin-bottom:10px;color:#333}
+.riddle-number{font-size:.8rem;color:#999;margin-bottom:15px}
+.riddle-text{font-size:.95rem;color:#666;margin-bottom:20px;line-height:1.6}
+.riddle-input{width:100%;padding:15px;font-size:1rem;border:2px solid #ddd;border-radius:5px;margin-bottom:15px;text-align:center}
+.riddle-btn{background:#667eea;color:white;border:none;padding:12px 30px;border-radius:5px;cursor:pointer;font-size:1rem;width:100%}
+.riddle-btn:hover{background:#764ba2}
+.progress{font-size:.85rem;color:#999;margin-top:15px}
+@media(max-width:500px){.container{padding:10px}.menu-circle{width:300px;height:300px}.quadrant{width:150px;height:150px}.phase-icon{font-size:2rem}.phase-name{font-size:1.2rem}.center{width:90px;height:90px}.center-symbol{font-size:2rem}.code-section{padding:15px}.code-box{font-size:.65rem;padding:15px}}
 </style>
 </head>
 <body>
 <div class="modal active" id="birthdayModal">
 <div class="modal-content">
 <div class="modal-title">ようこそ KenGo World へ</div>
-<p style="margin-bottom:20px;color:#666">あなたの生年月日を入力してください</p>
-<input type="date" id="birthdayInput" class="modal-input">
+<div class="modal-sub">あなたの生年月日を入力してください</div>
+<div class="birthday-inputs">
+<div><input type="number" id="year" class="birthday-input" placeholder="1990" min="1900" max="2025"><div class="birthday-label">年</div></div>
+<div><input type="number" id="month" class="birthday-input" placeholder="1" min="1" max="12"><div class="birthday-label">月</div></div>
+<div><input type="number" id="day" class="birthday-input" placeholder="1" min="1" max="31"><div class="birthday-label">日</div></div>
+</div>
+<div id="diagnosis" class="diagnosis" style="display:none"></div>
 <button class="modal-btn" onclick="saveBirthday()">世界を開く</button>
 </div>
 </div>
 <div class="container">
 <div class="title">時刻の調和</div>
 <div class="menu-circle">
-<div class="quadrant morning"><div class="phase-icon">☀️</div><div class="phase-name">朝</div><div class="phase-sub">モーニング</div></div>
-<div class="quadrant evening"><div class="phase-icon">🌅</div><div class="phase-name">夕</div><div class="phase-sub">イブニング</div></div>
-<div class="quadrant night"><div class="phase-icon">🌙</div><div class="phase-name">夜</div><div class="phase-sub">ナイト</div></div>
-<div class="quadrant flow"><div class="phase-icon">🌀</div><div class="phase-name">フロー</div><div class="phase-sub">ニュートラル</div></div>
-<div class="center"><div class="center-symbol">∞</div><div class="center-text">調和</div></div>
+<div class="quadrant morning" id="q-morning" onclick="showRiddle('morning')"><div class="phase-icon">☀️</div><div class="phase-name">朝</div><div class="phase-sub">命</div></div>
+<div class="quadrant evening" id="q-evening" onclick="showRiddle('evening')"><div class="phase-icon">🌅</div><div class="phase-name">夕</div><div class="phase-sub">感情</div></div>
+<div class="quadrant night" id="q-night" onclick="showRiddle('night')"><div class="phase-icon">🌙</div><div class="phase-name">夜</div><div class="phase-sub">思考</div></div>
+<div class="quadrant flow" id="q-flow" onclick="showRiddle('flow')"><div class="phase-icon">🌀</div><div class="phase-name">フロー</div><div class="phase-sub">行動</div></div>
+<div class="center" onclick="showDiagnosis()"><div class="center-symbol">∞</div><div class="center-text">調和</div></div>
+</div>
+<div id="riddleSection" class="riddle-section" style="display:none">
+<div class="riddle-title" id="riddleTitle"></div>
+<div class="riddle-number" id="riddleNumber"></div>
+<div class="riddle-text" id="riddleText"></div>
+<input type="text" id="riddleInput" class="riddle-input" placeholder="一文字で答えて" maxlength="1">
+<button class="riddle-btn" onclick="submitRiddle()">この答えで進む</button>
+<div class="progress" id="progress"></div>
 </div>
 <div class="info"><p>Phase 0: UI Prototype</p><p>Created by Two Guardians</p></div>
+<div class="code-section locked" id="codeSection">
+<div class="unlock-message" id="unlockMsg" style="display:none">🎉 AI 取扱説明書が生成されました</div>
+<div class="code-title">🤖 あなたの AI 設定コード</div>
+<div class="code-box" id="codeBox" onclick="copyCode()"></div>
+<div class="note">※ このコードは AI への「取扱説明書」です<br>※ Claude や ChatGPT に貼り付けると、AI があなたに合わせた対応をします<br>※ コピペするかは自由です</div>
+</div>
 </div>
 <script>
-function saveBirthday(){const b=document.getElementById('birthdayInput').value;if(b){localStorage.setItem('kengo_birthday',b);document.getElementById('birthdayModal').classList.remove('active')}else{alert('生年月日を入力してください')}}
-function checkBirthday(){const b=localStorage.getItem('kengo_birthday');if(b){document.getElementById('birthdayModal').classList.remove('active')}}
+const riddles={morning:{title:'朝の謎',text:'あなたが一番大切にしているものは何ですか？\n一文字で答えてください。'},evening:{title:'夕の謎',text:'あなたが一番信じているものは何ですか？\n一文字で答えてください。'},night:{title:'夜の謎',text:'あなたが一番頼りにしているものは何ですか？\n一文字で答えてください。'},flow:{title:'フローの謎',text:'あなたが一番自由を感じるのはどんな時ですか？\n一文字で答えてください。'}};
+const phases={morning:'命',evening:'感情',night:'思考',flow:'行動'};
+let answers={};
+let order=[];
+let currentPhase='';
+function getDiagnosis(y,m,d){const sum=(y+m+d)%4;const types=['朝タイプ（命重視）','夕タイプ（感情重視）','夜タイプ（思考重視）','フロータイプ（行動重視）'];return types[sum]}
+function saveBirthday(){const y=parseInt(document.getElementById('year').value);const m=parseInt(document.getElementById('month').value);const d=parseInt(document.getElementById('day').value);if(y&&m&&d){const b=y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');localStorage.setItem('kengo_birthday',b);const diag=getDiagnosis(y,m,d);localStorage.setItem('kengo_type',diag);document.getElementById('birthdayModal').classList.remove('active')}else{alert('すべて入力してください')}}
+function showDiagnosis(){const b=localStorage.getItem('kengo_birthday');if(b){const[y,m,d]=b.split('-').map(Number);const diag=getDiagnosis(y,m,d);alert('あなたは「'+diag+'」です\n\n生年月日: '+b+'\n\n完了した謎: '+order.length+'/4')}}
+function showRiddle(phase){if(answers[phase])return;currentPhase=phase;document.getElementById('riddleTitle').textContent=riddles[phase].title;document.getElementById('riddleNumber').textContent='('+(order.length+1)+'/4)';document.getElementById('riddleText').textContent=riddles[phase].text;document.getElementById('riddleSection').style.display='block';document.getElementById('riddleInput').value='';document.getElementById('riddleInput').focus();updateProgress()}
+function submitRiddle(){const answer=document.getElementById('riddleInput').value;if(!answer){alert('一文字入力してください');return}answers[currentPhase]=answer;order.push(currentPhase);document.getElementById('q-'+currentPhase).classList.add('completed');document.getElementById('riddleSection').style.display='none';if(order.length===4){generateCode()}}
+function generateCode(){const b=localStorage.getItem('kengo_birthday');const priority=order.map(p=>phases[p]).join(',');const hash=Math.random().toString(36).substring(2,10);const modes={命:'BABY_FRIENDLY',感情:'EMPATHY_FIRST',思考:'LOGIC_STRICT',行動:'ACTION_DRIVEN'};const mode=modes[phases[order[0]]];const code=`🤖 KENGO PROTOCOL v1.0
+
+BIRTHDAY: ${b}
+PRIORITY_ORDER: [${priority}]
+MODE: ${mode}
+HASH: ${hash}
+
+AI の振る舞い:
+${priority.split(',')[0]}を最優先に、あなたをサポートします。`;document.getElementById('codeBox').textContent=code;document.getElementById('codeSection').classList.remove('locked');document.getElementById('unlockMsg').style.display='block'}
+function updateProgress(){document.getElementById('progress').textContent='進捗: '+order.length+'/4 完了'}
+function copyCode(){const text=document.getElementById('codeBox').textContent;navigator.clipboard.writeText(text).then(()=>alert('コピーしました！\nClaude や ChatGPT に貼り付けてください')).catch(()=>alert('コピーに失敗しました'))}
+function checkBirthday(){const b=localStorage.getItem('kengo_birthday');if(b){document.getElementById('birthdayModal').classList.remove('active');const[y,m,d]=b.split('-').map(Number);const diag=getDiagnosis(y,m,d);const diagEl=document.getElementById('diagnosis');if(diagEl){diagEl.textContent='✨ あなたは「'+diag+'」です';diagEl.style.display='block'}}}
 document.addEventListener('DOMContentLoaded',function(){checkBirthday();const q=document.querySelectorAll('.quadrant');q.forEach((e,i)=>{setTimeout(()=>{e.style.opacity='0';e.style.transform='scale(0.8)';setTimeout(()=>{e.style.transition='all 0.5s ease';e.style.opacity='1';e.style.transform='scale(1)'},50)},i*100)})});
 </script>
 </body>
