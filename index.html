@@ -7,53 +7,53 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow-x:hidden;position:relative}
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow-x:hidden;position:relative;padding:10px}
 body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a1a2e 0%,#000 100%);animation:pulse 8s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
 .stars{position:absolute;width:100%;height:100%;z-index:0}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
-.container{text-align:center;padding:20px;max-width:95%;margin:0 auto;z-index:1;position:relative}
-.title{font-size:clamp(2rem,7vw,3.5rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;font-weight:900;letter-spacing:.25em;text-shadow:0 0 40px rgba(0,212,255,.8);animation:glow 2s ease-in-out infinite}
+.container{text-align:center;padding:15px;max-width:100%;margin:0 auto;z-index:1;position:relative;width:100%}
+.title{font-size:clamp(2rem,8vw,3.5rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:15px;font-weight:900;letter-spacing:.25em;animation:glow 2s ease-in-out infinite}
 @keyframes glow{0%,100%{filter:drop-shadow(0 0 30px rgba(0,212,255,.8))}50%{filter:drop-shadow(0 0 60px rgba(122,92,255,1))}}
-.subtitle{font-size:clamp(.9rem,3vw,1.2rem);color:#7a5cff;margin-bottom:10px;font-weight:700;letter-spacing:.3em;opacity:.9}
-.phase-badge{display:inline-block;background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);color:#000;padding:12px 30px;border-radius:25px;font-size:clamp(.9rem,2.5vw,1.1rem);font-weight:900;margin-bottom:40px;box-shadow:0 0 40px rgba(122,92,255,.8);letter-spacing:.15em;animation:pulse-badge 2s infinite}
-@keyframes pulse-badge{0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(122,92,255,.8)}50%{transform:scale(1.05);box-shadow:0 0 60px rgba(122,92,255,1)}}
-.intro{font-size:clamp(.85rem,2.5vw,1rem);color:rgba(255,255,255,.9);margin:0 auto 40px;max-width:90%;line-height:2;padding:30px;background:rgba(122,92,255,.08);border:2px solid rgba(122,92,255,.4);border-radius:15px}
+.subtitle{font-size:clamp(.9rem,3vw,1.2rem);color:#7a5cff;margin-bottom:12px;font-weight:700;letter-spacing:.3em}
+.phase-badge{display:inline-block;background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);color:#000;padding:10px 25px;border-radius:25px;font-size:clamp(.9rem,2.5vw,1.1rem);font-weight:900;margin-bottom:30px;box-shadow:0 0 40px rgba(122,92,255,.8);letter-spacing:.15em;animation:pulse-badge 2s infinite}
+@keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.intro{font-size:clamp(.85rem,2.5vw,1rem);color:rgba(255,255,255,.9);margin:0 auto 30px;max-width:100%;line-height:1.9;padding:25px;background:rgba(122,92,255,.08);border:2px solid rgba(122,92,255,.4);border-radius:15px}
 .intro strong{color:#00d4ff;font-weight:900}
 .screen{display:none;animation:fadeIn .5s}
 .screen.active{display:block}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.game-section{background:rgba(0,0,0,.95);padding:40px;border-radius:20px;margin:30px auto;border:3px solid rgba(122,92,255,.5);box-shadow:0 0 60px rgba(122,92,255,.4);max-width:800px}
-.problem-title{font-size:clamp(1.3rem,4vw,1.8rem);color:#00d4ff;margin-bottom:30px;font-weight:900;letter-spacing:.15em}
-.problem-text{font-size:clamp(.95rem,2.8vw,1.1rem);color:rgba(255,255,255,.9);line-height:2;padding:30px;background:rgba(122,92,255,.1);border-radius:15px;margin-bottom:30px;border:2px solid rgba(122,92,255,.3)}
-.question-history{max-height:300px;overflow-y:auto;margin-bottom:30px;padding:20px;background:rgba(0,0,0,.5);border-radius:10px;border:2px solid rgba(122,92,255,.3)}
-.qa-item{margin:15px 0;padding:15px;border-radius:8px;text-align:left}
-.question{background:rgba(0,212,255,.1);border-left:4px solid #00d4ff;padding:10px 15px;margin-bottom:8px;font-size:clamp(.85rem,2.5vw,.95rem)}
-.answer{background:rgba(122,92,255,.1);border-left:4px solid #7a5cff;padding:10px 15px;font-size:clamp(.85rem,2.5vw,.95rem)}
-.question-count{font-size:clamp(.85rem,2.5vw,1rem);color:#00d4ff;margin-bottom:20px;font-weight:700}
-.input-area{display:flex;gap:10px;margin-bottom:20px}
-.question-input{flex:1;padding:15px;font-size:clamp(.9rem,2.5vw,1rem);border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5);color:#fff;font-family:'Orbitron',sans-serif}
+.game-section{background:rgba(0,0,0,.95);padding:25px 20px;border-radius:20px;margin:20px auto;border:3px solid rgba(122,92,255,.5);box-shadow:0 0 60px rgba(122,92,255,.4);max-width:100%}
+.problem-title{font-size:clamp(1.3rem,5vw,1.8rem);color:#00d4ff;margin-bottom:25px;font-weight:900;letter-spacing:.15em}
+.problem-text{font-size:clamp(.95rem,3vw,1.1rem);color:rgba(255,255,255,.9);line-height:1.9;padding:25px;background:rgba(122,92,255,.1);border-radius:15px;margin-bottom:25px;border:2px solid rgba(122,92,255,.3);white-space:pre-wrap}
+.question-history{max-height:250px;overflow-y:auto;margin-bottom:25px;padding:15px;background:rgba(0,0,0,.5);border-radius:10px;border:2px solid rgba(122,92,255,.3)}
+.qa-item{margin:12px 0;padding:12px;border-radius:8px;text-align:left}
+.question{background:rgba(0,212,255,.1);border-left:4px solid #00d4ff;padding:12px;margin-bottom:8px;font-size:clamp(.85rem,2.5vw,.95rem);word-break:break-word}
+.answer{background:rgba(122,92,255,.1);border-left:4px solid #7a5cff;padding:12px;font-size:clamp(.85rem,2.5vw,.95rem);word-break:break-word}
+.question-count{font-size:clamp(.9rem,2.5vw,1rem);color:#00d4ff;margin-bottom:20px;font-weight:700}
+.input-area{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.question-input{width:100%;padding:18px;font-size:clamp(1rem,3vw,1.1rem);border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5);color:#fff;font-family:'Hiragino Sans',sans-serif;min-height:100px;resize:vertical}
 .question-input:focus{outline:none;border-color:#7a5cff;box-shadow:0 0 25px rgba(122,92,255,.6)}
-.btn{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);color:#000;border:none;padding:15px 30px;border-radius:12px;cursor:pointer;font-size:clamp(.9rem,2.5vw,1rem);font-weight:700;box-shadow:0 0 30px rgba(122,92,255,.5);font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s}
+.btn{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);color:#000;border:none;padding:18px 30px;border-radius:12px;cursor:pointer;font-size:clamp(1rem,3vw,1.2rem);font-weight:700;box-shadow:0 0 30px rgba(122,92,255,.5);font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;width:100%}
 .btn:hover{box-shadow:0 0 40px rgba(122,92,255,.8);transform:translateY(-2px)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-secondary{background:linear-gradient(135deg,#7a5cff 0%,#ff00ff 100%);margin-top:10px;width:100%}
-.result-section{background:rgba(0,0,0,.95);padding:40px;border-radius:20px;margin:30px auto;border:3px solid rgba(0,212,255,.5);box-shadow:0 0 60px rgba(0,212,255,.4);max-width:95%}
-.result-title{font-size:clamp(1.5rem,5vw,2.5rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:30px;font-weight:900;letter-spacing:.2em}
-.analysis-box{background:rgba(122,92,255,.05);padding:25px;border-radius:12px;margin:25px 0;border:2px solid rgba(122,92,255,.3);text-align:left}
-.analysis-title{font-size:clamp(1.1rem,3.5vw,1.4rem);color:#00d4ff;margin-bottom:18px;font-weight:700;letter-spacing:.1em}
-.analysis-text{font-size:clamp(.85rem,2.5vw,1rem);color:rgba(255,255,255,.9);line-height:1.9}
-.code-box{background:rgba(0,0,0,1);padding:25px;border-radius:10px;font-family:'Courier New',monospace;font-size:clamp(.7rem,2vw,.9rem);color:#00d4ff;text-align:left;overflow-x:auto;cursor:pointer;line-height:2;white-space:pre-wrap;border:2px solid rgba(0,212,255,.4);box-shadow:inset 0 0 30px rgba(0,212,255,.2);margin:20px 0}
+.btn-secondary{background:linear-gradient(135deg,#7a5cff 0%,#ff00ff 100%);margin-top:12px}
+.result-section{background:rgba(0,0,0,.95);padding:30px 20px;border-radius:20px;margin:20px auto;border:3px solid rgba(0,212,255,.5);box-shadow:0 0 60px rgba(0,212,255,.4);max-width:100%}
+.result-title{font-size:clamp(1.5rem,6vw,2.5rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:25px;font-weight:900;letter-spacing:.2em}
+.analysis-box{background:rgba(122,92,255,.05);padding:20px;border-radius:12px;margin:20px 0;border:2px solid rgba(122,92,255,.3);text-align:left}
+.analysis-title{font-size:clamp(1.1rem,4vw,1.4rem);color:#00d4ff;margin-bottom:15px;font-weight:700;letter-spacing:.1em}
+.analysis-text{font-size:clamp(.85rem,2.5vw,1rem);color:rgba(255,255,255,.9);line-height:1.8;white-space:pre-wrap}
+.code-box{background:rgba(0,0,0,1);padding:20px;border-radius:10px;font-family:'Courier New',monospace;font-size:clamp(.7rem,2.2vw,.9rem);color:#00d4ff;text-align:left;overflow-x:auto;cursor:pointer;line-height:1.8;white-space:pre-wrap;border:2px solid rgba(0,212,255,.4);box-shadow:inset 0 0 30px rgba(0,212,255,.2);margin:15px 0;word-break:break-all}
 .code-box:hover{box-shadow:0 0 40px rgba(0,212,255,.5),inset 0 0 40px rgba(0,212,255,.3)}
-.premium-cta{background:linear-gradient(135deg,#ff6b00 0%,#ffd700 100%);padding:40px;border-radius:20px;margin:40px auto;border:3px solid rgba(255,107,0,.8);box-shadow:0 0 60px rgba(255,107,0,.6);max-width:600px}
-.premium-cta-title{font-size:clamp(1.3rem,4vw,1.8rem);color:#000;margin-bottom:20px;font-weight:900;letter-spacing:.15em}
-.premium-cta-text{font-size:clamp(.9rem,2.5vw,1.1rem);color:rgba(0,0,0,.9);line-height:1.8;margin-bottom:30px}
-.premium-btn{background:#000;color:#ffd700;border:3px solid #ffd700;padding:20px 40px;border-radius:15px;font-size:clamp(1rem,3vw,1.3rem);font-weight:900;width:100%;cursor:pointer;box-shadow:0 0 40px rgba(255,215,0,.8);transition:all .3s}
+.premium-cta{background:linear-gradient(135deg,#ff6b00 0%,#ffd700 100%);padding:30px 20px;border-radius:20px;margin:30px auto;border:3px solid rgba(255,107,0,.8);box-shadow:0 0 60px rgba(255,107,0,.6);max-width:100%}
+.premium-cta-title{font-size:clamp(1.3rem,5vw,1.8rem);color:#000;margin-bottom:18px;font-weight:900;letter-spacing:.15em}
+.premium-cta-text{font-size:clamp(.9rem,2.5vw,1.1rem);color:rgba(0,0,0,.9);line-height:1.7;margin-bottom:25px}
+.premium-btn{background:#000;color:#ffd700;border:3px solid #ffd700;padding:18px 30px;border-radius:15px;font-size:clamp(1rem,3vw,1.3rem);font-weight:900;width:100%;cursor:pointer;box-shadow:0 0 40px rgba(255,215,0,.8);transition:all .3s}
 .premium-btn:hover{box-shadow:0 0 60px rgba(255,215,0,1);transform:translateY(-3px)}
-.loading{display:none;font-size:clamp(.9rem,2.5vw,1rem);color:#7a5cff;margin:20px 0;animation:pulse 1.5s infinite}
+.loading{display:none;font-size:clamp(.9rem,2.5vw,1rem);color:#7a5cff;margin:15px 0;animation:pulse 1.5s infinite}
 .loading.active{display:block}
-.info{margin-top:50px;color:rgba(255,255,255,.3);font-size:clamp(.65rem,2vw,.8rem);letter-spacing:.1em;padding:0 10px;line-height:1.8}
+.info{margin-top:40px;color:rgba(255,255,255,.3);font-size:clamp(.65rem,2vw,.8rem);letter-spacing:.1em;line-height:1.6}
 </style>
 </head>
 <body>
@@ -69,7 +69,7 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 あなたの質問から、時間を超える能力を分析します。<br><br>
 <strong>完全無料・個人情報不要</strong>
 </div>
-<button class="btn" onclick="startGame()" style="width:100%;padding:20px;font-size:clamp(1.1rem,3vw,1.4rem)">
+<button class="btn" onclick="startGame()" style="padding:22px;font-size:clamp(1.1rem,3.5vw,1.4rem)">
 🐢 診断を始める
 </button>
 </div>
@@ -80,11 +80,11 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 <div class="question-count" id="questionCount">質問数: 0/10</div>
 <div class="question-history" id="questionHistory"></div>
 <div class="input-area">
-<input type="text" class="question-input" id="questionInput" placeholder="はい/いいえで答えられる質問を入力..." onkeypress="if(event.key==='Enter')askQuestion()">
-<button class="btn" onclick="askQuestion()">質問</button>
+<textarea class="question-input" id="questionInput" placeholder="はい/いいえで答えられる質問を入力してください..."></textarea>
+<button class="btn" onclick="askQuestion()">💬 質問する</button>
 </div>
 <div class="loading" id="loading">AI が考え中...</div>
-<button class="btn btn-secondary" onclick="giveUp()">答えを見る</button>
+<button class="btn btn-secondary" onclick="giveUp()">💡 答えを見る</button>
 </div>
 </div>
 <div class="screen" id="resultScreen">
@@ -97,7 +97,7 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 <div class="analysis-box">
 <div class="analysis-title">⚡ 簡易存在コード</div>
 <div class="code-box" id="codeBox" onclick="copyCode()"></div>
-<p style="font-size:.85rem;color:rgba(255,255,255,.6);margin-top:10px">※ クリックでコピー</p>
+<p style="font-size:.85rem;color:rgba(255,255,255,.6);margin-top:10px;text-align:center">※ タップでコピー</p>
 </div>
 </div>
 <div class="premium-cta">
@@ -127,7 +127,7 @@ const problems=[
 let currentProblem,questionCount=0,questions=[],logicScore=0,intuitionScore=0;
 function createStars(){const stars=document.getElementById('stars');for(let i=0;i<150;i++){const star=document.createElement('div');star.className='star';star.style.left=Math.random()*100+'%';star.style.top=Math.random()*100+'%';star.style.animationDelay=Math.random()*3+'s';stars.appendChild(star)}}
 function startGame(){currentProblem=problems[Math.floor(Math.random()*problems.length)];questionCount=0;questions=[];logicScore=0;intuitionScore=0;document.getElementById('problemText').textContent=currentProblem.text;document.getElementById('questionCount').textContent='質問数: 0/10';document.getElementById('questionHistory').innerHTML='';showScreen('gameScreen')}
-async function askQuestion(){const input=document.getElementById('questionInput');const question=input.value.trim();if(!question){alert('質問を入力してください');return}if(questionCount>=10){alert('質問は10回までです。答えを見るか、推理してください。');return}input.value='';input.disabled=true;document.querySelector('.btn').disabled=true;document.getElementById('loading').classList.add('active');questionCount++;questions.push({q:question,a:'...'});updateQuestionHistory();if(question.length>20)logicScore+=2;if(question.includes('なぜ')||question.includes('何'))logicScore+=1;if(question.includes('感じ')||question.includes('思'))intuitionScore+=2;if(questionCount<=3)intuitionScore+=1;try{const answer=await getAIAnswer(question);questions[questions.length-1].a=answer;updateQuestionHistory()}catch(error){questions[questions.length-1].a='エラーが発生しました';updateQuestionHistory()}document.getElementById('questionCount').textContent=`質問数: ${questionCount}/10`;document.getElementById('loading').classList.remove('active');input.disabled=false;document.querySelector('.btn').disabled=false;input.focus();if(questionCount>=10){setTimeout(()=>{if(confirm('10回の質問が終了しました。\n答えを見ますか？それとも推理を続けますか？')){giveUp()}},500)}}
+async function askQuestion(){const input=document.getElementById('questionInput');const question=input.value.trim();if(!question){alert('質問を入力してください');return}if(questionCount>=10){alert('質問は10回までです。答えを見るか、推理してください。');return}input.value='';input.disabled=true;document.querySelectorAll('.btn').forEach(b=>b.disabled=true);document.getElementById('loading').classList.add('active');questionCount++;questions.push({q:question,a:'...'});updateQuestionHistory();if(question.length>20)logicScore+=2;if(question.includes('なぜ')||question.includes('何'))logicScore+=1;if(question.includes('感じ')||question.includes('思'))intuitionScore+=2;if(questionCount<=3)intuitionScore+=1;try{const answer=await getAIAnswer(question);questions[questions.length-1].a=answer;updateQuestionHistory()}catch(error){questions[questions.length-1].a='エラーが発生しました';updateQuestionHistory()}document.getElementById('questionCount').textContent=`質問数: ${questionCount}/10`;document.getElementById('loading').classList.remove('active');input.disabled=false;document.querySelectorAll('.btn').forEach(b=>b.disabled=false);input.focus();if(questionCount>=10){setTimeout(()=>{if(confirm('10回の質問が終了しました。\n答えを見ますか？それとも推理を続けますか？')){giveUp()}},500)}}
 async function getAIAnswer(question){const lowerQ=question.toLowerCase();for(const[key,value]of Object.entries(currentProblem.hints)){if(lowerQ.includes(key.toLowerCase())){return value}}if(lowerQ.includes('時間')||lowerQ.includes('過去')||lowerQ.includes('未来')){return'はい、時間に関係しています'}if(lowerQ.includes('人')||lowerQ.includes('誰')){return'いいえ、他の人は関係ありません'}if(lowerQ.includes('場所')||lowerQ.includes('どこ')){return'関係ありません'}return'関係ありません'}
 function updateQuestionHistory(){const history=document.getElementById('questionHistory');history.innerHTML='';questions.forEach(qa=>{const item=document.createElement('div');item.className='qa-item';item.innerHTML=`<div class="question">Q: ${qa.q}</div><div class="answer">A: ${qa.a}</div>`;history.appendChild(item)});history.scrollTop=history.scrollHeight}
 function giveUp(){showResult()}
