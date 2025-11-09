@@ -7,21 +7,21 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow:hidden;position:relative}
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow-x:hidden;position:relative}
 body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0a0a2e 0%,#000 100%);animation:pulse 8s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
 .stars{position:absolute;width:100%;height:100%;z-index:0}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
-.container{text-align:center;padding:20px;max-width:900px;margin:0 auto;z-index:1;position:relative}
-.title{font-size:3.5rem;color:#00ffff;margin-bottom:10px;font-weight:900;letter-spacing:.3em;text-shadow:0 0 30px #00ffff,0 0 60px #00ffff;animation:glow 2s ease-in-out infinite}
+.container{text-align:center;padding:20px;max-width:100%;margin:0 auto;z-index:1;position:relative}
+.title{font-size:clamp(2rem,8vw,3.5rem);color:#00ffff;margin-bottom:10px;font-weight:900;letter-spacing:.3em;text-shadow:0 0 30px #00ffff,0 0 60px #00ffff;animation:glow 2s ease-in-out infinite}
 @keyframes glow{0%,100%{text-shadow:0 0 30px #00ffff,0 0 60px #00ffff}50%{text-shadow:0 0 50px #00ffff,0 0 100px #00ffff}}
-.subtitle{font-size:1.2rem;color:#ff00ff;margin-bottom:15px;font-weight:400;letter-spacing:.2em;opacity:.8}
-.einstein-msg{font-size:.9rem;color:#ffd700;margin-bottom:40px;padding:20px;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.3);border-radius:10px;font-style:italic;line-height:1.8}
-.warning{font-size:.85rem;color:#ff0000;margin-bottom:40px;padding:15px;background:rgba(255,0,0,.1);border-radius:8px;border:1px solid rgba(255,0,0,.3);animation:flicker 3s infinite}
+.subtitle{font-size:clamp(.9rem,3vw,1.2rem);color:#ff00ff;margin-bottom:15px;font-weight:400;letter-spacing:.2em;opacity:.8}
+.einstein-msg{font-size:clamp(.75rem,2.5vw,.9rem);color:#ffd700;margin:0 auto 30px;padding:15px;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.3);border-radius:10px;font-style:italic;line-height:1.8;max-width:90%}
+.warning{font-size:clamp(.75rem,2.5vw,.85rem);color:#ff0000;margin:0 auto 30px;padding:12px;background:rgba(255,0,0,.1);border-radius:8px;border:1px solid rgba(255,0,0,.3);animation:flicker 3s infinite;max-width:90%}
 @keyframes flicker{0%,100%{opacity:1}50%{opacity:.6}}
-.menu-circle{position:relative;width:450px;height:450px;margin:0 auto;filter:drop-shadow(0 0 40px rgba(0,255,255,.5))}
-.quadrant{position:absolute;width:225px;height:225px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .4s ease;border-radius:25px;backdrop-filter:blur(15px);border:2px solid rgba(0,255,255,.2);background:rgba(0,255,255,.03)}
+.menu-circle{position:relative;width:90vw;max-width:400px;height:90vw;max-height:400px;margin:0 auto;filter:drop-shadow(0 0 40px rgba(0,255,255,.5))}
+.quadrant{position:absolute;width:45%;height:45%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .4s ease;border-radius:20px;backdrop-filter:blur(15px);border:2px solid rgba(0,255,255,.2);background:rgba(0,255,255,.03)}
 .quadrant:hover{transform:scale(1.08);z-index:10;box-shadow:0 0 50px rgba(0,255,255,.6);border-color:rgba(0,255,255,.8);background:rgba(0,255,255,.1)}
 .quadrant:active{transform:scale(.95)}
 .quadrant.completed{opacity:.2;cursor:default;filter:grayscale(100%) blur(2px)}
@@ -33,40 +33,39 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 .night:hover{box-shadow:0 0 50px rgba(100,100,255,.6);border-color:rgba(100,100,255,.8)}
 .flow{top:0;left:0;border-color:rgba(0,255,200,.3)}
 .flow:hover{box-shadow:0 0 50px rgba(0,255,200,.6);border-color:rgba(0,255,200,.8)}
-.phase-icon{font-size:4rem;margin-bottom:15px;filter:drop-shadow(0 0 15px currentColor);animation:float 3s ease-in-out infinite}
+.phase-icon{font-size:clamp(2.5rem,8vw,4rem);margin-bottom:10px;filter:drop-shadow(0 0 15px currentColor);animation:float 3s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.phase-name{font-size:1.8rem;font-weight:bold;margin-bottom:8px;text-transform:uppercase}
-.phase-sub{font-size:1rem;opacity:.7;letter-spacing:.15em}
-.order-number{position:absolute;top:15px;right:15px;width:40px;height:40px;background:rgba(0,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.5rem;color:#000;display:none;box-shadow:0 0 20px rgba(0,255,255,1);animation:pulse-number 2s infinite}
+.phase-name{font-size:clamp(1.2rem,4vw,1.8rem);font-weight:bold;margin-bottom:5px;text-transform:uppercase}
+.phase-sub{font-size:clamp(.8rem,2.5vw,1rem);opacity:.7;letter-spacing:.15em}
+.order-number{position:absolute;top:10px;right:10px;width:clamp(30px,8vw,40px);height:clamp(30px,8vw,40px);background:rgba(0,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:clamp(1.2rem,4vw,1.5rem);color:#000;display:none;box-shadow:0 0 20px rgba(0,255,255,1);animation:pulse-number 2s infinite}
 @keyframes pulse-number{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .order-number.show{display:flex}
-.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;background:rgba(0,0,0,.95);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(0,255,255,.8),inset 0 0 30px rgba(0,255,255,.3);z-index:5;cursor:pointer;border:3px solid rgba(0,255,255,.5)}
+.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:30%;height:30%;min-width:100px;min-height:100px;max-width:140px;max-height:140px;background:rgba(0,0,0,.95);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(0,255,255,.8),inset 0 0 30px rgba(0,255,255,.3);z-index:5;cursor:pointer;border:3px solid rgba(0,255,255,.5)}
 .center:hover{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 0 80px rgba(0,255,255,1),inset 0 0 40px rgba(0,255,255,.5)}
-.center-symbol{font-size:3rem;margin-bottom:8px;animation:rotate-slow 20s linear infinite}
+.center-symbol{font-size:clamp(2rem,6vw,3rem);margin-bottom:5px;animation:rotate-slow 20s linear infinite}
 @keyframes rotate-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.center-text{font-size:1rem;font-weight:700;color:#00ffff;letter-spacing:.2em}
+.center-text{font-size:clamp(.8rem,2.5vw,1rem);font-weight:700;color:#00ffff;letter-spacing:.2em}
 .secret-hint{position:absolute;bottom:5px;right:5px;font-size:.6rem;opacity:.3;cursor:pointer;transition:opacity .3s}
 .secret-hint:hover{opacity:1}
-.info{margin-top:50px;color:rgba(255,255,255,.3);font-size:.75rem;letter-spacing:.1em}
+.info{margin-top:40px;color:rgba(255,255,255,.3);font-size:clamp(.65rem,2vw,.75rem);letter-spacing:.1em;padding:0 10px}
 .info p{margin:8px 0}
-.code-section{margin-top:50px;background:rgba(0,255,255,.05);padding:30px;border-radius:15px;border:2px solid rgba(0,255,255,.3)}
+.code-section{margin:40px auto 0;background:rgba(0,255,255,.05);padding:20px;border-radius:15px;border:2px solid rgba(0,255,255,.3);max-width:95%}
 .code-section.locked{opacity:.15;pointer-events:none}
-.code-title{color:#00ffff;font-size:1.2rem;margin-bottom:20px;font-weight:700;letter-spacing:.15em}
-.code-box{background:rgba(0,0,0,.8);padding:25px;border-radius:8px;font-family:'Courier New',monospace;font-size:.8rem;color:#00ff00;text-align:left;overflow-x:auto;cursor:pointer;line-height:2;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);box-shadow:inset 0 0 20px rgba(0,255,0,.1)}
+.code-title{color:#00ffff;font-size:clamp(.9rem,3vw,1.2rem);margin-bottom:15px;font-weight:700;letter-spacing:.15em}
+.code-box{background:rgba(0,0,0,.8);padding:15px;border-radius:8px;font-family:'Courier New',monospace;font-size:clamp(.65rem,2vw,.8rem);color:#00ff00;text-align:left;overflow-x:auto;cursor:pointer;line-height:1.8;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);box-shadow:inset 0 0 20px rgba(0,255,0,.1)}
 .code-box:hover{background:rgba(0,0,0,.95);box-shadow:0 0 30px rgba(0,255,0,.3),inset 0 0 30px rgba(0,255,0,.2)}
-.unlock-message{color:#ffd700;font-size:1.3rem;margin-bottom:25px;font-weight:700;animation:flicker 3s infinite;letter-spacing:.1em}
-.note{color:rgba(255,255,255,.4);font-size:.75rem;margin-top:20px;line-height:1.8;letter-spacing:.05em}
-.riddle-section{background:rgba(0,0,0,.9);padding:35px;border-radius:15px;margin-top:30px;border:2px solid rgba(0,255,255,.4);box-shadow:0 0 40px rgba(0,255,255,.2)}
-.riddle-title{font-size:1.5rem;margin-bottom:15px;color:#00ffff;font-weight:700;letter-spacing:.1em}
-.riddle-number{font-size:.9rem;color:rgba(255,255,255,.5);margin-bottom:20px}
-.riddle-text{font-size:1.05rem;color:rgba(255,255,255,.9);margin-bottom:25px;line-height:1.8}
-.riddle-input{width:100%;padding:18px;font-size:1.1rem;border:2px solid rgba(0,255,255,.5);border-radius:8px;margin-bottom:20px;text-align:center;background:rgba(0,0,0,.5);color:#00ffff;font-family:'Orbitron',sans-serif;font-weight:700}
+.unlock-message{color:#ffd700;font-size:clamp(1rem,3vw,1.3rem);margin-bottom:20px;font-weight:700;animation:flicker 3s infinite;letter-spacing:.1em}
+.note{color:rgba(255,255,255,.4);font-size:clamp(.65rem,2vw,.75rem);margin-top:15px;line-height:1.8;letter-spacing:.05em}
+.riddle-section{background:rgba(0,0,0,.9);padding:25px;border-radius:15px;margin:25px auto 0;border:2px solid rgba(0,255,255,.4);box-shadow:0 0 40px rgba(0,255,255,.2);max-width:95%}
+.riddle-title{font-size:clamp(1.2rem,4vw,1.5rem);margin-bottom:12px;color:#00ffff;font-weight:700;letter-spacing:.1em}
+.riddle-number{font-size:clamp(.8rem,2.5vw,.9rem);color:rgba(255,255,255,.5);margin-bottom:15px}
+.riddle-text{font-size:clamp(.9rem,3vw,1.05rem);color:rgba(255,255,255,.9);margin-bottom:20px;line-height:1.8}
+.riddle-input{width:100%;padding:15px;font-size:clamp(.9rem,3vw,1.1rem);border:2px solid rgba(0,255,255,.5);border-radius:8px;margin-bottom:15px;text-align:center;background:rgba(0,0,0,.5);color:#00ffff;font-family:'Orbitron',sans-serif;font-weight:700}
 .riddle-input:focus{outline:none;border-color:#00ffff;box-shadow:0 0 20px rgba(0,255,255,.5)}
-.riddle-btn{background:linear-gradient(135deg,#00ffff 0%,#00aaff 100%);color:#000;border:none;padding:15px 35px;border-radius:8px;cursor:pointer;font-size:1.1rem;width:100%;font-weight:700;box-shadow:0 0 25px rgba(0,255,255,.5);font-family:'Orbitron',sans-serif;letter-spacing:.1em}
+.riddle-btn{background:linear-gradient(135deg,#00ffff 0%,#00aaff 100%);color:#000;border:none;padding:12px 30px;border-radius:8px;cursor:pointer;font-size:clamp(.9rem,3vw,1.1rem);width:100%;font-weight:700;box-shadow:0 0 25px rgba(0,255,255,.5);font-family:'Orbitron',sans-serif;letter-spacing:.1em}
 .riddle-btn:hover{background:linear-gradient(135deg,#00aaff 0%,#0088ff 100%);box-shadow:0 0 35px rgba(0,255,255,.8);transform:translateY(-2px)}
-.progress{font-size:.9rem;color:rgba(255,255,255,.5);margin-top:20px;letter-spacing:.1em}
-.mode-description{background:rgba(0,255,0,.1);padding:20px;border-radius:10px;margin-top:20px;color:#00ff00;font-size:.9rem;line-height:1.8;text-align:left;border:1px solid rgba(0,255,0,.3)}
-@media(max-width:600px){.container{padding:15px}.title{font-size:2.5rem}.menu-circle{width:350px;height:350px}.quadrant{width:175px;height:175px}.phase-icon{font-size:3rem}.phase-name{font-size:1.4rem}.center{width:110px;height:110px}.center-symbol{font-size:2.5rem}.code-section{padding:20px}.code-box{font-size:.7rem;padding:18px}}
+.progress{font-size:clamp(.8rem,2.5vw,.9rem);color:rgba(255,255,255,.5);margin-top:15px;letter-spacing:.1em}
+.mode-description{background:rgba(0,255,0,.1);padding:15px;border-radius:10px;margin-top:15px;color:#00ff00;font-size:clamp(.75rem,2.5vw,.9rem);line-height:1.8;text-align:left;border:1px solid rgba(0,255,0,.3)}
 </style>
 </head>
 <body>
