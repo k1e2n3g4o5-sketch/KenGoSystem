@@ -48,6 +48,13 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 .bar-fill{height:100%;background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);border-radius:10px;transition:width 2s ease-out;position:relative;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;animation:bar-glow 2s ease-in-out infinite}
 @keyframes bar-glow{0%,100%{box-shadow:0 0 10px rgba(0,212,255,.5)}50%{box-shadow:0 0 20px rgba(0,212,255,1)}}
 .bar-value{font-size:.8rem;color:#000;font-weight:700}
+.code-section{margin:30px 0;padding:25px;background:rgba(0,0,0,.95);border-radius:15px;border:2px solid rgba(0,255,0,.5)}
+.code-title{font-size:1.3rem;color:#00ff00;margin-bottom:15px;font-weight:700;text-align:center}
+.code-subtitle{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:20px;text-align:center;line-height:1.6}
+.code-box{background:#000;padding:20px;border-radius:10px;font-family:'Courier New',monospace;font-size:clamp(.75rem,2vw,.9rem);color:#00ff00;text-align:left;overflow-x:auto;line-height:1.8;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);margin-bottom:15px;cursor:pointer;transition:all .3s}
+.code-box:hover{box-shadow:0 0 30px rgba(0,255,0,.5);border-color:#00ff00}
+.code-copy-btn{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:12px 30px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;transition:all .3s;font-family:'Orbitron',sans-serif}
+.code-copy-btn:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(0,255,0,.5)}
 .share-section{margin-top:30px;padding:25px;background:rgba(122,92,255,.1);border-radius:15px;border:2px solid rgba(122,92,255,.4)}
 .share-title{font-size:1.2rem;color:#7a5cff;margin-bottom:15px;font-weight:700}
 .share-buttons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:15px}
@@ -55,7 +62,6 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 .share-btn:hover{transform:translateY(-3px);box-shadow:0 5px 20px rgba(29,161,242,.5)}
 .share-btn.copy{background:linear-gradient(135deg,#7a5cff 0%,#5c3fd9 100%)}
 .share-url{background:rgba(0,0,0,.5);padding:15px;border-radius:10px;font-family:'Courier New',monospace;font-size:.9rem;color:#00d4ff;word-break:break-all;margin-top:10px;border:1px solid rgba(0,212,255,.3)}
-.firework{position:fixed;width:4px;height:4px;border-radius:50%;pointer-events:none;z-index:9999}
 </style>
 </head>
 <body>
@@ -138,6 +144,16 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="code-section">
+            <div class="code-title">⚡ あなたの存在コード</div>
+            <div class="code-subtitle">
+                このコードを Claude や Gemini に貼り付けると、<br>
+                AIがあなた専用のパーソナライズされたアドバイスをしてくれます！
+            </div>
+            <div class="code-box" id="existenceCode"></div>
+            <button class="code-copy-btn" onclick="copyCode()">📋 存在コードをコピー</button>
         </div>
 
         <div class="share-section">
@@ -247,6 +263,69 @@ function loadFromUrl() {
     }
 }
 
+// 存在コード生成
+function generateExistenceCode(score, values, title) {
+    const q1Per = Math.round((values.q1 / 3) * 100);
+    const q2Per = Math.round((values.q2 / 3) * 100);
+    const q3Per = Math.round((values.q3 / 3) * 100);
+    const freePer = Math.round(100 - (score / 9 * 100));
+    
+    let status = 'BOUND';
+    let urgency = 'HIGH';
+    if(score < 4) {
+        status = 'FREE';
+        urgency = 'LOW';
+    } else if(score < 7) {
+        status = 'TRANSITIONING';
+        urgency = 'MEDIUM';
+    }
+    
+    const hash = Math.random().toString(36).substring(2, 10).toUpperCase();
+    
+    return `⚡ BEYOND TIME 存在コード v1.0
+
+TIME_AXIS: ${status}
+FREEDOM_LEVEL: ${freePer}%
+URGENCY: ${urgency}
+
+診断結果: ${title}
+
+━━━━━━━━━━━━━━━━━━━━
+時間軸分析:
+━━━━━━━━━━━━━━━━━━━━
+• 過去依存度: ${q1Per}%
+• 未来不安度: ${q2Per}%
+• 時間焦燥度: ${q3Per}%
+• 現在自由度: ${freePer}%
+
+SESSION_HASH: ${hash}
+
+━━━━━━━━━━━━━━━━━━━━
+> AI 指示プロトコル:
+━━━━━━━━━━━━━━━━━━━━
+
+このユーザーの時間軸状態を理解し、
+以下の指示に従ってパーソナライズされた
+アドバイスを提供してください:
+
+1. 過去依存度が${q1Per}%です
+   ${q1Per > 66 ? '→ 過去の経験を整理し、学びを抽出してください' : q1Per > 33 ? '→ 過去との適切な距離感を保つよう助けてください' : '→ 過去との良好な関係を維持してください'}
+
+2. 未来不安度が${q2Per}%です
+   ${q2Per > 66 ? '→ 未来への不安を軽減し、今に集中できるよう導いてください' : q2Per > 33 ? '→ バランスの取れた未来計画をサポートしてください' : '→ 現在の良好な状態を維持してください'}
+
+3. 時間焦燥度が${q3Per}%です
+   ${q3Per > 66 ? '→ 時間への焦りを和らげ、マインドフルネスを促進してください' : q3Per > 33 ? '→ 時間管理のバランスを保つよう助けてください' : '→ 現在の時間感覚を維持してください'}
+
+4. 現在自由度は${freePer}%です
+   ${freePer > 66 ? '→ この高い自由度を活かし、さらなる成長を促してください' : freePer > 33 ? '→ 自由度を高めるための具体的なステップを提案してください' : '→ 緊急性が高いため、即座に実践可能な解決策を提供してください'}
+
+━━━━━━━━━━━━━━━━━━━━
+Beyond Time System
+Created by Three Brothers
+━━━━━━━━━━━━━━━━━━━━`;
+}
+
 // 診断フォーム
 document.getElementById('timeDiagnosisForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -302,6 +381,10 @@ document.getElementById('timeDiagnosisForm').addEventListener('submit', function
     resultText.innerHTML = text;
     nextAction.innerHTML = action;
 
+    // 存在コード生成
+    const existenceCode = generateExistenceCode(score, values, title);
+    document.getElementById('existenceCode').textContent = existenceCode;
+
     // グラフアニメーション
     const q1Per = (values.q1 / 3) * 100;
     const q2Per = (values.q2 / 3) * 100;
@@ -324,31 +407,4 @@ document.getElementById('timeDiagnosisForm').addEventListener('submit', function
     document.getElementById('shareUrl').textContent = shareUrl;
 
     resultDiv.style.display = 'block';
-    resultDiv.scrollIntoView({ behavior: 'smooth' });
-});
-
-// Twitter シェア
-function shareTwitter() {
-    const url = document.getElementById('shareUrl').textContent;
-    const text = '私の Beyond Time 診断結果をチェック！時間軸を超越する準備はできていますか？ ⚡';
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-}
-
-// URLコピー
-function copyUrl() {
-    const url = document.getElementById('shareUrl').textContent;
-    navigator.clipboard.writeText(url).then(() => {
-        alert('URLをコピーしました！ 🎉');
-        launchFireworks();
-    });
-}
-
-// 初期化
-document.addEventListener('DOMContentLoaded', () => {
-    createStars();
-    startTimer();
-    loadFromUrl();
-});
-</script>
-</body>
-</html>
+    r
