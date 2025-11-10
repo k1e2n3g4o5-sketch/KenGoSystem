@@ -5,18 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Beyond Time System - 時間を超越せよ | AI診断システム</title>
 <meta name="description" content="時間に縛られていませんか？Beyond Timeは、AI×統計学×パラレルワールドで、あなたの時間軸を解き明かす究極の診断システム。完全無料の診断から始められます。">
-<meta name="keywords" content="AI診断,時間診断,生年月日診断,パラレルワールド,自己分析,運命診断">
-<link rel="canonical" href="https://ken-go-system.vercel.app/">
-
-<meta property="og:title" content="Beyond Time System - 時間を超越せよ">
-<meta property="og:description" content="AI×統計学×パラレルワールドで、あなたの運命を解き明かす。無料診断から始められる究極の診断システム。">
-<meta property="og:url" content="https://ken-go-system.vercel.app/">
-<meta property="og:image" content="https://ken-go-system.vercel.app/og-image.jpg">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Beyond Time System - 時間を超越せよ">
-<meta name="twitter:description" content="AI×統計学×パラレルワールドで、あなたの運命を解き明かす。">
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -262,113 +250,10 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 
 <script>
 let ans={q1:0,q2:0,q3:0};
-
-// ⭐ 星の生成
-function createStars(){
-const s=document.getElementById('stars');
-const fragment=document.createDocumentFragment();
-for(let i=0;i<150;i++){
-const d=document.createElement('div');
-d.className='star';
-d.style.left=Math.random()*100+'%';
-d.style.top=Math.random()*100+'%';
-d.style.animationDelay=Math.random()*3+'s';
-fragment.appendChild(d);
-}
-s.appendChild(fragment);
-}
-
-// 📊 統計更新
-function updateStats(){
-setInterval(()=>{
-document.getElementById('live').textContent=100+Math.floor(Math.random()*50);
-document.getElementById('avg').textContent=(4.5+Math.random()*1.5).toFixed(1);
-},5000);
-}
-
-// 🎯 選択肢クリック
-document.querySelectorAll('.opt').forEach(el=>{
-el.addEventListener('click',function(){
-const q=this.getAttribute('data-q');
-const v=parseInt(this.getAttribute('data-v'));
-ans['q'+q]=v;
-
-const opts=this.closest('.options').querySelectorAll('.opt');
-opts.forEach(o=>{
-o.classList.remove('selected');
-});
-this.classList.add('selected');
-
-console.log('✅ 選択:', 'Q'+q, '=', v);
-});
-});
-
-// 🚀 診断実行
-document.getElementById('submit').addEventListener('click',function(){
-if(ans.q1===0||ans.q2===0||ans.q3===0){
-alert('⚠️ 全ての質問に答えてください。');
-return;
-}
-
-const loading=document.getElementById('loading');
-const submitBtn=this;
-submitBtn.disabled=true;
-submitBtn.textContent='計算中...';
-loading.classList.add('active');
-
-setTimeout(()=>{
-const sc=ans.q1+ans.q2+ans.q3;
-const opp=(4-ans.q1)+(4-ans.q2)+(4-ans.q3);
-const rnd=Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1);
-
-function getTxt(s){
-if(s>=7)return{
-t:'【緊急】時間軸に強く縛られています',
-d:'あなたは過去と未来の重力に強く引かれ、「今」この瞬間を体験できていません。時間の牢獄から解放される必要があります。',
-p:'premium'
-};
-if(s>=4)return{
-t:'【中程度】時間軸に影響されています',
-d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。バランスを取りながらも、より深い自由を求めています。',
-p:'premium'
-};
-return{
-t:'【高自由度】Beyond Timeの準備完了',
-d:'あなたは既に時間軸から比較的自由な状態にあります。さらなる次元へ進む準備ができています。',
-p:'restoration'
-};
-}
-
-const yr=getTxt(sc);
-const op=getTxt(opp);
-const rd=getTxt(rnd);
-
-document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br><br>${yr.d}<br><br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;
-document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br><br>もしあなたが逆の選択をしていたら、この世界線にいたでしょう。<br><br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;
-document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br><br>量子的にランダムな選択をした場合の可能性です。<br><br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;
-
-const p1=Math.round((ans.q1/3)*100);
-const p2=Math.round((ans.q2/3)*100);
-const p3=Math.round((ans.q3/3)*100);
-const p4=Math.round(100-(sc/9*100));
-
-setTimeout(()=>{
-['b1','b2','b3','b4'].forEach((id,i)=>{
-const per=[p1,p2,p3,p4][i];
-document.getElementById(id).style.width=per+'%';
-document.getElementById('v'+(i+1)).textContent=per+'%';
-});
-},500);
-
-document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);
-
-const hash=Math.random().toString(36).substring(2,10).toUpperCase();
-const qhash=Math.random().toString(36).substring(2,10).toUpperCase();
-let st='BOUND';
-if(sc<4)st='FREE';
-else if(sc<7)st='TRANSITIONING';
-
-const code=`⚡ BEYOND TIME 量子存在コード v2.0
+function createStars(){const s=document.getElementById('stars');const fragment=document.createDocumentFragment();for(let i=0;i<150;i++){const d=document.createElement('div');d.className='star';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*3+'s';fragment.appendChild(d)}s.appendChild(fragment)}
+function updateStats(){setInterval(()=>{document.getElementById('live').textContent=100+Math.floor(Math.random()*50);document.getElementById('avg').textContent=(4.5+Math.random()*1.5).toFixed(1)},5000)}
+document.querySelectorAll('.opt').forEach(el=>{el.addEventListener('click',function(){const q=this.getAttribute('data-q');const v=parseInt(this.getAttribute('data-v'));ans['q'+q]=v;const opts=this.closest('.options').querySelectorAll('.opt');opts.forEach(o=>{o.classList.remove('selected')});this.classList.add('selected');console.log('✅ 選択:','Q'+q,'=',v)})});
+document.getElementById('submit').addEventListener('click',function(){if(ans.q1===0||ans.q2===0||ans.q3===0){alert('⚠️ 全ての質問に答えてください。');return}const loading=document.getElementById('loading');const submitBtn=this;submitBtn.disabled=true;submitBtn.textContent='計算中...';loading.classList.add('active');setTimeout(()=>{const sc=ans.q1+ans.q2+ans.q3;const opp=(4-ans.q1)+(4-ans.q2)+(4-ans.q3);const rnd=Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1);function getTxt(s){if(s>=7)return{t:'【緊急】時間軸に強く縛られています',d:'あなたは過去と未来の重力に強く引かれ、「今」この瞬間を体験できていません。時間の牢獄から解放される必要があります。',p:'premium'};if(s>=4)return{t:'【中程度】時間軸に影響されています',d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。バランスを取りながらも、より深い自由を求めています。',p:'premium'};return{t:'【高自由度】Beyond Timeの準備完了',d:'あなたは既に時間軸から比較的自由な状態にあります。さらなる次元へ進む準備ができています。',p:'restoration'}}const yr=getTxt(sc);const op=getTxt(opp);const rd=getTxt(rnd);document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br><br>${yr.d}<br><br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br><br>もしあなたが逆の選択をしていたら、この世界線にいたでしょう。<br><br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br><br>量子的にランダムな選択をした場合の可能性です。<br><br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;const p1=Math.round((ans.q1/3)*100);const p2=Math.round((ans.q2/3)*100);const p3=Math.round((ans.q3/3)*100);const p4=Math.round(100-(sc/9*100));setTimeout(()=>{['b1','b2','b3','b4'].forEach((id,i)=>{const per=[p1,p2,p3,p4][i];document.getElementById(id).style.width=per+'%';document.getElementById('v'+(i+1)).textContent=per+'%'})},500);document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);const hash=Math.random().toString(36).substring(2,10).toUpperCase();const qhash=Math.random().toString(36).substring(2,10).toUpperCase();let st='BOUND';if(sc<4)st='FREE';else if(sc<7)st='TRANSITIONING';const code=`⚡ BEYOND TIME 量子存在コード v2.0
 
 QUANTUM_STATE: SUPERPOSITION
 TIME_AXIS: ${st}
@@ -404,9 +289,6 @@ QUANTUM_HASH: ${qhash}
 
 Beyond Time Quantum System
 Created by Three Brothers
-━━━━━━━━━━━━━━━━━━━━`;
-
-document.getElementById('code').textContent=code;
-
-const shareUrl=window.location.origin+window.location.pathname+'?q1='+ans.q1+'&q2='+ans.q2+'&q3='+ans.q3;
-document
+━━━━━━━━━━━━━━━━━━━━`;document.getElementById('code').textContent=code;const shareUrl=window.location.origin+window.location.pathname+'?q1='+ans.q1+'&q2='+ans.q2+'&q3='+ans.q3;document.getElementById('url').textContent=shareUrl;document.getElementById('diagnosis').style.display='none';document.getElementById('results').classList.add('active');loading.classList.remove('active');setTimeout(()=>{document.getElementById('results').scrollIntoView({behavior:'smooth'})},100);console.log('✅ 診断完了 - スコア:',sc)},800)});
+document.getElementById('copyCode').addEventListener('click',function(){const txt=document.getElementById('code').textContent;navigator.clipboard.writeText(txt).then(()=>{this.textContent='✅ コピー完了！';setTimeout(()=>{this.textContent='📋 存在コードをコピー'},2000)}).catch(()=>{alert('⚠️ コピーに失敗しました')})});
+document.getElementById('twitter').addEventListener('click',function(){const url=document.getElementById('url').textContent;const txt='私の Beyond Time 量子診断結果をチェック！3つのパラレルワールドを見てみよう！⚡🌀';wi
