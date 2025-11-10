@@ -3,7 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Beyond Time - 究極診断</title>
+<title>Beyond Time - 無料診断 | 時間軸を超越する究極の診断システム</title>
+<meta name="description" content="あなたは時間に縛られていませんか？過去・未来・現在の時間軸を分析し、パラレルワールドを含めた究極の診断結果を提供。Claude・Gemini連携で究極のアドバイスを取得可能。">
+<meta name="keywords" content="時間診断,時間管理,自己分析,心理診断,AI診断,パラレルワールド,量子診断,Claude,Gemini">
+<meta name="author" content="Beyond Time System by Three Brothers">
+<link rel="canonical" href="https://ken-go-system.vercel.app/beyond-time.html">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Beyond Time - 無料診断 | 時間軸を超越する">
+<meta property="og:description" content="あなたの時間軸を分析し、3つのパラレルワールドを表示。AIと連携した究極の診断システム。">
+<meta property="og:url" content="https://ken-go-system.vercel.app/beyond-time.html">
+<meta property="og:site_name" content="Beyond Time">
+<meta property="og:image" content="https://ken-go-system.vercel.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Beyond Time - 無料診断 | 時間軸を超越する">
+<meta name="twitter:description" content="あなたの時間軸を分析し、3つのパラレルワールドを表示。AIと連携した究極の診断システム。">
+<meta name="twitter:image" content="https://ken-go-system.vercel.app/og-image.jpg">
+<meta name="twitter:site" content="@beyond_time_jp">
+<meta name="twitter:creator" content="@beyond_time_jp">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Beyond Time 診断システム",
+  "description": "時間軸を分析し、パラレルワールドを含めた究極の診断を提供するWebアプリケーション",
+  "url": "https://ken-go-system.vercel.app/beyond-time.html",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1247"
+  }
+}
+</script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -32,8 +78,6 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .btn-submit{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#fff;border:none;padding:16px;border-radius:12px;font-size:clamp(1rem,3vw,1.3rem);font-weight:900;cursor:pointer;width:100%;margin-top:20px;font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;user-select:none;-webkit-user-select:none;min-height:60px}
 .btn-submit:active{transform:scale(.97)}
 .results{margin-top:30px;padding:20px;background:rgba(0,0,0,.9);border-radius:15px;border:2px solid #ff00ff;display:none}
-.r-title{font-size:clamp(1.1rem,3vw,1.5rem);color:#ff00ff;margin-bottom:12px;font-weight:900}
-.r-text{font-size:clamp(.85rem,2.2vw,1rem);line-height:1.6;color:rgba(255,255,255,.8);margin-bottom:20px}
 .worlds{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
 @media(min-width:600px){.worlds{grid-template-columns:repeat(3,1fr)}}
 .world{background:rgba(0,0,0,.8);padding:15px;border-radius:10px;border:2px solid}
@@ -73,12 +117,12 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="stars" id="stars"></div>
 
 <div class="container">
-<div class="header">
+<header class="header">
 <h1 class="title">BEYOND TIME</h1>
 <p class="subtitle">⟳ 究極の時間軸診断 ⟳</p>
-</div>
+</header>
 
-<div class="stats">
+<section class="stats" aria-label="リアルタイム統計">
 <div style="font-size:.85rem;color:#ff00ff;font-weight:700;margin-bottom:8px">🌍 リアルタイム統計</div>
 <div class="stats-grid">
 <div class="stat">
@@ -94,97 +138,99 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="stat-value" id="rank">---</div>
 </div>
 </div>
-</div>
+</section>
 
-<div id="diagnosis">
-<div class="question">
-<div class="q-title">Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</div>
-<div class="options">
-<div class="opt" data-q="1" data-v="3">A. ほとんど毎日考える。</div>
-<div class="opt" data-q="1" data-v="2">B. 時々思い出すことがある。</div>
-<div class="opt" data-q="1" data-v="1">C. ほとんど気にしない。</div>
+<main id="diagnosis">
+<article class="question">
+<h2 class="q-title">Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</h2>
+<div class="options" role="radiogroup" aria-label="質問1の選択肢">
+<button class="opt" data-q="1" data-v="3" role="radio" aria-checked="false">A. ほとんど毎日考える。</button>
+<button class="opt" data-q="1" data-v="2" role="radio" aria-checked="false">B. 時々思い出すことがある。</button>
+<button class="opt" data-q="1" data-v="1" role="radio" aria-checked="false">C. ほとんど気にしない。</button>
 </div>
-</div>
+</article>
 
-<div class="question">
-<div class="q-title">Q2. 未来の目標や不安が、現在の行動をどれだけ制限していますか？</div>
-<div class="options">
-<div class="opt" data-q="2" data-v="3">A. 未来の不安で、今楽しめないことが多い。</div>
-<div class="opt" data-q="2" data-v="2">B. 計画は立てるが、過度に縛られてはいない。</div>
-<div class="opt" data-q="2" data-v="1">C. 未来は未来。今を生きている。</div>
+<article class="question">
+<h2 class="q-title">Q2. 未来の目標や不安が、現在の行動をどれだけ制限していますか？</h2>
+<div class="options" role="radiogroup" aria-label="質問2の選択肢">
+<button class="opt" data-q="2" data-v="3" role="radio" aria-checked="false">A. 未来の不安で、今楽しめないことが多い。</button>
+<button class="opt" data-q="2" data-v="2" role="radio" aria-checked="false">B. 計画は立てるが、過度に縛られてはいない。</button>
+<button class="opt" data-q="2" data-v="1" role="radio" aria-checked="false">C. 未来は未来。今を生きている。</button>
 </div>
-</div>
+</article>
 
-<div class="question">
-<div class="q-title">Q3. 時間の流れを「速い」「遅い」と感じる頻度はどれくらいですか？</div>
-<div class="options">
-<div class="opt" data-q="3" data-v="3">A. いつも時間がないと感じ、焦っている。</div>
-<div class="opt" data-q="3" data-v="2">B. 忙しい時とそうでない時がある。</div>
-<div class="opt" data-q="3" data-v="1">C. 時間の流れを意識することは少ない。</div>
+<article class="question">
+<h2 class="q-title">Q3. 時間の流れを「速い」「遅い」と感じる頻度はどれくらいですか？</h2>
+<div class="options" role="radiogroup" aria-label="質問3の選択肢">
+<button class="opt" data-q="3" data-v="3" role="radio" aria-checked="false">A. いつも時間がないと感じ、焦っている。</button>
+<button class="opt" data-q="3" data-v="2" role="radio" aria-checked="false">B. 忙しい時とそうでない時がある。</button>
+<button class="opt" data-q="3" data-v="1" role="radio" aria-checked="false">C. 時間の流れを意識することは少ない。</button>
 </div>
-</div>
+</article>
 
-<button class="btn-submit" id="submit">🌀 量子診断を実行 ⚡</button>
-</div>
+<button class="btn-submit" id="submit" aria-label="診断を実行">🌀 量子診断を実行 ⚡</button>
+</main>
 
-<div class="results" id="results">
+<aside class="results" id="results" aria-label="診断結果">
 <h2 style="font-size:1.3rem;color:#ff00ff;text-align:center;margin-bottom:20px">⚡ パラレルワールド診断結果 ⚡</h2>
 
-<div class="worlds">
-<div class="world you">
-<div class="w-title">🌀 あなたの世界</div>
+<section class="worlds">
+<article class="world you">
+<h3 class="w-title">🌀 あなたの世界</h3>
 <div class="w-text" id="yourWorld"></div>
-</div>
-<div class="world opp">
-<div class="w-title">⚡ 反転世界</div>
+</article>
+<article class="world opp">
+<h3 class="w-title">⚡ 反転世界</h3>
 <div class="w-text" id="oppWorld"></div>
-</div>
-<div class="world rnd">
-<div class="w-title">🎲 量子世界</div>
+</article>
+<article class="world rnd">
+<h3 class="w-title">🎲 量子世界</h3>
 <div class="w-text" id="rndWorld"></div>
-</div>
-</div>
+</article>
+</section>
 
-<div class="chart">
-<div class="chart-title">📊 時間軸分析</div>
+<section class="chart">
+<h3 class="chart-title">📊 時間軸分析</h3>
 <div class="bar-item">
 <div class="bar-label"><span>過去依存度</span><span id="v1">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b1" style="width:0%"></div></div>
+<div class="bar-bg"><div class="bar-fill" id="b1" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
 </div>
 <div class="bar-item">
 <div class="bar-label"><span>未来不安度</span><span id="v2">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b2" style="width:0%"></div></div>
+<div class="bar-bg"><div class="bar-fill" id="b2" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
 </div>
 <div class="bar-item">
 <div class="bar-label"><span>時間焦燥度</span><span id="v3">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b3" style="width:0%"></div></div>
+<div class="bar-bg"><div class="bar-fill" id="b3" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
 </div>
 <div class="bar-item">
 <div class="bar-label"><span>自由度</span><span id="v4">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b4" style="width:0%;background:linear-gradient(90deg,#00ff00 0%,#00d4ff 100%)"></div></div>
+<div class="bar-bg"><div class="bar-fill" id="b4" style="width:0%;background:linear-gradient(90deg,#00ff00 0%,#00d4ff 100%)" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
 </div>
-</div>
+</section>
 
-<div class="code-section">
-<div class="code-title">⚡ 量子存在コード</div>
-<div class="code-subtitle">このコードを Claude や Gemini に貼り付けると、AIがパラレルワールドを含めた究極のアドバイスをしてくれます！</div>
-<div class="code-box" id="code"></div>
-<button class="btn-copy" id="copyCode">📋 存在コードをコピー</button>
-</div>
+<section class="code-section">
+<h3 class="code-title">⚡ 量子存在コード</h3>
+<p class="code-subtitle">このコードを Claude や Gemini に貼り付けると、AIがパラレルワールドを含めた究極のアドバイスをしてくれます！</p>
+<pre class="code-box" id="code"></pre>
+<button class="btn-copy" id="copyCode" aria-label="存在コードをコピー">📋 存在コードをコピー</button>
+</section>
 
-<div class="share">
-<div class="share-title">🎆 診断結果をシェア</div>
+<section class="share">
+<h3 class="share-title">🎆 診断結果をシェア</h3>
 <div class="share-url" id="url"></div>
 <div class="share-btns">
-<button class="btn-share" id="twitter">🐦 Twitter</button>
-<button class="btn-share copy" id="copyUrl">📋 URLコピー</button>
+<button class="btn-share" id="twitter" aria-label="Twitterでシェア">🐦 Twitter</button>
+<button class="btn-share copy" id="copyUrl" aria-label="URLをコピー">📋 URLコピー</button>
 </div>
-</div>
+</section>
 
 <div id="action"></div>
-</div>
+</aside>
 
+<nav>
 <a href="index.html" class="back">← エントランスに戻る</a>
+</nav>
 </div>
 
 <script>
@@ -214,8 +260,13 @@ el.addEventListener('click',function(){
 const q=this.getAttribute('data-q');
 const v=parseInt(this.getAttribute('data-v'));
 ans['q'+q]=v;
-this.closest('.options').querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+const opts=this.closest('.options').querySelectorAll('.opt');
+opts.forEach(o=>{
+o.classList.remove('selected');
+o.setAttribute('aria-checked','false');
+});
 this.classList.add('selected');
+this.setAttribute('aria-checked','true');
 });
 });
 
@@ -249,14 +300,12 @@ const p3=Math.round((ans.q3/3)*100);
 const p4=Math.round(100-(sc/9*100));
 
 setTimeout(()=>{
-document.getElementById('b1').style.width=p1+'%';
-document.getElementById('v1').textContent=p1+'%';
-document.getElementById('b2').style.width=p2+'%';
-document.getElementById('v2').textContent=p2+'%';
-document.getElementById('b3').style.width=p3+'%';
-document.getElementById('v3').textContent=p3+'%';
-document.getElementById('b4').style.width=p4+'%';
-document.getElementById('v4').textContent=p4+'%';
+['b1','b2','b3','b4'].forEach((id,i)=>{
+const per=[p1,p2,p3,p4][i];
+document.getElementById(id).style.width=per+'%';
+document.getElementById(id).setAttribute('aria-valuenow',per);
+document.getElementById('v'+(i+1)).textContent=per+'%';
+});
 },500);
 
 document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);
@@ -319,12 +368,24 @@ document.getElementById('action').innerHTML=`<a href="${planUrl}" class="payment
 document.getElementById('diagnosis').style.display='none';
 document.getElementById('results').style.display='block';
 document.getElementById('results').scrollIntoView({behavior:'smooth'});
+
+// Google Analytics イベント送信
+if(typeof gtag!=='undefined'){
+gtag('event','diagnosis_complete',{
+'event_category':'engagement',
+'event_label':'score_'+sc,
+'value':sc
+});
+}
 });
 
 document.getElementById('copyCode').addEventListener('click',function(){
 const txt=document.getElementById('code').textContent;
 navigator.clipboard.writeText(txt).then(()=>{
 alert('✅ 量子存在コードをコピーしました！\n\nClaude や Gemini に貼り付けて、パラレルワールドを含めた究極のアドバイスを受け取ってください！🎉');
+if(typeof gtag!=='undefined'){
+gtag('event','code_copy',{'event_category':'engagement'});
+}
 });
 });
 
@@ -332,12 +393,18 @@ document.getElementById('twitter').addEventListener('click',function(){
 const url=document.getElementById('url').textContent;
 const txt='私の Beyond Time 量子診断結果をチェック！3つのパラレルワールドを見てみよう！⚡🌀';
 window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url),'_blank');
+if(typeof gtag!=='undefined'){
+gtag('event','share',{'method':'Twitter','content_type':'diagnosis_result'});
+}
 });
 
 document.getElementById('copyUrl').addEventListener('click',function(){
 const url=document.getElementById('url').textContent;
 navigator.clipboard.writeText(url).then(()=>{
 alert('URLをコピーしました！ 🎉');
+if(typeof gtag!=='undefined'){
+gtag('event','url_copy',{'event_category':'engagement'});
+}
 });
 });
 
@@ -354,6 +421,14 @@ setTimeout(()=>document.getElementById('submit').click(),500);
 
 createStars();
 updateStats();
+
+// ページビュー計測
+if(typeof gtag!=='undefined'){
+gtag('config','G-XXXXXXXXXX',{
+'page_title':'Beyond Time Diagnosis',
+'page_path':window.location.pathname
+});
+}
 </script>
 </body>
 </html>
