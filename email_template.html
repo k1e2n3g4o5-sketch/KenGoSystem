@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Time 診断ありがとうございます</title>
+<style>
+body{font-family:'Hiragino Sans','Arial',sans-serif;background:#f5f5f5;margin:0;padding:0}
+.container{max-width:600px;margin:0 auto;background:#fff;padding:30px;border-radius:10px;margin-top:30px}
+.header{text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:2px solid #00d4ff}
+.title{font-size:2rem;background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
+.content{font-size:1rem;line-height:1.8;color:#333;margin-bottom:30px}
+.result-box{background:#f0f0f0;padding:20px;border-radius:10px;margin:20px 0}
+.cta-button{display:inline-block;background:linear-gradient(135deg,#00d4ff 0%,#ff00ff 100%);color:#fff;padding:15px 40px;border-radius:8px;text-decoration:none;font-weight:900;font-size:1.1rem;margin-top:20px}
+.footer{text-align:center;font-size:0.85rem;color:#999;margin-top:40px;padding-top:20px;border-top:1px solid #ddd}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1 class="title">BEYOND TIME</h1>
+</div>
+
+<div class="content">
+<p>{{name}}様</p>
+<p>Beyond Time 診断をご利用いただき、ありがとうございます！</p>
+<p>あなたの診断結果はこちらです：</p>
+
+<div class="result-box">
+<strong>診断結果:</strong> {{result_title}}<br>
+<strong>スコア:</strong> {{score}}/9<br>
+<strong>自由度:</strong> {{freedom}}%
+</div>
+
+<p>さらに詳細な分析と、AI からのパーソナライズされたアドバイスを受け取りませんか？</p>
+
+<div style="text-align:center">
+<a href="https://ken-go-system.vercel.app/payment.html?plan=premium" class="cta-button">
+Premium Plan で深層分析する（¥980）
+</a>
+</div>
+
+<p style="margin-top:30px">また、あなたの存在コードを Claude や Gemini に貼り付けることで、無料で AI アドバイスを受け取ることもできます！</p>
+</div>
+
+<div class="footer">
+<p>Beyond Time System by Three Brothers</p>
+<p><a href="https://ken-go-system.vercel.app" style="color:#00d4ff">ken-go-system.vercel.app</a></p>
+<p><a href="mailto:support@ken-go-system.com" style="color:#00d4ff">お問い合わせ</a></p>
+</div>
+</div>
+</body>
+</html>
