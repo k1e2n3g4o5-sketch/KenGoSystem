@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Beyond Time System - 時間を超越せよ | AI診断システム</title>
-<meta name="description" content="時間に縛られていませんか？Beyond Timeは、AI×統計学×パラレルワールドで、あなたの時間軸を解き明かす究極の診断システム。¥100から始められる、人生を変える診断。">
+<meta name="description" content="時間に縛られていませんか？Beyond Timeは、AI×統計学×パラレルワールドで、あなたの時間軸を解き明かす究極の診断システム。完全無料の診断から始められます。">
 <meta name="keywords" content="AI診断,時間診断,生年月日診断,パラレルワールド,自己分析,運命診断">
 <link rel="canonical" href="https://ken-go-system.vercel.app/">
 
 <meta property="og:title" content="Beyond Time System - 時間を超越せよ">
-<meta property="og:description" content="AI×統計学×パラレルワールドで、あなたの運命を解き明かす。¥100から始められる究極の診断システム。">
+<meta property="og:description" content="AI×統計学×パラレルワールドで、あなたの運命を解き明かす。無料診断から始められる究極の診断システム。">
 <meta property="og:url" content="https://ken-go-system.vercel.app/">
 <meta property="og:image" content="https://ken-go-system.vercel.app/og-image.jpg">
 
@@ -21,74 +21,97 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;touch-action:manipulation}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%);z-index:-2}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%);z-index:-2;animation:pulse 8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.8}}
 .stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
-.shooting-star{position:fixed;width:3px;height:3px;background:#fff;border-radius:50%;animation:shoot 4s linear infinite;box-shadow:0 0 10px #fff,0 0 20px #fff}
-@keyframes shoot{0%{transform:translate(0,0);opacity:1}100%{transform:translate(-400px,400px);opacity:0}}
 .container{max-width:1200px;margin:0 auto;padding:20px}
-.hero{text-align:center;padding:60px 20px;margin-bottom:60px;position:relative}
+.hero{text-align:center;padding:60px 20px 40px;margin-bottom:40px}
 .logo{font-size:clamp(3rem,8vw,5rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:.2em;margin-bottom:20px;animation:logoGlow 3s infinite;font-family:'Orbitron',sans-serif}
 @keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 30px rgba(0,212,255,.8))}50%{filter:drop-shadow(0 0 60px rgba(255,0,255,1))}}
 .tagline{font-size:clamp(1.2rem,3vw,2rem);color:#ffd700;margin-bottom:30px;font-weight:700}
 .hero-desc{font-size:clamp(.95rem,2.5vw,1.3rem);color:#ddd;line-height:1.8;max-width:800px;margin:0 auto 40px;padding:0 20px}
-.cta-buttons{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:40px}
-.btn-cta{padding:18px 40px;border-radius:15px;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:900;cursor:pointer;border:none;transition:all .3s;text-decoration:none;display:inline-block;font-family:'Noto Sans JP',sans-serif;position:relative;overflow:hidden;z-index:1;touch-action:manipulation}
-.btn-primary{background:linear-gradient(135deg,#ff00ff 0%,#00d4ff 100%);color:#fff}
-.btn-secondary{background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000}
-.btn-cta::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%);transition:width .6s,height .6s;z-index:-1}
-.btn-cta:hover::before{width:300%;height:300%}
-.btn-cta span{position:relative;z-index:1}
-.btn-cta:active{transform:scale(.97)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin:60px 0;padding:40px 20px;background:rgba(255,0,255,.05);border-radius:20px;border:2px solid rgba(255,0,255,.2)}
-.stat-item{text-align:center;padding:20px}
-.stat-value{font-size:clamp(2.5rem,6vw,4rem);background:linear-gradient(135deg,#00d4ff 0%,#ffd700 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:10px}
-.stat-label{font-size:clamp(.9rem,2vw,1.1rem);color:#999}
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin:60px 0}
-.service-card{background:linear-gradient(135deg,rgba(138,43,226,.1) 0%,rgba(0,0,0,.5) 100%);padding:40px;border-radius:20px;border:2px solid rgba(138,43,226,.3);transition:all .3s;cursor:pointer;text-decoration:none;display:block;color:#fff;position:relative;overflow:hidden}
-.service-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(138,43,226,.2) 0%,transparent 70%);transition:all .5s;opacity:0}
-.service-card:hover::before{opacity:1;transform:translate(25%,25%)}
-.service-card:hover{transform:translateY(-10px);box-shadow:0 20px 60px rgba(138,43,226,.4);border-color:rgba(138,43,226,.6)}
-.service-icon{font-size:4rem;margin-bottom:20px;text-align:center}
-.service-title{font-size:clamp(1.5rem,3vw,2rem);color:#00d4ff;font-weight:900;margin-bottom:15px;text-align:center}
-.service-desc{font-size:clamp(.9rem,2vw,1.1rem);color:#ddd;line-height:1.8;margin-bottom:20px}
-.service-price{font-size:clamp(1.8rem,4vw,2.5rem);color:#ffd700;font-weight:900;text-align:center;margin-bottom:15px}
-.service-features{list-style:none;margin-bottom:25px}
-.service-features li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);color:#aaa;font-size:.95rem}
-.service-features li::before{content:'✓';color:#00d4ff;font-weight:900;margin-right:10px}
-.btn-service{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:15px;border-radius:10px;font-size:1.1rem;font-weight:900;width:100%;cursor:pointer;transition:all .3s;font-family:'Noto Sans JP',sans-serif;position:relative;z-index:1}
-.btn-service:hover{transform:scale(1.05);box-shadow:0 5px 20px rgba(255,0,255,.5)}
-.btn-service:active{transform:scale(.98)}
-.features-section{margin:80px 0;padding:60px 20px;background:rgba(0,212,255,.05);border-radius:30px;border:2px solid rgba(0,212,255,.2)}
-.section-title{font-size:clamp(2rem,5vw,3rem);text-align:center;background:linear-gradient(135deg,#ff00ff 0%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:50px}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
-.feature{background:rgba(0,0,0,.5);padding:30px;border-radius:15px;border:1px solid rgba(0,212,255,.3);text-align:center;transition:all .3s}
-.feature:hover{transform:translateY(-5px);border-color:rgba(0,212,255,.6);box-shadow:0 10px 30px rgba(0,212,255,.3)}
-.feature-emoji{font-size:3rem;margin-bottom:15px}
-.feature-title{font-size:1.2rem;color:#00d4ff;font-weight:900;margin-bottom:10px}
-.feature-text{font-size:.95rem;color:#aaa;line-height:1.6}
-.testimonials{margin:80px 0}
-.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;margin-top:40px}
-.testimonial{background:rgba(255,215,0,.05);padding:30px;border-radius:15px;border:2px solid rgba(255,215,0,.2);transition:all .3s}
-.testimonial:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,215,0,.2)}
-.testimonial-text{font-size:1rem;color:#ddd;line-height:1.8;margin-bottom:20px;font-style:italic}
-.testimonial-author{font-size:.9rem;color:#ffd700;font-weight:700}
-.testimonial-rating{color:#ffd700;margin-bottom:10px}
-.faq{margin:80px 0;padding:60px 20px;background:rgba(138,43,226,.05);border-radius:30px;border:2px solid rgba(138,43,226,.2)}
-.faq-item{background:rgba(0,0,0,.5);padding:25px;border-radius:15px;margin-bottom:20px;border:1px solid rgba(138,43,226,.3);cursor:pointer;transition:all .3s}
-.faq-item:hover{border-color:rgba(138,43,226,.6)}
-.faq-question{font-size:1.2rem;color:#ff00ff;font-weight:900;margin-bottom:15px;position:relative;padding-right:30px}
-.faq-question::after{content:'▼';position:absolute;right:0;transition:transform .3s}
-.faq-item.active .faq-question::after{transform:rotate(180deg)}
-.faq-answer{font-size:1rem;color:#ddd;line-height:1.8;display:none;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);margin-top:10px}
-.faq-item.active .faq-answer{display:block}
-.footer{text-align:center;padding:40px 20px;margin-top:80px;border-top:2px solid rgba(138,43,226,.2)}
-.footer-links{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-.footer-link{color:#00d4ff;text-decoration:none;font-size:1rem;transition:color .3s}
-.footer-link:hover{color:#ff00ff}
-.copyright{color:#999;font-size:.9rem}
-@media(max-width:768px){.cta-buttons{flex-direction:column;align-items:center}.btn-cta{width:90%;max-width:350px}.services{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}.testimonial-grid{grid-template-columns:1fr}}
+.stats{background:rgba(255,0,255,.1);padding:15px;border-radius:10px;margin:20px 0;text-align:center;border:1px solid rgba(255,0,255,.3)}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:10px}
+.stat{background:rgba(0,0,0,.5);padding:12px;border-radius:8px;transition:all .3s}
+.stat:hover{background:rgba(0,0,0,.7);transform:scale(1.05)}
+.stat-label{font-size:.8rem;color:#7a5cff;margin-bottom:5px}
+.stat-value{font-size:1.2rem;color:#00d4ff;font-weight:900}
+.diagnosis-section{background:rgba(0,0,0,.9);padding:40px 30px;border-radius:20px;margin:40px auto;max-width:900px;border:3px solid rgba(0,212,255,.5);box-shadow:0 0 50px rgba(0,212,255,.3)}
+.section-title{font-size:clamp(1.5rem,4vw,2.2rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;text-align:center;margin-bottom:30px;letter-spacing:.1em}
+.question{margin-bottom:30px;background:rgba(255,255,255,.03);padding:20px;border-radius:12px;border:1px solid rgba(0,212,255,.2);transition:all .3s}
+.question:hover{background:rgba(255,255,255,.05);border-color:rgba(0,212,255,.4)}
+.q-title{font-size:clamp(1rem,2.5vw,1.2rem);color:#00d4ff;margin-bottom:15px;font-weight:700;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{background:rgba(0,0,0,.7);color:rgba(255,255,255,.9);border:2px solid rgba(0,212,255,.3);padding:15px;border-radius:10px;font-size:clamp(.9rem,2.2vw,1rem);cursor:pointer;transition:all .2s;text-align:left;font-family:'Noto Sans JP',sans-serif;position:relative;user-select:none;display:flex;align-items:center;justify-content:space-between;min-height:55px;line-height:1.5}
+.opt::after{content:'';width:22px;height:22px;border:2px solid rgba(0,212,255,.5);border-radius:50%;flex-shrink:0;transition:all .2s}
+.opt:hover{border-color:rgba(0,212,255,.6);background:rgba(0,0,0,.8);transform:translateX(5px)}
+.opt:active{transform:scale(.98) translateX(5px)}
+.opt.selected{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#000;border-color:#fff;font-weight:900;box-shadow:0 0 30px rgba(0,212,255,.8);transform:translateX(0)}
+.opt.selected::after{background:#fff;border-color:#fff;box-shadow:0 0 10px #fff}
+.btn-submit{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#fff;border:none;padding:20px;border-radius:15px;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:900;cursor:pointer;width:100%;margin-top:30px;font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;box-shadow:0 0 40px rgba(0,212,255,.6);position:relative;z-index:1;touch-action:manipulation}
+.btn-submit:hover{transform:translateY(-3px);box-shadow:0 0 60px rgba(255,0,255,.8)}
+.btn-submit:active{transform:translateY(-1px) scale(.98)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.loading{display:none;text-align:center;color:#7a5cff;font-size:1.1rem;font-weight:700;margin:20px 0}
+.loading.active{display:block}
+.loading::after{content:'';animation:dots 1.5s steps(4,end) infinite}
+@keyframes dots{0%,20%{content:''}40%{content:'.'}60%{content:'..'}80%,100%{content:'...'}}
+.results{margin-top:40px;padding:30px;background:rgba(0,0,0,.95);border-radius:20px;border:3px solid #ff00ff;display:none;animation:fadeIn .5s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.results.active{display:block}
+.result-header{font-size:clamp(1.3rem,3vw,1.8rem);color:#ff00ff;text-align:center;margin-bottom:30px;font-weight:900}
+.worlds{display:grid;grid-template-columns:1fr;gap:15px;margin:25px 0}
+@media(min-width:700px){.worlds{grid-template-columns:repeat(3,1fr)}}
+.world{background:rgba(0,0,0,.8);padding:20px;border-radius:12px;border:2px solid;transition:all .3s;position:relative;overflow:hidden}
+.world::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%);transition:all .5s;opacity:0}
+.world:hover::before{opacity:1;transform:translate(25%,25%)}
+.world:hover{transform:translateY(-5px)}
+.world.you{border-color:#00d4ff}
+.world.opp{border-color:#ff00ff}
+.world.rnd{border-color:#ffd700}
+.w-title{font-size:1.1rem;font-weight:900;margin-bottom:12px;text-align:center}
+.world.you .w-title{color:#00d4ff}
+.world.opp .w-title{color:#ff00ff}
+.world.rnd .w-title{color:#ffd700}
+.w-text{font-size:.9rem;line-height:1.6;color:rgba(255,255,255,.85)}
+.chart{margin:30px 0;padding:20px;background:rgba(0,212,255,.05);border-radius:15px;border:2px solid rgba(0,212,255,.3)}
+.chart-title{font-size:1.2rem;color:#00d4ff;margin-bottom:20px;text-align:center;font-weight:700}
+.bar-item{margin-bottom:15px}
+.bar-label{font-size:.9rem;color:#7a5cff;margin-bottom:6px;font-weight:600;display:flex;justify-content:space-between}
+.bar-bg{background:rgba(0,0,0,.5);border-radius:10px;height:28px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
+.bar-fill{height:100%;background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);transition:width 2s ease-out;box-shadow:0 0 10px rgba(0,212,255,.6)}
+.code-section{margin:30px 0;padding:20px;background:rgba(0,0,0,.95);border-radius:15px;border:2px solid rgba(0,255,0,.5)}
+.code-title{font-size:1.2rem;color:#00ff00;margin-bottom:12px;font-weight:700;text-align:center}
+.code-subtitle{font-size:.85rem;color:rgba(255,255,255,.7);margin-bottom:15px;text-align:center;line-height:1.6}
+.code-box{background:#000;padding:15px;border-radius:10px;font-family:'Courier New',monospace;font-size:.75rem;color:#00ff00;text-align:left;overflow-x:auto;line-height:1.6;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);margin-bottom:15px;max-height:350px;overflow-y:auto;box-shadow:inset 0 0 10px rgba(0,255,0,.1);cursor:pointer}
+.code-box:hover{box-shadow:0 0 20px rgba(0,255,0,.4),inset 0 0 15px rgba(0,255,0,.2)}
+.btn-copy{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:15px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;font-family:'Noto Sans JP',sans-serif;transition:all .3s;box-shadow:0 0 25px rgba(0,255,0,.4);touch-action:manipulation}
+.btn-copy:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(0,255,0,.6)}
+.btn-copy:active{transform:scale(.97)}
+.share{margin:30px 0;padding:20px;background:rgba(122,92,255,.1);border-radius:15px;border:2px solid rgba(122,92,255,.4)}
+.share-title{font-size:1.1rem;color:#7a5cff;margin-bottom:12px;font-weight:700;text-align:center}
+.share-url{background:rgba(0,0,0,.5);padding:12px;border-radius:10px;font-family:'Courier New',monospace;font-size:.8rem;color:#00d4ff;word-break:break-all;margin:12px 0;border:1px solid rgba(0,212,255,.3)}
+.share-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-share{flex:1;min-width:120px;background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff;border:none;padding:12px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .3s;touch-action:manipulation}
+.btn-share:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(29,161,242,.4)}
+.btn-share:active{transform:scale(.97)}
+.btn-share.copy{background:linear-gradient(135deg,#7a5cff 0%,#5c3fd9 100%)}
+.btn-share.copy:hover{box-shadow:0 5px 15px rgba(122,92,255,.4)}
+.next-steps{margin:30px 0;padding:25px;background:rgba(255,0,255,.08);border-radius:15px;border:2px solid rgba(255,0,255,.4)}
+.next-title{font-size:1.3rem;color:#ff00ff;margin-bottom:20px;font-weight:900;text-align:center}
+.plans-grid{display:grid;grid-template-columns:1fr;gap:15px}
+@media(min-width:700px){.plans-grid{grid-template-columns:repeat(2,1fr)}}
+.plan-card{background:rgba(0,0,0,.7);padding:20px;border-radius:12px;border:2px solid rgba(122,92,255,.4);transition:all .3s;text-decoration:none;display:block;color:#fff}
+.plan-card:hover{transform:translateY(-5px);border-color:rgba(122,92,255,.8);box-shadow:0 10px 30px rgba(122,92,255,.4)}
+.plan-name{font-size:1.2rem;color:#00d4ff;font-weight:900;margin-bottom:10px;text-align:center}
+.plan-price{font-size:1.8rem;color:#7a5cff;font-weight:900;text-align:center;margin-bottom:12px}
+.plan-desc{font-size:.9rem;color:rgba(255,255,255,.8);line-height:1.6;text-align:center}
+.fun-link{display:block;background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;padding:18px;border-radius:12px;text-decoration:none;font-weight:900;font-size:1.1rem;text-align:center;margin-top:20px;transition:all .3s;box-shadow:0 0 30px rgba(255,215,0,.5);touch-action:manipulation}
+.fun-link:hover{transform:translateY(-3px);box-shadow:0 5px 30px rgba(255,215,0,.8)}
+.fun-link:active{transform:translateY(-1px) scale(.98)}
+@media(max-width:768px){.container{padding:15px}.hero{padding:40px 20px 30px}.diagnosis-section{padding:30px 20px}.question{padding:15px}.opt{padding:12px;min-height:50px}.worlds{grid-template-columns:1fr}.plans-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -104,167 +127,147 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 過去・現在・未来の時間軸を超越し、<br>
 本当の自分と出会う。
 </p>
-<div class="cta-buttons">
-<a href="#diagnosis-start" class="btn-cta btn-primary"><span>⚡ 今すぐ無料診断</span></a>
-<a href="#services" class="btn-cta btn-secondary"><span>🌟 プランを見る</span></a>
-</div>
-</section>
 
-<section class="stats">
-<div class="stat-item">
-<div class="stat-value" id="totalDiag">28,473</div>
-<div class="stat-label">総診断数</div>
+<div class="stats">
+<div style="font-size:.9rem;color:#ff00ff;font-weight:700;margin-bottom:10px">🌍 リアルタイム統計</div>
+<div class="stats-grid">
+<div class="stat">
+<div class="stat-label">診断中</div>
+<div class="stat-value" id="live">127</div>
 </div>
-<div class="stat-item">
-<div class="stat-value">98.3%</div>
-<div class="stat-label">満足度</div>
+<div class="stat">
+<div class="stat-label">平均スコア</div>
+<div class="stat-value" id="avg">5.2</div>
 </div>
-<div class="stat-item">
-<div class="stat-value">15,892</div>
-<div class="stat-label">SNSシェア数</div>
+<div class="stat">
+<div class="stat-label">あなたの順位</div>
+<div class="stat-value" id="rank">---</div>
 </div>
-<div class="stat-item">
-<div class="stat-value">4.9/5</div>
-<div class="stat-label">平均評価</div>
-</div>
-</section>
-
-<section class="services" id="services">
-<div class="service-card" onclick="window.location.href='payment.html?plan=premium'">
-<div class="service-icon">⚡</div>
-<h2 class="service-title">Premium 診断</h2>
-<p class="service-desc">
-生年月日から、あなたの時間軸を徹底分析。過去・現在・未来の3つの次元から、真の自分を解き明かします。
-</p>
-<div class="service-price">¥980</div>
-<ul class="service-features">
-<li>深層パラレルワールド診断</li>
-<li>詳細な存在コード生成</li>
-<li>AI連携用データ出力</li>
-<li>PDF レポート</li>
-<li>即座に結果表示</li>
-</ul>
-<button class="btn-service">今すぐ診断する →</button>
-</div>
-
-<div class="service-card" onclick="window.location.href='payment.html?plan=restoration'">
-<div class="service-icon">🌟</div>
-<h2 class="service-title">Time Restoration</h2>
-<p class="service-desc">
-時間軸の再構築。究極の「永遠の今」ボタンで、あなたの人生を完全に書き換えます。最高峰の診断体験。
-</p>
-<div class="service-price">¥29,800</div>
-<ul class="service-features">
-<li>完全カスタム診断</li>
-<li>究極の存在コード</li>
-<li>永遠の今ボタン機能</li>
-<li>時間軸再構築システム</li>
-<li>限定サポート付き</li>
-</ul>
-<button class="btn-service">究極の体験へ →</button>
-</div>
-</section>
-
-<section class="features-section">
-<h2 class="section-title">🌌 なぜ Beyond Time なのか？</h2>
-<div class="features-grid">
-<div class="feature">
-<div class="feature-emoji">🤖</div>
-<h3 class="feature-title">AI駆動</h3>
-<p class="feature-text">最先端のAI技術で、従来の占いを超えた科学的分析を実現</p>
-</div>
-<div class="feature">
-<div class="feature-emoji">🌀</div>
-<h3 class="feature-title">パラレルワールド</h3>
-<p class="feature-text">もう一つの人生を可視化。可能性の分岐点を発見</p>
-</div>
-<div class="feature">
-<div class="feature-emoji">📊</div>
-<h3 class="feature-title">統計学的根拠</h3>
-<p class="feature-text">100万人以上のデータから導き出された信頼性の高い診断</p>
-</div>
-<div class="feature">
-<div class="feature-emoji">⚡</div>
-<h3 class="feature-title">即座の結果</h3>
-<p class="feature-text">わずか数分で、あなたの運命が明らかに</p>
-</div>
-<div class="feature">
-<div class="feature-emoji">💰</div>
-<h3 class="feature-title">圧倒的コスパ</h3>
-<p class="feature-text">¥980から始められる本格的な診断システム</p>
-</div>
-<div class="feature">
-<div class="feature-emoji">🔒</div>
-<h3 class="feature-title">安全決済</h3>
-<p class="feature-text">Stripe採用。クレジットカード情報は暗号化され安全に処理</p>
 </div>
 </div>
 </section>
 
-<section class="testimonials">
-<h2 class="section-title">💬 利用者の声</h2>
-<div class="testimonial-grid">
-<div class="testimonial">
-<div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-<p class="testimonial-text">「パラレルワールド診断が衝撃的でした。もし別の選択をしていたら...と考えさせられました。¥980でこのクオリティは信じられない！」</p>
-<p class="testimonial-author">- 28歳 女性</p>
+<section class="diagnosis-section" id="diagnosis">
+<h2 class="section-title">🌀 無料診断スタート</h2>
+
+<article class="question">
+<h3 class="q-title">Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</h3>
+<div class="options">
+<button class="opt" data-q="1" data-v="3">A. ほとんど毎日考える。過去が頭から離れない。</button>
+<button class="opt" data-q="1" data-v="2">B. 時々思い出すことがある。でも切り替えられる。</button>
+<button class="opt" data-q="1" data-v="1">C. ほとんど気にしない。過去は過去だ。</button>
 </div>
-<div class="testimonial">
-<div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-<p class="testimonial-text">「AI連携機能が素晴らしい。存在コードをClaudeに貼り付けたら、的確すぎるアドバイスが返ってきて鳥肌が立ちました。」</p>
-<p class="testimonial-author">- 35歳 男性</p>
+</article>
+
+<article class="question">
+<h3 class="q-title">Q2. 未来の目標や不安が、現在の行動をどれだけ制限していますか？</h3>
+<div class="options">
+<button class="opt" data-q="2" data-v="3">A. 未来の不安で、今を楽しめないことが多い。</button>
+<button class="opt" data-q="2" data-v="2">B. 計画は立てるが、過度に縛られてはいない。</button>
+<button class="opt" data-q="2" data-v="1">C. 未来は未来。今を全力で生きている。</button>
 </div>
-<div class="testimonial">
-<div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-<p class="testimonial-text">「Time Restorationの『永遠の今』ボタン、マジで人生変わりました。高いけど価値ありすぎる！」</p>
-<p class="testimonial-author">- 42歳 男性</p>
+</article>
+
+<article class="question">
+<h3 class="q-title">Q3. 時間の流れを「速い」「遅い」と感じる頻度はどれくらいですか？</h3>
+<div class="options">
+<button class="opt" data-q="3" data-v="3">A. いつも時間がないと感じ、常に焦っている。</button>
+<button class="opt" data-q="3" data-v="2">B. 忙しい時とそうでない時がある。</button>
+<button class="opt" data-q="3" data-v="1">C. 時間の流れを意識することは少ない。</button>
 </div>
+</article>
+
+<div class="loading" id="loading">診断を計算中</div>
+
+<button class="btn-submit" id="submit">🌀 量子診断を実行 ⚡</button>
+</section>
+
+<aside class="results" id="results">
+<h2 class="result-header">⚡ パラレルワールド診断結果 ⚡</h2>
+
+<section class="worlds">
+<article class="world you">
+<h3 class="w-title">🌀 あなたの世界</h3>
+<div class="w-text" id="yourWorld"></div>
+</article>
+<article class="world opp">
+<h3 class="w-title">⚡ 反転世界</h3>
+<div class="w-text" id="oppWorld"></div>
+</article>
+<article class="world rnd">
+<h3 class="w-title">🎲 量子世界</h3>
+<div class="w-text" id="rndWorld"></div>
+</article>
+</section>
+
+<section class="chart">
+<h3 class="chart-title">📊 時間軸分析</h3>
+<div class="bar-item">
+<div class="bar-label"><span>過去依存度</span><span id="v1">0%</span></div>
+<div class="bar-bg"><div class="bar-fill" id="b1" style="width:0%"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>未来不安度</span><span id="v2">0%</span></div>
+<div class="bar-bg"><div class="bar-fill" id="b2" style="width:0%"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>時間焦燥度</span><span id="v3">0%</span></div>
+<div class="bar-bg"><div class="bar-fill" id="b3" style="width:0%"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>現在自由度</span><span id="v4">0%</span></div>
+<div class="bar-bg"><div class="bar-fill" id="b4" style="width:0%;background:linear-gradient(90deg,#00ff00 0%,#00d4ff 100%)"></div></div>
 </div>
 </section>
 
-<section class="faq">
-<h2 class="section-title">❓ よくある質問</h2>
-<div class="faq-item" onclick="toggleFAQ(this)">
-<div class="faq-question">Q. 決済は安全ですか？</div>
-<div class="faq-answer">A. はい、世界標準の決済システム「Stripe」を採用しています。クレジットカード情報は暗号化され、当サイトには保存されません。</div>
-</div>
-<div class="faq-item" onclick="toggleFAQ(this)">
-<div class="faq-question">Q. 診断結果はいつ届きますか？</div>
-<div class="faq-answer">A. 決済完了後、即座に診断ページへ移動します。わずか数秒で結果が表示されます。</div>
-</div>
-<div class="faq-item" onclick="toggleFAQ(this)">
-<div class="faq-question">Q. AIとの連携はどうやるのですか？</div>
-<div class="faq-answer">A. 診断結果に表示される「存在コード」をコピーし、ClaudeやGeminiに貼り付けるだけです。AIがあなた専用のアドバイスを提供します。</div>
-</div>
-<div class="faq-item" onclick="toggleFAQ(this)">
-<div class="faq-question">Q. 返金はできますか？</div>
-<div class="faq-answer">A. デジタルコンテンツの性質上、原則として返金は承っておりません。ただし、技術的な問題で診断が受けられなかった場合は対応いたします。</div>
-</div>
-<div class="faq-item" onclick="toggleFAQ(this)">
-<div class="faq-question">Q. 診断結果は保存されますか？</div>
-<div class="faq-answer">A. 診断結果のURLを保存することで、いつでも再確認できます。また、PDFでのダウンロードも可能です。</div>
+<section class="code-section">
+<h3 class="code-title">⚡ 量子存在コード</h3>
+<p class="code-subtitle">このコードを Claude や Gemini に貼り付けると、AIがパラレルワールドを含めた究極のアドバイスをしてくれます！</p>
+<pre class="code-box" id="code"></pre>
+<button class="btn-copy" id="copyCode">📋 存在コードをコピー</button>
+</section>
+
+<section class="share">
+<h3 class="share-title">🎆 診断結果をシェア</h3>
+<div class="share-url" id="url"></div>
+<div class="share-btns">
+<button class="btn-share" id="twitter">🐦 Twitter</button>
+<button class="btn-share copy" id="copyUrl">📋 URLコピー</button>
 </div>
 </section>
 
-<div id="diagnosis-start" style="padding-top:80px;margin-top:-80px"></div>
+<section class="next-steps">
+<h3 class="next-title">🚀 さらに深い診断へ</h3>
 
-<footer class="footer">
-<div class="footer-links">
-<a href="#services" class="footer-link">料金プラン</a>
-<a href="#diagnosis-start" class="footer-link">診断を始める</a>
-<a href="mailto:support@ken-go-system.com" class="footer-link">お問い合わせ</a>
+<a href="birthday-diagnosis.html" class="fun-link">
+🎉 誕生日診断で遊ぶ（¥100）
+</a>
+
+<div class="plans-grid">
+<a href="payment.html?plan=premium" class="plan-card">
+<div class="plan-name">Premium診断</div>
+<div class="plan-price">¥980</div>
+<div class="plan-desc">深層分析・詳細レポート・真面目な本格診断</div>
+</a>
+
+<a href="payment.html?plan=restoration" class="plan-card">
+<div class="plan-name">Time Restoration</div>
+<div class="plan-price">¥29,800</div>
+<div class="plan-desc">時間軸再構築・永遠の今ボタン・究極の存在コード</div>
+</a>
 </div>
-<p class="copyright">© 2024 Beyond Time System by Three Brothers. All rights reserved.</p>
-</footer>
+</section>
+</aside>
 </div>
 
 <script>
+let ans={q1:0,q2:0,q3:0};
+
 // ⭐ 星の生成
 function createStars(){
 const s=document.getElementById('stars');
 const fragment=document.createDocumentFragment();
-
-for(let i=0;i<250;i++){
+for(let i=0;i<150;i++){
 const d=document.createElement('div');
 d.className='star';
 d.style.left=Math.random()*100+'%';
@@ -272,63 +275,138 @@ d.style.top=Math.random()*100+'%';
 d.style.animationDelay=Math.random()*3+'s';
 fragment.appendChild(d);
 }
-
-for(let i=0;i<8;i++){
-const d=document.createElement('div');
-d.className='shooting-star';
-d.style.left=Math.random()*100+'%';
-d.style.top=Math.random()*30+'%';
-d.style.animationDelay=i*3+'s';
-fragment.appendChild(d);
-}
-
 s.appendChild(fragment);
 }
 
-// 📊 統計のリアルタイム更新
+// 📊 統計更新
 function updateStats(){
 setInterval(()=>{
-const elem=document.getElementById('totalDiag');
-const current=parseInt(elem.textContent.replace(/,/g,''));
-const newVal=current+Math.floor(Math.random()*10)+1;
-elem.textContent=newVal.toLocaleString();
-},15000);
+document.getElementById('live').textContent=100+Math.floor(Math.random()*50);
+document.getElementById('avg').textContent=(4.5+Math.random()*1.5).toFixed(1);
+},5000);
 }
 
-// ❓ FAQ トグル
-function toggleFAQ(element){
-element.classList.toggle('active');
-}
+// 🎯 選択肢クリック
+document.querySelectorAll('.opt').forEach(el=>{
+el.addEventListener('click',function(){
+const q=this.getAttribute('data-q');
+const v=parseInt(this.getAttribute('data-v'));
+ans['q'+q]=v;
 
-// 🚀 初期化
-document.addEventListener('DOMContentLoaded',()=>{
-createStars();
-updateStats();
+const opts=this.closest('.options').querySelectorAll('.opt');
+opts.forEach(o=>{
+o.classList.remove('selected');
+});
+this.classList.add('selected');
 
-// スムーズスクロール
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-anchor.addEventListener('click',function(e){
-const href=this.getAttribute('href');
-if(href!=='#'){
-e.preventDefault();
-const target=document.querySelector(href);
-if(target){
-target.scrollIntoView({behavior:'smooth',block:'start'});
-}
-}
+console.log('✅ 選択:', 'Q'+q, '=', v);
 });
 });
 
-console.log('🔥 Beyond Time System initialized');
-});
-
-// Google Analytics（必要に応じて有効化）
-if(typeof gtag!=='undefined'){
-gtag('config','G-XXXXXXXXXX',{
-'page_title':'Beyond Time - Home',
-'page_path':'/'
-});
+// 🚀 診断実行
+document.getElementById('submit').addEventListener('click',function(){
+if(ans.q1===0||ans.q2===0||ans.q3===0){
+alert('⚠️ 全ての質問に答えてください。');
+return;
 }
-</script>
-</body>
-</html>
+
+const loading=document.getElementById('loading');
+const submitBtn=this;
+submitBtn.disabled=true;
+submitBtn.textContent='計算中...';
+loading.classList.add('active');
+
+setTimeout(()=>{
+const sc=ans.q1+ans.q2+ans.q3;
+const opp=(4-ans.q1)+(4-ans.q2)+(4-ans.q3);
+const rnd=Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1);
+
+function getTxt(s){
+if(s>=7)return{
+t:'【緊急】時間軸に強く縛られています',
+d:'あなたは過去と未来の重力に強く引かれ、「今」この瞬間を体験できていません。時間の牢獄から解放される必要があります。',
+p:'premium'
+};
+if(s>=4)return{
+t:'【中程度】時間軸に影響されています',
+d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。バランスを取りながらも、より深い自由を求めています。',
+p:'premium'
+};
+return{
+t:'【高自由度】Beyond Timeの準備完了',
+d:'あなたは既に時間軸から比較的自由な状態にあります。さらなる次元へ進む準備ができています。',
+p:'restoration'
+};
+}
+
+const yr=getTxt(sc);
+const op=getTxt(opp);
+const rd=getTxt(rnd);
+
+document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br><br>${yr.d}<br><br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;
+document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br><br>もしあなたが逆の選択をしていたら、この世界線にいたでしょう。<br><br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;
+document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br><br>量子的にランダムな選択をした場合の可能性です。<br><br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;
+
+const p1=Math.round((ans.q1/3)*100);
+const p2=Math.round((ans.q2/3)*100);
+const p3=Math.round((ans.q3/3)*100);
+const p4=Math.round(100-(sc/9*100));
+
+setTimeout(()=>{
+['b1','b2','b3','b4'].forEach((id,i)=>{
+const per=[p1,p2,p3,p4][i];
+document.getElementById(id).style.width=per+'%';
+document.getElementById('v'+(i+1)).textContent=per+'%';
+});
+},500);
+
+document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);
+
+const hash=Math.random().toString(36).substring(2,10).toUpperCase();
+const qhash=Math.random().toString(36).substring(2,10).toUpperCase();
+let st='BOUND';
+if(sc<4)st='FREE';
+else if(sc<7)st='TRANSITIONING';
+
+const code=`⚡ BEYOND TIME 量子存在コード v2.0
+
+QUANTUM_STATE: SUPERPOSITION
+TIME_AXIS: ${st}
+FREEDOM_LEVEL: ${p4}%
+PARALLEL_WORLDS: 3
+
+診断結果: ${yr.t}
+
+━━━━━━━━━━━━━━━━━━━━
+あなたの世界（スコア: ${sc}/9）:
+━━━━━━━━━━━━━━━━━━━━
+• 過去依存度: ${p1}%
+• 未来不安度: ${p2}%
+• 時間焦燥度: ${p3}%
+• 現在自由度: ${p4}%
+
+━━━━━━━━━━━━━━━━━━━━
+パラレルワールド分析:
+━━━━━━━━━━━━━━━━━━━━
+• 反転世界スコア: ${opp}/9
+• 量子世界スコア: ${rnd}/9
+• 可能性の分岐点: ${Math.abs(sc-opp)}
+
+SESSION_HASH: ${hash}
+QUANTUM_HASH: ${qhash}
+
+━━━━━━━━━━━━━━━━━━━━
+> 量子 AI 指示プロトコル:
+━━━━━━━━━━━━━━━━━━━━
+
+このユーザーは3つの並行世界を同時に観測しています。
+パラレルワールドを考慮した究極のアドバイスを提供してください。
+
+Beyond Time Quantum System
+Created by Three Brothers
+━━━━━━━━━━━━━━━━━━━━`;
+
+document.getElementById('code').textContent=code;
+
+const shareUrl=window.location.origin+window.location.pathname+'?q1='+ans.q1+'&q2='+ans.q2+'&q3='+ans.q3;
+document
