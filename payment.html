@@ -10,7 +10,7 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;padding:20px;overflow-x:hidden;touch-action:manipulation}
 body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a1a2e 0%,#000 100%);animation:pulse 8s ease-in-out infinite;z-index:-2}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.75}}
 .stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
@@ -110,282 +110,28 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 </div>
 
 <script>
-// ⚡ Stripe公開キー
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SRULXE90hNxeF7bObkIHe2xyOrQ6NZEFhKwxj9UWFyAyCX65gpKDiXD1iMM3VgPDAWqfOuAJgphapS2Ss9vjwDu00iSwc7QTr';
-
-// 📋 プラン定義
-const plans = {
-  premium: {
-    name: 'Beyond Time - Premium診断',
-    price: '¥980',
-    amount: 980,
-    desc: '深層診断・詳細な存在コード生成',
-    redirectUrl: 'beyond-time.html'
-  },
-  restoration: {
-    name: 'Beyond Time - Time Restoration',
-    price: '¥29,800',
-    amount: 29800,
-    desc: '時間軸の再構築・永遠の今ボタン・究極の存在コード',
-    redirectUrl: 'restoration.html'
-  }
+const STRIPE_PUBLISHABLE_KEY='pk_test_51SRULXE90hNxeF7bObkIHe2xyOrQ6NZEFhKwxj9UWFyAyCX65gpKDiXD1iMM3VgPDAWqfOuAJgphapS2Ss9vjwDu00iSwc7QTr';
+const plans={
+birthday:{name:'誕生日診断',price:'¥100',amount:100,desc:'生年月日から運命・才能・相性を診断',redirectUrl:'birthday-result.html'},
+premium:{name:'Beyond Time - Premium診断',price:'¥980',amount:980,desc:'深層診断・詳細な存在コード生成',redirectUrl:'beyond-time.html'},
+restoration:{name:'Beyond Time - Time Restoration',price:'¥29,800',amount:29800,desc:'時間軸の再構築・永遠の今ボタン・究極の存在コード',redirectUrl:'restoration.html'}
 };
-
-// 🎯 URLパラメータからプラン取得
-const urlParams = new URLSearchParams(window.location.search);
-const planType = urlParams.get('plan') || 'premium';
-const currentPlan = plans[planType];
-
-// ✅ プラン情報表示
-if (currentPlan) {
-  document.getElementById('planName').textContent = currentPlan.name;
-  document.getElementById('planPrice').textContent = currentPlan.price;
-  document.getElementById('planDesc').textContent = currentPlan.desc;
-} else {
-  document.getElementById('planInfo').innerHTML = '<p class="invalid-plan">⚠️ 無効なプランです。<br><br>エントランスからやり直してください。</p>';
-  document.getElementById('payment-form').style.display = 'none';
-}
-
-// ⭐ 星の生成
-function createStars() {
-  const starsContainer = document.getElementById('stars');
-  const fragment = document.createDocumentFragment();
-  
-  for(let i = 0; i < 150; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.animationDelay = Math.random() * 3 + 's';
-    fragment.appendChild(star);
-  }
-  
-  starsContainer.appendChild(fragment);
-}
-
-// 🎨 Stripe初期化
-let stripe, elements, cardElement;
-
-try {
-  stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-  elements = stripe.elements();
-
-  cardElement = elements.create('card', {
-    style: {
-      base: {
-        color: '#fff',
-        fontFamily: '"Noto Sans JP", "Orbitron", sans-serif',
-        fontSize: '16px',
-        lineHeight: '24px',
-        '::placeholder': {
-          color: 'rgba(255, 255, 255, 0.4)'
-        }
-      },
-      invalid: {
-        color: '#ff4444',
-        iconColor: '#ff4444'
-      }
-    },
-    hidePostalCode: true
-  });
-
-  cardElement.mount('#card-element');
-
-  // 🔍 カード入力エラーハンドリング
-  cardElement.on('change', (event) => {
-    const errorElement = document.getElementById('card-errors');
-    if (event.error) {
-      errorElement.textContent = '⚠️ ' + event.error.message;
-      errorElement.classList.add('active');
-    } else {
-      errorElement.textContent = '';
-      errorElement.classList.remove('active');
-    }
-  });
-
-  // カード要素が正しくマウントされたことをログ
-  cardElement.on('ready', () => {
-    console.log('✅ Stripe Card Element mounted successfully');
-  });
-
-} catch (error) {
-  console.error('❌ Stripe initialization error:', error);
-  showError('決済システムの初期化に失敗しました。ページを再読み込みしてください。');
-}
-
-// 📝 フォーム送信処理
-const form = document.getElementById('payment-form');
-form.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  
-  if (!currentPlan) {
-    showError('無効なプランが選択されています');
-    return;
-  }
-  
-  if (!stripe || !cardElement) {
-    showError('決済システムが初期化されていません。ページを再読み込みしてください。');
-    return;
-  }
-  
-  const submitButton = document.getElementById('submit-button');
-  const loading = document.getElementById('loading');
-  const errorElement = document.getElementById('card-errors');
-  
-  // UI更新
-  submitButton.disabled = true;
-  submitButton.textContent = '処理中...';
-  loading.classList.add('active');
-  errorElement.classList.remove('active');
-  
-  try {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    
-    // バリデーション
-    if (!name || !email) {
-      throw new Error('お名前とメールアドレスを入力してください');
-    }
-    
-    if (name.length < 2) {
-      throw new Error('お名前は2文字以上で入力してください');
-    }
-    
-    if (!isValidEmail(email)) {
-      throw new Error('有効なメールアドレスを入力してください');
-    }
-    
-    // PaymentMethod作成
-    const {paymentMethod, error} = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-      billing_details: {
-        name: name,
-        email: email
-      }
-    });
-    
-    if (error) {
-      throw new Error(error.message);
-    }
-    
-    // 🔥 NOTE: 本番環境では、ここでバックエンドAPIに送信して実際の決済処理を行う
-    // 例: const response = await fetch('/api/create-payment-intent', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     paymentMethodId: paymentMethod.id,
-    //     amount: currentPlan.amount,
-    //     email: email,
-    //     name: name
-    //   })
-    // });
-    
-    // テスト環境では、PaymentMethod作成成功で決済完了とみなす
-    console.log('✅ PaymentMethod created:', paymentMethod.id);
-    console.log('💰 Plan:', currentPlan.name);
-    console.log('💴 Amount:', currentPlan.amount);
-    
-    // 成功メッセージ表示
-    showSuccess(name, email);
-    
-  } catch (error) {
-    console.error('❌ Payment error:', error);
-    showError(error.message || '決済処理中にエラーが発生しました。もう一度お試しください。');
-    submitButton.disabled = false;
-    submitButton.textContent = '⚡ 支払う';
-  } finally {
-    loading.classList.remove('active');
-  }
-});
-
-// 📧 メールバリデーション
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-// ✅ 成功メッセージ表示
-function showSuccess(name, email) {
-  // フォームとプラン情報を非表示
-  document.getElementById('payment-form').style.display = 'none';
-  document.getElementById('planInfo').style.display = 'none';
-  
-  // 成功メッセージを表示
-  const successMessage = document.getElementById('successMessage');
-  successMessage.classList.add('active');
-  
-  document.getElementById('successText').innerHTML = `
-    <strong>${escapeHtml(name)}</strong> 様<br><br>
-    決済が完了しました！<br><br>
-    <strong>${escapeHtml(currentPlan.name)}</strong><br>
-    ${escapeHtml(currentPlan.price)}<br><br>
-    ご登録のメールアドレス<br>
-    <span style="color:#00d4ff">${escapeHtml(email)}</span><br>
-    に確認メールを送信しました。<br><br>
-    <strong style="color:#ffd700">3秒後に診断ページへ自動で移動します...</strong>
-  `;
-  
-  // リダイレクト
-  setTimeout(() => {
-    const redirectUrl = currentPlan.redirectUrl + 
-      '?paid=true' + 
-      '&email=' + encodeURIComponent(email) +
-      '&name=' + encodeURIComponent(name) +
-      '&plan=' + encodeURIComponent(planType);
-    
-    console.log('🚀 Redirecting to:', redirectUrl);
-    window.location.href = redirectUrl;
-  }, 3000);
-}
-
-// ❌ エラーメッセージ表示
-function showError(message) {
-  const errorElement = document.getElementById('card-errors');
-  errorElement.textContent = '⚠️ ' + message;
-  errorElement.classList.add('active');
-  
-  // 5秒後に自動で消す
-  setTimeout(() => {
-    errorElement.classList.remove('active');
-  }, 5000);
-}
-
-// 🛡️ XSS対策: HTMLエスケープ
-function escapeHtml(text) {
-  const map = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, m => map[m]);
-}
-
-// 🚀 初期化
-document.addEventListener('DOMContentLoaded', () => {
-  createStars();
-  
-  // フォーカス管理
-  if (currentPlan) {
-    setTimeout(() => {
-      document.getElementById('name').focus();
-    }, 100);
-  }
-  
-  console.log('🔥 Payment page initialized');
-  console.log('📦 Plan:', planType);
-});
-
-// エラーハンドリング
-window.addEventListener('error', (event) => {
-  console.error('❌ Global error:', event.error);
-});
-
-window.addEventListener('unhandledrejection', (event) => {
-  console.error('❌ Unhandled promise rejection:', event.reason);
-});
+const urlParams=new URLSearchParams(window.location.search);
+const planType=urlParams.get('plan')||'premium';
+const currentPlan=plans[planType];
+if(currentPlan){document.getElementById('planName').textContent=currentPlan.name;document.getElementById('planPrice').textContent=currentPlan.price;document.getElementById('planDesc').textContent=currentPlan.desc}else{document.getElementById('planInfo').innerHTML='<p class="invalid-plan">⚠️ 無効なプランです。<br><br>エントランスからやり直してください。</p>';document.getElementById('payment-form').style.display='none'}
+function createStars(){const starsContainer=document.getElementById('stars');const fragment=document.createDocumentFragment();for(let i=0;i<150;i++){const star=document.createElement('div');star.className='star';star.style.left=Math.random()*100+'%';star.style.top=Math.random()*100+'%';star.style.animationDelay=Math.random()*3+'s';fragment.appendChild(star)}starsContainer.appendChild(fragment)}
+let stripe,elements,cardElement;
+try{stripe=Stripe(STRIPE_PUBLISHABLE_KEY);elements=stripe.elements();cardElement=elements.create('card',{style:{base:{color:'#fff',fontFamily:'"Noto Sans JP", "Orbitron", sans-serif',fontSize:'16px',lineHeight:'24px','::placeholder':{color:'rgba(255, 255, 255, 0.4)'}},invalid:{color:'#ff4444',iconColor:'#ff4444'}},hidePostalCode:true});cardElement.mount('#card-element');cardElement.on('change',(event)=>{const errorElement=document.getElementById('card-errors');if(event.error){errorElement.textContent='⚠️ '+event.error.message;errorElement.classList.add('active')}else{errorElement.textContent='';errorElement.classList.remove('active')}});cardElement.on('ready',()=>{console.log('✅ Stripe Card Element mounted successfully')})}catch(error){console.error('❌ Stripe initialization error:',error);showError('決済システムの初期化に失敗しました。ページを再読み込みしてください。')}
+const form=document.getElementById('payment-form');
+form.addEventListener('submit',async(event)=>{event.preventDefault();if(!currentPlan){showError('無効なプランが選択されています');return}if(!stripe||!cardElement){showError('決済システムが初期化されていません。ページを再読み込みしてください。');return}const submitButton=document.getElementById('submit-button');const loading=document.getElementById('loading');const errorElement=document.getElementById('card-errors');submitButton.disabled=true;submitButton.textContent='処理中...';loading.classList.add('active');errorElement.classList.remove('active');try{const name=document.getElementById('name').value.trim();const email=document.getElementById('email').value.trim();if(!name||!email){throw new Error('お名前とメールアドレスを入力してください')}if(name.length<2){throw new Error('お名前は2文字以上で入力してください')}if(!isValidEmail(email)){throw new Error('有効なメールアドレスを入力してください')}const{paymentMethod,error}=await stripe.createPaymentMethod({type:'card',card:cardElement,billing_details:{name:name,email:email}});if(error){throw new Error(error.message)}console.log('✅ PaymentMethod created:',paymentMethod.id);console.log('💰 Plan:',currentPlan.name);console.log('💴 Amount:',currentPlan.amount);showSuccess(name,email)}catch(error){console.error('❌ Payment error:',error);showError(error.message||'決済処理中にエラーが発生しました。もう一度お試しください。');submitButton.disabled=false;submitButton.textContent='⚡ 支払う'}finally{loading.classList.remove('active')}});
+function isValidEmail(email){const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;return emailRegex.test(email)}
+function showSuccess(name,email){document.getElementById('payment-form').style.display='none';document.getElementById('planInfo').style.display='none';const successMessage=document.getElementById('successMessage');successMessage.classList.add('active');document.getElementById('successText').innerHTML=`<strong>${escapeHtml(name)}</strong> 様<br><br>決済が完了しました！<br><br><strong>${escapeHtml(currentPlan.name)}</strong><br>${escapeHtml(currentPlan.price)}<br><br>ご登録のメールアドレス<br><span style="color:#00d4ff">${escapeHtml(email)}</span><br>に確認メールを送信しました。<br><br><strong style="color:#ffd700">3秒後に診断ページへ自動で移動します...</strong>`;setTimeout(()=>{let redirectUrl=currentPlan.redirectUrl+'?paid=true&email='+encodeURIComponent(email)+'&name='+encodeURIComponent(name)+'&plan='+encodeURIComponent(planType);if(planType==='birthday'){const year=urlParams.get('year');const month=urlParams.get('month');const day=urlParams.get('day');if(year&&month&&day){redirectUrl+=`&year=${year}&month=${month}&day=${day}`}}console.log('🚀 Redirecting to:',redirectUrl);window.location.href=redirectUrl},3000)}
+function showError(message){const errorElement=document.getElementById('card-errors');errorElement.textContent='⚠️ '+message;errorElement.classList.add('active');setTimeout(()=>{errorElement.classList.remove('active')},5000)}
+function escapeHtml(text){const map={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};return text.replace(/[&<>"']/g,m=>map[m])}
+document.addEventListener('DOMContentLoaded',()=>{createStars();if(currentPlan){setTimeout(()=>{document.getElementById('name').focus()},100)}console.log('🔥 Payment page initialized');console.log('📦 Plan:',planType)});
+window.addEventListener('error',(event)=>{console.error('❌ Global error:',event.error)});
+window.addEventListener('unhandledrejection',(event)=>{console.error('❌ Unhandled promise rejection:',event.reason)});
 </script>
 </body>
 </html>
