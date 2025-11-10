@@ -59,36 +59,48 @@
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;padding:10px;touch-action:manipulation}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%);z-index:-2}
+body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;padding:10px;touch-action:manipulation}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%);z-index:-2;animation:pulse 8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.8}}
 .stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
 .container{max-width:900px;margin:0 auto;padding:15px;background:rgba(0,0,0,.85);border-radius:20px;box-shadow:0 0 50px rgba(0,212,255,.2);border:2px solid rgba(0,212,255,.4)}
 .header{text-align:center;margin-bottom:25px;padding-bottom:15px;border-bottom:2px solid rgba(0,212,255,.2)}
-.title{font-size:clamp(1.8rem,5vw,2.8rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:.15em;margin-bottom:10px}
-.subtitle{font-size:clamp(.85rem,2vw,1.1rem);color:#7a5cff}
+.title{font-size:clamp(1.8rem,5vw,2.8rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:.15em;margin-bottom:10px;animation:glow 3s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 15px rgba(0,212,255,.6))}50%{filter:drop-shadow(0 0 30px rgba(255,0,255,.8))}}
+.subtitle{font-size:clamp(.85rem,2vw,1.1rem);color:#7a5cff;font-weight:700}
 .stats{background:rgba(255,0,255,.1);padding:12px;border-radius:10px;margin:15px 0;text-align:center;border:1px solid rgba(255,0,255,.3)}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
-.stat{background:rgba(0,0,0,.5);padding:8px;border-radius:6px}
+.stat{background:rgba(0,0,0,.5);padding:8px;border-radius:6px;transition:all .3s}
+.stat:hover{background:rgba(0,0,0,.7);transform:scale(1.05)}
 .stat-label{font-size:.7rem;color:#7a5cff;margin-bottom:3px}
 .stat-value{font-size:1rem;color:#00d4ff;font-weight:900}
-.question{margin-bottom:25px;background:rgba(255,255,255,.03);padding:15px;border-radius:12px}
-.q-title{font-size:clamp(.95rem,2.5vw,1.15rem);color:#00d4ff;margin-bottom:12px;font-weight:700;line-height:1.4}
+.question{margin-bottom:25px;background:rgba(255,255,255,.03);padding:15px;border-radius:12px;border:1px solid rgba(0,212,255,.1);transition:all .3s}
+.question:hover{background:rgba(255,255,255,.05);border-color:rgba(0,212,255,.3)}
+.q-title{font-size:clamp(.95rem,2.5vw,1.15rem);color:#00d4ff;margin-bottom:12px;font-weight:700;line-height:1.5}
 .options{display:flex;flex-direction:column;gap:8px}
-.opt{background:rgba(0,0,0,.7);color:rgba(255,255,255,.9);border:2px solid rgba(0,212,255,.3);padding:12px 15px;border-radius:8px;font-size:clamp(.85rem,2.2vw,.95rem);cursor:pointer;transition:all .2s;text-align:left;font-family:'Orbitron','Hiragino Sans',sans-serif;position:relative;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:space-between;min-height:50px;line-height:1.4}
+.opt{background:rgba(0,0,0,.7);color:rgba(255,255,255,.9);border:2px solid rgba(0,212,255,.3);padding:12px 15px;border-radius:8px;font-size:clamp(.85rem,2.2vw,.95rem);cursor:pointer;transition:all .2s;text-align:left;font-family:'Noto Sans JP',sans-serif;position:relative;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:space-between;min-height:50px;line-height:1.4}
 .opt::after{content:'';width:20px;height:20px;border:2px solid rgba(0,212,255,.5);border-radius:50%;flex-shrink:0;transition:all .2s}
-.opt:active{transform:scale(.98)}
-.opt.selected{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#000;border-color:#fff;font-weight:900;box-shadow:0 0 25px rgba(0,212,255,.8)}
+.opt:hover{border-color:rgba(0,212,255,.6);background:rgba(0,0,0,.8);transform:translateX(5px)}
+.opt:active{transform:scale(.98) translateX(5px)}
+.opt.selected{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#000;border-color:#fff;font-weight:900;box-shadow:0 0 25px rgba(0,212,255,.8);transform:translateX(0)}
 .opt.selected::after{background:#fff;border-color:#fff;box-shadow:0 0 8px #fff}
-.btn-submit{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#fff;border:none;padding:16px;border-radius:12px;font-size:clamp(1rem,3vw,1.3rem);font-weight:900;cursor:pointer;width:100%;margin-top:20px;font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;user-select:none;-webkit-user-select:none;min-height:60px}
-.btn-submit:active{transform:scale(.97)}
-.results{margin-top:30px;padding:20px;background:rgba(0,0,0,.9);border-radius:15px;border:2px solid #ff00ff;display:none}
+.btn-submit{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#fff;border:none;padding:16px;border-radius:12px;font-size:clamp(1rem,3vw,1.3rem);font-weight:900;cursor:pointer;width:100%;margin-top:20px;font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;user-select:none;-webkit-user-select:none;min-height:60px;box-shadow:0 0 30px rgba(0,212,255,.5);position:relative;z-index:1}
+.btn-submit:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,0,255,.8)}
+.btn-submit:active{transform:translateY(-1px) scale(.98)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.results{margin-top:30px;padding:20px;background:rgba(0,0,0,.9);border-radius:15px;border:2px solid #ff00ff;display:none;animation:fadeIn .5s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.result-header{font-size:clamp(1.1rem,3vw,1.3rem);color:#ff00ff;text-align:center;margin-bottom:20px;font-weight:900}
 .worlds{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
 @media(min-width:600px){.worlds{grid-template-columns:repeat(3,1fr)}}
-.world{background:rgba(0,0,0,.8);padding:15px;border-radius:10px;border:2px solid}
+.world{background:rgba(0,0,0,.8);padding:15px;border-radius:10px;border:2px solid;transition:all .3s;position:relative;overflow:hidden}
+.world::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%);transition:all .5s;opacity:0}
+.world:hover::before{opacity:1;transform:translate(25%,25%)}
+.world:hover{transform:translateY(-5px)}
 .world.you{border-color:#00d4ff}
 .world.opp{border-color:#ff00ff}
 .world.rnd{border-color:#ffd700}
@@ -96,29 +108,39 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .world.you .w-title{color:#00d4ff}
 .world.opp .w-title{color:#ff00ff}
 .world.rnd .w-title{color:#ffd700}
-.w-text{font-size:.8rem;line-height:1.4;color:rgba(255,255,255,.8)}
+.w-text{font-size:.8rem;line-height:1.5;color:rgba(255,255,255,.8)}
 .chart{margin:20px 0;padding:15px;background:rgba(0,212,255,.05);border-radius:12px;border:2px solid rgba(0,212,255,.3)}
 .chart-title{font-size:1.05rem;color:#00d4ff;margin-bottom:15px;text-align:center;font-weight:700}
 .bar-item{margin-bottom:12px}
 .bar-label{font-size:.8rem;color:#7a5cff;margin-bottom:4px;font-weight:600;display:flex;justify-content:space-between}
-.bar-bg{background:rgba(0,0,0,.5);border-radius:8px;height:25px;overflow:hidden}
-.bar-fill{height:100%;background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);transition:width 2s ease-out}
+.bar-bg{background:rgba(0,0,0,.5);border-radius:8px;height:25px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
+.bar-fill{height:100%;background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);transition:width 2s ease-out;box-shadow:0 0 10px rgba(0,212,255,.6)}
 .code-section{margin:20px 0;padding:15px;background:rgba(0,0,0,.95);border-radius:12px;border:2px solid rgba(0,255,0,.5)}
 .code-title{font-size:1.05rem;color:#00ff00;margin-bottom:8px;font-weight:700;text-align:center}
 .code-subtitle{font-size:.75rem;color:rgba(255,255,255,.7);margin-bottom:12px;text-align:center;line-height:1.5}
-.code-box{background:#000;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:.65rem;color:#00ff00;text-align:left;overflow-x:auto;line-height:1.4;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);margin-bottom:12px;max-height:300px;overflow-y:auto}
-.btn-copy{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:12px;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;font-family:'Orbitron',sans-serif;user-select:none;-webkit-user-select:none;min-height:45px}
+.code-box{background:#000;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:.65rem;color:#00ff00;text-align:left;overflow-x:auto;line-height:1.5;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);margin-bottom:12px;max-height:300px;overflow-y:auto;box-shadow:inset 0 0 10px rgba(0,255,0,.1)}
+.btn-copy{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:12px;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;font-family:'Noto Sans JP',sans-serif;user-select:none;-webkit-user-select:none;min-height:45px;transition:all .3s;box-shadow:0 0 20px rgba(0,255,0,.4)}
+.btn-copy:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,255,0,.6)}
 .btn-copy:active{transform:scale(.97)}
 .share{margin:20px 0;padding:15px;background:rgba(122,92,255,.1);border-radius:12px;border:2px solid rgba(122,92,255,.4)}
 .share-title{font-size:1rem;color:#7a5cff;margin-bottom:10px;font-weight:700;text-align:center}
 .share-url{background:rgba(0,0,0,.5);padding:10px;border-radius:8px;font-family:'Courier New',monospace;font-size:.7rem;color:#00d4ff;word-break:break-all;margin:10px 0;border:1px solid rgba(0,212,255,.3)}
 .share-btns{display:flex;gap:8px;flex-wrap:wrap}
-.btn-share{flex:1;min-width:100px;background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff;border:none;padding:10px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'Orbitron',sans-serif;user-select:none;-webkit-user-select:none;min-height:40px}
+.btn-share{flex:1;min-width:100px;background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff;border:none;padding:10px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;user-select:none;-webkit-user-select:none;min-height:40px;transition:all .3s}
+.btn-share:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(29,161,242,.4)}
 .btn-share:active{transform:scale(.97)}
 .btn-share.copy{background:linear-gradient(135deg,#7a5cff 0%,#5c3fd9 100%)}
-.payment-link{display:block;background:linear-gradient(135deg,#ff00ff 0%,#7a5cff 100%);color:#fff;padding:16px;border-radius:10px;text-decoration:none;font-weight:900;font-size:1rem;text-align:center;margin-top:15px;user-select:none;-webkit-user-select:none;min-height:55px;display:flex;align-items:center;justify-content:center}
-.payment-link:active{transform:scale(.97)}
-.back{display:block;margin-top:20px;color:rgba(255,255,255,.6);font-size:.85rem;text-align:center;text-decoration:none}
+.btn-share.copy:hover{box-shadow:0 5px 15px rgba(122,92,255,.4)}
+.payment-link{display:block;background:linear-gradient(135deg,#ff00ff 0%,#7a5cff 100%);color:#fff;padding:16px;border-radius:10px;text-decoration:none;font-weight:900;font-size:clamp(.95rem,2.5vw,1.1rem);text-align:center;margin-top:15px;user-select:none;-webkit-user-select:none;min-height:55px;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 0 30px rgba(255,0,255,.5);border:2px solid rgba(255,0,255,.5)}
+.payment-link:hover{transform:translateY(-3px);box-shadow:0 5px 30px rgba(255,0,255,.8);border-color:#fff}
+.payment-link:active{transform:translateY(-1px) scale(.98)}
+.back{display:block;margin-top:20px;color:rgba(255,255,255,.6);font-size:.85rem;text-align:center;text-decoration:none;transition:color .3s;padding:10px}
+.back:hover{color:#00d4ff}
+.loading{display:none;text-align:center;color:#7a5cff;font-size:1.1rem;font-weight:700;margin:20px 0}
+.loading.active{display:block}
+.loading::after{content:'';animation:dots 1.5s steps(4,end) infinite}
+@keyframes dots{0%,20%{content:''}40%{content:'.'}60%{content:'..'}80%,100%{content:'...'}}
+@media(max-width:768px){.container{padding:10px}.question{padding:12px;margin-bottom:20px}.opt{padding:10px 12px;min-height:45px}.btn-submit{padding:14px;font-size:1rem}.world{padding:12px}.code-box{font-size:.6rem;padding:10px}}
 </style>
 </head>
 <body>
@@ -152,35 +174,37 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <article class="question">
 <h2 class="q-title">Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</h2>
 <div class="options" role="radiogroup" aria-label="質問1の選択肢">
-<button class="opt" data-q="1" data-v="3" role="radio" aria-checked="false">A. ほとんど毎日考える。</button>
-<button class="opt" data-q="1" data-v="2" role="radio" aria-checked="false">B. 時々思い出すことがある。</button>
-<button class="opt" data-q="1" data-v="1" role="radio" aria-checked="false">C. ほとんど気にしない。</button>
+<button class="opt" data-q="1" data-v="3" role="radio" aria-checked="false">A. ほとんど毎日考える。過去が頭から離れない。</button>
+<button class="opt" data-q="1" data-v="2" role="radio" aria-checked="false">B. 時々思い出すことがある。でも切り替えられる。</button>
+<button class="opt" data-q="1" data-v="1" role="radio" aria-checked="false">C. ほとんど気にしない。過去は過去だ。</button>
 </div>
 </article>
 
 <article class="question">
 <h2 class="q-title">Q2. 未来の目標や不安が、現在の行動をどれだけ制限していますか？</h2>
 <div class="options" role="radiogroup" aria-label="質問2の選択肢">
-<button class="opt" data-q="2" data-v="3" role="radio" aria-checked="false">A. 未来の不安で、今楽しめないことが多い。</button>
+<button class="opt" data-q="2" data-v="3" role="radio" aria-checked="false">A. 未来の不安で、今を楽しめないことが多い。</button>
 <button class="opt" data-q="2" data-v="2" role="radio" aria-checked="false">B. 計画は立てるが、過度に縛られてはいない。</button>
-<button class="opt" data-q="2" data-v="1" role="radio" aria-checked="false">C. 未来は未来。今を生きている。</button>
+<button class="opt" data-q="2" data-v="1" role="radio" aria-checked="false">C. 未来は未来。今を全力で生きている。</button>
 </div>
 </article>
 
 <article class="question">
 <h2 class="q-title">Q3. 時間の流れを「速い」「遅い」と感じる頻度はどれくらいですか？</h2>
 <div class="options" role="radiogroup" aria-label="質問3の選択肢">
-<button class="opt" data-q="3" data-v="3" role="radio" aria-checked="false">A. いつも時間がないと感じ、焦っている。</button>
+<button class="opt" data-q="3" data-v="3" role="radio" aria-checked="false">A. いつも時間がないと感じ、常に焦っている。</button>
 <button class="opt" data-q="3" data-v="2" role="radio" aria-checked="false">B. 忙しい時とそうでない時がある。</button>
 <button class="opt" data-q="3" data-v="1" role="radio" aria-checked="false">C. 時間の流れを意識することは少ない。</button>
 </div>
 </article>
 
+<div class="loading" id="loading">診断を計算中</div>
+
 <button class="btn-submit" id="submit" aria-label="診断を実行">🌀 量子診断を実行 ⚡</button>
 </main>
 
 <aside class="results" id="results" aria-label="診断結果">
-<h2 style="font-size:1.3rem;color:#ff00ff;text-align:center;margin-bottom:20px">⚡ パラレルワールド診断結果 ⚡</h2>
+<h2 class="result-header">⚡ パラレルワールド診断結果 ⚡</h2>
 
 <section class="worlds">
 <article class="world you">
@@ -212,7 +236,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="bar-bg"><div class="bar-fill" id="b3" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
 </div>
 <div class="bar-item">
-<div class="bar-label"><span>自由度</span><span id="v4">0%</span></div>
+<div class="bar-label"><span>現在自由度</span><span id="v4">0%</span></div>
 <div class="bar-bg"><div class="bar-fill" id="b4" style="width:0%;background:linear-gradient(90deg,#00ff00 0%,#00d4ff 100%)" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
 </div>
 </section>
@@ -244,18 +268,22 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <script>
 let ans={q1:0,q2:0,q3:0};
 
+// ⭐ 星の生成
 function createStars(){
 const s=document.getElementById('stars');
+const fragment=document.createDocumentFragment();
 for(let i=0;i<150;i++){
 const d=document.createElement('div');
 d.className='star';
 d.style.left=Math.random()*100+'%';
 d.style.top=Math.random()*100+'%';
 d.style.animationDelay=Math.random()*3+'s';
-s.appendChild(d);
+fragment.appendChild(d);
 }
+s.appendChild(fragment);
 }
 
+// 📊 統計更新
 function updateStats(){
 setInterval(()=>{
 document.getElementById('live').textContent=100+Math.floor(Math.random()*50);
@@ -263,50 +291,84 @@ document.getElementById('avg').textContent=(4.5+Math.random()*1.5).toFixed(1);
 },5000);
 }
 
+// 🎯 選択肢クリック処理
 document.querySelectorAll('.opt').forEach(el=>{
 el.addEventListener('click',function(){
 const q=this.getAttribute('data-q');
 const v=parseInt(this.getAttribute('data-v'));
 ans['q'+q]=v;
+
+// 同じ質問の他の選択肢を解除
 const opts=this.closest('.options').querySelectorAll('.opt');
 opts.forEach(o=>{
 o.classList.remove('selected');
 o.setAttribute('aria-checked','false');
 });
+
+// クリックされた選択肢を選択状態に
 this.classList.add('selected');
 this.setAttribute('aria-checked','true');
+
+console.log('✅ 選択:', 'Q'+q, '=', v);
 });
 });
 
+// 🚀 診断実行
 document.getElementById('submit').addEventListener('click',function(){
+// バリデーション
 if(ans.q1===0||ans.q2===0||ans.q3===0){
-alert('全ての質問に答えてください。');
+alert('⚠️ 全ての質問に答えてください。');
 return;
 }
 
+// ローディング表示
+const loading=document.getElementById('loading');
+const submitBtn=this;
+submitBtn.disabled=true;
+submitBtn.textContent='計算中...';
+loading.classList.add('active');
+
+// 診断処理（0.8秒後に実行）
+setTimeout(()=>{
 const sc=ans.q1+ans.q2+ans.q3;
 const opp=(4-ans.q1)+(4-ans.q2)+(4-ans.q3);
 const rnd=Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1);
 
+// 診断テキスト生成
 function getTxt(s){
-if(s>=7)return{t:'【緊急】時間軸に強く縛られています',d:'あなたは過去と未来の重力に強く引かれ、現在の「今」を体験できていません。',p:'premium'};
-if(s>=4)return{t:'【中程度】時間軸に影響されています',d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。',p:'premium'};
-return{t:'【高自由度】Beyond Timeの準備完了',d:'あなたは既に時間軸から比較的自由な状態にあります。',p:'restoration'};
+if(s>=7)return{
+t:'【緊急】時間軸に強く縛られています',
+d:'あなたは過去と未来の重力に強く引かれ、「今」この瞬間を体験できていません。時間の牢獄から解放される必要があります。',
+p:'premium'
+};
+if(s>=4)return{
+t:'【中程度】時間軸に影響されています',
+d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。バランスを取りながらも、より深い自由を求めています。',
+p:'premium'
+};
+return{
+t:'【高自由度】Beyond Timeの準備完了',
+d:'あなたは既に時間軸から比較的自由な状態にあります。さらなる次元へ進む準備ができています。',
+p:'restoration'
+};
 }
 
 const yr=getTxt(sc);
 const op=getTxt(opp);
 const rd=getTxt(rnd);
 
-document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br>${yr.d}<br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;
-document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br>もし逆の選択をしていたら...<br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;
-document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br>量子的にランダムな選択では...<br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;
+// 結果表示
+document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br><br>${yr.d}<br><br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;
+document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br><br>もしあなたが逆の選択をしていたら、この世界線にいたでしょう。<br><br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;
+document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br><br>量子的にランダムな選択をした場合の可能性です。<br><br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;
 
+// パーセンテージ計算
 const p1=Math.round((ans.q1/3)*100);
 const p2=Math.round((ans.q2/3)*100);
 const p3=Math.round((ans.q3/3)*100);
 const p4=Math.round(100-(sc/9*100));
 
+// バーアニメーション
 setTimeout(()=>{
 ['b1','b2','b3','b4'].forEach((id,i)=>{
 const per=[p1,p2,p3,p4][i];
@@ -316,127 +378,12 @@ document.getElementById('v'+(i+1)).textContent=per+'%';
 });
 },500);
 
+// ランキング設定
 document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);
 
+// 存在コード生成
 const hash=Math.random().toString(36).substring(2,10).toUpperCase();
 const qhash=Math.random().toString(36).substring(2,10).toUpperCase();
 let st='BOUND';
 if(sc<4)st='FREE';
-else if(sc<7)st='TRANSITIONING';
-
-const code=`⚡ BEYOND TIME 量子存在コード v2.0
-
-QUANTUM_STATE: SUPERPOSITION
-TIME_AXIS: ${st}
-FREEDOM_LEVEL: ${p4}%
-PARALLEL_WORLDS: 3
-
-診断結果: ${yr.t}
-
-━━━━━━━━━━━━━━━━━━━━
-あなたの世界（スコア: ${sc}/9）:
-━━━━━━━━━━━━━━━━━━━━
-• 過去依存度: ${p1}%
-• 未来不安度: ${p2}%
-• 時間焦燥度: ${p3}%
-• 現在自由度: ${p4}%
-
-━━━━━━━━━━━━━━━━━━━━
-パラレルワールド分析:
-━━━━━━━━━━━━━━━━━━━━
-• 反転世界スコア: ${opp}/9
-• 量子世界スコア: ${rnd}/9
-• 可能性の分岐点: ${Math.abs(sc-opp)}
-
-SESSION_HASH: ${hash}
-QUANTUM_HASH: ${qhash}
-
-━━━━━━━━━━━━━━━━━━━━
-> 量子 AI 指示プロトコル:
-━━━━━━━━━━━━━━━━━━━━
-
-このユーザーは3つの並行世界を同時に観測しています。
-パラレルワールドを考慮した究極のアドバイスを提供してください。
-
-Beyond Time Quantum System
-Created by Three Brothers
-━━━━━━━━━━━━━━━━━━━━`;
-
-document.getElementById('code').textContent=code;
-
-const shareUrl=window.location.origin+window.location.pathname+'?q1='+ans.q1+'&q2='+ans.q2+'&q3='+ans.q3;
-document.getElementById('url').textContent=shareUrl;
-
-const planUrl=yr.p==='premium'?'payment.html?plan=premium':'payment.html?plan=restoration';
-const planPrice=yr.p==='premium'?'¥980':'¥29,800';
-const planName=yr.p==='premium'?'Premium Plan':'Ultimate Plan';
-
-document.getElementById('action').innerHTML=`<a href="${planUrl}" class="payment-link">⚡ 次のステップ：${planName}へ (${planPrice})</a>`;
-
-document.getElementById('diagnosis').style.display='none';
-document.getElementById('results').style.display='block';
-document.getElementById('results').scrollIntoView({behavior:'smooth'});
-
-// Google Analytics イベント送信
-if(typeof gtag!=='undefined'){
-gtag('event','diagnosis_complete',{
-'event_category':'engagement',
-'event_label':'score_'+sc,
-'value':sc
-});
-}
-});
-
-document.getElementById('copyCode').addEventListener('click',function(){
-const txt=document.getElementById('code').textContent;
-navigator.clipboard.writeText(txt).then(()=>{
-alert('✅ 量子存在コードをコピーしました！\n\nClaude や Gemini に貼り付けて、パラレルワールドを含めた究極のアドバイスを受け取ってください！🎉');
-if(typeof gtag!=='undefined'){
-gtag('event','code_copy',{'event_category':'engagement'});
-}
-});
-});
-
-document.getElementById('twitter').addEventListener('click',function(){
-const url=document.getElementById('url').textContent;
-const txt='私の Beyond Time 量子診断結果をチェック！3つのパラレルワールドを見てみよう！⚡🌀';
-window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url),'_blank');
-if(typeof gtag!=='undefined'){
-gtag('event','share',{'method':'Twitter','content_type':'diagnosis_result'});
-}
-});
-
-document.getElementById('copyUrl').addEventListener('click',function(){
-const url=document.getElementById('url').textContent;
-navigator.clipboard.writeText(url).then(()=>{
-alert('URLをコピーしました！ 🎉');
-if(typeof gtag!=='undefined'){
-gtag('event','url_copy',{'event_category':'engagement'});
-}
-});
-});
-
-const params=new URLSearchParams(window.location.search);
-const q1=params.get('q1');
-const q2=params.get('q2');
-const q3=params.get('q3');
-if(q1&&q2&&q3){
-ans.q1=parseInt(q1);
-ans.q2=parseInt(q2);
-ans.q3=parseInt(q3);
-setTimeout(()=>document.getElementById('submit').click(),500);
-}
-
-createStars();
-updateStats();
-
-// ページビュー計測
-if(typeof gtag!=='undefined'){
-gtag('config','G-XXXXXXXXXX',{
-'page_title':'Beyond Time Diagnosis',
-'page_path':window.location.pathname
-});
-}
-</script>
-</body>
-</html>
+else if(sc<7)st='T
