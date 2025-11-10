@@ -142,75 +142,10 @@ AI×統計学×パラレルワールドで、たった¥100であなたの：
 </div>
 
 <script>
-// ⭐ 星の生成
-function createStars(){
-const s=document.getElementById('stars');
-const fragment=document.createDocumentFragment();
-for(let i=0;i<150;i++){
-const d=document.createElement('div');
-d.className='star';
-d.style.left=Math.random()*100+'%';
-d.style.top=Math.random()*100+'%';
-d.style.animationDelay=Math.random()*3+'s';
-fragment.appendChild(d);
-}
-s.appendChild(fragment);
-}
-
-// 🚀 診断開始
-function startDiagnosis(){
-const y=parseInt(document.getElementById('year').value);
-const m=parseInt(document.getElementById('month').value);
-const d=parseInt(document.getElementById('day').value);
-
-// バリデーション
-if(!y||!m||!d){
-alert('⚠️ 生年月日を全て入力してください');
-return;
-}
-
-if(y<1900||y>2025){
-alert('⚠️ 年は1900〜2025の範囲で入力してください');
-return;
-}
-
-if(m<1||m>12){
-alert('⚠️ 月は1〜12の範囲で入力してください');
-return;
-}
-
-if(d<1||d>31){
-alert('⚠️ 日は1〜31の範囲で入力してください');
-return;
-}
-
-// ボタン無効化
-const btn=document.getElementById('startBtn');
-btn.disabled=true;
-btn.textContent='決済ページへ移動中...';
-
-// 決済ページへリダイレクト
-setTimeout(()=>{
-window.location.href=`payment.html?plan=birthday&year=${y}&month=${m}&day=${d}`;
-},800);
-
-console.log('🎂 誕生日診断開始:',{year:y,month:m,day:d});
-}
-
-// Enterキーで送信
-['year','month','day'].forEach(id=>{
-document.getElementById(id).addEventListener('keypress',function(e){
-if(e.key==='Enter'){
-startDiagnosis();
-}
-});
-});
-
-// 🚀 初期化
-document.addEventListener('DOMContentLoaded',()=>{
-createStars();
-console.log('🎂 Birthday Diagnosis System initialized');
-});
+function createStars(){const s=document.getElementById('stars');const fragment=document.createDocumentFragment();for(let i=0;i<150;i++){const d=document.createElement('div');d.className='star';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*3+'s';fragment.appendChild(d)}s.appendChild(fragment)}
+function startDiagnosis(){const y=parseInt(document.getElementById('year').value);const m=parseInt(document.getElementById('month').value);const d=parseInt(document.getElementById('day').value);if(!y||!m||!d){alert('⚠️ 生年月日を全て入力してください');return}if(y<1900||y>2025){alert('⚠️ 年は1900〜2025の範囲で入力してください');return}if(m<1||m>12){alert('⚠️ 月は1〜12の範囲で入力してください');return}if(d<1||d>31){alert('⚠️ 日は1〜31の範囲で入力してください');return}const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='決済ページへ移動中...';setTimeout(()=>{window.location.href=`payment.html?plan=birthday&year=${y}&month=${m}&day=${d}`},800);console.log('🎂 誕生日診断開始:',{year:y,month:m,day:d})}
+['year','month','day'].forEach(id=>{document.getElementById(id).addEventListener('keypress',function(e){if(e.key==='Enter'){startDiagnosis()}})});
+document.addEventListener('DOMContentLoaded',()=>{createStars();console.log('🎂 Birthday Diagnosis System initialized')});
 </script>
 </body>
 </html>
