@@ -32,13 +32,13 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .question:hover{background:rgba(255,255,255,.05);border-color:rgba(0,212,255,.4)}
 .q-title{font-size:clamp(1rem,2.5vw,1.2rem);color:#00d4ff;margin-bottom:15px;font-weight:700;line-height:1.5}
 .options{display:flex;flex-direction:column;gap:10px}
-.opt{background:rgba(0,0,0,.7);color:rgba(255,255,255,.9);border:2px solid rgba(0,212,255,.3);padding:15px;border-radius:10px;font-size:clamp(.9rem,2.2vw,1rem);cursor:pointer;transition:all .2s;text-align:left;font-family:'Noto Sans JP',sans-serif;position:relative;user-select:none;display:flex;align-items:center;justify-content:space-between;min-height:55px;line-height:1.5}
+.opt{background:rgba(0,0,0,.7);color:rgba(255,255,255,.9);border:2px solid rgba(0,212,255,.3);padding:15px;border-radius:10px;font-size:clamp(.9rem,2.2vw,1rem);cursor:pointer;transition:all .2s;text-align:left;font-family:'Noto Sans JP',sans-serif;position:relative;user-select:none;display:flex;align-items:center;justify-content:space-between;min-height:55px;line-height:1.5;z-index:10}
 .opt::after{content:'';width:22px;height:22px;border:2px solid rgba(0,212,255,.5);border-radius:50%;flex-shrink:0;transition:all .2s}
 .opt:hover{border-color:rgba(0,212,255,.6);background:rgba(0,0,0,.8);transform:translateX(5px)}
 .opt:active{transform:scale(.98) translateX(5px)}
 .opt.selected{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#000;border-color:#fff;font-weight:900;box-shadow:0 0 30px rgba(0,212,255,.8);transform:translateX(0)}
 .opt.selected::after{background:#fff;border-color:#fff;box-shadow:0 0 10px #fff}
-.btn-submit{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#fff;border:none;padding:20px;border-radius:15px;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:900;cursor:pointer;width:100%;margin-top:30px;font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;box-shadow:0 0 40px rgba(0,212,255,.6);position:relative;z-index:1;touch-action:manipulation}
+.btn-submit{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#fff;border:none;padding:20px;border-radius:15px;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:900;cursor:pointer;width:100%;margin-top:30px;font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;box-shadow:0 0 40px rgba(0,212,255,.6);position:relative;z-index:10;touch-action:manipulation}
 .btn-submit:hover{transform:translateY(-3px);box-shadow:0 0 60px rgba(255,0,255,.8)}
 .btn-submit:active{transform:translateY(-1px) scale(.98)}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
@@ -141,27 +141,27 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 <article class="question">
 <h3 class="q-title">Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</h3>
 <div class="options">
-<button class="opt" data-q="1" data-v="3">A. ほとんど毎日考える。過去が頭から離れない。</button>
-<button class="opt" data-q="1" data-v="2">B. 時々思い出すことがある。でも切り替えられる。</button>
-<button class="opt" data-q="1" data-v="1">C. ほとんど気にしない。過去は過去だ。</button>
+<div class="opt" data-q="1" data-v="3">A. ほとんど毎日考える。過去が頭から離れない。</div>
+<div class="opt" data-q="1" data-v="2">B. 時々思い出すことがある。でも切り替えられる。</div>
+<div class="opt" data-q="1" data-v="1">C. ほとんど気にしない。過去は過去だ。</div>
 </div>
 </article>
 
 <article class="question">
 <h3 class="q-title">Q2. 未来の目標や不安が、現在の行動をどれだけ制限していますか？</h3>
 <div class="options">
-<button class="opt" data-q="2" data-v="3">A. 未来の不安で、今を楽しめないことが多い。</button>
-<button class="opt" data-q="2" data-v="2">B. 計画は立てるが、過度に縛られてはいない。</button>
-<button class="opt" data-q="2" data-v="1">C. 未来は未来。今を全力で生きている。</button>
+<div class="opt" data-q="2" data-v="3">A. 未来の不安で、今を楽しめないことが多い。</div>
+<div class="opt" data-q="2" data-v="2">B. 計画は立てるが、過度に縛られてはいない。</div>
+<div class="opt" data-q="2" data-v="1">C. 未来は未来。今を全力で生きている。</div>
 </div>
 </article>
 
 <article class="question">
 <h3 class="q-title">Q3. 時間の流れを「速い」「遅い」と感じる頻度はどれくらいですか？</h3>
 <div class="options">
-<button class="opt" data-q="3" data-v="3">A. いつも時間がないと感じ、常に焦っている。</button>
-<button class="opt" data-q="3" data-v="2">B. 忙しい時とそうでない時がある。</button>
-<button class="opt" data-q="3" data-v="1">C. 時間の流れを意識することは少ない。</button>
+<div class="opt" data-q="3" data-v="3">A. いつも時間がないと感じ、常に焦っている。</div>
+<div class="opt" data-q="3" data-v="2">B. 忙しい時とそうでない時がある。</div>
+<div class="opt" data-q="3" data-v="1">C. 時間の流れを意識することは少ない。</div>
 </div>
 </article>
 
@@ -249,11 +249,7 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 </div>
 
 <script>
-let ans={q1:0,q2:0,q3:0};
-function createStars(){const s=document.getElementById('stars');const fragment=document.createDocumentFragment();for(let i=0;i<150;i++){const d=document.createElement('div');d.className='star';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*3+'s';fragment.appendChild(d)}s.appendChild(fragment)}
-function updateStats(){setInterval(()=>{document.getElementById('live').textContent=100+Math.floor(Math.random()*50);document.getElementById('avg').textContent=(4.5+Math.random()*1.5).toFixed(1)},5000)}
-document.querySelectorAll('.opt').forEach(el=>{el.addEventListener('click',function(){const q=this.getAttribute('data-q');const v=parseInt(this.getAttribute('data-v'));ans['q'+q]=v;const opts=this.closest('.options').querySelectorAll('.opt');opts.forEach(o=>{o.classList.remove('selected')});this.classList.add('selected');console.log('✅ 選択:','Q'+q,'=',v)})});
-document.getElementById('submit').addEventListener('click',function(){if(ans.q1===0||ans.q2===0||ans.q3===0){alert('⚠️ 全ての質問に答えてください。');return}const loading=document.getElementById('loading');const submitBtn=this;submitBtn.disabled=true;submitBtn.textContent='計算中...';loading.classList.add('active');setTimeout(()=>{const sc=ans.q1+ans.q2+ans.q3;const opp=(4-ans.q1)+(4-ans.q2)+(4-ans.q3);const rnd=Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1);function getTxt(s){if(s>=7)return{t:'【緊急】時間軸に強く縛られています',d:'あなたは過去と未来の重力に強く引かれ、「今」この瞬間を体験できていません。時間の牢獄から解放される必要があります。',p:'premium'};if(s>=4)return{t:'【中程度】時間軸に影響されています',d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。バランスを取りながらも、より深い自由を求めています。',p:'premium'};return{t:'【高自由度】Beyond Timeの準備完了',d:'あなたは既に時間軸から比較的自由な状態にあります。さらなる次元へ進む準備ができています。',p:'restoration'}}const yr=getTxt(sc);const op=getTxt(opp);const rd=getTxt(rnd);document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br><br>${yr.d}<br><br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br><br>もしあなたが逆の選択をしていたら、この世界線にいたでしょう。<br><br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br><br>量子的にランダムな選択をした場合の可能性です。<br><br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;const p1=Math.round((ans.q1/3)*100);const p2=Math.round((ans.q2/3)*100);const p3=Math.round((ans.q3/3)*100);const p4=Math.round(100-(sc/9*100));setTimeout(()=>{['b1','b2','b3','b4'].forEach((id,i)=>{const per=[p1,p2,p3,p4][i];document.getElementById(id).style.width=per+'%';document.getElementById('v'+(i+1)).textContent=per+'%'})},500);document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);const hash=Math.random().toString(36).substring(2,10).toUpperCase();const qhash=Math.random().toString(36).substring(2,10).toUpperCase();let st='BOUND';if(sc<4)st='FREE';else if(sc<7)st='TRANSITIONING';const code=`⚡ BEYOND TIME 量子存在コード v2.0
+let ans={q1:0,q2:0,q3:0};function createStars(){const s=document.getElementById('stars');const fragment=document.createDocumentFragment();for(let i=0;i<150;i++){const d=document.createElement('div');d.className='star';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*3+'s';fragment.appendChild(d)}s.appendChild(fragment)}function updateStats(){setInterval(()=>{document.getElementById('live').textContent=100+Math.floor(Math.random()*50);document.getElementById('avg').textContent=(4.5+Math.random()*1.5).toFixed(1)},5000)}function setupOptionClicks(){console.log('🔥 選択肢クリック設定開始');const allOptions=document.querySelectorAll('.opt');console.log('📋 見つかった選択肢:',allOptions.length);allOptions.forEach((el,index)=>{console.log(`🎯 選択肢${index+1}にイベント設定`);el.onclick=function(e){e.preventDefault();e.stopPropagation();console.log('✅ クリック!',this.textContent.substring(0,20));const q=this.getAttribute('data-q');const v=parseInt(this.getAttribute('data-v'));ans['q'+q]=v;const opts=this.closest('.options').querySelectorAll('.opt');opts.forEach(o=>{o.classList.remove('selected')});this.classList.add('selected');console.log('✅ Q'+q+' = '+v)};el.ontouchstart=function(e){e.preventDefault();console.log('📱 タッチ!');this.click()}});console.log('✅ イベント設定完了')}document.getElementById('submit').addEventListener('click',function(){console.log('🚀 診断実行');console.log('回答:',ans);if(ans.q1===0||ans.q2===0||ans.q3===0){alert('⚠️ 全ての質問に答えてください。');return}const loading=document.getElementById('loading');const submitBtn=this;submitBtn.disabled=true;submitBtn.textContent='計算中...';loading.classList.add('active');setTimeout(()=>{const sc=ans.q1+ans.q2+ans.q3;const opp=(4-ans.q1)+(4-ans.q2)+(4-ans.q3);const rnd=Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1);function getTxt(s){if(s>=7)return{t:'【緊急】時間軸に強く縛られています',d:'あなたは過去と未来の重力に強く引かれ、「今」この瞬間を体験できていません。時間の牢獄から解放される必要があります。',p:'premium'};if(s>=4)return{t:'【中程度】時間軸に影響されています',d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。バランスを取りながらも、より深い自由を求めています。',p:'premium'};return{t:'【高自由度】Beyond Timeの準備完了',d:'あなたは既に時間軸から比較的自由な状態にあります。さらなる次元へ進む準備ができています。',p:'restoration'}}const yr=getTxt(sc);const op=getTxt(opp);const rd=getTxt(rnd);document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br><br>${yr.d}<br><br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br><br>もしあなたが逆の選択をしていたら、この世界線にいたでしょう。<br><br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br><br>量子的にランダムな選択をした場合の可能性です。<br><br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;const p1=Math.round((ans.q1/3)*100);const p2=Math.round((ans.q2/3)*100);const p3=Math.round((ans.q3/3)*100);const p4=Math.round(100-(sc/9*100));setTimeout(()=>{['b1','b2','b3','b4'].forEach((id,i)=>{const per=[p1,p2,p3,p4][i];document.getElementById(id).style.width=per+'%';document.getElementById('v'+(i+1)).textContent=per+'%'})},500);document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);const hash=Math.random().toString(36).substring(2,10).toUpperCase();const qhash=Math.random().toString(36).substring(2,10).toUpperCase();let st='BOUND';if(sc<4)st='FREE';else if(sc<7)st='TRANSITIONING';const code=`⚡ BEYOND TIME 量子存在コード v2.0
 
 QUANTUM_STATE: SUPERPOSITION
 TIME_AXIS: ${st}
@@ -289,6 +285,4 @@ QUANTUM_HASH: ${qhash}
 
 Beyond Time Quantum System
 Created by Three Brothers
-━━━━━━━━━━━━━━━━━━━━`;document.getElementById('code').textContent=code;const shareUrl=window.location.origin+window.location.pathname+'?q1='+ans.q1+'&q2='+ans.q2+'&q3='+ans.q3;document.getElementById('url').textContent=shareUrl;document.getElementById('diagnosis').style.display='none';document.getElementById('results').classList.add('active');loading.classList.remove('active');setTimeout(()=>{document.getElementById('results').scrollIntoView({behavior:'smooth'})},100);console.log('✅ 診断完了 - スコア:',sc)},800)});
-document.getElementById('copyCode').addEventListener('click',function(){const txt=document.getElementById('code').textContent;navigator.clipboard.writeText(txt).then(()=>{this.textContent='✅ コピー完了！';setTimeout(()=>{this.textContent='📋 存在コードをコピー'},2000)}).catch(()=>{alert('⚠️ コピーに失敗しました')})});
-document.getElementById('twitter').addEventListener('click',function(){const url=document.getElementById('url').textContent;const txt='私の Beyond Time 量子診断結果をチェック！3つのパラレルワールドを見てみよう！⚡🌀';wi
+━━━━━━━━━━━━━━━━━━━━`;document.getElementById('code').textContent=code;const shareUrl=window.location.origin+window.location.pathname+'?q1='+ans.q1+'&q2='+ans.q2+'&q3='+ans.q3;document.getElementById('url').textContent=shareUrl;document.getElementById('diagnosis').style.display='none';document.getElementById('results').classList.add('active');loading.classList.remove('active');setTimeout(()=>{document.getElementById('results').scrollIntoView({behavior:'smooth'})},100);console.log('✅ 診断完了:',sc)},800)});document.getElementById('copyCode').addEventListener('click',function(){const txt=document.getElementById('code').textContent
