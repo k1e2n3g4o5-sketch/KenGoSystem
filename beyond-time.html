@@ -2,303 +2,201 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Beyond Time - Premium 存在コード診断</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Time - Premium診断</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;touch-action:manipulation}
-.stars-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
-@keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
-.nebula{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 30% 50%,rgba(138,43,226,.15) 0%,transparent 50%),radial-gradient(circle at 70% 50%,rgba(0,212,255,.15) 0%,transparent 50%);z-index:0;animation:nebulaShift 20s ease-in-out infinite;pointer-events:none}
-@keyframes nebulaShift{0%,100%{opacity:.3}50%{opacity:.6}}
-.container{max-width:900px;margin:0 auto;padding:20px;position:relative;z-index:1}
-.header{text-align:center;margin-bottom:40px;padding:50px 30px;background:linear-gradient(135deg,rgba(138,43,226,.2) 0%,rgba(0,212,255,.2) 100%);border-radius:25px;border:2px solid rgba(138,43,226,.6);box-shadow:0 0 50px rgba(138,43,226,.4);animation:headerPulse 4s ease-in-out infinite}
-@keyframes headerPulse{0%,100%{box-shadow:0 0 50px rgba(138,43,226,.4)}50%{box-shadow:0 0 80px rgba(0,212,255,.6)}}
-.logo{font-size:clamp(2.5rem,8vw,4rem);background:linear-gradient(135deg,#8a2be2 0%,#00d4ff 50%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:20px;letter-spacing:.1em;animation:logoShine 3s ease-in-out infinite}
-@keyframes logoShine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.tagline{font-size:clamp(1.1rem,3vw,1.4rem);color:rgba(255,255,255,.9);line-height:1.8;margin-bottom:15px;font-weight:400}
-.premium-badge{display:inline-block;background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;padding:12px 30px;border-radius:25px;font-size:1rem;font-weight:900;margin-top:15px;box-shadow:0 0 30px rgba(255,215,0,.6);animation:badgeGlow 2s ease-in-out infinite}
-@keyframes badgeGlow{0%,100%{box-shadow:0 0 30px rgba(255,215,0,.6)}50%{box-shadow:0 0 50px rgba(255,215,0,1)}}
-.progress-section{background:rgba(0,0,0,.9);padding:25px;border-radius:20px;margin:30px 0;border:2px solid rgba(138,43,226,.5)}
-.progress-label{text-align:center;color:#8a2be2;font-weight:700;margin-bottom:15px;font-size:1.1rem}
-.progress-bar-container{background:rgba(138,43,226,.2);height:12px;border-radius:20px;overflow:hidden;position:relative}
-.progress-bar{background:linear-gradient(90deg,#8a2be2 0%,#00d4ff 100%);height:100%;transition:width .5s cubic-bezier(.4,0,.2,1);border-radius:20px;box-shadow:0 0 15px rgba(0,212,255,.8);position:relative}
-.progress-bar::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.3) 50%,transparent 100%);animation:progressShine 2s ease-in-out infinite}
-@keyframes progressShine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-.question-container{background:rgba(0,0,0,.95);padding:35px;border-radius:20px;margin:25px 0;border:2px solid rgba(138,43,226,.5);box-shadow:0 10px 40px rgba(0,0,0,.5);transition:all .3s}
-.question-container:hover{border-color:rgba(0,212,255,.7);box-shadow:0 15px 50px rgba(0,212,255,.3)}
-.q-number{font-size:1rem;color:#00d4ff;font-weight:900;margin-bottom:10px;letter-spacing:.1em}
-.q-title{font-size:clamp(1.2rem,3.5vw,1.5rem);color:#fff;font-weight:700;margin-bottom:25px;line-height:1.8}
-.options{display:grid;grid-template-columns:1fr;gap:15px}
-.opt{background:linear-gradient(135deg,rgba(138,43,226,.15) 0%,rgba(0,212,255,.1) 100%);border:2px solid rgba(138,43,226,.4);padding:20px 55px 20px 20px;border-radius:15px;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);font-size:clamp(1rem,2.5vw,1.1rem);color:rgba(255,255,255,.95);text-align:left;width:100%;display:block;position:relative;overflow:hidden}
-.opt::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transition:left .5s}
-.opt:hover{background:linear-gradient(135deg,rgba(138,43,226,.3) 0%,rgba(0,212,255,.2) 100%);border-color:rgba(138,43,226,.7);transform:translateX(8px) scale(1.02);box-shadow:0 5px 25px rgba(138,43,226,.4)}
-.opt:hover::before{left:100%}
-.opt.selected{background:linear-gradient(135deg,rgba(0,212,255,.35) 0%,rgba(138,43,226,.25) 100%);border-color:#00d4ff;box-shadow:0 0 30px rgba(0,212,255,.6);transform:translateX(8px)}
-.opt.selected::after{content:'✓';position:absolute;right:20px;top:50%;transform:translateY(-50%) scale(0);font-size:1.8rem;color:#00d4ff;font-weight:900;animation:checkAppear .3s cubic-bezier(.68,-.55,.265,1.55) forwards}
-@keyframes checkAppear{0%{transform:translateY(-50%) scale(0) rotate(-180deg)}100%{transform:translateY(-50%) scale(1) rotate(0)}}
-.btn-submit{background:linear-gradient(135deg,#8a2be2 0%,#00d4ff 100%);color:#fff;border:none;padding:22px;border-radius:18px;font-size:clamp(1.2rem,3vw,1.4rem);font-weight:900;cursor:pointer;width:100%;margin-top:30px;transition:all .3s;box-shadow:0 8px 35px rgba(138,43,226,.7);letter-spacing:.05em;text-transform:uppercase;position:relative;overflow:hidden;display:none}
-.btn-submit::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,.3);transform:translate(-50%,-50%);transition:width .6s,height .6s}
-.btn-submit:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 12px 45px rgba(0,212,255,.8)}
-.btn-submit:hover:not(:disabled)::before{width:300%;height:300%}
-.btn-submit:active:not(:disabled){transform:translateY(-1px)}
-.btn-submit:disabled{opacity:.5;cursor:not-allowed}
-.results{display:none;animation:resultsAppear .8s cubic-bezier(.68,-.55,.265,1.55)}
-@keyframes resultsAppear{0%{opacity:0;transform:scale(.9) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
-.result-header{text-align:center;padding:50px 30px;background:linear-gradient(135deg,rgba(138,43,226,.25) 0%,rgba(0,212,255,.25) 100%);border-radius:25px;margin-bottom:40px;border:2px solid rgba(0,212,255,.6);box-shadow:0 0 60px rgba(0,212,255,.5)}
-.result-title{font-size:clamp(2rem,6vw,3rem);background:linear-gradient(135deg,#00d4ff 0%,#8a2be2 50%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:20px}
-.result-subtitle{font-size:clamp(1.1rem,3vw,1.3rem);color:rgba(255,255,255,.8);line-height:1.6}
-.existence-code-section{background:rgba(0,0,0,.95);padding:40px;border-radius:20px;margin:30px 0;border:3px solid rgba(0,255,0,.5);box-shadow:0 0 50px rgba(0,255,0,.3);position:relative;overflow:hidden}
-.existence-code-section::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 30%,rgba(0,255,0,.1) 50%,transparent 70%);animation:codeScan 3s linear infinite}
-@keyframes codeScan{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.code-title{font-size:1.6rem;color:#00ff00;font-weight:900;margin-bottom:20px;text-align:center;text-shadow:0 0 20px rgba(0,255,0,.8)}
-.code-display{background:#000;padding:30px;border-radius:15px;font-family:'Orbitron','Courier New',monospace;font-size:clamp(1.5rem,4vw,2.5rem);color:#00ff00;text-align:center;letter-spacing:.15em;font-weight:900;border:2px solid rgba(0,255,0,.5);box-shadow:inset 0 0 30px rgba(0,255,0,.2);position:relative;z-index:1}
-.parallel-worlds{display:grid;grid-template-columns:1fr;gap:25px;margin:40px 0}
-@media(min-width:768px){.parallel-worlds{grid-template-columns:repeat(3,1fr)}}
-.parallel-card{background:linear-gradient(135deg,rgba(138,43,226,.2) 0%,rgba(0,0,0,.95) 100%);padding:30px;border-radius:20px;border:2px solid rgba(138,43,226,.5);transition:all .4s;cursor:pointer;position:relative;overflow:hidden}
-.parallel-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(0,212,255,.1) 0%,transparent 100%);opacity:0;transition:opacity .4s}
-.parallel-card:hover{transform:translateY(-10px) scale(1.05);border-color:rgba(0,212,255,.8);box-shadow:0 15px 50px rgba(0,212,255,.5)}
-.parallel-card:hover::before{opacity:1}
-.parallel-icon{font-size:3rem;margin-bottom:15px;text-align:center}
-.parallel-title{font-size:1.3rem;color:#00d4ff;font-weight:900;margin-bottom:15px;text-align:center}
-.parallel-desc{font-size:1rem;color:rgba(255,255,255,.85);line-height:1.8;text-align:center}
-.analysis-section{background:rgba(0,0,0,.95);padding:35px;border-radius:20px;margin:30px 0;border:2px solid rgba(138,43,226,.5);position:relative}
-.analysis-title{font-size:1.5rem;color:#8a2be2;font-weight:900;margin-bottom:20px;padding-bottom:15px;border-bottom:2px solid rgba(138,43,226,.3)}
-.analysis-text{font-size:1.05rem;color:rgba(255,255,255,.9);line-height:2;margin-bottom:15px}
-.highlight{color:#00d4ff;font-weight:700}
-.ai-code-section{background:rgba(0,0,0,.95);padding:35px;border-radius:20px;margin:30px 0;border:2px solid rgba(0,255,0,.5)}
-.ai-code-title{font-size:1.4rem;color:#00ff00;font-weight:900;margin-bottom:20px;text-align:center}
-.code-box{background:#000;padding:25px;border-radius:15px;font-family:'Courier New',monospace;font-size:.9rem;color:#00ff00;line-height:1.8;border:2px solid rgba(0,255,0,.3);margin:20px 0;white-space:pre-wrap;max-height:500px;overflow-y:auto;box-shadow:inset 0 0 20px rgba(0,255,0,.1)}
-.code-box::-webkit-scrollbar{width:8px}
-.code-box::-webkit-scrollbar-track{background:rgba(0,0,0,.5)}
-.code-box::-webkit-scrollbar-thumb{background:rgba(0,255,0,.5);border-radius:10px}
-.btn-copy{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:18px;border-radius:12px;font-size:1.1rem;font-weight:900;cursor:pointer;width:100%;transition:all .3s;margin-top:15px}
-.btn-copy:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,255,0,.6)}
-.share-section{background:linear-gradient(135deg,rgba(138,43,226,.15) 0%,rgba(0,212,255,.15) 100%);padding:35px;border-radius:20px;margin:30px 0;border:2px solid rgba(138,43,226,.4);text-align:center}
-.share-title{font-size:1.4rem;color:#8a2be2;font-weight:900;margin-bottom:20px}
-.share-buttons{display:flex;gap:15px;flex-wrap:wrap;justify-content:center}
-.btn-share{flex:1;min-width:150px;padding:15px 25px;border-radius:12px;font-size:1rem;font-weight:700;border:none;cursor:pointer;transition:all .3s;color:#fff}
-.btn-twitter{background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%)}
-.btn-url{background:linear-gradient(135deg,#8a2be2 0%,#5d1f9e 100%)}
-.btn-share:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(138,43,226,.5)}
-.back-link{display:block;text-align:center;margin-top:40px;color:rgba(255,255,255,.6);text-decoration:none;font-size:1rem;padding:15px;transition:color .3s}
-.back-link:hover{color:#00d4ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:sans-serif;background:#000;color:#fff;padding:20px;min-height:100vh}
+.container{max-width:800px;margin:0 auto}
+.header{text-align:center;padding:40px 20px;background:linear-gradient(135deg,rgba(138,43,226,.3),rgba(0,212,255,.3));border-radius:20px;margin-bottom:30px}
+.logo{font-size:3rem;color:#00d4ff;margin-bottom:10px}
+.tagline{font-size:1.2rem;color:#fff;line-height:1.6}
+.badge{display:inline-block;background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;padding:10px 25px;border-radius:20px;font-weight:bold;margin-top:10px}
+.progress{background:rgba(138,43,226,.2);padding:20px;border-radius:15px;margin:20px 0}
+.progress-text{text-align:center;color:#8a2be2;font-weight:bold;margin-bottom:10px}
+.progress-bar{background:rgba(138,43,226,.3);height:10px;border-radius:10px;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,#8a2be2,#00d4ff);height:100%;width:0;transition:width .3s;border-radius:10px}
+.question{background:rgba(0,0,0,.9);padding:30px;border-radius:15px;margin:20px 0;border:2px solid rgba(138,43,226,.5)}
+.q-num{color:#00d4ff;font-weight:bold;margin-bottom:10px}
+.q-title{font-size:1.3rem;margin-bottom:20px;line-height:1.6}
+.options{display:flex;flex-direction:column;gap:12px}
+.opt{background:rgba(138,43,226,.2);border:2px solid rgba(138,43,226,.4);padding:18px;border-radius:12px;cursor:pointer;transition:all .3s;text-align:left;font-size:1rem;color:#fff}
+.opt:hover{background:rgba(138,43,226,.4);border-color:rgba(138,43,226,.7);transform:translateX(5px)}
+.opt.selected{background:rgba(0,212,255,.3);border-color:#00d4ff;box-shadow:0 0 20px rgba(0,212,255,.5)}
+.btn-submit{background:linear-gradient(135deg,#8a2be2,#00d4ff);color:#fff;border:none;padding:20px;border-radius:15px;font-size:1.3rem;font-weight:bold;cursor:pointer;width:100%;margin-top:20px;display:none}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 5px 30px rgba(138,43,226,.7)}
+.results{display:none}
+.result-header{text-align:center;padding:40px;background:rgba(138,43,226,.2);border-radius:20px;margin:30px 0}
+.result-title{font-size:2.5rem;color:#00d4ff;margin-bottom:15px}
+.code-section{background:rgba(0,0,0,.9);padding:30px;border-radius:15px;margin:20px 0;border:2px solid rgba(0,255,0,.5);text-align:center}
+.code-display{background:#000;padding:20px;border-radius:10px;font-size:2rem;color:#00ff00;font-weight:bold;letter-spacing:.2em;margin:15px 0}
+.analysis{background:rgba(0,0,0,.9);padding:30px;border-radius:15px;margin:20px 0;border:2px solid rgba(138,43,226,.5)}
+.analysis-title{font-size:1.5rem;color:#8a2be2;margin-bottom:15px}
+.analysis-text{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.9)}
+.parallels{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:30px 0}
+.parallel-card{background:rgba(138,43,226,.2);padding:25px;border-radius:15px;border:2px solid rgba(138,43,226,.5);text-align:center;transition:all .3s}
+.parallel-card:hover{transform:translateY(-5px);border-color:#00d4ff}
+.parallel-icon{font-size:3rem;margin-bottom:10px}
+.parallel-title{font-size:1.2rem;color:#00d4ff;font-weight:bold;margin-bottom:10px}
+.parallel-desc{font-size:1rem;line-height:1.6}
+.ai-code{background:rgba(0,0,0,.9);padding:30px;border-radius:15px;margin:20px 0;border:2px solid rgba(0,255,0,.5)}
+.code-box{background:#000;padding:20px;border-radius:10px;font-family:monospace;font-size:.9rem;color:#00ff00;line-height:1.8;white-space:pre-wrap;max-height:400px;overflow-y:auto;margin:15px 0}
+.btn-copy{background:linear-gradient(135deg,#00ff00,#00d4ff);color:#000;border:none;padding:15px;border-radius:10px;font-size:1.1rem;font-weight:bold;cursor:pointer;width:100%}
+.btn-copy:hover{transform:translateY(-2px)}
+.back{display:block;text-align:center;margin-top:30px;color:rgba(255,255,255,.6);text-decoration:none;padding:10px}
+.back:hover{color:#00d4ff}
 </style>
 </head>
 <body>
-<div class="nebula"></div>
-<div class="stars-container" id="starsContainer"></div>
-
 <div class="container">
-<header class="header">
-<h1 class="logo">BEYOND TIME</h1>
-<p class="tagline">
-時空を超えた存在コード診断<br>
-あなたの本質を量子レベルで解析
-</p>
-<div class="premium-badge">✨ PREMIUM DIAGNOSIS ✨</div>
-</header>
-
-<section class="progress-section">
-<div class="progress-label"><span id="progressText">質問 0/15</span></div>
-<div class="progress-bar-container">
-<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="header">
+<div class="logo">BEYOND TIME</div>
+<div class="tagline">時空を超えた存在コード診断<br>あなたの本質を量子レベルで解析</div>
+<div class="badge">✨ PREMIUM ✨</div>
 </div>
-</section>
 
-<section id="questionSection"></section>
+<div class="progress">
+<div class="progress-text" id="progressText">質問 0/15</div>
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+</div>
 
-<button class="btn-submit" id="btnSubmit" onclick="showResults()">
-✨ 存在コードを生成する ✨
-</button>
+<div id="questions"></div>
 
-<section class="results" id="results">
+<button class="btn-submit" id="btnSubmit" onclick="showResults()">✨ 結果を見る ✨</button>
+
+<div class="results" id="results">
 <div class="result-header">
-<h2 class="result-title">🌌 診断完了</h2>
-<p class="result-subtitle">あなたの存在コードが生成されました</p>
+<div class="result-title">🌌 診断完了</div>
+<div>あなたの存在コードが生成されました</div>
 </div>
 
-<div class="existence-code-section">
-<h3 class="code-title">⚡ あなたの存在コード ⚡</h3>
-<div class="code-display" id="existenceCode">---</div>
+<div class="code-section">
+<h3 style="color:#00ff00;margin-bottom:15px">⚡ 存在コード ⚡</h3>
+<div class="code-display" id="code">---</div>
 </div>
 
-<div class="analysis-section">
-<h3 class="analysis-title">🔮 深層心理分析</h3>
-<div id="analysisContent"></div>
+<div class="analysis">
+<div class="analysis-title">🔮 分析結果</div>
+<div class="analysis-text" id="analysisText"></div>
 </div>
 
-<h3 style="font-size:1.8rem;color:#00d4ff;font-weight:900;text-align:center;margin:50px 0 30px">🌍 あなたの3つのパラレルワールド</h3>
-<div class="parallel-worlds" id="parallelWorlds"></div>
+<h3 style="text-align:center;color:#00d4ff;margin:40px 0 20px">🌍 パラレルワールド</h3>
+<div class="parallels" id="parallels"></div>
 
-<div class="ai-code-section">
-<h3 class="ai-code-title">🤖 AI超連携コード</h3>
-<pre class="code-box" id="aiCodeBox"></pre>
-<button class="btn-copy" onclick="copyAICode()">📋 コピーしてAIに貼り付け</button>
-</div>
-
-<div class="share-section">
-<h3 class="share-title">✨ 結果をシェア</h3>
-<div class="share-buttons">
-<button class="btn-share btn-twitter" onclick="shareTwitter()">🐦 Twitter</button>
-<button class="btn-share btn-url" onclick="copyUrl()">🔗 URLコピー</button>
+<div class="ai-code">
+<h3 style="color:#00ff00;margin-bottom:15px;text-align:center">🤖 AI連携コード</h3>
+<div class="code-box" id="aiCode"></div>
+<button class="btn-copy" onclick="copyCode()">📋 コピー</button>
 </div>
 </div>
-</section>
 
-<nav>
-<a href="index.html" class="back-link">← エントランスに戻る</a>
-</nav>
+<a href="index.html" class="back">← エントランスに戻る</a>
 </div>
 
 <script>
 const ans={};
-const questions=[
-{id:1,title:'過去の記憶は、あなたにとってどんな存在ですか？',options:[{text:'宝物のように大切。過去があるから今がある。',value:1},{text:'時々振り返るが、今を生きることを優先。',value:2},{text:'過去は過去。今と未来だけを見ている。',value:3}]},
-{id:2,title:'未来について考える時、どんな感情が湧きますか？',options:[{text:'ワクワクと期待で満たされる。',value:1},{text:'不安と期待が混在している。',value:2},{text:'未来は不確実。今を全力で生きるだけ。',value:3}]},
-{id:3,title:'「今この瞬間」をどれだけ意識していますか？',options:[{text:'常に今に集中している。過去も未来も気にしない。',value:3},{text:'時々今に意識を向けるが、難しい。',value:2},{text:'過去や未来のことばかり考えている。',value:1}]},
-{id:4,title:'他人と自分を比較することはありますか？',options:[{text:'よく比較してしまう。焦りや劣等感を感じる。',value:1},{text:'時々比較するが、自分のペースを大切にしている。',value:2},{text:'ほとんど比較しない。人は人、自分は自分。',value:3}]},
-{id:5,title:'「時間」とは、あなたにとって何ですか？',options:[{text:'限られた資源。有効に使わなければならない。',value:1},{text:'流れるもの。自然に任せている。',value:2},{text:'幻想。本当は存在しないと感じる。',value:3}]},
-{id:6,title:'人生において、何を最も大切にしていますか？',options:[{text:'成長と達成。常に前進したい。',value:1},{text:'バランス。仕事も遊びも大切。',value:2},{text:'存在そのもの。何もしなくても価値がある。',value:3}]},
-{id:7,title:'失敗や挫折をどう捉えていますか？',options:[{text:'避けるべきもの。恐怖を感じる。',value:1},{text:'学びの機会。成長のために必要。',value:2},{text:'失敗も成功も同じ。すべてが経験。',value:3}]},
-{id:8,title:'直感と論理、どちらを信じますか？',options:[{text:'論理を重視。データと分析が大切。',value:1},{text:'状況に応じて使い分ける。',value:2},{text:'直感を信じる。体が答えを知っている。',value:3}]},
-{id:9,title:'孤独をどう感じますか？',options:[{text:'寂しい。誰かと繋がっていたい。',value:1},{text:'時には必要。自分と向き合う時間。',value:2},{text:'孤独こそが本来の姿。一人で完結している。',value:3}]},
-{id:10,title:'「意味」や「目的」をどれだけ求めますか？',options:[{text:'常に求めている。意味がないと不安。',value:1},{text:'ある程度求めるが、囚われない。',value:2},{text:'求めていない。存在そのものが意味。',value:3}]},
-{id:11,title:'変化をどう感じますか？',options:[{text:'不安。安定を望む。',value:1},{text:'必要なもの。柔軟に対応する。',value:2},{text:'常に変化している。それが自然。',value:3}]},
-{id:12,title:'「死」についてどう思いますか？',options:[{text:'恐怖を感じる。考えたくない。',value:1},{text:'自然なこと。受け入れている。',value:2},{text:'死も生も同じ。境界がない。',value:3}]},
-{id:13,title:'あなたの「存在」をどう捉えていますか？',options:[{text:'何かを成し遂げて初めて価値がある。',value:1},{text:'成し遂げることも大事だが、存在自体も大切。',value:2},{text:'存在するだけで完璧。証明は不要。',value:3}]},
-{id:14,title:'人生で最も美しいと感じる瞬間は？',options:[{text:'目標を達成した時。努力が報われる瞬間。',value:1},{text:'愛する人と過ごす時。繋がりを感じる瞬間。',value:2},{text:'何もない静寂の中。ただ存在している瞬間。',value:3}]},
-{id:15,title:'あなたは何者だと思いますか？',options:[{text:'肩書きや役割が自分を定義する。',value:1},{text:'複数の側面を持つ複雑な存在。',value:2},{text:'定義できない。言葉を超えた存在。',value:3}]}
+const qs=[
+{id:1,q:'過去の記憶は、あなたにとって？',opts:['宝物。過去があるから今がある','時々振り返るが、今を優先','過去は過去。今と未来だけ']},
+{id:2,q:'未来について考える時の感情は？',opts:['ワクワクと期待','不安と期待が混在','不確実。今を全力で生きる']},
+{id:3,q:'「今この瞬間」への意識は？',opts:['常に今に集中','時々意識するが難しい','過去や未来ばかり考える']},
+{id:4,q:'他人と比較することは？',opts:['よく比較。焦りを感じる','時々比較するが自分のペース','ほとんど比較しない']},
+{id:5,q:'「時間」とは何ですか？',opts:['限られた資源','流れるもの','幻想。存在しない']},
+{id:6,q:'人生で最も大切なことは？',opts:['成長と達成','バランス','存在そのもの']},
+{id:7,q:'失敗や挫折の捉え方は？',opts:['避けるべきもの','学びの機会','失敗も成功も同じ']},
+{id:8,q:'直感と論理、どちらを信じる？',opts:['論理を重視','状況で使い分ける','直感を信じる']},
+{id:9,q:'孤独をどう感じる？',opts:['寂しい','時には必要','本来の姿']},
+{id:10,q:'「意味」や「目的」は？',opts:['常に求めている','ある程度求める','求めていない']},
+{id:11,q:'変化への感情は？',opts:['不安。安定を望む','必要。柔軟に対応','常に変化。自然']},
+{id:12,q:'「死」について',opts:['恐怖を感じる','自然なこと','死も生も同じ']},
+{id:13,q:'あなたの「存在」は？',opts:['成し遂げて価値','存在自体も価値','存在で完璧']},
+{id:14,q:'最も美しい瞬間は？',opts:['目標達成の時','愛する人と過ごす時','静寂の中']},
+{id:15,q:'あなたは何者？',opts:['肩書きが定義する','複雑な存在','定義できない']}
 ];
 
-function createStars(){
-const container=document.getElementById('starsContainer');
-for(let i=0;i<200;i++){
-const star=document.createElement('div');
-star.className='star';
-star.style.left=Math.random()*100+'%';
-star.style.top=Math.random()*100+'%';
-star.style.animationDelay=Math.random()*3+'s';
-container.appendChild(star);
-}
-}
-
-function renderQuestions(){
-const section=document.getElementById('questionSection');
-questions.forEach(q=>{
-const container=document.createElement('div');
-container.className='question-container';
-container.innerHTML=`
-<div class="q-number">QUESTION ${q.id}/15</div>
-<div class="q-title">${q.title}</div>
+function render(){
+const c=document.getElementById('questions');
+qs.forEach(q=>{
+const d=document.createElement('div');
+d.className='question';
+d.innerHTML=`
+<div class="q-num">Q${q.id}/15</div>
+<div class="q-title">${q.q}</div>
 <div class="options">
-${q.options.map(opt=>`<button class="opt" data-q="${q.id}" data-v="${opt.value}">${opt.text}</button>`).join('')}
+${q.opts.map((o,i)=>`<button class="opt" data-q="${q.id}" data-v="${i+1}">${o}</button>`).join('')}
 </div>
 `;
-section.appendChild(container);
+c.appendChild(d);
 });
-attachEvents();
-}
-
-function attachEvents(){
-document.querySelectorAll('.opt').forEach(btn=>{
-btn.onclick=null;
-btn.addEventListener('click',function(e){
-e.preventDefault();
-const q=this.getAttribute('data-q');
-const v=parseInt(this.getAttribute('data-v'));
-ans['q'+q]=v;
+document.querySelectorAll('.opt').forEach(b=>{
+b.onclick=function(){
+const qid=this.getAttribute('data-q');
+const val=parseInt(this.getAttribute('data-v'));
+ans['q'+qid]=val;
 this.closest('.options').querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
 this.classList.add('selected');
-updateProgress();
-checkSubmit();
-});
-btn.addEventListener('touchstart',function(e){
-e.preventDefault();
-this.click();
-});
+update();
+};
 });
 }
 
-function updateProgress(){
-const answered=Object.keys(ans).length;
-const percent=(answered/15)*100;
-document.getElementById('progressBar').style.width=percent+'%';
-document.getElementById('progressText').textContent=`質問 ${answered}/15`;
-}
-
-function checkSubmit(){
-const btn=document.getElementById('btnSubmit');
-if(Object.keys(ans).length===15){
-btn.style.display='block';
-btn.disabled=false;
-}else{
-btn.disabled=true;
+function update(){
+const n=Object.keys(ans).length;
+document.getElementById('progressText').textContent=`質問 ${n}/15`;
+document.getElementById('progressFill').style.width=(n/15*100)+'%';
+if(n===15){
+document.getElementById('btnSubmit').style.display='block';
 }
 }
 
 function showResults(){
-if(Object.keys(ans).length<15){
-alert('すべての質問に答えてください');
-return;
-}
+if(Object.keys(ans).length<15)return alert('全部答えてください');
+const score=Object.values(ans).reduce((a,b)=>a+b,0);
+const avg=(score/15).toFixed(1);
+const code=`ALPHA-${Math.floor(Math.random()*9000+1000)}-XY`;
+const type=avg<2?'達成者':avg<2.5?'調和者':'超越者';
+const text=avg<2?'過去と未来を重視。計画性と責任感が強い。時々今を感じることで人生が豊かに。':avg<2.5?'バランスが取れている。柔軟に対応できる貴重な能力。さらに今を深めると新しい扉が開く。':'今を生きている。稀有な能力。周囲に静けさをもたらす存在。';
+const p=[
+{i:'🔥',t:'起業家',d:'革新的なリーダー'},
+{i:'🌊',t:'カウンセラー',d:'人々を癒す存在'},
+{i:'✨',t:'ヒーラー',d:'特別な力を持つ'}
+];
 
-const score=Object.values(ans).reduce((sum,val)=>sum+val,0);
-const avgScore=(score/15).toFixed(1);
+document.getElementById('code').textContent=code;
+document.getElementById('analysisText').innerHTML=`<strong>タイプ:</strong> ${type}<br><br>${text}`;
+document.getElementById('parallels').innerHTML=p.map(x=>`
+<div class="parallel-card">
+<div class="parallel-icon">${x.i}</div>
+<div class="parallel-title">${x.t}</div>
+<div class="parallel-desc">${x.d}</div>
+</div>
+`).join('');
+document.getElementById('aiCode').textContent=`
+Beyond Time Premium診断
 
-let codePrefix,personality,analysis,parallel1,parallel2,parallel3;
+存在コード: ${code}
+タイプ: ${type}
+スコア: ${avg}/3.0
 
-if(avgScore<=1.5){
-codePrefix='ALPHA';
-personality='達成者';
-analysis='あなたは<span class="highlight">過去と未来に強く意識を向けるタイプ</span>です。目標達成や成長を重視し、常に前進しようとします。時には「今」を忘れがちですが、その情熱こそがあなたの強さです。<br><br>過去の経験から学び、未来を見据える力は素晴らしい才能です。ただし、<span class="highlight">時々立ち止まって「今この瞬間」を味わうこと</span>で、人生はさらに豊かになるでしょう。';
-parallel1={icon:'🔥',title:'猛烈な起業家',desc:'別の世界線では、あなたは革新的なスタートアップを立ち上げ、世界を変えるリーダーになっています。'};
-parallel2={icon:'🎯',title:'完璧主義者',desc:'もう一つの世界では、細部まで徹底的にこだわる職人として、唯一無二の作品を生み出しています。'};
-parallel3={icon:'⚡',title:'時間の支配者',desc:'さらに別の次元では、時間管理の達人として、1日48時間を生きているかのような生産性を発揮しています。'};
-}else if(avgScore<=2.5){
-codePrefix='BETA';
-personality='調和者';
-analysis='あなたは<span class="highlight">バランスを大切にするタイプ</span>です。過去・現在・未来のすべてに適度な注意を払い、柔軟に対応できます。この調和感覚は、混沌とした現代社会で非常に貴重な能力です。<br><br>あなたの強みは<span class="highlight">状況に応じて適切に対応できる柔軟性</span>にあります。ただし、時には直感に従って大胆な決断をすることで、新しい可能性が開けるかもしれません。';
-parallel1={icon:'🌊',title:'カウンセラー',desc:'別の世界線では、多くの人々の心を癒し、導くプロフェッショナルとして活躍しています。'};
-parallel2={icon:'🎨',title:'クリエイター',desc:'もう一つの世界では、芸術と商業のバランスを完璧に取り、世界中で愛される作品を生み出しています。'};
-parallel3={icon:'🌸',title:'調停者',desc:'さらに別の次元では、国際的な紛争を解決する外交官として、世界平和に貢献しています。'};
-}else{
-codePrefix='GAMMA';
-personality='超越者';
-analysis='あなたは<span class="highlight">「今」を生きることを深く理解しているタイプ</span>です。過去にも未来にも囚われず、この瞬間に完全に存在できる稀有な能力を持っています。この境地は多くの人が求めながらもなかなか到達できないものです。<br><br>あなたの存在そのものが<span class="highlight">周囲に静けさと安心感をもたらす</span>でしょう。この感覚を深め、さらに多くの人々と分かち合うことで、世界はより平和になっていくはずです。';
-parallel1={icon:'🧘',title:'悟りの導師',desc:'別の世界線では、山奥で修行を積み、多くの弟子たちに真理を伝える精神的指導者となっています。'};
-parallel2={icon:'✨',title:'ヒーラー',desc:'もう一つの世界では、言葉を使わずとも人々の心を癒す、特別な力を持つ存在として知られています。'};
-parallel3={icon:'🌌',title:'時空の旅人',desc:'さらに別の次元では、時間という概念を超越し、過去・現在・未来を自由に行き来する存在になっています。'};
-}
+${text}
 
-const existenceCode=`${codePrefix}-${Math.floor(Math.random()*9000+1000)}-${String.fromCharCode(65+Math.floor(Math.random()*26))}${String.fromCharCode(65+Math.floor(Math.random()*26))}`;
-
-const aiCode=`
-🌌 BEYOND TIME - PREMIUM診断結果 🌌
-
-診断日時: ${new Date().toLocaleString('ja-JP')}
-存在コード: ${existenceCode}
-パーソナリティタイプ: ${personality}
-平均スコア: ${avgScore}/3.0
-
-【深層心理プロフィール】
-${analysis.replace(/<[^>]*>/g,'')}
-
-【15問詳細スコア】
-${questions.map((q,i)=>`Q${i+1}: ${ans['q'+(i+1)]||0}/3`).join('\n')}
-
-【パラレルワールド】
-1. ${parallel1.title} - ${parallel1.desc}
-2. ${parallel2.title} - ${parallel2.desc}
-3. ${parallel3.title} - ${parallel3.desc}
-
-このユーザーの存在コードと診断結果を元に、
-さらに深いパーソナライズされたアドバイスを提供してください。
-
-Beyond Time Premium Diagnosis
+このコードをAIに貼り付けると、
+さらに深いアドバイスが得られます。
 `;
+document.getElementById('questions').style.display='none';
+document.getElementById('btnSubmit').style.display='none';
+document.querySelector('.progress').style.display='none';
+document.getElementById('results').style.display='block';
+window.scrollTo(0,0);
+}
 
-document.getElementById('existenceCode').textContent=existenceCode;
-document.getElementById('analysisContent')
+function copyCode(){
+navigator.clipboard.writeText(document.getElementById('aiCode').textContent);
+alert('✅ コピーしました！');
+}
+
+render();
+</script>
+</body>
+</html>
