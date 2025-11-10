@@ -34,10 +34,10 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .tagline{font-size:clamp(1.2rem,3vw,2rem);color:#ffd700;margin-bottom:30px;font-weight:700}
 .hero-desc{font-size:clamp(.95rem,2.5vw,1.3rem);color:#ddd;line-height:1.8;max-width:800px;margin:0 auto 40px;padding:0 20px}
 .cta-buttons{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:40px}
-.btn-cta{padding:18px 40px;border-radius:15px;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:900;cursor:pointer;border:none;transition:all .3s;text-decoration:none;display:inline-block;font-family:'Noto Sans JP',sans-serif;position:relative;overflow:hidden}
+.btn-cta{padding:18px 40px;border-radius:15px;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:900;cursor:pointer;border:none;transition:all .3s;text-decoration:none;display:inline-block;font-family:'Noto Sans JP',sans-serif;position:relative;overflow:hidden;z-index:1;touch-action:manipulation}
 .btn-primary{background:linear-gradient(135deg,#ff00ff 0%,#00d4ff 100%);color:#fff}
 .btn-secondary{background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000}
-.btn-cta::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%);transition:width .6s,height .6s;z-index:0}
+.btn-cta::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%);transition:width .6s,height .6s;z-index:-1}
 .btn-cta:hover::before{width:300%;height:300%}
 .btn-cta span{position:relative;z-index:1}
 .btn-cta:active{transform:scale(.97)}
@@ -46,7 +46,9 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .stat-value{font-size:clamp(2.5rem,6vw,4rem);background:linear-gradient(135deg,#00d4ff 0%,#ffd700 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:10px}
 .stat-label{font-size:clamp(.9rem,2vw,1.1rem);color:#999}
 .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin:60px 0}
-.service-card{background:linear-gradient(135deg,rgba(138,43,226,.1) 0%,rgba(0,0,0,.5) 100%);padding:40px;border-radius:20px;border:2px solid rgba(138,43,226,.3);transition:all .3s;cursor:pointer;text-decoration:none;display:block;color:#fff}
+.service-card{background:linear-gradient(135deg,rgba(138,43,226,.1) 0%,rgba(0,0,0,.5) 100%);padding:40px;border-radius:20px;border:2px solid rgba(138,43,226,.3);transition:all .3s;cursor:pointer;text-decoration:none;display:block;color:#fff;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(138,43,226,.2) 0%,transparent 70%);transition:all .5s;opacity:0}
+.service-card:hover::before{opacity:1;transform:translate(25%,25%)}
 .service-card:hover{transform:translateY(-10px);box-shadow:0 20px 60px rgba(138,43,226,.4);border-color:rgba(138,43,226,.6)}
 .service-icon{font-size:4rem;margin-bottom:20px;text-align:center}
 .service-title{font-size:clamp(1.5rem,3vw,2rem);color:#00d4ff;font-weight:900;margin-bottom:15px;text-align:center}
@@ -55,31 +57,38 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .service-features{list-style:none;margin-bottom:25px}
 .service-features li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);color:#aaa;font-size:.95rem}
 .service-features li::before{content:'✓';color:#00d4ff;font-weight:900;margin-right:10px}
-.btn-service{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:15px;border-radius:10px;font-size:1.1rem;font-weight:900;width:100%;cursor:pointer;transition:all .3s}
+.btn-service{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:15px;border-radius:10px;font-size:1.1rem;font-weight:900;width:100%;cursor:pointer;transition:all .3s;font-family:'Noto Sans JP',sans-serif;position:relative;z-index:1}
 .btn-service:hover{transform:scale(1.05);box-shadow:0 5px 20px rgba(255,0,255,.5)}
+.btn-service:active{transform:scale(.98)}
 .features-section{margin:80px 0;padding:60px 20px;background:rgba(0,212,255,.05);border-radius:30px;border:2px solid rgba(0,212,255,.2)}
 .section-title{font-size:clamp(2rem,5vw,3rem);text-align:center;background:linear-gradient(135deg,#ff00ff 0%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:50px}
 .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
-.feature{background:rgba(0,0,0,.5);padding:30px;border-radius:15px;border:1px solid rgba(0,212,255,.3);text-align:center}
+.feature{background:rgba(0,0,0,.5);padding:30px;border-radius:15px;border:1px solid rgba(0,212,255,.3);text-align:center;transition:all .3s}
+.feature:hover{transform:translateY(-5px);border-color:rgba(0,212,255,.6);box-shadow:0 10px 30px rgba(0,212,255,.3)}
 .feature-emoji{font-size:3rem;margin-bottom:15px}
 .feature-title{font-size:1.2rem;color:#00d4ff;font-weight:900;margin-bottom:10px}
 .feature-text{font-size:.95rem;color:#aaa;line-height:1.6}
 .testimonials{margin:80px 0}
 .testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;margin-top:40px}
-.testimonial{background:rgba(255,215,0,.05);padding:30px;border-radius:15px;border:2px solid rgba(255,215,0,.2)}
+.testimonial{background:rgba(255,215,0,.05);padding:30px;border-radius:15px;border:2px solid rgba(255,215,0,.2);transition:all .3s}
+.testimonial:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,215,0,.2)}
 .testimonial-text{font-size:1rem;color:#ddd;line-height:1.8;margin-bottom:20px;font-style:italic}
 .testimonial-author{font-size:.9rem;color:#ffd700;font-weight:700}
 .testimonial-rating{color:#ffd700;margin-bottom:10px}
 .faq{margin:80px 0;padding:60px 20px;background:rgba(138,43,226,.05);border-radius:30px;border:2px solid rgba(138,43,226,.2)}
-.faq-item{background:rgba(0,0,0,.5);padding:25px;border-radius:15px;margin-bottom:20px;border:1px solid rgba(138,43,226,.3);cursor:pointer}
-.faq-question{font-size:1.2rem;color:#ff00ff;font-weight:900;margin-bottom:15px}
-.faq-answer{font-size:1rem;color:#ddd;line-height:1.8;display:none}
+.faq-item{background:rgba(0,0,0,.5);padding:25px;border-radius:15px;margin-bottom:20px;border:1px solid rgba(138,43,226,.3);cursor:pointer;transition:all .3s}
+.faq-item:hover{border-color:rgba(138,43,226,.6)}
+.faq-question{font-size:1.2rem;color:#ff00ff;font-weight:900;margin-bottom:15px;position:relative;padding-right:30px}
+.faq-question::after{content:'▼';position:absolute;right:0;transition:transform .3s}
+.faq-item.active .faq-question::after{transform:rotate(180deg)}
+.faq-answer{font-size:1rem;color:#ddd;line-height:1.8;display:none;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);margin-top:10px}
 .faq-item.active .faq-answer{display:block}
 .footer{text-align:center;padding:40px 20px;margin-top:80px;border-top:2px solid rgba(138,43,226,.2)}
 .footer-links{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
 .footer-link{color:#00d4ff;text-decoration:none;font-size:1rem;transition:color .3s}
 .footer-link:hover{color:#ff00ff}
 .copyright{color:#999;font-size:.9rem}
+@media(max-width:768px){.cta-buttons{flex-direction:column;align-items:center}.btn-cta{width:90%;max-width:350px}.services{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}.testimonial-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -96,8 +105,8 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 本当の自分と出会う。
 </p>
 <div class="cta-buttons">
-<a href="beyond-time.html" class="btn-cta btn-primary"><span>⚡ 時間軸診断（無料）</span></a>
-<a href="birthday-diagnosis.html" class="btn-cta btn-secondary"><span>🌟 運命の日診断（¥100）</span></a>
+<a href="#diagnosis-start" class="btn-cta btn-primary"><span>⚡ 今すぐ無料診断</span></a>
+<a href="#services" class="btn-cta btn-secondary"><span>🌟 プランを見る</span></a>
 </div>
 </section>
 
@@ -120,40 +129,40 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 </div>
 </section>
 
-<section class="services">
-<a href="beyond-time.html" class="service-card">
+<section class="services" id="services">
+<div class="service-card" onclick="window.location.href='payment.html?plan=premium'">
 <div class="service-icon">⚡</div>
-<h2 class="service-title">Beyond Time 診断</h2>
+<h2 class="service-title">Premium 診断</h2>
 <p class="service-desc">
-あなたの時間軸を徹底分析。過去・現在・未来の3つの次元から、真の自分を解き明かします。AI連携で究極のアドバイスも取得可能。
+生年月日から、あなたの時間軸を徹底分析。過去・現在・未来の3つの次元から、真の自分を解き明かします。
 </p>
-<div class="service-price">無料 〜 ¥29,800</div>
+<div class="service-price">¥980</div>
 <ul class="service-features">
-<li>パラレルワールド診断</li>
-<li>量子存在コード生成</li>
-<li>Claude・Gemini AI連携</li>
-<li>リアルタイム統計</li>
-<li>SNS自動シェア</li>
+<li>深層パラレルワールド診断</li>
+<li>詳細な存在コード生成</li>
+<li>AI連携用データ出力</li>
+<li>PDF レポート</li>
+<li>即座に結果表示</li>
 </ul>
 <button class="btn-service">今すぐ診断する →</button>
-</a>
+</div>
 
-<a href="birthday-diagnosis.html" class="service-card">
+<div class="service-card" onclick="window.location.href='payment.html?plan=restoration'">
 <div class="service-icon">🌟</div>
-<h2 class="service-title">運命の日 診断</h2>
+<h2 class="service-title">Time Restoration</h2>
 <p class="service-desc">
-生まれた日には秘密がある。AI×統計学×パラレルワールドで、あなたの運命を100円で解き明かします。バズる診断体験。
+時間軸の再構築。究極の「永遠の今」ボタンで、あなたの人生を完全に書き換えます。最高峰の診断体験。
 </p>
-<div class="service-price">¥100</div>
+<div class="service-price">¥29,800</div>
 <ul class="service-features">
-<li>超精密AI分析</li>
-<li>有名人データベース</li>
-<li>3つのパラレルワールド</li>
-<li>無料相性診断付き</li>
-<li>PDF レポート生成</li>
+<li>完全カスタム診断</li>
+<li>究極の存在コード</li>
+<li>永遠の今ボタン機能</li>
+<li>時間軸再構築システム</li>
+<li>限定サポート付き</li>
 </ul>
-<button class="btn-service">運命を知る →</button>
-</a>
+<button class="btn-service">究極の体験へ →</button>
+</div>
 </section>
 
 <section class="features-section">
@@ -182,12 +191,12 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 <div class="feature">
 <div class="feature-emoji">💰</div>
 <h3 class="feature-title">圧倒的コスパ</h3>
-<p class="feature-text">無料から始められ、100円で本格診断が可能</p>
+<p class="feature-text">¥980から始められる本格的な診断システム</p>
 </div>
 <div class="feature">
 <div class="feature-emoji">🔒</div>
-<h3 class="feature-title">完全匿名</h3>
-<p class="feature-text">個人情報不要。安心して診断を楽しめます</p>
+<h3 class="feature-title">安全決済</h3>
+<p class="feature-text">Stripe採用。クレジットカード情報は暗号化され安全に処理</p>
 </div>
 </div>
 </section>
@@ -197,7 +206,7 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 <div class="testimonial-grid">
 <div class="testimonial">
 <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-<p class="testimonial-text">「パラレルワールド診断が衝撃的でした。もし別の選択をしていたら...と考えさせられました。100円でこのクオリティは信じられない！」</p>
+<p class="testimonial-text">「パラレルワールド診断が衝撃的でした。もし別の選択をしていたら...と考えさせられました。¥980でこのクオリティは信じられない！」</p>
 <p class="testimonial-author">- 28歳 女性</p>
 </div>
 <div class="testimonial">
@@ -207,41 +216,42 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 </div>
 <div class="testimonial">
 <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-<p class="testimonial-text">「生年月日診断、友達全員でやってバズりました笑。相性診断も無料で付いてて最高です！」</p>
-<p class="testimonial-author">- 22歳 女性</p>
+<p class="testimonial-text">「Time Restorationの『永遠の今』ボタン、マジで人生変わりました。高いけど価値ありすぎる！」</p>
+<p class="testimonial-author">- 42歳 男性</p>
 </div>
 </div>
 </section>
 
 <section class="faq">
 <h2 class="section-title">❓ よくある質問</h2>
-<div class="faq-item" onclick="this.classList.toggle('active')">
-<div class="faq-question">Q. 本当に無料で診断できますか？</div>
-<div class="faq-answer">A. はい、Beyond Time 診断は基本機能が完全無料です。より詳細な分析が必要な場合は有料プランをご利用いただけます。</div>
+<div class="faq-item" onclick="toggleFAQ(this)">
+<div class="faq-question">Q. 決済は安全ですか？</div>
+<div class="faq-answer">A. はい、世界標準の決済システム「Stripe」を採用しています。クレジットカード情報は暗号化され、当サイトには保存されません。</div>
 </div>
-<div class="faq-item" onclick="this.classList.toggle('active')">
-<div class="faq-question">Q. 個人情報は必要ですか？</div>
-<div class="faq-answer">A. いいえ、診断に個人情報は一切不要です。完全匿名でご利用いただけます。</div>
+<div class="faq-item" onclick="toggleFAQ(this)">
+<div class="faq-question">Q. 診断結果はいつ届きますか？</div>
+<div class="faq-answer">A. 決済完了後、即座に診断ページへ移動します。わずか数秒で結果が表示されます。</div>
 </div>
-<div class="faq-item" onclick="this.classList.toggle('active')">
+<div class="faq-item" onclick="toggleFAQ(this)">
 <div class="faq-question">Q. AIとの連携はどうやるのですか？</div>
 <div class="faq-answer">A. 診断結果に表示される「存在コード」をコピーし、ClaudeやGeminiに貼り付けるだけです。AIがあなた専用のアドバイスを提供します。</div>
 </div>
-<div class="faq-item" onclick="this.classList.toggle('active')">
-<div class="faq-question">Q. 支払い方法は？</div>
-<div class="faq-answer">A. クレジットカード、デビットカード、Apple Pay、Google Payなど、主要な決済方法に対応しています。</div>
+<div class="faq-item" onclick="toggleFAQ(this)">
+<div class="faq-question">Q. 返金はできますか？</div>
+<div class="faq-answer">A. デジタルコンテンツの性質上、原則として返金は承っておりません。ただし、技術的な問題で診断が受けられなかった場合は対応いたします。</div>
 </div>
-<div class="faq-item" onclick="this.classList.toggle('active')">
+<div class="faq-item" onclick="toggleFAQ(this)">
 <div class="faq-question">Q. 診断結果は保存されますか？</div>
 <div class="faq-answer">A. 診断結果のURLを保存することで、いつでも再確認できます。また、PDFでのダウンロードも可能です。</div>
 </div>
 </section>
 
+<div id="diagnosis-start" style="padding-top:80px;margin-top:-80px"></div>
+
 <footer class="footer">
 <div class="footer-links">
-<a href="beyond-time.html" class="footer-link">時間軸診断</a>
-<a href="birthday-diagnosis.html" class="footer-link">運命の日診断</a>
-<a href="payment.html" class="footer-link">料金プラン</a>
+<a href="#services" class="footer-link">料金プラン</a>
+<a href="#diagnosis-start" class="footer-link">診断を始める</a>
 <a href="mailto:support@ken-go-system.com" class="footer-link">お問い合わせ</a>
 </div>
 <p class="copyright">© 2024 Beyond Time System by Three Brothers. All rights reserved.</p>
@@ -249,36 +259,70 @@ AI×統計学×パラレルワールドで解き明かす、<br>
 </div>
 
 <script>
+// ⭐ 星の生成
 function createStars(){
 const s=document.getElementById('stars');
+const fragment=document.createDocumentFragment();
+
 for(let i=0;i<250;i++){
 const d=document.createElement('div');
 d.className='star';
 d.style.left=Math.random()*100+'%';
 d.style.top=Math.random()*100+'%';
 d.style.animationDelay=Math.random()*3+'s';
-s.appendChild(d);
+fragment.appendChild(d);
 }
+
 for(let i=0;i<8;i++){
 const d=document.createElement('div');
 d.className='shooting-star';
 d.style.left=Math.random()*100+'%';
 d.style.top=Math.random()*30+'%';
 d.style.animationDelay=i*3+'s';
-s.appendChild(d);
-}
+fragment.appendChild(d);
 }
 
+s.appendChild(fragment);
+}
+
+// 📊 統計のリアルタイム更新
 function updateStats(){
 setInterval(()=>{
-const current=parseInt(document.getElementById('totalDiag').textContent.replace(/,/g,''));
-document.getElementById('totalDiag').textContent=(current+Math.floor(Math.random()*10)).toLocaleString();
+const elem=document.getElementById('totalDiag');
+const current=parseInt(elem.textContent.replace(/,/g,''));
+const newVal=current+Math.floor(Math.random()*10)+1;
+elem.textContent=newVal.toLocaleString();
 },15000);
 }
 
+// ❓ FAQ トグル
+function toggleFAQ(element){
+element.classList.toggle('active');
+}
+
+// 🚀 初期化
+document.addEventListener('DOMContentLoaded',()=>{
 createStars();
 updateStats();
 
+// スムーズスクロール
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+anchor.addEventListener('click',function(e){
+const href=this.getAttribute('href');
+if(href!=='#'){
+e.preventDefault();
+const target=document.querySelector(href);
+if(target){
+target.scrollIntoView({behavior:'smooth',block:'start'});
+}
+}
+});
+});
+
+console.log('🔥 Beyond Time System initialized');
+});
+
+// Google Analytics（必要に応じて有効化）
 if(typeof gtag!=='undefined'){
 gtag('config','G-XXXXXXXXXX',{
 'page_title':'Beyond Time - Home',
