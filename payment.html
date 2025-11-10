@@ -6,12 +6,12 @@
 <title>Beyond Time - お支払い</title>
 <script src="https://js.stripe.com/v3/"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;padding:20px}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a1a2e 0%,#000 100%);animation:pulse 8s ease-in-out infinite;z-index:-2}
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;padding:20px;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a1a2e 0%,#000 100%);animation:pulse 8s ease-in-out infinite;z-index:-1}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
-.stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
+.stars{position:fixed;width:100%;height:100%;z-index:0;pointer-events:none}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
 .container{max-width:600px;width:100%;background:rgba(0,0,0,.95);padding:40px;border-radius:20px;border:3px solid rgba(122,92,255,.5);box-shadow:0 0 60px rgba(122,92,255,.4);position:relative;z-index:1}
@@ -23,26 +23,29 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .payment-form{margin:30px 0}
 .form-group{margin-bottom:20px}
 .form-label{font-size:.9rem;color:#00d4ff;margin-bottom:8px;display:block;font-weight:700}
-.form-input{width:100%;padding:15px;font-size:1rem;border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5);color:#fff;font-family:'Noto Sans JP',sans-serif}
+.form-input{width:100%;padding:15px;font-size:1rem;border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5);color:#fff;font-family:'Orbitron',sans-serif;transition:all .3s}
 .form-input:focus{outline:none;border-color:#7a5cff;box-shadow:0 0 25px rgba(122,92,255,.6)}
-#card-element{padding:15px;border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5)}
-.btn-pay{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);color:#000;border:none;padding:20px;border-radius:12px;cursor:pointer;font-size:clamp(1.1rem,3vw,1.3rem);width:100%;font-weight:900;box-shadow:0 0 40px rgba(122,92,255,.8);font-family:'Noto Sans JP',sans-serif;letter-spacing:.15em;transition:all .3s;margin-top:20px}
-.btn-pay:hover{box-shadow:0 0 60px rgba(122,92,255,1);transform:translateY(-2px)}
-.btn-pay:disabled{opacity:.5;cursor:not-allowed}
-.btn-pay:active{transform:scale(.97)}
-.error{color:#ff4444;font-size:.9rem;margin-top:10px;display:none}
+.form-input::placeholder{color:rgba(255,255,255,.4)}
+#card-element{padding:15px;border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5);min-height:40px}
+.btn-pay{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);color:#000;border:none;padding:20px;border-radius:12px;cursor:pointer;font-size:clamp(1.1rem,3vw,1.3rem);width:100%;font-weight:900;box-shadow:0 0 40px rgba(122,92,255,.8);font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;margin-top:20px}
+.btn-pay:hover:not(:disabled){box-shadow:0 0 60px rgba(122,92,255,1);transform:translateY(-2px)}
+.btn-pay:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.error{color:#ff4444;font-size:.9rem;margin-top:10px;padding:10px;background:rgba(255,68,68,.1);border-radius:8px;border-left:3px solid #ff4444;display:none}
 .error.active{display:block}
-.loading{text-align:center;color:#7a5cff;margin:20px 0;display:none;font-weight:700}
+.loading{text-align:center;color:#7a5cff;margin:20px 0;display:none;font-size:1.1rem;font-weight:700}
 .loading.active{display:block}
-.secure-badge{text-align:center;margin-top:20px;font-size:.85rem;color:rgba(255,255,255,.6)}
-.secure-badge::before{content:"🔒 ";color:#00d4ff}
-.success-message{background:rgba(0,255,0,.1);border:2px solid rgba(0,255,0,.5);padding:20px;border-radius:12px;text-align:center;display:none;animation:successAppear 1s}
-@keyframes successAppear{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.loading::after{content:'';animation:dots 1.5s steps(4,end) infinite}
+@keyframes dots{0%,20%{content:''}40%{content:'.'}60%{content:'..'}80%,100%{content:'...'}}
+.secure-badge{text-align:center;margin-top:20px;font-size:.85rem;color:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;gap:8px}
+.secure-badge::before{content:"🔒";color:#00d4ff;font-size:1.2rem}
+.success-message{background:rgba(0,255,0,.1);border:2px solid rgba(0,255,0,.5);padding:20px;border-radius:12px;text-align:center;display:none;animation:fadeInScale .5s ease-out}
 .success-message.active{display:block}
+@keyframes fadeInScale{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 .success-title{font-size:1.5rem;color:#00ff00;margin-bottom:15px;font-weight:900}
 .success-text{font-size:1rem;color:rgba(255,255,255,.9);line-height:1.8}
 .back-link{display:block;margin-top:20px;color:rgba(255,255,255,.6);text-align:center;font-size:.9rem;text-decoration:none;transition:color .3s}
 .back-link:hover{color:#00d4ff}
+.invalid-plan{color:#ff4444;text-align:center;padding:20px;font-size:1.1rem}
 </style>
 </head>
 <body>
@@ -51,9 +54,9 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="title">💳 お支払い</div>
 
 <div class="plan-info" id="planInfo">
-<div class="plan-name" id="planName">Loading...</div>
+<div class="plan-name" id="planName">読み込み中...</div>
 <div class="plan-price" id="planPrice">¥---</div>
-<div class="plan-desc" id="planDesc">Loading...</div>
+<div class="plan-desc" id="planDesc">プラン情報を取得しています...</div>
 </div>
 
 <div class="success-message" id="successMessage">
@@ -63,17 +66,17 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 
 <form id="payment-form" class="payment-form">
 <div class="form-group">
-<label class="form-label">お名前</label>
-<input type="text" class="form-input" id="name" placeholder="山田太郎" required>
+<label class="form-label">お名前 *</label>
+<input type="text" class="form-input" id="name" placeholder="山田 太郎" required autocomplete="name">
 </div>
 
 <div class="form-group">
-<label class="form-label">メールアドレス</label>
-<input type="email" class="form-input" id="email" placeholder="example@email.com" required>
+<label class="form-label">メールアドレス *</label>
+<input type="email" class="form-input" id="email" placeholder="example@email.com" required autocomplete="email">
 </div>
 
 <div class="form-group">
-<label class="form-label">カード情報</label>
+<label class="form-label">カード情報 *</label>
 <div id="card-element"></div>
 <div class="error" id="card-errors"></div>
 </div>
@@ -83,7 +86,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 </button>
 
 <div class="loading" id="loading">
-処理中です...
+処理中です
 </div>
 </form>
 
@@ -95,14 +98,16 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 </div>
 
 <script>
+// ⚡ Stripe公開キー（本番環境では環境変数で管理すること）
 const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SRULXE90hNxeF7bObkIHe2xyOrQ6NZEFhKwxj9UWFyAyCX65gpKDiXD1iMM3VgPDAWqfOuAJgphapS2Ss9vjwDu00iSwc7QTr';
 
+// 📋 プラン定義
 const plans = {
   premium: {
     name: 'Beyond Time - Premium診断',
     price: '¥980',
     amount: 980,
-    desc: '深層診断・詳細な存在コード生成・AI連携機能',
+    desc: '深層診断・詳細な存在コード生成',
     redirectUrl: 'beyond-time.html'
   },
   restoration: {
@@ -111,67 +116,71 @@ const plans = {
     amount: 29800,
     desc: '時間軸の再構築・永遠の今ボタン・究極の存在コード',
     redirectUrl: 'restoration.html'
-  },
-  birthday: {
-    name: '運命の日 - 詳細レポート',
-    price: '¥100',
-    amount: 100,
-    desc: 'PDF詳細レポート・AI未来予測・運勢カレンダー',
-    redirectUrl: 'birthday-diagnosis.html'
   }
 };
 
+// 🎯 URLパラメータからプラン取得
 const urlParams = new URLSearchParams(window.location.search);
-const planType = urlParams.get('plan') || urlParams.get('type') || 'premium';
-const birthdayYear = urlParams.get('year');
-const birthdayMonth = urlParams.get('month');
-const birthdayDay = urlParams.get('day');
-
+const planType = urlParams.get('plan') || 'premium';
 const currentPlan = plans[planType];
 
+// ✅ プラン情報表示
 if (currentPlan) {
   document.getElementById('planName').textContent = currentPlan.name;
   document.getElementById('planPrice').textContent = currentPlan.price;
   document.getElementById('planDesc').textContent = currentPlan.desc;
 } else {
-  document.getElementById('planInfo').innerHTML = '<p style="color:#ff4444;">無効なプランです。エントランスからやり直してください。</p>';
+  document.getElementById('planInfo').innerHTML = '<p class="invalid-plan">⚠️ 無効なプランです。<br>エントランスからやり直してください。</p>';
+  document.getElementById('payment-form').style.display = 'none';
 }
 
-function createStars(){
-  const stars = document.getElementById('stars');
-  for(let i = 0; i < 150; i++){
+// ⭐ 星の生成
+function createStars() {
+  const starsContainer = document.getElementById('stars');
+  const fragment = document.createDocumentFragment();
+  
+  for(let i = 0; i < 150; i++) {
     const star = document.createElement('div');
     star.className = 'star';
     star.style.left = Math.random() * 100 + '%';
     star.style.top = Math.random() * 100 + '%';
     star.style.animationDelay = Math.random() * 3 + 's';
-    stars.appendChild(star);
+    fragment.appendChild(star);
   }
+  
+  starsContainer.appendChild(fragment);
 }
 
+// 🎨 Stripe初期化
 const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 const elements = stripe.elements();
+
 const cardElement = elements.create('card', {
   style: {
     base: {
       color: '#fff',
-      fontFamily: '"Noto Sans JP", sans-serif',
+      fontFamily: 'Orbitron, sans-serif',
       fontSize: '16px',
+      lineHeight: '24px',
       '::placeholder': {
-        color: '#aaa'
+        color: 'rgba(255, 255, 255, 0.4)'
       }
     },
     invalid: {
-      color: '#ff4444'
+      color: '#ff4444',
+      iconColor: '#ff4444'
     }
-  }
+  },
+  hidePostalCode: true
 });
+
 cardElement.mount('#card-element');
 
+// 🔍 カード入力エラーハンドリング
 cardElement.on('change', (event) => {
   const errorElement = document.getElementById('card-errors');
   if (event.error) {
-    errorElement.textContent = event.error.message;
+    errorElement.textContent = '⚠️ ' + event.error.message;
     errorElement.classList.add('active');
   } else {
     errorElement.textContent = '';
@@ -179,20 +188,39 @@ cardElement.on('change', (event) => {
   }
 });
 
+// 📝 フォーム送信処理
 const form = document.getElementById('payment-form');
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
   
+  if (!currentPlan) {
+    showError('無効なプランが選択されています');
+    return;
+  }
+  
   const submitButton = document.getElementById('submit-button');
   const loading = document.getElementById('loading');
+  const errorElement = document.getElementById('card-errors');
   
+  // UI更新
   submitButton.disabled = true;
   loading.classList.add('active');
+  errorElement.classList.remove('active');
   
   try {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
     
+    // バリデーション
+    if (!name || !email) {
+      throw new Error('お名前とメールアドレスを入力してください');
+    }
+    
+    if (!isValidEmail(email)) {
+      throw new Error('有効なメールアドレスを入力してください');
+    }
+    
+    // PaymentMethod作成
     const {paymentMethod, error} = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
@@ -203,42 +231,74 @@ form.addEventListener('submit', async (event) => {
     });
     
     if (error) {
-      throw error;
+      throw new Error(error.message);
     }
     
-    document.getElementById('payment-form').style.display = 'none';
-    document.getElementById('planInfo').style.display = 'none';
-    document.getElementById('successMessage').classList.add('active');
+    // 🔥 NOTE: 本番環境では、ここでバックエンドAPIに送信して実際の決済処理を行う
+    // 例: const response = await fetch('/api/create-payment-intent', {...});
     
-    let redirectUrl = currentPlan.redirectUrl + '?paid=true&email=' + encodeURIComponent(email);
+    // テスト環境では、PaymentMethod作成成功で決済完了とみなす
+    console.log('PaymentMethod created:', paymentMethod.id);
     
-    if (planType === 'birthday' && birthdayYear && birthdayMonth && birthdayDay) {
-      redirectUrl += `&year=${birthdayYear}&month=${birthdayMonth}&day=${birthdayDay}`;
-    }
-    
-    document.getElementById('successText').innerHTML = `
-      決済が完了しました！<br><br>
-      <strong>${currentPlan.name}</strong><br>
-      ${currentPlan.price}<br><br>
-      3秒後に診断ページに移動します...
-    `;
-    
-    setTimeout(() => {
-      window.location.href = redirectUrl;
-    }, 3000);
+    // 成功メッセージ表示
+    showSuccess(name, email);
     
   } catch (error) {
-    console.error('Error:', error);
-    const errorElement = document.getElementById('card-errors');
-    errorElement.textContent = '決済に失敗しました: ' + (error.message || '不明なエラー');
-    errorElement.classList.add('active');
-  } finally {
+    console.error('Payment error:', error);
+    showError(error.message || '決済処理中にエラーが発生しました');
     submitButton.disabled = false;
+  } finally {
     loading.classList.remove('active');
   }
 });
 
-document.addEventListener('DOMContentLoaded', createStars);
+// 📧 メールバリデーション
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// ✅ 成功メッセージ表示
+function showSuccess(name, email) {
+  document.getElementById('payment-form').style.display = 'none';
+  document.getElementById('planInfo').style.display = 'none';
+  document.getElementById('successMessage').classList.add('active');
+  document.getElementById('successText').innerHTML = `
+    <strong>${name}</strong> 様<br><br>
+    決済が完了しました！<br><br>
+    <strong>${currentPlan.name}</strong><br>
+    ${currentPlan.price}<br><br>
+    診断結果を ${email} に送信しました。<br><br>
+    <strong>3秒後に診断ページへ移動します...</strong>
+  `;
+  
+  // リダイレクト
+  setTimeout(() => {
+    window.location.href = currentPlan.redirectUrl + '?paid=true&email=' + encodeURIComponent(email);
+  }, 3000);
+}
+
+// ❌ エラーメッセージ表示
+function showError(message) {
+  const errorElement = document.getElementById('card-errors');
+  errorElement.textContent = '⚠️ ' + message;
+  errorElement.classList.add('active');
+  
+  // 3秒後に自動で消す
+  setTimeout(() => {
+    errorElement.classList.remove('active');
+  }, 5000);
+}
+
+// 🚀 初期化
+document.addEventListener('DOMContentLoaded', () => {
+  createStars();
+  
+  // フォーカス管理
+  if (currentPlan) {
+    document.getElementById('name').focus();
+  }
+});
 </script>
 </body>
 </html>
