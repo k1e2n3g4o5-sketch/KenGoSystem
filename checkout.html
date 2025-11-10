@@ -39,6 +39,8 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 .success-message.active{display:block}
 .success-title{font-size:1.5rem;color:#00ff00;margin-bottom:15px;font-weight:900}
 .success-text{font-size:1rem;color:rgba(255,255,255,.9);line-height:1.8}
+.back-link{display:block;margin-top:20px;color:rgba(255,255,255,.6);text-align:center;font-size:.9rem;text-decoration:none;transition:color .3s}
+.back-link:hover{color:#00d4ff}
 </style>
 </head>
 <body>
@@ -86,20 +88,26 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 <div class="secure-badge">
 安全な決済（Stripe使用）
 </div>
+
+<a href="index.html" class="back-link">← エントランスに戻る</a>
 </div>
 
 <script>
-// Stripe公開可能キー
+// ===== Beyond Time - 決済システム =====
+// 30%システム: 透明性100%
+
+// Stripe公開可能キー（テストモード）
+// NOTE: 本番環境に移行する際は、本番キーに置き換えてください。
 const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SRULXE90hNxeF7bObkIHe2xyOrQ6NZEFhKwxj9UWFyAyCX65gpKDiXD1iMM3VgPDAWqfOuAJgphapS2Ss9vjwDu00iSwc7QTr';
 
-// プラン情報
+// プラン情報とリダイレクトURL
 const plans = {
   premium: {
     name: 'Beyond Time - Premium診断',
     price: '¥980',
     amount: 980,
-    desc: 'リゾート気分の深層診断・詳細な存在コード生成',
-    redirectUrl: 'premium.html'
+    desc: '深層診断・詳細な存在コード生成',
+    redirectUrl: 'beyond-time.html'
   },
   restoration: {
     name: 'Beyond Time - Time Restoration',
@@ -116,19 +124,24 @@ const planType = urlParams.get('plan') || 'premium';
 const currentPlan = plans[planType];
 
 // プラン情報を表示
-document.getElementById('planName').textContent = currentPlan.name;
-document.getElementById('planPrice').textContent = currentPlan.price;
-document.getElementById('planDesc').textContent = currentPlan.desc;
+if (currentPlan) {
+  document.getElementById('planName').textContent = currentPlan.name;
+  document.getElementById('planPrice').textContent = currentPlan.price;
+  document.getElementById('planDesc').textContent = currentPlan.desc;
+} else {
+  // プランが見つからない場合: 構造の安全のため、無効なプランと表示
+  document.getElementById('planInfo').innerHTML = '<p style="color:#ff4444;">無効なプランです。エントランスからやり直してください。</p>';
+}
 
 // 星空生成
 function createStars(){
-  const stars=document.getElementById('stars');
-  for(let i=0;i<150;i++){
-    const star=document.createElement('div');
-    star.className='star';
-    star.style.left=Math.random()*100+'%';
-    star.style.top=Math.random()*100+'%';
-    star.style.animationDelay=Math.random()*3+'s';
+  const stars = document.getElementById('stars');
+  for(let i = 0; i < 150; i++){
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
     stars.appendChild(star);
   }
 }
@@ -180,7 +193,9 @@ form.addEventListener('submit', async (event) => {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     
-    // Payment Method作成
+    // 実際はサーバー側でPaymentIntentを作成し、client_secretを取得する必要があります。
+    // クライアント側でのPaymentMethod作成は、デモ目的でのみ使用してください。
+    
     const {paymentMethod, error} = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
@@ -196,6 +211,7 @@ form.addEventListener('submit', async (event) => {
     
     // 成功メッセージ表示
     document.getElementById('payment-form').style.display = 'none';
+    document.getElementById('planInfo').style.display = 'none';
     document.getElementById('successMessage').classList.add('active');
     document.getElementById('successText').innerHTML = `
       決済が完了しました！<br><br>
@@ -206,13 +222,14 @@ form.addEventListener('submit', async (event) => {
     
     // 3秒後にリダイレクト
     setTimeout(() => {
+      // 支払い成功を次のページに渡す
       window.location.href = currentPlan.redirectUrl + '?paid=true&email=' + encodeURIComponent(email);
     }, 3000);
     
   } catch (error) {
     console.error('Error:', error);
     const errorElement = document.getElementById('card-errors');
-    errorElement.textContent = '決済に失敗しました: ' + error.message;
+    errorElement.textContent = '決済に失敗しました: ' + (error.message || '不明なエラー');
     errorElement.classList.add('active');
   } finally {
     submitButton.disabled = false;
@@ -220,6 +237,7 @@ form.addEventListener('submit', async (event) => {
   }
 });
 
+// 初期化
 document.addEventListener('DOMContentLoaded', createStars);
 </script>
 </body>
