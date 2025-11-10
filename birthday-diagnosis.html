@@ -84,22 +84,28 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .famous-desc{font-size:.8rem;color:#999}
 .compatibility{background:linear-gradient(135deg,rgba(255,0,255,.1) 0%,rgba(0,0,0,.5) 100%);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(255,0,255,.3)}
 .compat-title{font-size:1.3rem;color:#ff00ff;font-weight:900;margin-bottom:15px;text-align:center}
-.compat-input{background:rgba(0,0,0,.7);border:2px solid rgba(255,0,255,.5);color:#fff;padding:12px;border-radius:8px;font-size:1rem;text-align:center;width:100%;margin-bottom:15px}
-.btn-compat{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:12px;border-radius:8px;font-size:1rem;font-weight:900;cursor:pointer;width:100%}
+.compat-input{background:rgba(0,0,0,.7);border:2px solid rgba(255,0,255,.5);color:#fff;padding:12px;border-radius:8px;font-size:1rem;text-align:center;width:100%;margin-bottom:15px;font-family:'Orbitron',sans-serif}
+.btn-compat{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:12px;border-radius:8px;font-size:1rem;font-weight:900;cursor:pointer;width:100%;font-family:'Noto Sans JP',sans-serif;transition:all .3s}
+.btn-compat:active{transform:scale(.97)}
 .compat-result{margin-top:20px;padding:20px;background:rgba(0,0,0,.6);border-radius:10px;display:none}
 .compat-score{font-size:3rem;color:#ffd700;font-weight:900;text-align:center;margin-bottom:10px}
-.compat-analysis{font-size:.95rem;color:#ddd;line-height:1.6}
+.compat-analysis{font-size:.95rem;color:#ddd;line-height:1.6;text-align:center}
 .share-section{background:rgba(0,212,255,.1);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(0,212,255,.3);text-align:center}
 .share-title{font-size:1.2rem;color:#00d4ff;font-weight:900;margin-bottom:15px}
 .share-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.btn-share{flex:1;min-width:120px;padding:12px 20px;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;border:none;transition:all .3s}
+.btn-share{flex:1;min-width:120px;padding:12px 20px;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;border:none;transition:all .3s;font-family:'Noto Sans JP',sans-serif}
+.btn-share:active{transform:scale(.97)}
 .btn-twitter{background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff}
 .btn-line{background:linear-gradient(135deg,#00b900 0%,#008000 100%);color:#fff}
 .btn-copy{background:linear-gradient(135deg,#ff00ff 0%,#7a5cff 100%);color:#fff}
 .viral-hook{background:linear-gradient(135deg,rgba(255,215,0,.2) 0%,rgba(255,0,255,.2) 100%);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(255,215,0,.5);text-align:center}
 .hook-text{font-size:clamp(1.1rem,3vw,1.5rem);color:#ffd700;font-weight:900;line-height:1.8;margin-bottom:15px}
 .hook-cta{font-size:.95rem;color:#fff;margin-bottom:20px}
-.btn-another{background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;border:none;padding:15px 40px;border-radius:10px;font-size:1.1rem;font-weight:900;cursor:pointer;display:inline-block}
+.btn-another{background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;border:none;padding:15px 40px;border-radius:10px;font-size:1.1rem;font-weight:900;cursor:pointer;display:inline-block;font-family:'Noto Sans JP',sans-serif;transition:all .3s}
+.btn-another:active{transform:scale(.97)}
+.payment-notice{background:rgba(255,0,255,.1);padding:20px;border-radius:15px;margin:20px 0;border:2px solid rgba(255,0,255,.3);text-align:center}
+.payment-btn{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:15px 40px;border-radius:10px;font-size:1.2rem;font-weight:900;cursor:pointer;display:inline-block;margin-top:15px;font-family:'Noto Sans JP',sans-serif;text-decoration:none;transition:all .3s}
+.payment-btn:active{transform:scale(.97)}
 .back{display:block;margin-top:30px;color:rgba(255,255,255,.6);font-size:.9rem;text-align:center;text-decoration:none}
 </style>
 </head>
@@ -160,7 +166,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 </div>
 </section>
 
-<section class="input-section">
+<section class="input-section" id="inputSection">
 <h2 class="section-title">⚡ あなたの運命を解き明かす ⚡</h2>
 <div class="date-input-group">
 <div style="flex:1;min-width:80px">
@@ -177,7 +183,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 </div>
 </div>
 <button class="btn-diagnose" id="btnDiagnose">運命を知る（¥100）</button>
-<p style="text-align:center;color:#999;font-size:.85rem;margin-top:15px">※クリック後、決済画面に移動します</p>
+<p style="text-align:center;color:#999;font-size:.85rem;margin-top:15px">※診断結果をすぐに表示します</p>
 </section>
 
 <div class="results" id="results">
@@ -207,6 +213,12 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <section class="famous-people">
 <h3 class="famous-title">🎭 同じ誕生日の有名人</h3>
 <div class="famous-list" id="famousList"></div>
+</section>
+
+<section class="payment-notice">
+<h3 style="color:#ff00ff;font-size:1.3rem;margin-bottom:15px;font-weight:900">🎉 この診断が気に入ったら</h3>
+<p style="color:#ddd;margin-bottom:15px">より詳細な分析レポート（PDF）と、AI未来予測を¥100で受け取れます！</p>
+<a href="payment.html?type=birthday&price=100" class="payment-btn">詳細レポートを購入（¥100）</a>
 </section>
 
 <section class="compatibility">
@@ -313,13 +325,21 @@ return total;
 
 function getFamousPeople(m,d){
 const db={
-'1-1':[{n:'元日',e:'🎍',d:'新年の始まり'}],
+'1-1':[{n:'元日',e:'🎍',d:'新年の始まり'},{n:'J・D・サリンジャー',e:'📚',d:'作家'}],
+'2-14':[{n:'バレンタインデー',e:'💝',d:'愛の日'},{n:'マイケル・ブルームバーグ',e:'💼',d:'実業家'}],
 '3-15':[{n:'真鍋かをり',e:'👩',d:'タレント'},{n:'武豊',e:'🏇',d:'騎手'},{n:'北乃きい',e:'👩',d:'女優'}],
-'7-7':[{n:'堤真一',e:'🎬',d:'俳優'},{n:'高橋愛',e:'🎤',d:'歌手'}],
-'12-25':[{n:'クリスマス',e:'🎄',d:'キリスト生誕祭'}]
+'4-1':[{n:'エイプリルフール',e:'🎭',d:'嘘の日'},{n:'桑田佳祐',e:'🎤',d:'歌手'}],
+'5-5':[{n:'こどもの日',e:'🎏',d:'端午の節句'},{n:'カール・マルクス',e:'📖',d:'思想家'}],
+'6-1':[{n:'マリリン・モンロー',e:'🎬',d:'女優'},{n:'モーガン・フリーマン',e:'🎭',d:'俳優'}],
+'7-7':[{n:'七夕',e:'🎋',d:'星祭り'},{n:'堤真一',e:'🎬',d:'俳優'},{n:'高橋愛',e:'🎤',d:'歌手'}],
+'8-15':[{n:'終戦記念日',e:'🕊️',d:'平和の日'},{n:'ナポレオン',e:'👑',d:'皇帝'}],
+'9-9':[{n:'重陽の節句',e:'🌸',d:'菊の節句'},{n:'マイケル・バブレ',e:'🎤',d:'歌手'}],
+'10-31':[{n:'ハロウィン',e:'🎃',d:'収穫祭'},{n:'渡辺謙',e:'🎬',d:'俳優'}],
+'11-11':[{n:'ポッキーの日',e:'🍫',d:'11月11日'},{n:'レオナルド・ディカプリオ',e:'🎬',d:'俳優'}],
+'12-25':[{n:'クリスマス',e:'🎄',d:'キリスト生誕祭'},{n:'ニュートン',e:'🍎',d:'科学者'}]
 };
 const key=`${m}-${d}`;
-return db[key]||[{n:'あなただけの特別な日',e:'⭐',d:'この日は特別'}];
+return db[key]||[{n:'あなただけの特別な日',e:'⭐',d:'この日は世界に一つだけ'}];
 }
 
 function generateResult(y,m,d){
@@ -331,10 +351,10 @@ const lifePath=getLifePath(y,m,d);
 document.getElementById('resultDate').textContent=`${y}年${m}月${d}日（${dow}）`;
 
 const descs={
-'春':'春生まれのあなたは、新しいことを始める力に満ちています。明るく前向きな性格で、周囲を元気づける存在です。',
-'夏':'夏生まれのあなたは、情熱的でエネルギッシュ。行動力があり、リーダーシップを発揮します。',
-'秋':'秋生まれのあなたは、落ち着きがあり思慮深い性格。芸術的センスに恵まれています。',
-'冬':'冬生まれのあなたは、冷静沈着で分析力抜群。困難な状況でも的確な判断ができます。'
+'春':'春生まれのあなたは、新しいことを始める力に満ちています。明るく前向きな性格で、周囲を元気づける存在です。創造性に富み、芸術的センスも抜群。',
+'夏':'夏生まれのあなたは、情熱的でエネルギッシュ。行動力があり、リーダーシップを発揮します。社交的で人を惹きつける魅力の持ち主。',
+'秋':'秋生まれのあなたは、落ち着きがあり思慮深い性格。芸術的センスに恵まれ、美しいものを愛します。分析力が高く、物事の本質を見抜きます。',
+'冬':'冬生まれのあなたは、冷静沈着で分析力抜群。困難な状況でも的確な判断ができます。忍耐強く、長期的な視点で物事を考えられます。'
 };
 
 document.getElementById('resultDesc').innerHTML=`
@@ -354,82 +374,11 @@ cosmic.innerHTML=`
 document.getElementById('worldOriginal').innerHTML=`
 <strong>現在のあなた</strong><br>
 ${y}年${m}月${d}日に生まれたあなたは、${season}の特性を強く持っています。
-${zodiac}の影響で、独自の魅力を放っています。
+${zodiac}の影響で、独自の魅力を放っています。運命数${lifePath}は、あなたの人生の道筋を示しています。
 `;
 
 const earlyDate=new Date(y,m-1,d-1);
+const earlyZodiac=getZodiac(earlyDate.getMonth()+1,earlyDate.getDate());
 document.getElementById('worldEarly').innerHTML=`
 <strong>もし1日早く生まれていたら...</strong><br>
-${earlyDate.getFullYear()}年${earlyDate.getMonth()+1}月${earlyDate.getDate()}日。
-性格は23%変化し、より計画的な人生を歩んでいたでしょう。
-`;
-
-const lateDate=new Date(y,m-1,d+1);
-document.getElementById('worldLate').innerHTML=`
-<strong>もし1日遅く生まれていたら...</strong><br>
-${lateDate.getFullYear()}年${lateDate.getMonth()+1}月${lateDate.getDate()}日。
-より自由奔放な性格で、冒険的な人生だったかもしれません。
-`;
-
-const famous=getFamousPeople(m,d);
-const list=document.getElementById('famousList');
-list.innerHTML='';
-famous.forEach(p=>{
-list.innerHTML+=`
-<div class="famous-item">
-<div class="famous-emoji">${p.e}</div>
-<div class="famous-info">
-<div class="famous-name">${p.n}</div>
-<div class="famous-desc">${p.d}</div>
-</div>
-</div>
-`;
-});
-
-userData={y,m,d};
-}
-
-document.getElementById('btnDiagnose').addEventListener('click',()=>{
-const y=parseInt(document.getElementById('year').value);
-const m=parseInt(document.getElementById('month').value);
-const d=parseInt(document.getElementById('day').value);
-
-if(!y||!m||!d){
-alert('生年月日を正しく入力してください');
-return;
-}
-
-if(y<1900||y>2024){
-alert('年は1900〜2024の範囲で入力してください');
-return;
-}
-
-const url=`payment.html?type=birthday&price=100&year=${y}&month=${m}&day=${d}`;
-window.location.href=url;
-});
-
-const params=new URLSearchParams(window.location.search);
-const py=params.get('year');
-const pm=params.get('month');
-const pd=params.get('day');
-
-if(py&&pm&&pd){
-generateResult(parseInt(py),parseInt(pm),parseInt(pd));
-document.querySelector('.input-section').style.display='none';
-document.getElementById('results').style.display='block';
-window.scrollTo({top:0,behavior:'smooth'});
-}
-
-document.getElementById('btnCompat').addEventListener('click',()=>{
-const date=document.getElementById('compatDate').value;
-if(!date){
-alert('相手の生年月日を入力してください');
-return;
-}
-
-const [cy,cm,cd]=date.split('-');
-const dayDiff=Math.abs(new Date(userData.y,userData.m-1,userData.d)-new Date(cy,cm-1,cd))/(1000*60*60*24);
-const score=Math.round(100-Math.abs((dayDiff%100)-50));
-
-document.getElementById('compatResult').innerHTML=`
-<div class="compa
+${earlyDate.getFullYear()}年${earl
