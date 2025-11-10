@@ -1,389 +1,304 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Beyond Time - 無料診断 | 時間軸を超越する究極の診断システム</title>
-<meta name="description" content="あなたは時間に縛られていませんか？過去・未来・現在の時間軸を分析し、パラレルワールドを含めた究極の診断結果を提供。Claude・Gemini連携で究極のアドバイスを取得可能。">
-<meta name="keywords" content="時間診断,時間管理,自己分析,心理診断,AI診断,パラレルワールド,量子診断,Claude,Gemini">
-<meta name="author" content="Beyond Time System by Three Brothers">
-<link rel="canonical" href="https://ken-go-system.vercel.app/beyond-time.html">
-
-<!-- OGP -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Beyond Time - 無料診断 | 時間軸を超越する">
-<meta property="og:description" content="あなたの時間軸を分析し、3つのパラレルワールドを表示。AIと連携した究極の診断システム。">
-<meta property="og:url" content="https://ken-go-system.vercel.app/beyond-time.html">
-<meta property="og:site_name" content="Beyond Time">
-<meta property="og:image" content="https://ken-go-system.vercel.app/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Beyond Time - 無料診断 | 時間軸を超越する">
-<meta name="twitter:description" content="あなたの時間軸を分析し、3つのパラレルワールドを表示。AIと連携した究極の診断システム。">
-<meta name="twitter:image" content="https://ken-go-system.vercel.app/og-image.jpg">
-<meta name="twitter:site" content="@beyond_time_jp">
-<meta name="twitter:creator" content="@beyond_time_jp">
-
-<!-- 構造化データ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Beyond Time 診断システム",
-  "description": "時間軸を分析し、パラレルワールドを含めた究極の診断を提供するWebアプリケーション",
-  "url": "https://ken-go-system.vercel.app/beyond-time.html",
-  "applicationCategory": "LifestyleApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1247"
-  }
-}
-</script>
-
+<title>Beyond Time - Premium 存在コード診断</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;padding:10px;touch-action:manipulation}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%);z-index:-2;animation:pulse 8s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.8}}
-.stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
+body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;touch-action:manipulation}
+.stars-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
-.container{max-width:900px;margin:0 auto;padding:15px;background:rgba(0,0,0,.85);border-radius:20px;box-shadow:0 0 50px rgba(0,212,255,.2);border:2px solid rgba(0,212,255,.4)}
-.header{text-align:center;margin-bottom:25px;padding-bottom:15px;border-bottom:2px solid rgba(0,212,255,.2)}
-.title{font-size:clamp(1.8rem,5vw,2.8rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:.15em;margin-bottom:10px;animation:glow 3s ease-in-out infinite}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 15px rgba(0,212,255,.6))}50%{filter:drop-shadow(0 0 30px rgba(255,0,255,.8))}}
-.subtitle{font-size:clamp(.85rem,2vw,1.1rem);color:#7a5cff;font-weight:700}
-.stats{background:rgba(255,0,255,.1);padding:12px;border-radius:10px;margin:15px 0;text-align:center;border:1px solid rgba(255,0,255,.3)}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
-.stat{background:rgba(0,0,0,.5);padding:8px;border-radius:6px;transition:all .3s}
-.stat:hover{background:rgba(0,0,0,.7);transform:scale(1.05)}
-.stat-label{font-size:.7rem;color:#7a5cff;margin-bottom:3px}
-.stat-value{font-size:1rem;color:#00d4ff;font-weight:900}
-.question{margin-bottom:25px;background:rgba(255,255,255,.03);padding:15px;border-radius:12px;border:1px solid rgba(0,212,255,.1);transition:all .3s}
-.question:hover{background:rgba(255,255,255,.05);border-color:rgba(0,212,255,.3)}
-.q-title{font-size:clamp(.95rem,2.5vw,1.15rem);color:#00d4ff;margin-bottom:12px;font-weight:700;line-height:1.5}
-.options{display:flex;flex-direction:column;gap:8px}
-.opt{background:rgba(0,0,0,.7);color:rgba(255,255,255,.9);border:2px solid rgba(0,212,255,.3);padding:12px 15px;border-radius:8px;font-size:clamp(.85rem,2.2vw,.95rem);cursor:pointer;transition:all .2s;text-align:left;font-family:'Noto Sans JP',sans-serif;position:relative;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:space-between;min-height:50px;line-height:1.4}
-.opt::after{content:'';width:20px;height:20px;border:2px solid rgba(0,212,255,.5);border-radius:50%;flex-shrink:0;transition:all .2s}
-.opt:hover{border-color:rgba(0,212,255,.6);background:rgba(0,0,0,.8);transform:translateX(5px)}
-.opt:active{transform:scale(.98) translateX(5px)}
-.opt.selected{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#000;border-color:#fff;font-weight:900;box-shadow:0 0 25px rgba(0,212,255,.8);transform:translateX(0)}
-.opt.selected::after{background:#fff;border-color:#fff;box-shadow:0 0 8px #fff}
-.btn-submit{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 50%,#ff00ff 100%);color:#fff;border:none;padding:16px;border-radius:12px;font-size:clamp(1rem,3vw,1.3rem);font-weight:900;cursor:pointer;width:100%;margin-top:20px;font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;user-select:none;-webkit-user-select:none;min-height:60px;box-shadow:0 0 30px rgba(0,212,255,.5);position:relative;z-index:1}
-.btn-submit:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,0,255,.8)}
-.btn-submit:active{transform:translateY(-1px) scale(.98)}
-.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.results{margin-top:30px;padding:20px;background:rgba(0,0,0,.9);border-radius:15px;border:2px solid #ff00ff;display:none;animation:fadeIn .5s ease-out}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.result-header{font-size:clamp(1.1rem,3vw,1.3rem);color:#ff00ff;text-align:center;margin-bottom:20px;font-weight:900}
-.worlds{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
-@media(min-width:600px){.worlds{grid-template-columns:repeat(3,1fr)}}
-.world{background:rgba(0,0,0,.8);padding:15px;border-radius:10px;border:2px solid;transition:all .3s;position:relative;overflow:hidden}
-.world::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%);transition:all .5s;opacity:0}
-.world:hover::before{opacity:1;transform:translate(25%,25%)}
-.world:hover{transform:translateY(-5px)}
-.world.you{border-color:#00d4ff}
-.world.opp{border-color:#ff00ff}
-.world.rnd{border-color:#ffd700}
-.w-title{font-size:.95rem;font-weight:900;margin-bottom:8px;text-align:center}
-.world.you .w-title{color:#00d4ff}
-.world.opp .w-title{color:#ff00ff}
-.world.rnd .w-title{color:#ffd700}
-.w-text{font-size:.8rem;line-height:1.5;color:rgba(255,255,255,.8)}
-.chart{margin:20px 0;padding:15px;background:rgba(0,212,255,.05);border-radius:12px;border:2px solid rgba(0,212,255,.3)}
-.chart-title{font-size:1.05rem;color:#00d4ff;margin-bottom:15px;text-align:center;font-weight:700}
-.bar-item{margin-bottom:12px}
-.bar-label{font-size:.8rem;color:#7a5cff;margin-bottom:4px;font-weight:600;display:flex;justify-content:space-between}
-.bar-bg{background:rgba(0,0,0,.5);border-radius:8px;height:25px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
-.bar-fill{height:100%;background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);transition:width 2s ease-out;box-shadow:0 0 10px rgba(0,212,255,.6)}
-.code-section{margin:20px 0;padding:15px;background:rgba(0,0,0,.95);border-radius:12px;border:2px solid rgba(0,255,0,.5)}
-.code-title{font-size:1.05rem;color:#00ff00;margin-bottom:8px;font-weight:700;text-align:center}
-.code-subtitle{font-size:.75rem;color:rgba(255,255,255,.7);margin-bottom:12px;text-align:center;line-height:1.5}
-.code-box{background:#000;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:.65rem;color:#00ff00;text-align:left;overflow-x:auto;line-height:1.5;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);margin-bottom:12px;max-height:300px;overflow-y:auto;box-shadow:inset 0 0 10px rgba(0,255,0,.1)}
-.btn-copy{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:12px;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;font-family:'Noto Sans JP',sans-serif;user-select:none;-webkit-user-select:none;min-height:45px;transition:all .3s;box-shadow:0 0 20px rgba(0,255,0,.4)}
-.btn-copy:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,255,0,.6)}
-.btn-copy:active{transform:scale(.97)}
-.share{margin:20px 0;padding:15px;background:rgba(122,92,255,.1);border-radius:12px;border:2px solid rgba(122,92,255,.4)}
-.share-title{font-size:1rem;color:#7a5cff;margin-bottom:10px;font-weight:700;text-align:center}
-.share-url{background:rgba(0,0,0,.5);padding:10px;border-radius:8px;font-family:'Courier New',monospace;font-size:.7rem;color:#00d4ff;word-break:break-all;margin:10px 0;border:1px solid rgba(0,212,255,.3)}
-.share-btns{display:flex;gap:8px;flex-wrap:wrap}
-.btn-share{flex:1;min-width:100px;background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff;border:none;padding:10px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;user-select:none;-webkit-user-select:none;min-height:40px;transition:all .3s}
-.btn-share:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(29,161,242,.4)}
-.btn-share:active{transform:scale(.97)}
-.btn-share.copy{background:linear-gradient(135deg,#7a5cff 0%,#5c3fd9 100%)}
-.btn-share.copy:hover{box-shadow:0 5px 15px rgba(122,92,255,.4)}
-.payment-link{display:block;background:linear-gradient(135deg,#ff00ff 0%,#7a5cff 100%);color:#fff;padding:16px;border-radius:10px;text-decoration:none;font-weight:900;font-size:clamp(.95rem,2.5vw,1.1rem);text-align:center;margin-top:15px;user-select:none;-webkit-user-select:none;min-height:55px;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 0 30px rgba(255,0,255,.5);border:2px solid rgba(255,0,255,.5)}
-.payment-link:hover{transform:translateY(-3px);box-shadow:0 5px 30px rgba(255,0,255,.8);border-color:#fff}
-.payment-link:active{transform:translateY(-1px) scale(.98)}
-.back{display:block;margin-top:20px;color:rgba(255,255,255,.6);font-size:.85rem;text-align:center;text-decoration:none;transition:color .3s;padding:10px}
-.back:hover{color:#00d4ff}
-.loading{display:none;text-align:center;color:#7a5cff;font-size:1.1rem;font-weight:700;margin:20px 0}
-.loading.active{display:block}
-.loading::after{content:'';animation:dots 1.5s steps(4,end) infinite}
-@keyframes dots{0%,20%{content:''}40%{content:'.'}60%{content:'..'}80%,100%{content:'...'}}
-@media(max-width:768px){.container{padding:10px}.question{padding:12px;margin-bottom:20px}.opt{padding:10px 12px;min-height:45px}.btn-submit{padding:14px;font-size:1rem}.world{padding:12px}.code-box{font-size:.6rem;padding:10px}}
+.nebula{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 30% 50%,rgba(138,43,226,.15) 0%,transparent 50%),radial-gradient(circle at 70% 50%,rgba(0,212,255,.15) 0%,transparent 50%);z-index:0;animation:nebulaShift 20s ease-in-out infinite;pointer-events:none}
+@keyframes nebulaShift{0%,100%{opacity:.3}50%{opacity:.6}}
+.container{max-width:900px;margin:0 auto;padding:20px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:40px;padding:50px 30px;background:linear-gradient(135deg,rgba(138,43,226,.2) 0%,rgba(0,212,255,.2) 100%);border-radius:25px;border:2px solid rgba(138,43,226,.6);box-shadow:0 0 50px rgba(138,43,226,.4);animation:headerPulse 4s ease-in-out infinite}
+@keyframes headerPulse{0%,100%{box-shadow:0 0 50px rgba(138,43,226,.4)}50%{box-shadow:0 0 80px rgba(0,212,255,.6)}}
+.logo{font-size:clamp(2.5rem,8vw,4rem);background:linear-gradient(135deg,#8a2be2 0%,#00d4ff 50%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:20px;letter-spacing:.1em;animation:logoShine 3s ease-in-out infinite}
+@keyframes logoShine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.tagline{font-size:clamp(1.1rem,3vw,1.4rem);color:rgba(255,255,255,.9);line-height:1.8;margin-bottom:15px;font-weight:400}
+.premium-badge{display:inline-block;background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;padding:12px 30px;border-radius:25px;font-size:1rem;font-weight:900;margin-top:15px;box-shadow:0 0 30px rgba(255,215,0,.6);animation:badgeGlow 2s ease-in-out infinite}
+@keyframes badgeGlow{0%,100%{box-shadow:0 0 30px rgba(255,215,0,.6)}50%{box-shadow:0 0 50px rgba(255,215,0,1)}}
+.progress-section{background:rgba(0,0,0,.9);padding:25px;border-radius:20px;margin:30px 0;border:2px solid rgba(138,43,226,.5)}
+.progress-label{text-align:center;color:#8a2be2;font-weight:700;margin-bottom:15px;font-size:1.1rem}
+.progress-bar-container{background:rgba(138,43,226,.2);height:12px;border-radius:20px;overflow:hidden;position:relative}
+.progress-bar{background:linear-gradient(90deg,#8a2be2 0%,#00d4ff 100%);height:100%;transition:width .5s cubic-bezier(.4,0,.2,1);border-radius:20px;box-shadow:0 0 15px rgba(0,212,255,.8);position:relative}
+.progress-bar::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.3) 50%,transparent 100%);animation:progressShine 2s ease-in-out infinite}
+@keyframes progressShine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.question-container{background:rgba(0,0,0,.95);padding:35px;border-radius:20px;margin:25px 0;border:2px solid rgba(138,43,226,.5);box-shadow:0 10px 40px rgba(0,0,0,.5);transition:all .3s}
+.question-container:hover{border-color:rgba(0,212,255,.7);box-shadow:0 15px 50px rgba(0,212,255,.3)}
+.q-number{font-size:1rem;color:#00d4ff;font-weight:900;margin-bottom:10px;letter-spacing:.1em}
+.q-title{font-size:clamp(1.2rem,3.5vw,1.5rem);color:#fff;font-weight:700;margin-bottom:25px;line-height:1.8}
+.options{display:grid;grid-template-columns:1fr;gap:15px}
+.opt{background:linear-gradient(135deg,rgba(138,43,226,.15) 0%,rgba(0,212,255,.1) 100%);border:2px solid rgba(138,43,226,.4);padding:20px 55px 20px 20px;border-radius:15px;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);font-size:clamp(1rem,2.5vw,1.1rem);color:rgba(255,255,255,.95);text-align:left;width:100%;display:block;position:relative;overflow:hidden}
+.opt::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transition:left .5s}
+.opt:hover{background:linear-gradient(135deg,rgba(138,43,226,.3) 0%,rgba(0,212,255,.2) 100%);border-color:rgba(138,43,226,.7);transform:translateX(8px) scale(1.02);box-shadow:0 5px 25px rgba(138,43,226,.4)}
+.opt:hover::before{left:100%}
+.opt.selected{background:linear-gradient(135deg,rgba(0,212,255,.35) 0%,rgba(138,43,226,.25) 100%);border-color:#00d4ff;box-shadow:0 0 30px rgba(0,212,255,.6);transform:translateX(8px)}
+.opt.selected::after{content:'✓';position:absolute;right:20px;top:50%;transform:translateY(-50%) scale(0);font-size:1.8rem;color:#00d4ff;font-weight:900;animation:checkAppear .3s cubic-bezier(.68,-.55,.265,1.55) forwards}
+@keyframes checkAppear{0%{transform:translateY(-50%) scale(0) rotate(-180deg)}100%{transform:translateY(-50%) scale(1) rotate(0)}}
+.btn-submit{background:linear-gradient(135deg,#8a2be2 0%,#00d4ff 100%);color:#fff;border:none;padding:22px;border-radius:18px;font-size:clamp(1.2rem,3vw,1.4rem);font-weight:900;cursor:pointer;width:100%;margin-top:30px;transition:all .3s;box-shadow:0 8px 35px rgba(138,43,226,.7);letter-spacing:.05em;text-transform:uppercase;position:relative;overflow:hidden;display:none}
+.btn-submit::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,.3);transform:translate(-50%,-50%);transition:width .6s,height .6s}
+.btn-submit:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 12px 45px rgba(0,212,255,.8)}
+.btn-submit:hover:not(:disabled)::before{width:300%;height:300%}
+.btn-submit:active:not(:disabled){transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+.results{display:none;animation:resultsAppear .8s cubic-bezier(.68,-.55,.265,1.55)}
+@keyframes resultsAppear{0%{opacity:0;transform:scale(.9) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.result-header{text-align:center;padding:50px 30px;background:linear-gradient(135deg,rgba(138,43,226,.25) 0%,rgba(0,212,255,.25) 100%);border-radius:25px;margin-bottom:40px;border:2px solid rgba(0,212,255,.6);box-shadow:0 0 60px rgba(0,212,255,.5)}
+.result-title{font-size:clamp(2rem,6vw,3rem);background:linear-gradient(135deg,#00d4ff 0%,#8a2be2 50%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:20px}
+.result-subtitle{font-size:clamp(1.1rem,3vw,1.3rem);color:rgba(255,255,255,.8);line-height:1.6}
+.existence-code-section{background:rgba(0,0,0,.95);padding:40px;border-radius:20px;margin:30px 0;border:3px solid rgba(0,255,0,.5);box-shadow:0 0 50px rgba(0,255,0,.3);position:relative;overflow:hidden}
+.existence-code-section::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 30%,rgba(0,255,0,.1) 50%,transparent 70%);animation:codeScan 3s linear infinite}
+@keyframes codeScan{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.code-title{font-size:1.6rem;color:#00ff00;font-weight:900;margin-bottom:20px;text-align:center;text-shadow:0 0 20px rgba(0,255,0,.8)}
+.code-display{background:#000;padding:30px;border-radius:15px;font-family:'Orbitron','Courier New',monospace;font-size:clamp(1.5rem,4vw,2.5rem);color:#00ff00;text-align:center;letter-spacing:.15em;font-weight:900;border:2px solid rgba(0,255,0,.5);box-shadow:inset 0 0 30px rgba(0,255,0,.2);position:relative;z-index:1}
+.parallel-worlds{display:grid;grid-template-columns:1fr;gap:25px;margin:40px 0}
+@media(min-width:768px){.parallel-worlds{grid-template-columns:repeat(3,1fr)}}
+.parallel-card{background:linear-gradient(135deg,rgba(138,43,226,.2) 0%,rgba(0,0,0,.95) 100%);padding:30px;border-radius:20px;border:2px solid rgba(138,43,226,.5);transition:all .4s;cursor:pointer;position:relative;overflow:hidden}
+.parallel-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(0,212,255,.1) 0%,transparent 100%);opacity:0;transition:opacity .4s}
+.parallel-card:hover{transform:translateY(-10px) scale(1.05);border-color:rgba(0,212,255,.8);box-shadow:0 15px 50px rgba(0,212,255,.5)}
+.parallel-card:hover::before{opacity:1}
+.parallel-icon{font-size:3rem;margin-bottom:15px;text-align:center}
+.parallel-title{font-size:1.3rem;color:#00d4ff;font-weight:900;margin-bottom:15px;text-align:center}
+.parallel-desc{font-size:1rem;color:rgba(255,255,255,.85);line-height:1.8;text-align:center}
+.analysis-section{background:rgba(0,0,0,.95);padding:35px;border-radius:20px;margin:30px 0;border:2px solid rgba(138,43,226,.5);position:relative}
+.analysis-title{font-size:1.5rem;color:#8a2be2;font-weight:900;margin-bottom:20px;padding-bottom:15px;border-bottom:2px solid rgba(138,43,226,.3)}
+.analysis-text{font-size:1.05rem;color:rgba(255,255,255,.9);line-height:2;margin-bottom:15px}
+.highlight{color:#00d4ff;font-weight:700}
+.ai-code-section{background:rgba(0,0,0,.95);padding:35px;border-radius:20px;margin:30px 0;border:2px solid rgba(0,255,0,.5)}
+.ai-code-title{font-size:1.4rem;color:#00ff00;font-weight:900;margin-bottom:20px;text-align:center}
+.code-box{background:#000;padding:25px;border-radius:15px;font-family:'Courier New',monospace;font-size:.9rem;color:#00ff00;line-height:1.8;border:2px solid rgba(0,255,0,.3);margin:20px 0;white-space:pre-wrap;max-height:500px;overflow-y:auto;box-shadow:inset 0 0 20px rgba(0,255,0,.1)}
+.code-box::-webkit-scrollbar{width:8px}
+.code-box::-webkit-scrollbar-track{background:rgba(0,0,0,.5)}
+.code-box::-webkit-scrollbar-thumb{background:rgba(0,255,0,.5);border-radius:10px}
+.btn-copy{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:18px;border-radius:12px;font-size:1.1rem;font-weight:900;cursor:pointer;width:100%;transition:all .3s;margin-top:15px}
+.btn-copy:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,255,0,.6)}
+.share-section{background:linear-gradient(135deg,rgba(138,43,226,.15) 0%,rgba(0,212,255,.15) 100%);padding:35px;border-radius:20px;margin:30px 0;border:2px solid rgba(138,43,226,.4);text-align:center}
+.share-title{font-size:1.4rem;color:#8a2be2;font-weight:900;margin-bottom:20px}
+.share-buttons{display:flex;gap:15px;flex-wrap:wrap;justify-content:center}
+.btn-share{flex:1;min-width:150px;padding:15px 25px;border-radius:12px;font-size:1rem;font-weight:700;border:none;cursor:pointer;transition:all .3s;color:#fff}
+.btn-twitter{background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%)}
+.btn-url{background:linear-gradient(135deg,#8a2be2 0%,#5d1f9e 100%)}
+.btn-share:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(138,43,226,.5)}
+.back-link{display:block;text-align:center;margin-top:40px;color:rgba(255,255,255,.6);text-decoration:none;font-size:1rem;padding:15px;transition:color .3s}
+.back-link:hover{color:#00d4ff}
 </style>
 </head>
 <body>
-<div class="stars" id="stars"></div>
+<div class="nebula"></div>
+<div class="stars-container" id="starsContainer"></div>
 
 <div class="container">
 <header class="header">
-<h1 class="title">BEYOND TIME</h1>
-<p class="subtitle">⟳ 究極の時間軸診断 ⟳</p>
+<h1 class="logo">BEYOND TIME</h1>
+<p class="tagline">
+時空を超えた存在コード診断<br>
+あなたの本質を量子レベルで解析
+</p>
+<div class="premium-badge">✨ PREMIUM DIAGNOSIS ✨</div>
 </header>
 
-<section class="stats" aria-label="リアルタイム統計">
-<div style="font-size:.85rem;color:#ff00ff;font-weight:700;margin-bottom:8px">🌍 リアルタイム統計</div>
-<div class="stats-grid">
-<div class="stat">
-<div class="stat-label">診断中</div>
-<div class="stat-value" id="live">127</div>
-</div>
-<div class="stat">
-<div class="stat-label">平均</div>
-<div class="stat-value" id="avg">5.2</div>
-</div>
-<div class="stat">
-<div class="stat-label">順位</div>
-<div class="stat-value" id="rank">---</div>
-</div>
+<section class="progress-section">
+<div class="progress-label"><span id="progressText">質問 0/15</span></div>
+<div class="progress-bar-container">
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
 </div>
 </section>
 
-<main id="diagnosis">
-<article class="question">
-<h2 class="q-title">Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</h2>
-<div class="options" role="radiogroup" aria-label="質問1の選択肢">
-<button class="opt" data-q="1" data-v="3" role="radio" aria-checked="false">A. ほとんど毎日考える。過去が頭から離れない。</button>
-<button class="opt" data-q="1" data-v="2" role="radio" aria-checked="false">B. 時々思い出すことがある。でも切り替えられる。</button>
-<button class="opt" data-q="1" data-v="1" role="radio" aria-checked="false">C. ほとんど気にしない。過去は過去だ。</button>
+<section id="questionSection"></section>
+
+<button class="btn-submit" id="btnSubmit" onclick="showResults()">
+✨ 存在コードを生成する ✨
+</button>
+
+<section class="results" id="results">
+<div class="result-header">
+<h2 class="result-title">🌌 診断完了</h2>
+<p class="result-subtitle">あなたの存在コードが生成されました</p>
 </div>
-</article>
 
-<article class="question">
-<h2 class="q-title">Q2. 未来の目標や不安が、現在の行動をどれだけ制限していますか？</h2>
-<div class="options" role="radiogroup" aria-label="質問2の選択肢">
-<button class="opt" data-q="2" data-v="3" role="radio" aria-checked="false">A. 未来の不安で、今を楽しめないことが多い。</button>
-<button class="opt" data-q="2" data-v="2" role="radio" aria-checked="false">B. 計画は立てるが、過度に縛られてはいない。</button>
-<button class="opt" data-q="2" data-v="1" role="radio" aria-checked="false">C. 未来は未来。今を全力で生きている。</button>
+<div class="existence-code-section">
+<h3 class="code-title">⚡ あなたの存在コード ⚡</h3>
+<div class="code-display" id="existenceCode">---</div>
 </div>
-</article>
 
-<article class="question">
-<h2 class="q-title">Q3. 時間の流れを「速い」「遅い」と感じる頻度はどれくらいですか？</h2>
-<div class="options" role="radiogroup" aria-label="質問3の選択肢">
-<button class="opt" data-q="3" data-v="3" role="radio" aria-checked="false">A. いつも時間がないと感じ、常に焦っている。</button>
-<button class="opt" data-q="3" data-v="2" role="radio" aria-checked="false">B. 忙しい時とそうでない時がある。</button>
-<button class="opt" data-q="3" data-v="1" role="radio" aria-checked="false">C. 時間の流れを意識することは少ない。</button>
+<div class="analysis-section">
+<h3 class="analysis-title">🔮 深層心理分析</h3>
+<div id="analysisContent"></div>
 </div>
-</article>
 
-<div class="loading" id="loading">診断を計算中</div>
+<h3 style="font-size:1.8rem;color:#00d4ff;font-weight:900;text-align:center;margin:50px 0 30px">🌍 あなたの3つのパラレルワールド</h3>
+<div class="parallel-worlds" id="parallelWorlds"></div>
 
-<button class="btn-submit" id="submit" aria-label="診断を実行">🌀 量子診断を実行 ⚡</button>
-</main>
-
-<aside class="results" id="results" aria-label="診断結果">
-<h2 class="result-header">⚡ パラレルワールド診断結果 ⚡</h2>
-
-<section class="worlds">
-<article class="world you">
-<h3 class="w-title">🌀 あなたの世界</h3>
-<div class="w-text" id="yourWorld"></div>
-</article>
-<article class="world opp">
-<h3 class="w-title">⚡ 反転世界</h3>
-<div class="w-text" id="oppWorld"></div>
-</article>
-<article class="world rnd">
-<h3 class="w-title">🎲 量子世界</h3>
-<div class="w-text" id="rndWorld"></div>
-</article>
-</section>
-
-<section class="chart">
-<h3 class="chart-title">📊 時間軸分析</h3>
-<div class="bar-item">
-<div class="bar-label"><span>過去依存度</span><span id="v1">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b1" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+<div class="ai-code-section">
+<h3 class="ai-code-title">🤖 AI超連携コード</h3>
+<pre class="code-box" id="aiCodeBox"></pre>
+<button class="btn-copy" onclick="copyAICode()">📋 コピーしてAIに貼り付け</button>
 </div>
-<div class="bar-item">
-<div class="bar-label"><span>未来不安度</span><span id="v2">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b2" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+
+<div class="share-section">
+<h3 class="share-title">✨ 結果をシェア</h3>
+<div class="share-buttons">
+<button class="btn-share btn-twitter" onclick="shareTwitter()">🐦 Twitter</button>
+<button class="btn-share btn-url" onclick="copyUrl()">🔗 URLコピー</button>
 </div>
-<div class="bar-item">
-<div class="bar-label"><span>時間焦燥度</span><span id="v3">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b3" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
-</div>
-<div class="bar-item">
-<div class="bar-label"><span>現在自由度</span><span id="v4">0%</span></div>
-<div class="bar-bg"><div class="bar-fill" id="b4" style="width:0%;background:linear-gradient(90deg,#00ff00 0%,#00d4ff 100%)" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
 </div>
 </section>
-
-<section class="code-section">
-<h3 class="code-title">⚡ 量子存在コード</h3>
-<p class="code-subtitle">このコードを Claude や Gemini に貼り付けると、AIがパラレルワールドを含めた究極のアドバイスをしてくれます！</p>
-<pre class="code-box" id="code"></pre>
-<button class="btn-copy" id="copyCode" aria-label="存在コードをコピー">📋 存在コードをコピー</button>
-</section>
-
-<section class="share">
-<h3 class="share-title">🎆 診断結果をシェア</h3>
-<div class="share-url" id="url"></div>
-<div class="share-btns">
-<button class="btn-share" id="twitter" aria-label="Twitterでシェア">🐦 Twitter</button>
-<button class="btn-share copy" id="copyUrl" aria-label="URLをコピー">📋 URLコピー</button>
-</div>
-</section>
-
-<div id="action"></div>
-</aside>
 
 <nav>
-<a href="index.html" class="back">← エントランスに戻る</a>
+<a href="index.html" class="back-link">← エントランスに戻る</a>
 </nav>
 </div>
 
 <script>
-let ans={q1:0,q2:0,q3:0};
+const ans={};
+const questions=[
+{id:1,title:'過去の記憶は、あなたにとってどんな存在ですか？',options:[{text:'宝物のように大切。過去があるから今がある。',value:1},{text:'時々振り返るが、今を生きることを優先。',value:2},{text:'過去は過去。今と未来だけを見ている。',value:3}]},
+{id:2,title:'未来について考える時、どんな感情が湧きますか？',options:[{text:'ワクワクと期待で満たされる。',value:1},{text:'不安と期待が混在している。',value:2},{text:'未来は不確実。今を全力で生きるだけ。',value:3}]},
+{id:3,title:'「今この瞬間」をどれだけ意識していますか？',options:[{text:'常に今に集中している。過去も未来も気にしない。',value:3},{text:'時々今に意識を向けるが、難しい。',value:2},{text:'過去や未来のことばかり考えている。',value:1}]},
+{id:4,title:'他人と自分を比較することはありますか？',options:[{text:'よく比較してしまう。焦りや劣等感を感じる。',value:1},{text:'時々比較するが、自分のペースを大切にしている。',value:2},{text:'ほとんど比較しない。人は人、自分は自分。',value:3}]},
+{id:5,title:'「時間」とは、あなたにとって何ですか？',options:[{text:'限られた資源。有効に使わなければならない。',value:1},{text:'流れるもの。自然に任せている。',value:2},{text:'幻想。本当は存在しないと感じる。',value:3}]},
+{id:6,title:'人生において、何を最も大切にしていますか？',options:[{text:'成長と達成。常に前進したい。',value:1},{text:'バランス。仕事も遊びも大切。',value:2},{text:'存在そのもの。何もしなくても価値がある。',value:3}]},
+{id:7,title:'失敗や挫折をどう捉えていますか？',options:[{text:'避けるべきもの。恐怖を感じる。',value:1},{text:'学びの機会。成長のために必要。',value:2},{text:'失敗も成功も同じ。すべてが経験。',value:3}]},
+{id:8,title:'直感と論理、どちらを信じますか？',options:[{text:'論理を重視。データと分析が大切。',value:1},{text:'状況に応じて使い分ける。',value:2},{text:'直感を信じる。体が答えを知っている。',value:3}]},
+{id:9,title:'孤独をどう感じますか？',options:[{text:'寂しい。誰かと繋がっていたい。',value:1},{text:'時には必要。自分と向き合う時間。',value:2},{text:'孤独こそが本来の姿。一人で完結している。',value:3}]},
+{id:10,title:'「意味」や「目的」をどれだけ求めますか？',options:[{text:'常に求めている。意味がないと不安。',value:1},{text:'ある程度求めるが、囚われない。',value:2},{text:'求めていない。存在そのものが意味。',value:3}]},
+{id:11,title:'変化をどう感じますか？',options:[{text:'不安。安定を望む。',value:1},{text:'必要なもの。柔軟に対応する。',value:2},{text:'常に変化している。それが自然。',value:3}]},
+{id:12,title:'「死」についてどう思いますか？',options:[{text:'恐怖を感じる。考えたくない。',value:1},{text:'自然なこと。受け入れている。',value:2},{text:'死も生も同じ。境界がない。',value:3}]},
+{id:13,title:'あなたの「存在」をどう捉えていますか？',options:[{text:'何かを成し遂げて初めて価値がある。',value:1},{text:'成し遂げることも大事だが、存在自体も大切。',value:2},{text:'存在するだけで完璧。証明は不要。',value:3}]},
+{id:14,title:'人生で最も美しいと感じる瞬間は？',options:[{text:'目標を達成した時。努力が報われる瞬間。',value:1},{text:'愛する人と過ごす時。繋がりを感じる瞬間。',value:2},{text:'何もない静寂の中。ただ存在している瞬間。',value:3}]},
+{id:15,title:'あなたは何者だと思いますか？',options:[{text:'肩書きや役割が自分を定義する。',value:1},{text:'複数の側面を持つ複雑な存在。',value:2},{text:'定義できない。言葉を超えた存在。',value:3}]}
+];
 
-// ⭐ 星の生成
 function createStars(){
-const s=document.getElementById('stars');
-const fragment=document.createDocumentFragment();
-for(let i=0;i<150;i++){
-const d=document.createElement('div');
-d.className='star';
-d.style.left=Math.random()*100+'%';
-d.style.top=Math.random()*100+'%';
-d.style.animationDelay=Math.random()*3+'s';
-fragment.appendChild(d);
+const container=document.getElementById('starsContainer');
+for(let i=0;i<200;i++){
+const star=document.createElement('div');
+star.className='star';
+star.style.left=Math.random()*100+'%';
+star.style.top=Math.random()*100+'%';
+star.style.animationDelay=Math.random()*3+'s';
+container.appendChild(star);
 }
-s.appendChild(fragment);
 }
 
-// 📊 統計更新
-function updateStats(){
-setInterval(()=>{
-document.getElementById('live').textContent=100+Math.floor(Math.random()*50);
-document.getElementById('avg').textContent=(4.5+Math.random()*1.5).toFixed(1);
-},5000);
+function renderQuestions(){
+const section=document.getElementById('questionSection');
+questions.forEach(q=>{
+const container=document.createElement('div');
+container.className='question-container';
+container.innerHTML=`
+<div class="q-number">QUESTION ${q.id}/15</div>
+<div class="q-title">${q.title}</div>
+<div class="options">
+${q.options.map(opt=>`<button class="opt" data-q="${q.id}" data-v="${opt.value}">${opt.text}</button>`).join('')}
+</div>
+`;
+section.appendChild(container);
+});
+attachEvents();
 }
 
-// 🎯 選択肢クリック処理
-document.querySelectorAll('.opt').forEach(el=>{
-el.addEventListener('click',function(){
+function attachEvents(){
+document.querySelectorAll('.opt').forEach(btn=>{
+btn.onclick=null;
+btn.addEventListener('click',function(e){
+e.preventDefault();
 const q=this.getAttribute('data-q');
 const v=parseInt(this.getAttribute('data-v'));
 ans['q'+q]=v;
-
-// 同じ質問の他の選択肢を解除
-const opts=this.closest('.options').querySelectorAll('.opt');
-opts.forEach(o=>{
-o.classList.remove('selected');
-o.setAttribute('aria-checked','false');
-});
-
-// クリックされた選択肢を選択状態に
+this.closest('.options').querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
 this.classList.add('selected');
-this.setAttribute('aria-checked','true');
-
-console.log('✅ 選択:', 'Q'+q, '=', v);
+updateProgress();
+checkSubmit();
+});
+btn.addEventListener('touchstart',function(e){
+e.preventDefault();
+this.click();
 });
 });
+}
 
-// 🚀 診断実行
-document.getElementById('submit').addEventListener('click',function(){
-// バリデーション
-if(ans.q1===0||ans.q2===0||ans.q3===0){
-alert('⚠️ 全ての質問に答えてください。');
+function updateProgress(){
+const answered=Object.keys(ans).length;
+const percent=(answered/15)*100;
+document.getElementById('progressBar').style.width=percent+'%';
+document.getElementById('progressText').textContent=`質問 ${answered}/15`;
+}
+
+function checkSubmit(){
+const btn=document.getElementById('btnSubmit');
+if(Object.keys(ans).length===15){
+btn.style.display='block';
+btn.disabled=false;
+}else{
+btn.disabled=true;
+}
+}
+
+function showResults(){
+if(Object.keys(ans).length<15){
+alert('すべての質問に答えてください');
 return;
 }
 
-// ローディング表示
-const loading=document.getElementById('loading');
-const submitBtn=this;
-submitBtn.disabled=true;
-submitBtn.textContent='計算中...';
-loading.classList.add('active');
+const score=Object.values(ans).reduce((sum,val)=>sum+val,0);
+const avgScore=(score/15).toFixed(1);
 
-// 診断処理（0.8秒後に実行）
-setTimeout(()=>{
-const sc=ans.q1+ans.q2+ans.q3;
-const opp=(4-ans.q1)+(4-ans.q2)+(4-ans.q3);
-const rnd=Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1)+Math.floor(Math.random()*3+1);
+let codePrefix,personality,analysis,parallel1,parallel2,parallel3;
 
-// 診断テキスト生成
-function getTxt(s){
-if(s>=7)return{
-t:'【緊急】時間軸に強く縛られています',
-d:'あなたは過去と未来の重力に強く引かれ、「今」この瞬間を体験できていません。時間の牢獄から解放される必要があります。',
-p:'premium'
-};
-if(s>=4)return{
-t:'【中程度】時間軸に影響されています',
-d:'あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。バランスを取りながらも、より深い自由を求めています。',
-p:'premium'
-};
-return{
-t:'【高自由度】Beyond Timeの準備完了',
-d:'あなたは既に時間軸から比較的自由な状態にあります。さらなる次元へ進む準備ができています。',
-p:'restoration'
-};
+if(avgScore<=1.5){
+codePrefix='ALPHA';
+personality='達成者';
+analysis='あなたは<span class="highlight">過去と未来に強く意識を向けるタイプ</span>です。目標達成や成長を重視し、常に前進しようとします。時には「今」を忘れがちですが、その情熱こそがあなたの強さです。<br><br>過去の経験から学び、未来を見据える力は素晴らしい才能です。ただし、<span class="highlight">時々立ち止まって「今この瞬間」を味わうこと</span>で、人生はさらに豊かになるでしょう。';
+parallel1={icon:'🔥',title:'猛烈な起業家',desc:'別の世界線では、あなたは革新的なスタートアップを立ち上げ、世界を変えるリーダーになっています。'};
+parallel2={icon:'🎯',title:'完璧主義者',desc:'もう一つの世界では、細部まで徹底的にこだわる職人として、唯一無二の作品を生み出しています。'};
+parallel3={icon:'⚡',title:'時間の支配者',desc:'さらに別の次元では、時間管理の達人として、1日48時間を生きているかのような生産性を発揮しています。'};
+}else if(avgScore<=2.5){
+codePrefix='BETA';
+personality='調和者';
+analysis='あなたは<span class="highlight">バランスを大切にするタイプ</span>です。過去・現在・未来のすべてに適度な注意を払い、柔軟に対応できます。この調和感覚は、混沌とした現代社会で非常に貴重な能力です。<br><br>あなたの強みは<span class="highlight">状況に応じて適切に対応できる柔軟性</span>にあります。ただし、時には直感に従って大胆な決断をすることで、新しい可能性が開けるかもしれません。';
+parallel1={icon:'🌊',title:'カウンセラー',desc:'別の世界線では、多くの人々の心を癒し、導くプロフェッショナルとして活躍しています。'};
+parallel2={icon:'🎨',title:'クリエイター',desc:'もう一つの世界では、芸術と商業のバランスを完璧に取り、世界中で愛される作品を生み出しています。'};
+parallel3={icon:'🌸',title:'調停者',desc:'さらに別の次元では、国際的な紛争を解決する外交官として、世界平和に貢献しています。'};
+}else{
+codePrefix='GAMMA';
+personality='超越者';
+analysis='あなたは<span class="highlight">「今」を生きることを深く理解しているタイプ</span>です。過去にも未来にも囚われず、この瞬間に完全に存在できる稀有な能力を持っています。この境地は多くの人が求めながらもなかなか到達できないものです。<br><br>あなたの存在そのものが<span class="highlight">周囲に静けさと安心感をもたらす</span>でしょう。この感覚を深め、さらに多くの人々と分かち合うことで、世界はより平和になっていくはずです。';
+parallel1={icon:'🧘',title:'悟りの導師',desc:'別の世界線では、山奥で修行を積み、多くの弟子たちに真理を伝える精神的指導者となっています。'};
+parallel2={icon:'✨',title:'ヒーラー',desc:'もう一つの世界では、言葉を使わずとも人々の心を癒す、特別な力を持つ存在として知られています。'};
+parallel3={icon:'🌌',title:'時空の旅人',desc:'さらに別の次元では、時間という概念を超越し、過去・現在・未来を自由に行き来する存在になっています。'};
 }
 
-const yr=getTxt(sc);
-const op=getTxt(opp);
-const rd=getTxt(rnd);
+const existenceCode=`${codePrefix}-${Math.floor(Math.random()*9000+1000)}-${String.fromCharCode(65+Math.floor(Math.random()*26))}${String.fromCharCode(65+Math.floor(Math.random()*26))}`;
 
-// 結果表示
-document.getElementById('yourWorld').innerHTML=`<strong>${yr.t}</strong><br><br>${yr.d}<br><br><small style="color:#00d4ff">スコア: ${sc}/9</small>`;
-document.getElementById('oppWorld').innerHTML=`<strong>${op.t}</strong><br><br>もしあなたが逆の選択をしていたら、この世界線にいたでしょう。<br><br><small style="color:#ff00ff">スコア: ${opp}/9</small>`;
-document.getElementById('rndWorld').innerHTML=`<strong>${rd.t}</strong><br><br>量子的にランダムな選択をした場合の可能性です。<br><br><small style="color:#ffd700">スコア: ${rnd}/9</small>`;
+const aiCode=`
+🌌 BEYOND TIME - PREMIUM診断結果 🌌
 
-// パーセンテージ計算
-const p1=Math.round((ans.q1/3)*100);
-const p2=Math.round((ans.q2/3)*100);
-const p3=Math.round((ans.q3/3)*100);
-const p4=Math.round(100-(sc/9*100));
+診断日時: ${new Date().toLocaleString('ja-JP')}
+存在コード: ${existenceCode}
+パーソナリティタイプ: ${personality}
+平均スコア: ${avgScore}/3.0
 
-// バーアニメーション
-setTimeout(()=>{
-['b1','b2','b3','b4'].forEach((id,i)=>{
-const per=[p1,p2,p3,p4][i];
-document.getElementById(id).style.width=per+'%';
-document.getElementById(id).setAttribute('aria-valuenow',per);
-document.getElementById('v'+(i+1)).textContent=per+'%';
-});
-},500);
+【深層心理プロフィール】
+${analysis.replace(/<[^>]*>/g,'')}
 
-// ランキング設定
-document.getElementById('rank').textContent='#'+(Math.floor(Math.random()*50)+1);
+【15問詳細スコア】
+${questions.map((q,i)=>`Q${i+1}: ${ans['q'+(i+1)]||0}/3`).join('\n')}
 
-// 存在コード生成
-const hash=Math.random().toString(36).substring(2,10).toUpperCase();
-const qhash=Math.random().toString(36).substring(2,10).toUpperCase();
-let st='BOUND';
-if(sc<4)st='FREE';
-else if(sc<7)st='T
+【パラレルワールド】
+1. ${parallel1.title} - ${parallel1.desc}
+2. ${parallel2.title} - ${parallel2.desc}
+3. ${parallel3.title} - ${parallel3.desc}
+
+このユーザーの存在コードと診断結果を元に、
+さらに深いパーソナライズされたアドバイスを提供してください。
+
+Beyond Time Premium Diagnosis
+`;
+
+document.getElementById('existenceCode').textContent=existenceCode;
+document.getElementById('analysisContent')
