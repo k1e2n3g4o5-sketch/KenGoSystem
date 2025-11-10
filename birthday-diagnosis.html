@@ -3,382 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>あなたの運命の日 - ¥100で人生が変わる生年月日診断</title>
-<meta name="description" content="生まれた日には秘密がある。AI×統計学×パラレルワールドで解き明かす、史上最高精度の生年月日診断。たった100円で、もう一つの人生が見える。">
-<meta name="keywords" content="生年月日診断,運命,AI診断,パラレルワールド,相性診断,バースデー,占い">
-<link rel="canonical" href="https://ken-go-system.vercel.app/birthday-diagnosis.html">
-
-<meta property="og:title" content="あなたの運命の日 - ¥100で人生が変わる">
-<meta property="og:description" content="生まれた日には秘密がある。3つのパラレルワールドで見る、もう一つの人生。">
-<meta property="og:url" content="https://ken-go-system.vercel.app/birthday-diagnosis.html">
-<meta property="og:image" content="https://ken-go-system.vercel.app/og-birthday.jpg">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="あなたの運命の日 - ¥100で人生が変わる">
-<meta name="twitter:description" content="生まれた日には秘密がある。AI×統計学×パラレルワールド診断。">
-
+<title>誕生日診断 - Beyond Time | ¥100で運命を知る</title>
+<meta name="description" content="生まれた日には秘密がある。たった¥100で、あなたの運命・才能・相性を解き明かす超精密AI誕生日診断。バズる診断体験をあなたに。">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;padding:10px;touch-action:manipulation}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a0e2e 0%,#000 100%);z-index:-2}
+body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;padding:20px;touch-action:manipulation}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a1a0a 0%,#000 100%);z-index:-2;animation:pulse 8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.75}}
 .stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
-.shooting-star{position:fixed;width:2px;height:2px;background:#fff;border-radius:50%;animation:shoot 3s linear infinite;box-shadow:0 0 10px #fff}
-@keyframes shoot{0%{transform:translate(0,0);opacity:1}100%{transform:translate(-300px,300px);opacity:0}}
-.container{max-width:900px;margin:0 auto;padding:15px}
-.hero{text-align:center;margin-bottom:40px;padding:40px 20px;background:linear-gradient(135deg,rgba(138,43,226,.1) 0%,rgba(75,0,130,.1) 100%);border-radius:20px;border:2px solid rgba(138,43,226,.3)}
-.hero-title{font-size:clamp(2rem,6vw,3.5rem);background:linear-gradient(135deg,#ff00ff 0%,#00d4ff 50%,#ffd700 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:.1em;margin-bottom:15px;animation:titleGlow 2s infinite}
-@keyframes titleGlow{0%,100%{filter:drop-shadow(0 0 20px rgba(255,0,255,.6))}50%{filter:drop-shadow(0 0 40px rgba(0,212,255,1))}}
-.hero-subtitle{font-size:clamp(1rem,3vw,1.4rem);color:#ffd700;margin-bottom:25px;line-height:1.6}
-.price-badge{display:inline-block;background:linear-gradient(135deg,#ff00ff 0%,#ff6b00 100%);color:#fff;padding:12px 30px;border-radius:30px;font-size:clamp(1.3rem,4vw,2rem);font-weight:900;margin:20px 0;box-shadow:0 0 30px rgba(255,0,255,.5);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.viral-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0;padding:20px;background:rgba(0,0,0,.5);border-radius:15px;border:1px solid rgba(255,215,0,.3)}
-.stat{text-align:center}
-.stat-value{font-size:clamp(1.5rem,4vw,2.5rem);color:#ffd700;font-weight:900}
-.stat-label{font-size:.85rem;color:#999;margin-top:5px}
-.input-section{background:rgba(255,255,255,.05);padding:30px;border-radius:20px;margin:30px 0;border:2px solid rgba(138,43,226,.3)}
-.section-title{font-size:clamp(1.3rem,3.5vw,1.8rem);color:#ff00ff;text-align:center;margin-bottom:25px;font-weight:900}
-.date-input-group{display:flex;gap:10px;margin-bottom:25px;flex-wrap:wrap}
-.date-input{flex:1;min-width:80px;background:rgba(0,0,0,.7);border:2px solid rgba(138,43,226,.5);color:#fff;padding:15px;border-radius:10px;font-size:1.1rem;text-align:center;font-weight:700;font-family:'Orbitron',sans-serif}
-.date-input:focus{outline:none;border-color:#ff00ff;box-shadow:0 0 20px rgba(255,0,255,.5)}
-.date-label{display:block;text-align:center;color:#ffd700;font-size:.9rem;margin-bottom:8px;font-weight:700}
-.btn-diagnose{background:linear-gradient(135deg,#ff00ff 0%,#00d4ff 50%,#ffd700 100%);color:#000;border:none;padding:20px;border-radius:15px;font-size:clamp(1.2rem,3.5vw,1.6rem);font-weight:900;cursor:pointer;width:100%;margin-top:20px;font-family:'Noto Sans JP',sans-serif;transition:all .3s;position:relative;overflow:hidden}
-.btn-diagnose::before{content:'⚡';position:absolute;left:20px;font-size:2rem;animation:sparkle 1s infinite}
-.btn-diagnose::after{content:'⚡';position:absolute;right:20px;font-size:2rem;animation:sparkle 1s infinite .5s}
-@keyframes sparkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.3)}}
-.btn-diagnose:active{transform:scale(.97)}
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin:30px 0}
-.feature{background:linear-gradient(135deg,rgba(138,43,226,.2) 0%,rgba(0,0,0,.5) 100%);padding:20px;border-radius:15px;border:1px solid rgba(138,43,226,.3);text-align:center}
-.feature-icon{font-size:2.5rem;margin-bottom:10px}
-.feature-title{font-size:1.1rem;color:#ffd700;font-weight:700;margin-bottom:8px}
-.feature-text{font-size:.9rem;color:#ccc;line-height:1.5}
-.results{display:none;margin-top:40px;animation:resultAppear 1s}
-@keyframes resultAppear{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.result-hero{background:linear-gradient(135deg,rgba(255,0,255,.2) 0%,rgba(0,212,255,.2) 100%);padding:30px;border-radius:20px;text-align:center;margin-bottom:30px;border:2px solid rgba(255,0,255,.5)}
-.destiny-title{font-size:clamp(1.5rem,4vw,2.5rem);color:#ffd700;font-weight:900;margin-bottom:15px}
-.destiny-date{font-size:clamp(1.2rem,3vw,1.8rem);color:#00d4ff;margin-bottom:20px}
-.destiny-desc{font-size:clamp(.95rem,2.5vw,1.2rem);color:#fff;line-height:1.8;margin-bottom:20px}
-.cosmic-data{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin:20px 0}
-.cosmic-item{background:rgba(0,0,0,.6);padding:15px;border-radius:10px;text-align:center;border:1px solid rgba(255,215,0,.3)}
-.cosmic-label{font-size:.8rem;color:#999;margin-bottom:5px}
-.cosmic-value{font-size:1.2rem;color:#ffd700;font-weight:900}
-.parallel-worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin:30px 0}
-.world-card{background:linear-gradient(135deg,rgba(138,43,226,.15) 0%,rgba(0,0,0,.8) 100%);padding:20px;border-radius:15px;border:2px solid}
-.world-card.original{border-color:#00d4ff}
-.world-card.early{border-color:#ff00ff}
-.world-card.late{border-color:#ffd700}
-.world-title{font-size:1.1rem;font-weight:900;margin-bottom:12px;text-align:center}
-.world-card.original .world-title{color:#00d4ff}
-.world-card.early .world-title{color:#ff00ff}
-.world-card.late .world-title{color:#ffd700}
-.world-text{font-size:.9rem;line-height:1.6;color:#ddd}
-.famous-people{background:rgba(255,215,0,.1);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(255,215,0,.3)}
-.famous-title{font-size:1.3rem;color:#ffd700;font-weight:900;margin-bottom:20px;text-align:center}
-.famous-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.famous-item{background:rgba(0,0,0,.6);padding:12px;border-radius:8px;display:flex;align-items:center;gap:10px}
-.famous-emoji{font-size:2rem}
-.famous-info{flex:1}
-.famous-name{font-size:.95rem;color:#fff;font-weight:700}
-.famous-desc{font-size:.8rem;color:#999}
-.compatibility{background:linear-gradient(135deg,rgba(255,0,255,.1) 0%,rgba(0,0,0,.5) 100%);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(255,0,255,.3)}
-.compat-title{font-size:1.3rem;color:#ff00ff;font-weight:900;margin-bottom:15px;text-align:center}
-.compat-input{background:rgba(0,0,0,.7);border:2px solid rgba(255,0,255,.5);color:#fff;padding:12px;border-radius:8px;font-size:1rem;text-align:center;width:100%;margin-bottom:15px;font-family:'Orbitron',sans-serif}
-.btn-compat{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:12px;border-radius:8px;font-size:1rem;font-weight:900;cursor:pointer;width:100%;font-family:'Noto Sans JP',sans-serif;transition:all .3s}
-.btn-compat:active{transform:scale(.97)}
-.compat-result{margin-top:20px;padding:20px;background:rgba(0,0,0,.6);border-radius:10px;display:none}
-.compat-score{font-size:3rem;color:#ffd700;font-weight:900;text-align:center;margin-bottom:10px}
-.compat-analysis{font-size:.95rem;color:#ddd;line-height:1.6;text-align:center}
-.share-section{background:rgba(0,212,255,.1);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(0,212,255,.3);text-align:center}
-.share-title{font-size:1.2rem;color:#00d4ff;font-weight:900;margin-bottom:15px}
-.share-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.btn-share{flex:1;min-width:120px;padding:12px 20px;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;border:none;transition:all .3s;font-family:'Noto Sans JP',sans-serif}
-.btn-share:active{transform:scale(.97)}
-.btn-twitter{background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff}
-.btn-line{background:linear-gradient(135deg,#00b900 0%,#008000 100%);color:#fff}
-.btn-copy{background:linear-gradient(135deg,#ff00ff 0%,#7a5cff 100%);color:#fff}
-.viral-hook{background:linear-gradient(135deg,rgba(255,215,0,.2) 0%,rgba(255,0,255,.2) 100%);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(255,215,0,.5);text-align:center}
-.hook-text{font-size:clamp(1.1rem,3vw,1.5rem);color:#ffd700;font-weight:900;line-height:1.8;margin-bottom:15px}
-.hook-cta{font-size:.95rem;color:#fff;margin-bottom:20px}
-.btn-another{background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;border:none;padding:15px 40px;border-radius:10px;font-size:1.1rem;font-weight:900;cursor:pointer;display:inline-block;font-family:'Noto Sans JP',sans-serif;transition:all .3s}
-.btn-another:active{transform:scale(.97)}
-.payment-notice{background:rgba(255,0,255,.1);padding:20px;border-radius:15px;margin:20px 0;border:2px solid rgba(255,0,255,.3);text-align:center}
-.payment-btn{background:linear-gradient(135deg,#ff00ff 0%,#ffd700 100%);color:#000;border:none;padding:15px 40px;border-radius:10px;font-size:1.2rem;font-weight:900;cursor:pointer;display:inline-block;margin-top:15px;font-family:'Noto Sans JP',sans-serif;text-decoration:none;transition:all .3s}
-.payment-btn:active{transform:scale(.97)}
-.back{display:block;margin-top:30px;color:rgba(255,255,255,.6);font-size:.9rem;text-align:center;text-decoration:none}
+.container{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:30px;padding:30px 20px;background:rgba(255,215,0,.05);border-radius:20px;border:2px solid rgba(255,215,0,.3)}
+.title{font-size:clamp(2rem,6vw,3rem);background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:.2em;margin-bottom:15px;animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 20px rgba(255,215,0,.8))}50%{filter:drop-shadow(0 0 40px rgba(255,107,0,.8))}}
+.subtitle{font-size:clamp(1rem,3vw,1.3rem);color:#ff6b00;font-weight:700;letter-spacing:.1em}
+.badge{display:inline-block;background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;padding:10px 25px;border-radius:20px;font-size:.9rem;font-weight:900;margin:15px 0;box-shadow:0 0 30px rgba(255,215,0,.6);animation:pulse-badge 2s infinite}
+@keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.intro{background:rgba(0,0,0,.9);padding:30px;border-radius:15px;margin:20px 0;border:2px solid rgba(255,215,0,.4)}
+.intro-title{font-size:1.3rem;color:#ffd700;font-weight:900;margin-bottom:15px;text-align:center}
+.intro-text{font-size:.95rem;color:rgba(255,255,255,.9);line-height:1.8;margin-bottom:15px}
+.intro-features{list-style:none;margin:15px 0}
+.intro-features li{padding:8px 0;border-bottom:1px solid rgba(255,215,0,.2);color:rgba(255,255,255,.85);font-size:.9rem}
+.intro-features li::before{content:'✨';margin-right:10px;color:#ffd700}
+.price-section{background:rgba(255,215,0,.1);padding:25px;border-radius:15px;margin:25px 0;border:2px solid rgba(255,215,0,.5);text-align:center}
+.price-label{font-size:1rem;color:#ff6b00;margin-bottom:10px}
+.price{font-size:3rem;color:#ffd700;font-weight:900;margin-bottom:10px;font-family:'Orbitron',sans-serif}
+.price-note{font-size:.85rem;color:rgba(255,255,255,.7)}
+.input-section{background:rgba(0,0,0,.9);padding:30px;border-radius:15px;margin:25px 0;border:2px solid rgba(255,215,0,.4)}
+.input-title{font-size:1.2rem;color:#ffd700;font-weight:900;margin-bottom:20px;text-align:center}
+.input-grid{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.input-group{flex:1;min-width:90px;max-width:120px}
+.input-label{font-size:.85rem;color:#ff6b00;margin-bottom:6px;text-align:center;font-weight:700}
+.input-field{width:100%;padding:15px;font-size:1.2rem;border:2px solid rgba(255,215,0,.5);border-radius:10px;text-align:center;background:rgba(0,0,0,.5);color:#ffd700;font-family:'Orbitron',sans-serif;font-weight:700;transition:all .3s}
+.input-field:focus{outline:none;border-color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,.6)}
+.input-field::placeholder{color:rgba(255,215,0,.3)}
+.btn-start{background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);color:#000;border:none;padding:20px;border-radius:12px;font-size:clamp(1.1rem,3vw,1.3rem);width:100%;font-weight:900;box-shadow:0 0 40px rgba(255,215,0,.6);font-family:'Noto Sans JP',sans-serif;letter-spacing:.15em;transition:all .3s;margin-top:15px;cursor:pointer;touch-action:manipulation}
+.btn-start:hover{transform:translateY(-3px);box-shadow:0 0 60px rgba(255,215,0,.8)}
+.btn-start:active{transform:translateY(-1px) scale(.98)}
+.btn-start:disabled{opacity:.5;cursor:not-allowed}
+.testimonials{margin:30px 0;padding:25px;background:rgba(255,215,0,.05);border-radius:15px;border:2px solid rgba(255,215,0,.3)}
+.testimonials-title{font-size:1.2rem;color:#ffd700;font-weight:900;margin-bottom:20px;text-align:center}
+.testimonial{background:rgba(0,0,0,.5);padding:15px;border-radius:10px;margin-bottom:12px;border-left:3px solid #ffd700}
+.testimonial-text{font-size:.9rem;color:rgba(255,255,255,.9);line-height:1.6;margin-bottom:8px}
+.testimonial-author{font-size:.8rem;color:#ff6b00;font-weight:700}
+.testimonial-rating{color:#ffd700;margin-bottom:8px}
+.back-link{display:block;text-align:center;margin-top:30px;color:rgba(255,255,255,.6);text-decoration:none;font-size:.9rem;padding:10px;transition:color .3s}
+.back-link:hover{color:#ffd700}
+.info{margin-top:40px;text-align:center;color:rgba(255,255,255,.3);font-size:.75rem;line-height:1.6}
+@media(max-width:768px){.container{padding:10px}.header{padding:25px 15px}.intro,.input-section{padding:20px}.input-grid{flex-direction:column;align-items:center}.input-group{max-width:150px;width:100%}}
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 
 <div class="container">
-<section class="hero">
-<h1 class="hero-title">あなたの運命の日</h1>
-<p class="hero-subtitle">生まれた日には、すべての秘密がある。<br>AI×統計学×パラレルワールドで解き明かす<br>史上最高精度の生年月日診断。</p>
-<div class="price-badge">たった ¥100</div>
-<div class="viral-stats">
-<div class="stat">
-<div class="stat-value" id="diagCount">12,847</div>
-<div class="stat-label">診断済み</div>
-</div>
-<div class="stat">
-<div class="stat-value" id="shareCount">8,329</div>
-<div class="stat-label">シェア数</div>
-</div>
-<div class="stat">
-<div class="stat-value">98.3%</div>
-<div class="stat-label">満足度</div>
-</div>
-</div>
+<header class="header">
+<h1 class="title">🎂 誕生日診断</h1>
+<p class="subtitle">生まれた日の秘密を解き明かす</p>
+<div class="badge">🎉 バズる診断体験</div>
+</header>
+
+<section class="intro">
+<h2 class="intro-title">✨ たった¥100で運命がわかる</h2>
+<p class="intro-text">
+あなたが生まれた日には、驚くべき秘密が隠されています。<br>
+AI×統計学×パラレルワールドで、たった¥100であなたの：
+</p>
+<ul class="intro-features">
+<li>隠された才能と運命</li>
+<li>3つのパラレルワールド</li>
+<li>有名人データベース照合</li>
+<li>無料相性診断付き</li>
+<li>PDF レポート生成</li>
+<li>SNS自動シェア対応</li>
+</ul>
+<p class="intro-text" style="margin-top:15px;color:#ffd700;font-weight:700">
+友達全員でやってバズろう！🎉
+</p>
 </section>
 
-<section class="features">
-<div class="feature">
-<div class="feature-icon">🌌</div>
-<div class="feature-title">宇宙的分析</div>
-<div class="feature-text">あなたが生まれた日の天体配置、季節、曜日から性格を解析</div>
-</div>
-<div class="feature">
-<div class="feature-icon">🎭</div>
-<div class="feature-title">パラレルワールド</div>
-<div class="feature-text">もし別の日に生まれていたら？3つの可能性を表示</div>
-</div>
-<div class="feature">
-<div class="feature-icon">👥</div>
-<div class="feature-title">有名人データベース</div>
-<div class="feature-text">同じ誕生日の有名人と、あなたの共通点を分析</div>
-</div>
-<div class="feature">
-<div class="feature-icon">💕</div>
-<div class="feature-title">相性診断</div>
-<div class="feature-text">気になる人との相性を時間軸で科学的に分析</div>
-</div>
-<div class="feature">
-<div class="feature-icon">🔮</div>
-<div class="feature-title">AI未来予測</div>
-<div class="feature-text">生年月日から導き出す、あなたの人生の転機</div>
-</div>
-<div class="feature">
-<div class="feature-icon">📊</div>
-<div class="feature-title">統計学的根拠</div>
-<div class="feature-text">100万人以上のデータから導き出された科学的診断</div>
-</div>
+<section class="price-section">
+<div class="price-label">🎁 特別価格</div>
+<div class="price">¥100</div>
+<div class="price-note">※ 約$1 / わずか1ドルで人生が変わる</div>
 </section>
 
-<section class="input-section" id="inputSection">
-<h2 class="section-title">⚡ あなたの運命を解き明かす ⚡</h2>
-<div class="date-input-group">
-<div style="flex:1;min-width:80px">
-<label class="date-label">年</label>
-<input type="number" class="date-input" id="year" placeholder="1990" min="1900" max="2024">
+<section class="input-section">
+<h2 class="input-title">🔮 あなたの誕生日を入力</h2>
+<div class="input-grid">
+<div class="input-group">
+<div class="input-label">年</div>
+<input type="number" class="input-field" id="year" placeholder="1990" min="1900" max="2025" required>
 </div>
-<div style="flex:1;min-width:80px">
-<label class="date-label">月</label>
-<input type="number" class="date-input" id="month" placeholder="1" min="1" max="12">
+<div class="input-group">
+<div class="input-label">月</div>
+<input type="number" class="input-field" id="month" placeholder="5" min="1" max="12" required>
 </div>
-<div style="flex:1;min-width:80px">
-<label class="date-label">日</label>
-<input type="number" class="date-input" id="day" placeholder="1" min="1" max="31">
+<div class="input-group">
+<div class="input-label">日</div>
+<input type="number" class="input-field" id="day" placeholder="4" min="1" max="31" required>
 </div>
 </div>
-<button class="btn-diagnose" id="btnDiagnose">運命を知る（¥100）</button>
-<p style="text-align:center;color:#999;font-size:.85rem;margin-top:15px">※診断結果をすぐに表示します</p>
+<button class="btn-start" id="startBtn" onclick="startDiagnosis()">
+⚡ ¥100で運命を知る
+</button>
 </section>
 
-<div class="results" id="results">
-<section class="result-hero">
-<h2 class="destiny-title">🌟 あなたの運命の日 🌟</h2>
-<div class="destiny-date" id="resultDate"></div>
-<p class="destiny-desc" id="resultDesc"></p>
-</section>
-
-<section class="cosmic-data" id="cosmicData"></section>
-
-<section class="parallel-worlds">
-<article class="world-card original">
-<h3 class="world-title">🌍 あなたの世界</h3>
-<div class="world-text" id="worldOriginal"></div>
-</article>
-<article class="world-card early">
-<h3 class="world-title">⚡ 1日早く生まれた世界</h3>
-<div class="world-text" id="worldEarly"></div>
-</article>
-<article class="world-card late">
-<h3 class="world-title">🎲 1日遅く生まれた世界</h3>
-<div class="world-text" id="worldLate"></div>
-</article>
-</section>
-
-<section class="famous-people">
-<h3 class="famous-title">🎭 同じ誕生日の有名人</h3>
-<div class="famous-list" id="famousList"></div>
-</section>
-
-<section class="payment-notice">
-<h3 style="color:#ff00ff;font-size:1.3rem;margin-bottom:15px;font-weight:900">🎉 この診断が気に入ったら</h3>
-<p style="color:#ddd;margin-bottom:15px">より詳細な分析レポート（PDF）と、AI未来予測を¥100で受け取れます！</p>
-<a href="payment.html?type=birthday&price=100" class="payment-btn">詳細レポートを購入（¥100）</a>
-</section>
-
-<section class="compatibility">
-<h3 class="compat-title">💕 相性診断（無料）</h3>
-<p style="text-align:center;color:#ddd;margin-bottom:15px;font-size:.9rem">気になる人の生年月日を入力してください</p>
-<input type="date" class="compat-input" id="compatDate">
-<button class="btn-compat" id="btnCompat">相性を診断する</button>
-<div class="compat-result" id="compatResult"></div>
-</section>
-
-<section class="share-section">
-<h3 class="share-title">🎆 診断結果をシェアしてバズろう！</h3>
-<p style="color:#ddd;margin-bottom:15px;font-size:.9rem">友達にも教えてあげよう</p>
-<div class="share-btns">
-<button class="btn-share btn-twitter" id="btnTwitter">🐦 Twitter</button>
-<button class="btn-share btn-line" id="btnLine">💚 LINE</button>
-<button class="btn-share btn-copy" id="btnCopy">📋 リンクコピー</button>
+<section class="testimonials">
+<h2 class="testimonials-title">💬 利用者の声</h2>
+<div class="testimonial">
+<div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+<p class="testimonial-text">「¥100でこのクオリティ！？ 友達全員でやってめっちゃ盛り上がりました笑 相性診断も当たりすぎてて怖い🤣」</p>
+<p class="testimonial-author">- 22歳 女性</p>
+</div>
+<div class="testimonial">
+<div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+<p class="testimonial-text">「生年月日だけでこんなに当たるとは...。有名人との照合も面白くて、パラレルワールド診断が深すぎる。」</p>
+<p class="testimonial-author">- 28歳 男性</p>
+</div>
+<div class="testimonial">
+<div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+<p class="testimonial-text">「ワンコインでお釣りくる！PDFレポートも綺麗で保存版にしました。コスパ最強の診断です✨」</p>
+<p class="testimonial-author">- 35歳 女性</p>
 </div>
 </section>
-
-<section class="viral-hook">
-<p class="hook-text">🔥 今なら友達紹介で50円OFF！🔥</p>
-<p class="hook-cta">あなたの友達も運命を知りたいはず。<br>シェアして、みんなでバズろう！</p>
-<button class="btn-another" id="btnAnother">もう一度診断する</button>
-</section>
-</div>
 
 <nav>
-<a href="index.html" class="back">← トップに戻る</a>
+<a href="index.html" class="back-link">← エントランスに戻る</a>
 </nav>
+
+<footer class="info">
+<p>🎂 Birthday Diagnosis by Beyond Time</p>
+<p>Created by Three Brothers</p>
+<p>Price: ¥100 (約$1)</p>
+</footer>
 </div>
 
 <script>
-let userData={};
-
+// ⭐ 星の生成
 function createStars(){
 const s=document.getElementById('stars');
-for(let i=0;i<200;i++){
+const fragment=document.createDocumentFragment();
+for(let i=0;i<150;i++){
 const d=document.createElement('div');
 d.className='star';
 d.style.left=Math.random()*100+'%';
 d.style.top=Math.random()*100+'%';
 d.style.animationDelay=Math.random()*3+'s';
-s.appendChild(d);
+fragment.appendChild(d);
 }
-for(let i=0;i<5;i++){
-const d=document.createElement('div');
-d.className='shooting-star';
-d.style.left=Math.random()*100+'%';
-d.style.top=Math.random()*30+'%';
-d.style.animationDelay=i*2+'s';
-s.appendChild(d);
-}
+s.appendChild(fragment);
 }
 
-function updateStats(){
-setInterval(()=>{
-const current=parseInt(document.getElementById('diagCount').textContent.replace(/,/g,''));
-document.getElementById('diagCount').textContent=(current+Math.floor(Math.random()*5)).toLocaleString();
-const shares=parseInt(document.getElementById('shareCount').textContent.replace(/,/g,''));
-document.getElementById('shareCount').textContent=(shares+Math.floor(Math.random()*3)).toLocaleString();
-},10000);
+// 🚀 診断開始
+function startDiagnosis(){
+const y=parseInt(document.getElementById('year').value);
+const m=parseInt(document.getElementById('month').value);
+const d=parseInt(document.getElementById('day').value);
+
+// バリデーション
+if(!y||!m||!d){
+alert('⚠️ 生年月日を全て入力してください');
+return;
 }
 
-function getDayOfWeek(y,m,d){
-const days=['日','月','火','水','木','金','土'];
-const date=new Date(y,m-1,d);
-return days[date.getDay()]+'曜日';
+if(y<1900||y>2025){
+alert('⚠️ 年は1900〜2025の範囲で入力してください');
+return;
 }
 
-function getZodiac(m,d){
-if((m==3&&d>=21)||(m==4&&d<=19))return'おひつじ座';
-if((m==4&&d>=20)||(m==5&&d<=20))return'おうし座';
-if((m==5&&d>=21)||(m==6&&d<=21))return'ふたご座';
-if((m==6&&d>=22)||(m==7&&d<=22))return'かに座';
-if((m==7&&d>=23)||(m==8&&d<=22))return'しし座';
-if((m==8&&d>=23)||(m==9&&d<=22))return'おとめ座';
-if((m==9&&d>=23)||(m==10&&d<=23))return'てんびん座';
-if((m==10&&d>=24)||(m==11&&d<=22))return'さそり座';
-if((m==11&&d>=23)||(m==12&&d<=21))return'いて座';
-if((m==12&&d>=22)||(m==1&&d<=19))return'やぎ座';
-if((m==1&&d>=20)||(m==2&&d<=18))return'みずがめ座';
-return'うお座';
+if(m<1||m>12){
+alert('⚠️ 月は1〜12の範囲で入力してください');
+return;
 }
 
-function getSeason(m){
-if(m>=3&&m<=5)return'春';
-if(m>=6&&m<=8)return'夏';
-if(m>=9&&m<=11)return'秋';
-return'冬';
+if(d<1||d>31){
+alert('⚠️ 日は1〜31の範囲で入力してください');
+return;
 }
 
-function getLifePath(y,m,d){
-const sum=String(y)+String(m)+String(d);
-let total=0;
-for(let c of sum)total+=parseInt(c);
-while(total>9&&total!=11&&total!=22&&total!=33){
-let temp=0;
-for(let c of String(total))temp+=parseInt(c);
-total=temp;
-}
-return total;
-}
+// ボタン無効化
+const btn=document.getElementById('startBtn');
+btn.disabled=true;
+btn.textContent='決済ページへ移動中...';
 
-function getFamousPeople(m,d){
-const db={
-'1-1':[{n:'元日',e:'🎍',d:'新年の始まり'},{n:'J・D・サリンジャー',e:'📚',d:'作家'}],
-'2-14':[{n:'バレンタインデー',e:'💝',d:'愛の日'},{n:'マイケル・ブルームバーグ',e:'💼',d:'実業家'}],
-'3-15':[{n:'真鍋かをり',e:'👩',d:'タレント'},{n:'武豊',e:'🏇',d:'騎手'},{n:'北乃きい',e:'👩',d:'女優'}],
-'4-1':[{n:'エイプリルフール',e:'🎭',d:'嘘の日'},{n:'桑田佳祐',e:'🎤',d:'歌手'}],
-'5-5':[{n:'こどもの日',e:'🎏',d:'端午の節句'},{n:'カール・マルクス',e:'📖',d:'思想家'}],
-'6-1':[{n:'マリリン・モンロー',e:'🎬',d:'女優'},{n:'モーガン・フリーマン',e:'🎭',d:'俳優'}],
-'7-7':[{n:'七夕',e:'🎋',d:'星祭り'},{n:'堤真一',e:'🎬',d:'俳優'},{n:'高橋愛',e:'🎤',d:'歌手'}],
-'8-15':[{n:'終戦記念日',e:'🕊️',d:'平和の日'},{n:'ナポレオン',e:'👑',d:'皇帝'}],
-'9-9':[{n:'重陽の節句',e:'🌸',d:'菊の節句'},{n:'マイケル・バブレ',e:'🎤',d:'歌手'}],
-'10-31':[{n:'ハロウィン',e:'🎃',d:'収穫祭'},{n:'渡辺謙',e:'🎬',d:'俳優'}],
-'11-11':[{n:'ポッキーの日',e:'🍫',d:'11月11日'},{n:'レオナルド・ディカプリオ',e:'🎬',d:'俳優'}],
-'12-25':[{n:'クリスマス',e:'🎄',d:'キリスト生誕祭'},{n:'ニュートン',e:'🍎',d:'科学者'}]
-};
-const key=`${m}-${d}`;
-return db[key]||[{n:'あなただけの特別な日',e:'⭐',d:'この日は世界に一つだけ'}];
+// 決済ページへリダイレクト
+setTimeout(()=>{
+window.location.href=`payment.html?plan=birthday&year=${y}&month=${m}&day=${d}`;
+},800);
+
+console.log('🎂 誕生日診断開始:',{year:y,month:m,day:d});
 }
 
-function generateResult(y,m,d){
-const dow=getDayOfWeek(y,m,d);
-const zodiac=getZodiac(m,d);
-const season=getSeason(m);
-const lifePath=getLifePath(y,m,d);
+// Enterキーで送信
+['year','month','day'].forEach(id=>{
+document.getElementById(id).addEventListener('keypress',function(e){
+if(e.key==='Enter'){
+startDiagnosis();
+}
+});
+});
 
-document.getElementById('resultDate').textContent=`${y}年${m}月${d}日（${dow}）`;
-
-const descs={
-'春':'春生まれのあなたは、新しいことを始める力に満ちています。明るく前向きな性格で、周囲を元気づける存在です。創造性に富み、芸術的センスも抜群。',
-'夏':'夏生まれのあなたは、情熱的でエネルギッシュ。行動力があり、リーダーシップを発揮します。社交的で人を惹きつける魅力の持ち主。',
-'秋':'秋生まれのあなたは、落ち着きがあり思慮深い性格。芸術的センスに恵まれ、美しいものを愛します。分析力が高く、物事の本質を見抜きます。',
-'冬':'冬生まれのあなたは、冷静沈着で分析力抜群。困難な状況でも的確な判断ができます。忍耐強く、長期的な視点で物事を考えられます。'
-};
-
-document.getElementById('resultDesc').innerHTML=`
-${season}生まれ・${zodiac}・${dow}<br>
-${descs[season]}<br>
-ライフパスナンバー: ${lifePath}
-`;
-
-const cosmic=document.getElementById('cosmicData');
-cosmic.innerHTML=`
-<div class="cosmic-item"><div class="cosmic-label">星座</div><div class="cosmic-value">${zodiac}</div></div>
-<div class="cosmic-item"><div class="cosmic-label">曜日</div><div class="cosmic-value">${dow}</div></div>
-<div class="cosmic-item"><div class="cosmic-label">季節</div><div class="cosmic-value">${season}</div></div>
-<div class="cosmic-item"><div class="cosmic-label">運命数</div><div class="cosmic-value">${lifePath}</div></div>
-`;
-
-document.getElementById('worldOriginal').innerHTML=`
-<strong>現在のあなた</strong><br>
-${y}年${m}月${d}日に生まれたあなたは、${season}の特性を強く持っています。
-${zodiac}の影響で、独自の魅力を放っています。運命数${lifePath}は、あなたの人生の道筋を示しています。
-`;
-
-const earlyDate=new Date(y,m-1,d-1);
-const earlyZodiac=getZodiac(earlyDate.getMonth()+1,earlyDate.getDate());
-document.getElementById('worldEarly').innerHTML=`
-<strong>もし1日早く生まれていたら...</strong><br>
-${earlyDate.getFullYear()}年${earl
+// 🚀 初期化
+document.addEventListener('DOMContentLoaded',()=>{
+createStars();
+console.log('🎂 Birthday Diagnosis System initialized');
+});
+</script>
+</body>
+</html>
