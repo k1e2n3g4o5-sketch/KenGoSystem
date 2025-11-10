@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KenGo OS - 生年月日診断</title>
+<link rel="stylesheet" href="ultra-k.css">
+</head>
+<body>
+<div class="wrap">
+<h1>KenGo OS</h1>
+<p class="sub">生年月日から貴方の駆動原理を解析</p>
+
+<form id="form">
+<div>
+<label for="dob">生年月日 (YYYY-MM-DD)</label>
+<input type="date" id="dob" required>
+</div>
+<button type="submit">解析する</button>
+</form>
+
+<div id="result" class="hidden">
+<div class="card"></div>
+</div>
+</div>
+
+<script src="kengo-client.js"></script>
+</body>
+</html>
