@@ -1,0 +1,25 @@
+# Beyond Time System - Robots.txt
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /beyond-time.html
+Allow: /payment.html
+
+# Sitemap
+Sitemap: https://ken-go-system.vercel.app/sitemap.xml
+
+# クロール頻度
+Crawl-delay: 1
+
+# 特殊なボット対策
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
