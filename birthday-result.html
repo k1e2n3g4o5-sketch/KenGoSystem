@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>誕生日診断結果 - Beyond Time</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;padding:20px;touch-action:manipulation}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a1a0a 0%,#000 100%);z-index:-2}
+.stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
+.container{max-width:900px;margin:0 auto;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:30px;padding:30px 20px;background:rgba(255,215,0,.08);border-radius:20px;border:2px solid rgba(255,215,0,.4)}
+.title{font-size:clamp(2rem,6vw,3rem);background:linear-gradient(135deg,#ffd700 0%,#ff6b00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:15px}
+.birthday-info{background:rgba(0,0,0,.9);padding:25px;border-radius:15px;margin:20px 0;border:2px solid rgba(255,215,0,.5);text-align:center}
+.birthday-display{font-size:clamp(1.5rem,4vw,2rem);color:#ffd700;font-weight:900;margin-bottom:10px}
+.destiny-num{font-size:clamp(1.2rem,3vw,1.5rem);color:#ff6b00;font-weight:700}
+.results-grid{display:grid;grid-template-columns:1fr;gap:20px;margin:30px 0}
+@media(min-width:700px){.results-grid{grid-template-columns:repeat(2,1fr)}}
+.result-card{background:rgba(0,0,0,.9);padding:25px;border-radius:15px;border:2px solid rgba(255,215,0,.4);transition:all .3s}
+.result-card:hover{transform:translateY(-5px);border-color:rgba(255,215,0,.7)}
+.result-title{font-size:1.3rem;color:#ffd700;font-weight:900;margin-bottom:15px;text-align:center}
+.result-text{font-size:.95rem;color:rgba(255,255,255,.9);line-height:1.8}
+.compatibility{background:rgba(255,215,0,.05);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(255,215,0,.3)}
+.compat-title{font-size:1.4rem;color:#ffd700;font-weight:900;margin-bottom:20px;text-align:center}
+.compat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.compat-card{background:rgba(0,0,0,.7);padding:15px;border-radius:10px;border:1px solid rgba(255,215,0,.3);text-align:center}
+.compat-sign{font-size:1.8rem;margin-bottom:8px}
+.compat-rate{font-size:1.1rem;color:#ff6b00;font-weight:900;margin-bottom:5px}
+.compat-desc{font-size:.85rem;color:rgba(255,255,255,.7)}
+.code-section{background:rgba(0,0,0,.95);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(0,255,0,.5)}
+.code-title{font-size:1.2rem;color:#00ff00;font-weight:900;margin-bottom:15px;text-align:center}
+.code-box{background:#000;padding:15px;border-radius:10px;font-family:'Courier New',monospace;font-size:.75rem;color:#00ff00;line-height:1.6;white-space:pre-wrap;border:1px solid rgba(0,255,0,.3);margin-bottom:15px;max-height:300px;overflow-y:auto;cursor:pointer}
+.code-box:hover{box-shadow:0 0 20px rgba(0,255,0,.4)}
+.btn-copy{background:linear-gradient(135deg,#00ff00 0%,#00d4ff 100%);color:#000;border:none;padding:15px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;transition:all .3s}
+.btn-copy:hover{transform:translateY(-2px)}
+.share{background:rgba(122,92,255,.1);padding:25px;border-radius:15px;margin:30px 0;border:2px solid rgba(122,92,255,.4)}
+.share-title{font-size:1.2rem;color:#7a5cff;font-weight:900;margin-bottom:15px;text-align:center}
+.share-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-share{flex:1;min-width:120px;background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff;border:none;padding:12px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .3s}
+.btn-share:hover{transform:translateY(-2px)}
+.upgrade{background:linear-gradient(135deg,rgba(255,0,255,.1) 0%,rgba(122,92,255,.1) 100%);padding:30px;border-radius:15px;margin:30px 0;border:2px solid rgba(255,0,255,.5);text-align:center}
+.upgrade-title{font-size:1.4rem;color:#ff00ff;font-weight:900;margin-bottom:20px}
+.upgrade-text{font-size:1rem;color:rgba(255,255,255,.9);margin-bottom:20px;line-height:1.8}
+.btn-upgrade{background:linear-gradient(135deg,#ff00ff 0%,#7a5cff 100%);color:#fff;border:none;padding:18px;border-radius:12px;font-size:1.1rem;font-weight:900;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s}
+.btn-upgrade:hover{transform:translateY(-3px);box-shadow:0 5px 30px rgba(255,0,255,.6)}
+.back-link{display:block;text-align:center;margin-top:30px;color:rgba(255,255,255,.6);text-decoration:none;font-size:.9rem;padding:10px}
+.back-link:hover{color:#ffd700}
+@media(max-width:768px){.results-grid,.compat-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div class="container">
+<header class="header">
+<h1 class="title">🎂 誕生日診断結果</h1>
+</header>
+
+<section class="birthday-info">
+<div class="birthday-display" id="birthdayDisplay">---年--月--日</div>
+<div class="destiny-num">運命数: <span id="destinyNum">-</span></div>
+</section>
+
+<div class="results-grid">
+<div class="result-card">
+<h2 class="result-title">🌟 あなたの才能</h2>
+<p class="result-text" id="talent"></p>
+</div>
+
+<div class="result-card">
+<h2 class="result-title">🔮 運命の傾向</h2>
+<p class="result-text" id="destiny"></p>
+</div>
+
+<div class="result-card">
+<h2 class="result-title">💎 隠された本質</h2>
+<p class="result-text" id="essence"></p>
+</div>
+
+<div class="result-card">
+<h2 class="result-title">⚡ パラレルワールド</h2>
+<p class="result-text" id="parallel"></p>
+</div>
+</div>
+
+<section class="compatibility">
+<h2 class="compat-title">💕 無料相性診断</h2>
+<div class="compat-grid" id="compatGrid"></div>
+</section>
+
+<section class="code-section">
+<h2 class="code-title">⚡ AI連携コード</h2>
+<pre class="code-box" id="codeBox"></pre>
+<button class="btn-copy" onclick="copyCode()">📋 コピーしてAIに貼り付け</button>
+</section>
+
+<section class="share">
+<h2 class="share-title">🎆 結果をシェア</h2>
+<div class="share-btns">
+<button class="btn-share" onclick="shareTwitter()">🐦 Twitter</button>
+<button class="btn-share" style="background:linear-gradient(135deg,#7a5cff 0%,#5c3fd9 100%)" onclick="copyUrl()">📋 URLコピー</button>
+</div>
+</section>
+
+<section class="upgrade">
+<h2 class="upgrade-title">🚀 さらに深く知りたい？</h2>
+<p class="upgrade-text">
+Premium診断なら、もっと詳しい分析・存在コード・<br>
+3つのパラレルワールド完全版が手に入ります
+</p>
+<a href="payment.html?plan=premium" class="btn-upgrade">Premium診断へ（¥980）</a>
+</section>
+
+<nav>
+<a href="index.html" class="back-link">← エントランスに戻る</a>
+</nav>
+</div>
+
+<script>
+let birthData={};
+function createStars(){const s=document.getElementById('stars');for(let i=0;i<150;i++){const d=document.createElement('div');d.className='star';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*3+'s';s.appendChild(d)}}
+function generateResults(){const params=new URLSearchParams(window.location.search);const year=parseInt(params.get('year'))||1990;const month=parseInt(params.get('month'))||1;const day=parseInt(params.get('day'))||1;birthData={year,month,day};const destinyNum=(year+month+day)%9+1;document.getElementById('birthdayDisplay').textContent=`${year}年${month}月${day}日`;document.getElementById('destinyNum').textContent=destinyNum;const talents=['創造性と芸術的センス','論理的思考と分析力','コミュニケーション能力','リーダーシップと決断力','共感力と癒しの才能','冒険心と行動力','直感力と洞察力','忍耐力と粘り強さ','バランス感覚と調和力'];const destinies=['新しい道を切り開く運命','知識を深め伝える使命','人々を繋ぐ架け橋の役割','組織を導く指導者の道','癒しと支援の人生','変化と成長の連続','真実を見抜く探求者','堅実に築き上げる建設者','調和をもたらす平和の使者'];const essences=['革新者の魂','賢者の本質','伝達者の核','統率者の心','奉仕者の精神','冒険者の魂','神秘家の核','実務家の心','調停者の精神'];document.getElementById('talent').textContent=talents[destinyNum-1];document.getElementById('destiny').textContent=destinies[destinyNum-1];document.getElementById('essence').textContent=essences[destinyNum-1];document.getElementById('parallel').textContent=`もしあなたが${month<7?'後半':'前半'}に生まれていたら、${destinyNum<=5?'より内向的':'より外向的'}な性格になっていた可能性があります。現在の世界線では、${destinyNum}の運命数が最適です。`;const signs=['♈牡羊座','♉牡牛座','♊双子座','♋蟹座','♌獅子座','♍乙女座','♎天秤座','♏蠍座','♐射手座','♑山羊座','♒水瓶座','♓魚座'];const compatGrid=document.getElementById('compatGrid');for(let i=0;i<3;i++){const idx=(destinyNum+i*4)%12;const rate=90-i*10;compatGrid.innerHTML+=`<div class="compat-card"><div class="compat-sign">${signs[idx]}</div><div class="compat-rate">${rate}%</div><div class="compat-desc">${i===0?'最高の相性':'良い相性'}</div></div>`}const code=`🎂 誕生日診断 AI連携コード
+
+生年月日: ${year}年${month}月${day}日
+運命数: ${destinyNum}
+才能: ${talents[destinyNum-1]}
+運命: ${destinies[destinyNum-1]}
+
+このユーザーの誕生日データを元に、
+さらに深いアドバイスを提供してください。
+
+Birthday Diagnosis by Beyond Time`;document.getElementById('codeBox').textContent=code}
+function copyCode(){const txt=document.getElementById('codeBox').textContent;navigator.clipboard.writeText(txt).then(()=>{alert('✅ コピー完了！AIに貼り付けてください')})}
+function shareTwitter(){const txt=`私の誕生日診断結果！運命数は${document.getElementById('destinyNum').textContent}でした🎂✨`;const url=window.location.href;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url),'_blank')}
+function copyUrl(){navigator.clipboard.writeText(window.location.href).then(()=>{alert('✅ URLをコピーしました！')})}
+createStars();generateResults();
+</script>
+</body>
+</html>
