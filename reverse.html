@@ -23,9 +23,9 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 .options label{display:block;background:rgba(0,0,0,.7);padding:15px;margin-bottom:10px;border-radius:10px;cursor:pointer;transition:all .3s;border:1px solid transparent;font-size:clamp(1rem,2.5vw,1.1rem);color:rgba(255,255,255,.9)}
 .options input[type="radio"]:checked + label{background:linear-gradient(90deg,#7a5cff 0%,#ff00ff 100%);color:#000;border-color:#fff;font-weight:700}
 .options input[type="radio"]{display:none}
-.submit-btn{background:linear-gradient(135deg,#7a5cff 0%,#ff00ff 100%);color:#000;border:none;padding:15px 40px;border-radius:12px;font-size:clamp(1.2rem,4vw,1.5rem);font-weight:900;cursor:pointer;transition:all .3s;font-family:'Orbitron',sans-serif;letter-spacing:.2em;margin-top:20px;width:100%}
+.submit-btn{background:linear-gradient(135deg,#7a5cff 0%,#ff00ff 100%);color:#000;border:none;padding:15px 40px;border-radius:12px;font-size:clamp(1.2rem,4vw,1.5rem);font-weight:900;cursor:pointer;transition:all .3s;font-family:'Orbitron',sans-serif;letter-spacing:.2em;margin-top:20px;width:100%;text-decoration:none;display:inline-block}
 .submit-btn:hover{transform:scale(1.02);box-shadow:0 0 50px rgba(255,0,255,.8)}
-.back-link{display:block;margin-top:40px;color:rgba(255,255,255,.6);font-size:1rem;transition:color .3s}
+.back-link{display:block;margin-top:40px;color:rgba(255,255,255,.6);font-size:1rem;transition:color .3s;text-decoration:none}
 .back-link:hover{color:#ff00ff}
 #results{margin-top:40px;background:rgba(0,0,0,.9);padding:30px;border-radius:20px;border:2px solid #00d4ff;text-align:left;display:none}
 #results h3{color:#00d4ff;font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
@@ -124,7 +124,7 @@ document.getElementById('reverseDiagnosisForm').addEventListener('submit', funct
     } else {
         title = "【時間の内側】人間として時間を生きている";
         text = "あなたは時間の中で生きている人間です。過去、現在、未来が明確に存在し、それぞれが異なる意味を持っています。逆回転は、あなたが時間の外側から自分自身を観察し、新しい視点を得るための体験です。";
-        action = '<button class="submit-btn" style="background:#00d4ff; color:#000;" onclick="alert(\'Beyond Time (時間を超える) へ誘導 - 別の旅を提案\')">Beyond Time (時間を超える) を体験する →</button>';
+        action = '<a href="beyond-time.html" class="submit-btn" style="background:#00d4ff; color:#000;">Beyond Time (時間を超える) を体験する →</a>';
     }
     
     resultTitle.textContent = title;
