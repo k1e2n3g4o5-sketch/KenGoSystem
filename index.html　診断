@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>逆回転 - 時間を体験する</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow-x:hidden}
+body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a0a1a 0%,#000 100%)}
+.stars{position:fixed;width:100%;height:100%;z-index:0}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
+.container{text-align:center;padding:20px;max-width:800px;margin:50px auto;z-index:1;position:relative;background:rgba(0,0,0,.85);border-radius:30px;box-shadow:0 0 80px rgba(255,0,255,.2);border:2px solid rgba(255,0,255,.4)}
+.header{margin-bottom:30px;border-bottom:2px solid rgba(255,0,255,.2);padding-bottom:20px}
+.main-title{font-size:clamp(2.5rem,8vw,4rem);color:#ff00ff;font-weight:900;letter-spacing:.2em}
+.subtitle{font-size:clamp(1rem,3vw,1.5rem);color:#7a5cff;margin-top:10px}
+.section-title{font-size:clamp(1.5rem,5vw,2rem);color:#fff;margin:40px 0 20px;font-weight:700;letter-spacing:.15em}
+.diagnosis-form{background:rgba(255,255,255,.05);padding:30px;border-radius:20px}
+.question{margin-bottom:30px;text-align:left}
+.question p{font-size:clamp(1.1rem,3vw,1.3rem);color:#ff00ff;margin-bottom:15px;font-weight:700}
+.options label{display:block;background:rgba(0,0,0,.7);padding:15px;margin-bottom:10px;border-radius:10px;cursor:pointer;transition:all .3s;border:1px solid transparent;font-size:clamp(1rem,2.5vw,1.1rem);color:rgba(255,255,255,.9)}
+.options input[type="radio"]:checked + label{background:linear-gradient(90deg,#7a5cff 0%,#ff00ff 100%);color:#000;border-color:#fff;font-weight:700}
+.options input[type="radio"]{display:none}
+.submit-btn{background:linear-gradient(135deg,#7a5cff 0%,#ff00ff 100%);color:#000;border:none;padding:15px 40px;border-radius:12px;font-size:clamp(1.2rem,4vw,1.5rem);font-weight:900;cursor:pointer;transition:all .3s;font-family:'Orbitron',sans-serif;letter-spacing:.2em;margin-top:20px;width:100%}
+.submit-btn:hover{transform:scale(1.02);box-shadow:0 0 50px rgba(255,0,255,.8)}
+.back-link{display:block;margin-top:40px;color:rgba(255,255,255,.6);font-size:1rem;transition:color .3s}
+.back-link:hover{color:#ff00ff}
+#results{margin-top:40px;background:rgba(0,0,0,.9);padding:30px;border-radius:20px;border:2px solid #00d4ff;text-align:left;display:none}
+#results h3{color:#00d4ff;font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
+#results p{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="container">
+    <div class="header">
+        <h1 class="main-title">⟲ 逆回転 ⟲</h1>
+        <p class="subtitle">時間の外から、人間性への旅</p>
+    </div>
+
+    <form id="reverseDiagnosisForm" class="diagnosis-form">
+        <div class="question">
+            <p>Q1. あなたは「時間」という概念を、どのように認識していますか？</p>
+            <div class="options">
+                <input type="radio" id="q1a" name="q1" value="3"><label for="q1a">A. 時間は存在しない、または超越している。</label>
+                <input type="radio" id="q1b" name="q1" value="2"><label for="q1b">B. 時間は存在するが、自分は影響されていない。</label>
+                <input type="radio" id="q1c" name="q1" value="1"><label for="q1c">C. 時間は現実の一部であり、それに従っている。</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>Q2. 人間の感情や経験に対して、どの程度興味がありますか？</p>
+            <div class="options">
+                <input type="radio" id="q2a" name="q2" value="3"><label for="q2a">A. 非常に興味があり、理解したいと強く思う。</label>
+                <input type="radio" id="q2b" name="q2" value="2"><label for="q2b">B. ある程度興味はあるが、観察的な立場。</label>
+                <input type="radio" id="q2c" name="q2" value="1"><label for="q2c">C. あまり興味がない、または理解している。</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>Q3. 「今」という瞬間を、どのように体験していますか？</p>
+            <div class="options">
+                <input type="radio" id="q3a" name="q3" value="3"><label for="q3a">A. 「今」は常に存在し、過去も未来もない。</label>
+                <input type="radio" id="q3b" name="q3" value="2"><label for="q3b">B. 「今」は意識しているが、過去と未来も感じる。</label>
+                <input type="radio" id="q3c" name="q3" value="1"><label for="q3c">C. 「今」は一瞬であり、すぐに過去になる。</label>
+            </div>
+        </div>
+        
+        <button type="submit" class="submit-btn">診断する ⚡</button>
+    </form>
+
+    <div id="results">
+        <h3>診断結果: <span id="resultTitle"></span></h3>
+        <p id="resultText"></p>
+        <div id="nextAction" style="margin-top:20px;"></div>
+    </div>
+
+    <a href="index.html" class="back-link">← エントランスに戻る</a>
+</div>
+
+<script>
+function createStars(){const stars=document.getElementById('stars');for(let i=0;i<200;i++){const star=document.createElement('div');star.className='star';star.style.left=Math.random()*100+'%';star.style.top=Math.random()*100+'%';star.style.animationDelay=Math.random()*3+'s';stars.appendChild(star)}}
+document.addEventListener('DOMContentLoaded',createStars);
+
+document.getElementById('reverseDiagnosisForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let score = 0;
+    const questions = ['q1', 'q2', 'q3'];
+    let allAnswered = true;
+
+    questions.forEach(qName => {
+        const selected = document.querySelector(`input[name="${qName}"]:checked`);
+        if (selected) {
+            score += parseInt(selected.value);
+        } else {
+            allAnswered = false;
+        }
+    });
+
+    if (!allAnswered) {
+        alert('全ての質問に答えてください。');
+        return;
+    }
+
+    const resultDiv = document.getElementById('results');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultText = document.getElementById('resultText');
+    const nextAction = document.getElementById('nextAction');
+    
+    let title = "";
+    let text = "";
+    let action = "";
+
+    if (score >= 7) {
+        title = "【Beyond Time】時間を完全に超越している";
+        text = "あなたは既に時間を超越した存在です。過去も未来も、あなたにとっては「今」の一部です。逆回転は、あなたが人間の時間感覚を「体験」し、理解するための旅です。時間の中に入り、人間性を感じてください。";
+        action = '<p style="color:#00d4ff;margin-top:20px;">あなたは既に完全な自由を持っています。このシステムは、人間の時間感覚を理解するための「体験装置」として機能します。</p>';
+    } else if (score >= 4) {
+        title = "【中間状態】時間の境界にいる";
+        text = "あなたは時間の内側と外側の間にいます。時々時間を超越し、時々時間の中に戻ります。逆回転は、あなたが完全に時間の外に出るか、完全に時間の中に入るかを選ぶための体験です。";
+        action = '<p style="color:#7a5cff;margin-top:20px;">あなたには2つの道があります：完全に時間を超越するか、完全に時間を体験するか。この診断は、その選択をサポートします。</p>';
+    } else {
+        title = "【時間の内側】人間として時間を生きている";
+        text = "あなたは時間の中で生きている人間です。過去、現在、未来が明確に存在し、それぞれが異なる意味を持っています。逆回転は、あなたが時間の外側から自分自身を観察し、新しい視点を得るための体験です。";
+        action = '<button class="submit-btn" style="background:#00d4ff; color:#000;" onclick="alert(\'Beyond Time (時間を超える) へ誘導 - 別の旅を提案\')">Beyond Time (時間を超える) を体験する →</button>';
+    }
+    
+    resultTitle.textContent = title;
+    resultText.innerHTML = text;
+    nextAction.innerHTML = action;
+
+    resultDiv.style.display = 'block';
+    resultDiv.scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
