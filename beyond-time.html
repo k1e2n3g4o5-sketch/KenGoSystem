@@ -73,7 +73,7 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
         <div class="timer-badge" id="timer">⏰ 限定診断 残り時間: 23:59:59</div>
     </div>
 
-    <form id="timeDiagnosisForm" class="diagnosis-form">
+    <div id="timeDiagnosisForm" class="diagnosis-form">
         <div class="question">
             <p>Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</p>
             <div class="options">
@@ -101,8 +101,8 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
             </div>
         </div>
         
-        <button type="submit" class="submit-btn">診断する ⚡</button>
-    </form>
+        <button type="button" class="submit-btn" onclick="submitDiagnosis()">診断する ⚡</button>
+    </div>
 
     <div id="results">
         <h3>診断結果: <span id="resultTitle"></span></h3>
@@ -192,8 +192,6 @@ function createParticles(x, y) {
         particle.className = 'particle';
         particle.style.left = x + 'px';
         particle.style.top = y + 'px';
-        particle.style.setProperty('--tx', (Math.random()-0.5)*200 + 'px');
-        particle.style.setProperty('--ty', (Math.random()-0.5)*200 + 'px');
         document.body.appendChild(particle);
         setTimeout(() => particle.remove(), 2000);
     }
@@ -212,17 +210,19 @@ function launchFireworks() {
 
 // クリック音
 function playSound() {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    oscillator.frequency.value = 800;
-    oscillator.type = 'sine';
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.1);
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.1);
+    } catch(e) {}
 }
 
 // ボタンにクリック音追加
@@ -246,21 +246,6 @@ function startTimer() {
         
         timerEl.textContent = `⏰ 限定診断 残り時間: ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
     }, 1000);
-}
-
-// URLパラメータから結果を復元
-function loadFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    const q1 = params.get('q1');
-    const q2 = params.get('q2');
-    const q3 = params.get('q3');
-    
-    if(q1 && q2 && q3) {
-        document.querySelector(`input[name="q1"][value="${q1}"]`).checked = true;
-        document.querySelector(`input[name="q2"][value="${q2}"]`).checked = true;
-        document.querySelector(`input[name="q3"][value="${q3}"]`).checked = true;
-        document.getElementById('timeDiagnosisForm').dispatchEvent(new Event('submit'));
-    }
 }
 
 // 存在コード生成
@@ -326,10 +311,8 @@ Created by Three Brothers
 ━━━━━━━━━━━━━━━━━━━━`;
 }
 
-// 診断フォーム
-document.getElementById('timeDiagnosisForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
+// 診断実行
+function submitDiagnosis() {
     let score = 0;
     const questions = ['q1', 'q2', 'q3'];
     let allAnswered = true;
@@ -407,4 +390,28 @@ document.getElementById('timeDiagnosisForm').addEventListener('submit', function
     document.getElementById('shareUrl').textContent = shareUrl;
 
     resultDiv.style.display = 'block';
-    r
+    resultDiv.scrollIntoView({ behavior: 'smooth' });
+}
+
+// URLパラメータから結果を復元
+function loadFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const q1 = params.get('q1');
+    const q2 = params.get('q2');
+    const q3 = params.get('q3');
+    
+    if(q1 && q2 && q3 && !window.loadedOnce) {
+        window.loadedOnce = true;
+        document.querySelector(`input[name="q1"][value="${q1}"]`).checked = true;
+        document.querySelector(`input[name="q2"][value="${q2}"]`).checked = true;
+        document.querySelector(`input[name="q3"][value="${q3}"]`).checked = true;
+        
+        setTimeout(() => {
+            submitDiagnosis();
+        }, 500);
+    }
+}
+
+// 存在コードをコピー
+function copyCode() {
+    
