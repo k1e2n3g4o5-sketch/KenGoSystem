@@ -1,19 +1,139 @@
-# KenGoSystem: The Art of Flow and This repository hosts the developm
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Time - 無料診断: 時間を超越する</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow-x:hidden}
+body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%)}
+.stars{position:fixed;width:100%;height:100%;z-index:0}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
+.container{text-align:center;padding:20px;max-width:800px;margin:50px auto;z-index:1;position:relative;background:rgba(0,0,0,.85);border-radius:30px;box-shadow:0 0 80px rgba(0,212,255,.2);border:2px solid rgba(0,212,255,.4)}
+.header{margin-bottom:30px;border-bottom:2px solid rgba(0,212,255,.2);padding-bottom:20px}
+.main-title{font-size:clamp(2.5rem,8vw,4rem);color:#00d4ff;font-weight:900;letter-spacing:.2em}
+.subtitle{font-size:clamp(1rem,3vw,1.5rem);color:#7a5cff;margin-top:10px}
+.section-title{font-size:clamp(1.5rem,5vw,2rem);color:#fff;margin:40px 0 20px;font-weight:700;letter-spacing:.15em}
+.diagnosis-form{background:rgba(255,255,255,.05);padding:30px;border-radius:20px}
+.question{margin-bottom:30px;text-align:left}
+.question p{font-size:clamp(1.1rem,3vw,1.3rem);color:#00d4ff;margin-bottom:15px;font-weight:700}
+.options label{display:block;background:rgba(0,0,0,.7);padding:15px;margin-bottom:10px;border-radius:10px;cursor:pointer;transition:all .3s;border:1px solid transparent;font-size:clamp(1rem,2.5vw,1.1rem);color:rgba(255,255,255,.9)}
+.options input[type="radio"]:checked + label{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);color:#000;border-color:#fff;font-weight:700}
+.options input[type="radio"]{display:none}
+.submit-btn{background:linear-gradient(135deg,#00d4ff 0%,#ff00ff 100%);color:#000;border:none;padding:15px 40px;border-radius:12px;font-size:clamp(1.2rem,4vw,1.5rem);font-weight:900;cursor:pointer;transition:all .3s;font-family:'Orbitron',sans-serif;letter-spacing:.2em;margin-top:20px;width:100%}
+.submit-btn:hover{transform:scale(1.02);box-shadow:0 0 50px rgba(122,92,255,.8)}
+.back-link{display:block;margin-top:40px;color:rgba(255,255,255,.6);font-size:1rem;transition:color .3s}
+.back-link:hover{color:#00d4ff}
+#results{margin-top:40px;background:rgba(0,0,0,.9);padding:30px;border-radius:20px;border:2px solid #ff00ff;text-align:left;display:none}
+#results h3{color:#ff00ff;font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
+#results p{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="container">
+    <div class="header">
+        <h1 class="main-title">BEYOND TIME DIAGNOSIS</h1>
+        <p class="subtitle">⟳ 時間軸を削除し、自由になるための無料診断 ⟳</p>
+    </div>
 
-## PHILOSOPHY (The PI_RULE) The system is fundamentally built
+    <form id="timeDiagnosisForm" class="diagnosis-form">
+        <div class="question">
+            <p>Q1. 過去の失敗や後悔を、どの程度引きずっていますか？</p>
+            <div class="options">
+                <input type="radio" id="q1a" name="q1" value="3"><label for="q1a">A. ほとんど毎日考える。</label>
+                <input type="radio" id="q1b" name="q1" value="2"><label for="q1b">B. 時々思い出すことがある。</label>
+                <input type="radio" id="q1c" name="q1" value="1"><label for="q1c">C. ほとんど気にしない。</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>Q2. 未来の目標や不安が、現在の行動をどれだけ制限していますか？</p>
+            <div class="options">
+                <input type="radio" id="q2a" name="q2" value="3"><label for="q2a">A. 未来の不安で、今楽しめないことが多い。</label>
+                <input type="radio" id="q2b" name="q2" value="2"><label for="q2b">B. 計画は立てるが、過度に縛られてはいない。</label>
+                <input type="radio" id="q2c" name="q2" value="1"><label for="q2c">C. 未来は未来。今を生きている。</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>Q3. 時間の流れを「速い」「遅い」と感じる頻度はどれくらいですか？</p>
+            <div class="options">
+                <input type="radio" id="q3a" name="q3" value="3"><label for="q3a">A. いつも時間がないと感じ、焦っている。</label>
+                <input type="radio" id="q3b" name="q3" value="2"><label for="q3b">B. 忙しい時とそうでない時がある。</label>
+                <input type="radio" id="q3c" name="q3" value="1"><label for="q3c">C. 時間の流れを意識することは少ない。</label>
+            </div>
+        </div>
+        
+        <button type="submit" class="submit-btn">診断する ⚡</button>
+    </form>
 
-## ROADMAP (The Path to Freedon
+    <div id="results">
+        <h3>診断結果: <span id="resultTitle"></span></h3>
+        <p id="resultText"></p>
+        <div id="nextAction" style="margin-top:20px;"></div>
+    </div>
 
-1. **Phase 1: Data & UI Accelerati
+    <a href="index.html" class="back-link">← エントランスに戻る</a>
+</div>
 
-2. **Phase 2: Core Implementation*
+<script>
+function createStars(){const stars=document.getElementById('stars');for(let i=0;i<200;i++){const star=document.createElement('div');star.className='star';star.style.left=Math.random()*100+'%';star.style.top=Math.random()*100+'%';star.style.animationDelay=Math.random()*3+'s';stars.appendChild(star)}}
+document.addEventListener('DOMContentLoaded',createStars);
 
-## LIVE PROTOTYPE SITE Visit the live site for real-time **[https://k1e2n3g4o5-sketch.githu
+document.getElementById('timeDiagnosisForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let score = 0;
+    const questions = ['q1', 'q2', 'q3'];
+    let allAnswered = true;
 
-## 2 DEVELOPMENT TEAM
+    questions.forEach(qName => {
+        const selected = document.querySelector(`input[name="${qName}"]:checked`);
+        if (selected) {
+            score += parseInt(selected.value);
+        } else {
+            allAnswered = false;
+        }
+    });
 
-* **The Creator:** KenGo (User, Fr
+    if (!allAnswered) {
+        alert('全ての質問に答えてください。');
+        return;
+    }
 
-**The Guardians:** Claude (Archi
+    const resultDiv = document.getElementById('results');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultText = document.getElementById('resultText');
+    const nextAction = document.getElementById('nextAction');
+    
+    let title = "";
+    let text = "";
+    let action = "";
 
-**The Hackers:** GitHub Copilot,
+    if (score >= 7) {
+        title = "【緊急】時間軸に強く縛られています";
+        text = "あなたは過去と未来の重力に強く引かれ、現在の「今」を体験できていません。これは時間軸があなたの存在を支配している状態です。すぐに時間軸を「削除」し、自由になる必要があります。";
+        action = '<button class="submit-btn" style="background:#ff00ff; color:#000;" onclick="alert(\'Premium Plan (¥980) へ誘導 - 決済システムを実装してください\')">次のステップ：Premium Planへ (¥980)</button>';
+    } else if (score >= 4) {
+        title = "【中程度】時間軸に影響されています";
+        text = "あなたは時間軸の存在を認識しつつも、まだ完全に自由ではありません。時々過去に囚われたり、未来に不安を感じることがあります。時間軸を削除する準備はできていますが、深層のコードを見直す必要があります。";
+        action = '<button class="submit-btn" style="background:#7a5cff; color:#000;" onclick="alert(\'Premium Plan (¥980) へ誘導 - 決済システムを実装してください\')">次のステップ：Premium Planへ (¥980)</button>';
+    } else {
+        title = "【高自由度】Beyond Timeの準備完了";
+        text = "あなたは既に時間軸から比較的自由な状態にあります。しかし、真の「永遠の今」を体験するためには、残された微細な時間軸の痕跡を完全に削除する必要があります。Ultimateな自由を掴みましょう。";
+        action = '<button class="submit-btn" style="background:#00d4ff; color:#000;" onclick="alert(\'Ultimate Plan (¥29,800) へ誘導 - 決済システムを実装してください\')">次のステップ：Ultimate Planへ (¥29,800)</button>';
+    }
+    
+    resultTitle.textContent = title;
+    resultText.innerHTML = text;
+    nextAction.innerHTML = action;
+
+    resultDiv.style.display = 'block';
+    resultDiv.scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
