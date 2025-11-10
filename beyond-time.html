@@ -7,29 +7,55 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow-x:hidden}
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow-x:hidden;position:relative}
 body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%)}
 .stars{position:fixed;width:100%;height:100%;z-index:0}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
+.particle{position:fixed;width:4px;height:4px;background:#00d4ff;border-radius:50%;pointer-events:none;z-index:9999;animation:particle-float 2s ease-out forwards}
+@keyframes particle-float{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-100px) scale(0);opacity:0}}
 .container{text-align:center;padding:20px;max-width:800px;margin:50px auto;z-index:1;position:relative;background:rgba(0,0,0,.85);border-radius:30px;box-shadow:0 0 80px rgba(0,212,255,.2);border:2px solid rgba(0,212,255,.4)}
-.header{margin-bottom:30px;border-bottom:2px solid rgba(0,212,255,.2);padding-bottom:20px}
-.main-title{font-size:clamp(2.5rem,8vw,4rem);color:#00d4ff;font-weight:900;letter-spacing:.2em}
+.header{margin-bottom:30px;border-bottom:2px solid rgba(0,212,255,.2);padding-bottom:20px;position:relative}
+.main-title{font-size:clamp(2.5rem,8vw,4rem);color:#00d4ff;font-weight:900;letter-spacing:.2em;animation:title-glow 2s ease-in-out infinite}
+@keyframes title-glow{0%,100%{text-shadow:0 0 20px rgba(0,212,255,.8)}50%{text-shadow:0 0 40px rgba(0,212,255,1),0 0 60px rgba(122,92,255,1)}}
 .subtitle{font-size:clamp(1rem,3vw,1.5rem);color:#7a5cff;margin-top:10px}
-.section-title{font-size:clamp(1.5rem,5vw,2rem);color:#fff;margin:40px 0 20px;font-weight:700;letter-spacing:.15em}
+.timer-badge{display:inline-block;background:linear-gradient(135deg,#ff0000 0%,#ff6b00 100%);color:#fff;padding:10px 20px;border-radius:20px;font-size:clamp(.9rem,2.5vw,1.1rem);font-weight:700;margin:10px 0;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 .diagnosis-form{background:rgba(255,255,255,.05);padding:30px;border-radius:20px}
 .question{margin-bottom:30px;text-align:left}
 .question p{font-size:clamp(1.1rem,3vw,1.3rem);color:#00d4ff;margin-bottom:15px;font-weight:700}
 .options label{display:block;background:rgba(0,0,0,.7);padding:15px;margin-bottom:10px;border-radius:10px;cursor:pointer;transition:all .3s;border:1px solid transparent;font-size:clamp(1rem,2.5vw,1.1rem);color:rgba(255,255,255,.9)}
-.options input[type="radio"]:checked + label{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);color:#000;border-color:#fff;font-weight:700}
+.options label:hover{transform:translateX(5px);border-color:rgba(0,212,255,.5)}
+.options input[type="radio"]:checked + label{background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);color:#000;border-color:#fff;font-weight:700;animation:select-flash .5s}
+@keyframes select-flash{0%,100%{box-shadow:0 0 0 rgba(0,212,255,.8)}50%{box-shadow:0 0 20px rgba(0,212,255,1)}}
 .options input[type="radio"]{display:none}
-.submit-btn{background:linear-gradient(135deg,#00d4ff 0%,#ff00ff 100%);color:#000;border:none;padding:15px 40px;border-radius:12px;font-size:clamp(1.2rem,4vw,1.5rem);font-weight:900;cursor:pointer;transition:all .3s;font-family:'Orbitron',sans-serif;letter-spacing:.2em;margin-top:20px;width:100%;text-decoration:none;display:inline-block}
+.submit-btn{background:linear-gradient(135deg,#00d4ff 0%,#ff00ff 100%);color:#000;border:none;padding:15px 40px;border-radius:12px;font-size:clamp(1.2rem,4vw,1.5rem);font-weight:900;cursor:pointer;transition:all .3s;font-family:'Orbitron',sans-serif;letter-spacing:.2em;margin-top:20px;width:100%;text-decoration:none;display:inline-block;position:relative;overflow:hidden}
+.submit-btn::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%);transition:width .6s,height .6s}
+.submit-btn:hover::before{width:300%;height:300%}
 .submit-btn:hover{transform:scale(1.02);box-shadow:0 0 50px rgba(122,92,255,.8)}
 .back-link{display:block;margin-top:40px;color:rgba(255,255,255,.6);font-size:1rem;transition:color .3s;text-decoration:none}
 .back-link:hover{color:#00d4ff}
-#results{margin-top:40px;background:rgba(0,0,0,.9);padding:30px;border-radius:20px;border:2px solid #ff00ff;text-align:left;display:none}
+#results{margin-top:40px;background:rgba(0,0,0,.9);padding:30px;border-radius:20px;border:2px solid #ff00ff;text-align:left;display:none;animation:result-appear 1s ease-out}
+@keyframes result-appear{0%{opacity:0;transform:translateY(50px)}100%{opacity:1;transform:translateY(0)}}
 #results h3{color:#ff00ff;font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
 #results p{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.8)}
+.chart-container{margin:30px 0;padding:20px;background:rgba(0,212,255,.05);border-radius:15px;border:2px solid rgba(0,212,255,.3)}
+.chart-title{font-size:1.3rem;color:#00d4ff;margin-bottom:20px;text-align:center;font-weight:700}
+.bar-chart{display:flex;flex-direction:column;gap:15px}
+.bar-item{display:flex;align-items:center;gap:10px}
+.bar-label{min-width:120px;font-size:.9rem;color:#7a5cff;font-weight:600}
+.bar-container{flex:1;background:rgba(0,0,0,.5);border-radius:10px;height:30px;position:relative;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,#00d4ff 0%,#7a5cff 100%);border-radius:10px;transition:width 2s ease-out;position:relative;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;animation:bar-glow 2s ease-in-out infinite}
+@keyframes bar-glow{0%,100%{box-shadow:0 0 10px rgba(0,212,255,.5)}50%{box-shadow:0 0 20px rgba(0,212,255,1)}}
+.bar-value{font-size:.8rem;color:#000;font-weight:700}
+.share-section{margin-top:30px;padding:25px;background:rgba(122,92,255,.1);border-radius:15px;border:2px solid rgba(122,92,255,.4)}
+.share-title{font-size:1.2rem;color:#7a5cff;margin-bottom:15px;font-weight:700}
+.share-buttons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:15px}
+.share-btn{background:linear-gradient(135deg,#1da1f2 0%,#0d8bd9 100%);color:#fff;border:none;padding:12px 25px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
+.share-btn:hover{transform:translateY(-3px);box-shadow:0 5px 20px rgba(29,161,242,.5)}
+.share-btn.copy{background:linear-gradient(135deg,#7a5cff 0%,#5c3fd9 100%)}
+.share-url{background:rgba(0,0,0,.5);padding:15px;border-radius:10px;font-family:'Courier New',monospace;font-size:.9rem;color:#00d4ff;word-break:break-all;margin-top:10px;border:1px solid rgba(0,212,255,.3)}
+.firework{position:fixed;width:4px;height:4px;border-radius:50%;pointer-events:none;z-index:9999}
 </style>
 </head>
 <body>
@@ -38,6 +64,7 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
     <div class="header">
         <h1 class="main-title">BEYOND TIME DIAGNOSIS</h1>
         <p class="subtitle">⟳ 時間軸を削除し、自由になるための無料診断 ⟳</p>
+        <div class="timer-badge" id="timer">⏰ 限定診断 残り時間: 23:59:59</div>
     </div>
 
     <form id="timeDiagnosisForm" class="diagnosis-form">
@@ -74,6 +101,54 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
     <div id="results">
         <h3>診断結果: <span id="resultTitle"></span></h3>
         <p id="resultText"></p>
+        
+        <div class="chart-container">
+            <div class="chart-title">⚡ あなたの時間軸分析</div>
+            <div class="bar-chart">
+                <div class="bar-item">
+                    <div class="bar-label">過去依存度</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" id="bar1" style="width:0%">
+                            <span class="bar-value" id="val1">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">未来不安度</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" id="bar2" style="width:0%">
+                            <span class="bar-value" id="val2">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">時間焦燥度</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" id="bar3" style="width:0%">
+                            <span class="bar-value" id="val3">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">自由度</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" id="bar4" style="width:0%; background:linear-gradient(90deg,#00ff00 0%,#00d4ff 100%)">
+                            <span class="bar-value" id="val4">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="share-section">
+            <div class="share-title">🎆 診断結果をシェア</div>
+            <div class="share-url" id="shareUrl">読み込み中...</div>
+            <div class="share-buttons">
+                <button class="share-btn" onclick="shareTwitter()">🐦 Twitterでシェア</button>
+                <button class="share-btn copy" onclick="copyUrl()">📋 URLをコピー</button>
+            </div>
+        </div>
+        
         <div id="nextAction" style="margin-top:20px;"></div>
     </div>
 
@@ -81,19 +156,112 @@ body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;ba
 </div>
 
 <script>
-function createStars(){const stars=document.getElementById('stars');for(let i=0;i<200;i++){const star=document.createElement('div');star.className='star';star.style.left=Math.random()*100+'%';star.style.top=Math.random()*100+'%';star.style.animationDelay=Math.random()*3+'s';stars.appendChild(star)}}
-document.addEventListener('DOMContentLoaded',createStars);
+// 星空生成
+function createStars(){
+    const stars=document.getElementById('stars');
+    for(let i=0;i<200;i++){
+        const star=document.createElement('div');
+        star.className='star';
+        star.style.left=Math.random()*100+'%';
+        star.style.top=Math.random()*100+'%';
+        star.style.animationDelay=Math.random()*3+'s';
+        stars.appendChild(star);
+    }
+}
 
+// パーティクルエフェクト
+function createParticles(x, y) {
+    for(let i=0; i<10; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.setProperty('--tx', (Math.random()-0.5)*200 + 'px');
+        particle.style.setProperty('--ty', (Math.random()-0.5)*200 + 'px');
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 2000);
+    }
+}
+
+// 花火エフェクト
+function launchFireworks() {
+    for(let i=0; i<20; i++) {
+        setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight * 0.7;
+            createParticles(x, y);
+        }, i * 100);
+    }
+}
+
+// クリック音
+function playSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    oscillator.frequency.value = 800;
+    oscillator.type = 'sine';
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+}
+
+// ボタンにクリック音追加
+document.addEventListener('click', (e) => {
+    if(e.target.tagName === 'BUTTON' || e.target.tagName === 'LABEL') {
+        playSound();
+        createParticles(e.clientX, e.clientY);
+    }
+});
+
+// カウントダウンタイマー
+function startTimer() {
+    const timerEl = document.getElementById('timer');
+    let hours = 23, minutes = 59, seconds = 59;
+    
+    setInterval(() => {
+        seconds--;
+        if(seconds < 0) { seconds = 59; minutes--; }
+        if(minutes < 0) { minutes = 59; hours--; }
+        if(hours < 0) { hours = 23; minutes = 59; seconds = 59; }
+        
+        timerEl.textContent = `⏰ 限定診断 残り時間: ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+    }, 1000);
+}
+
+// URLパラメータから結果を復元
+function loadFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const q1 = params.get('q1');
+    const q2 = params.get('q2');
+    const q3 = params.get('q3');
+    
+    if(q1 && q2 && q3) {
+        document.querySelector(`input[name="q1"][value="${q1}"]`).checked = true;
+        document.querySelector(`input[name="q2"][value="${q2}"]`).checked = true;
+        document.querySelector(`input[name="q3"][value="${q3}"]`).checked = true;
+        document.getElementById('timeDiagnosisForm').dispatchEvent(new Event('submit'));
+    }
+}
+
+// 診断フォーム
 document.getElementById('timeDiagnosisForm').addEventListener('submit', function(e) {
     e.preventDefault();
+    
     let score = 0;
     const questions = ['q1', 'q2', 'q3'];
     let allAnswered = true;
+    let values = {};
 
     questions.forEach(qName => {
         const selected = document.querySelector(`input[name="${qName}"]:checked`);
         if (selected) {
-            score += parseInt(selected.value);
+            const val = parseInt(selected.value);
+            values[qName] = val;
+            score += val;
         } else {
             allAnswered = false;
         }
@@ -103,6 +271,9 @@ document.getElementById('timeDiagnosisForm').addEventListener('submit', function
         alert('全ての質問に答えてください。');
         return;
     }
+
+    // 花火打ち上げ
+    launchFireworks();
 
     const resultDiv = document.getElementById('results');
     const resultTitle = document.getElementById('resultTitle');
@@ -131,8 +302,52 @@ document.getElementById('timeDiagnosisForm').addEventListener('submit', function
     resultText.innerHTML = text;
     nextAction.innerHTML = action;
 
+    // グラフアニメーション
+    const q1Per = (values.q1 / 3) * 100;
+    const q2Per = (values.q2 / 3) * 100;
+    const q3Per = (values.q3 / 3) * 100;
+    const freePer = 100 - (score / 9 * 100);
+    
+    setTimeout(() => {
+        document.getElementById('bar1').style.width = q1Per + '%';
+        document.getElementById('val1').textContent = Math.round(q1Per) + '%';
+        document.getElementById('bar2').style.width = q2Per + '%';
+        document.getElementById('val2').textContent = Math.round(q2Per) + '%';
+        document.getElementById('bar3').style.width = q3Per + '%';
+        document.getElementById('val3').textContent = Math.round(q3Per) + '%';
+        document.getElementById('bar4').style.width = freePer + '%';
+        document.getElementById('val4').textContent = Math.round(freePer) + '%';
+    }, 500);
+
+    // シェアURL生成
+    const shareUrl = `${window.location.origin}${window.location.pathname}?q1=${values.q1}&q2=${values.q2}&q3=${values.q3}`;
+    document.getElementById('shareUrl').textContent = shareUrl;
+
     resultDiv.style.display = 'block';
     resultDiv.scrollIntoView({ behavior: 'smooth' });
+});
+
+// Twitter シェア
+function shareTwitter() {
+    const url = document.getElementById('shareUrl').textContent;
+    const text = '私の Beyond Time 診断結果をチェック！時間軸を超越する準備はできていますか？ ⚡';
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+}
+
+// URLコピー
+function copyUrl() {
+    const url = document.getElementById('shareUrl').textContent;
+    navigator.clipboard.writeText(url).then(() => {
+        alert('URLをコピーしました！ 🎉');
+        launchFireworks();
+    });
+}
+
+// 初期化
+document.addEventListener('DOMContentLoaded', () => {
+    createStars();
+    startTimer();
+    loadFromUrl();
 });
 </script>
 </body>
