@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Time - お支払い</title>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;padding:20px}
+body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a1a2e 0%,#000 100%);animation:pulse 8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.stars{position:absolute;width:100%;height:100%;z-index:0}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
+.container{max-width:600px;width:100%;background:rgba(0,0,0,.95);padding:40px;border-radius:20px;border:3px solid rgba(122,92,255,.5);box-shadow:0 0 60px rgba(122,92,255,.4);position:relative;z-index:1}
+.title{font-size:clamp(1.5rem,5vw,2rem);background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:30px;font-weight:900;text-align:center;letter-spacing:.2em}
+.plan-info{background:rgba(122,92,255,.1);padding:25px;border-radius:12px;margin-bottom:30px;border:2px solid rgba(122,92,255,.3)}
+.plan-name{font-size:clamp(1.1rem,3vw,1.4rem);color:#00d4ff;margin-bottom:10px;font-weight:700}
+.plan-price{font-size:clamp(1.5rem,4vw,2rem);color:#7a5cff;margin-bottom:15px;font-weight:900}
+.plan-desc{font-size:clamp(.85rem,2.5vw,1rem);color:rgba(255,255,255,.8);line-height:1.8}
+.payment-form{margin:30px 0}
+.form-group{margin-bottom:20px}
+.form-label{font-size:.9rem;color:#00d4ff;margin-bottom:8px;display:block}
+.form-input{width:100%;padding:15px;font-size:1rem;border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5);color:#fff;font-family:'Orbitron',sans-serif}
+.form-input:focus{outline:none;border-color:#7a5cff;box-shadow:0 0 25px rgba(122,92,255,.6)}
+#card-element{padding:15px;border:2px solid rgba(122,92,255,.5);border-radius:10px;background:rgba(0,0,0,.5)}
+.btn-pay{background:linear-gradient(135deg,#00d4ff 0%,#7a5cff 100%);color:#000;border:none;padding:20px;border-radius:12px;cursor:pointer;font-size:clamp(1.1rem,3vw,1.3rem);width:100%;font-weight:900;box-shadow:0 0 40px rgba(122,92,255,.8);font-family:'Orbitron',sans-serif;letter-spacing:.15em;transition:all .3s;margin-top:20px}
+.btn-pay:hover{box-shadow:0 0 60px rgba(122,92,255,1);transform:translateY(-2px)}
+.btn-pay:disabled{opacity:.5;cursor:not-allowed}
+.error{color:#ff4444;font-size:.9rem;margin-top:10px;display:none}
+.error.active{display:block}
+.loading{text-align:center;color:#7a5cff;margin:20px 0;display:none}
+.loading.active{display:block}
+.secure-badge{text-align:center;margin-top:20px;font-size:.85rem;color:rgba(255,255,255,.6)}
+.secure-badge::before{content:"🔒 ";color:#00d4ff}
+.success-message{background:rgba(0,255,0,.1);border:2px solid rgba(0,255,0,.5);padding:20px;border-radius:12px;text-align:center;display:none}
+.success-message.active{display:block}
+.success-title{font-size:1.5rem;color:#00ff00;margin-bottom:15px;font-weight:900}
+.success-text{font-size:1rem;color:rgba(255,255,255,.9);line-height:1.8}
+.back-link{display:block;margin-top:20px;color:rgba(255,255,255,.6);text-align:center;font-size:.9rem;text-decoration:none;transition:color .3s}
+.back-link:hover{color:#00d4ff}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="container">
+<div class="title">💳 お支払い</div>
+
+<div class="plan-info" id="planInfo">
+<div class="plan-name" id="planName">Loading...</div>
+<div class="plan-price" id="planPrice">¥---</div>
+<div class="plan-desc" id="planDesc">Loading...</div>
+</div>
+
+<div class="success-message" id="successMessage">
+<div class="success-title">✅ 決済成功！</div>
+<div class="success-text" id="successText"></div>
+</div>
+
+<form id="payment-form" class="payment-form">
+<div class="form-group">
+<label class="form-label">お名前</label>
+<input type="text" class="form-input" id="name" placeholder="山田太郎" required>
+</div>
+
+<div class="form-group">
+<label class="form-label">メールアドレス</label>
+<input type="email" class="form-input" id="email" placeholder="example@email.com" required>
+</div>
+
+<div class="form-group">
+<label class="form-label">カード情報</label>
+<div id="card-element"></div>
+<div class="error" id="card-errors"></div>
+</div>
+
+<button type="submit" class="btn-pay" id="submit-button">
+⚡ 支払う
+</button>
+
+<div class="loading" id="loading">
+処理中です...
+</div>
+</form>
+
+<div class="secure-badge">
+安全な決済（Stripe使用）
+</div>
+
+<a href="index.html" class="back-link">← エントランスに戻る</a>
+</div>
+
+<script>
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SRULXE90hNxeF7bObkIHe2xyOrQ6NZEFhKwxj9UWFyAyCX65gpKDiXD1iMM3VgPDAWqfOuAJgphapS2Ss9vjwDu00iSwc7QTr';
+
+const plans = {
+  premium: {
+    name: 'Beyond Time - Premium診断',
+    price: '¥980',
+    amount: 980,
+    desc: '深層診断・詳細な存在コード生成',
+    redirectUrl: 'beyond-time.html'
+  },
+  restoration: {
+    name: 'Beyond Time - Time Restoration',
+    price: '¥29,800',
+    amount: 29800,
+    desc: '時間軸の再構築・永遠の今ボタン・究極の存在コード',
+    redirectUrl: 'restoration.html'
+  }
+};
+
+const urlParams = new URLSearchParams(window.location.search);
+const planType = urlParams.get('plan') || 'premium';
+const currentPlan = plans[planType];
+
+if (currentPlan) {
+  document.getElementById('planName').textContent = currentPlan.name;
+  document.getElementById('planPrice').textContent = currentPlan.price;
+  document.getElementById('planDesc').textContent = currentPlan.desc;
+} else {
+  document.getElementById('planInfo').innerHTML = '<p style="color:#ff4444;">無効なプランです。エントランスからやり直してください。</p>';
+}
+
+function createStars(){
+  const stars = document.getElementById('stars');
+  for(let i = 0; i < 150; i++){
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    stars.appendChild(star);
+  }
+}
+
+const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+const elements = stripe.elements();
+const cardElement = elements.create('card', {
+  style: {
+    base: {
+      color: '#fff',
+      fontFamily: 'Orbitron, sans-serif',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#aaa'
+      }
+    },
+    invalid: {
+      color: '#ff4444'
+    }
+  }
+});
+cardElement.mount('#card-element');
+
+cardElement.on('change', (event) => {
+  const errorElement = document.getElementById('card-errors');
+  if (event.error) {
+    errorElement.textContent = event.error.message;
+    errorElement.classList.add('active');
+  } else {
+    errorElement.textContent = '';
+    errorElement.classList.remove('active');
+  }
+});
+
+const form = document.getElementById('payment-form');
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  
+  const submitButton = document.getElementById('submit-button');
+  const loading = document.getElementById('loading');
+  
+  submitButton.disabled = true;
+  loading.classList.add('active');
+  
+  try {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    
+    const {paymentMethod, error} = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+      billing_details: {
+        name: name,
+        email: email
+      }
+    });
+    
+    if (error) {
+      throw error;
+    }
+    
+    document.getElementById('payment-form').style.display = 'none';
+    document.getElementById('planInfo').style.display = 'none';
+    document.getElementById('successMessage').classList.add('active');
+    document.getElementById('successText').innerHTML = `
+      決済が完了しました！<br><br>
+      <strong>${currentPlan.name}</strong><br>
+      ${currentPlan.price}<br><br>
+      3秒後に診断ページに移動します...
+    `;
+    
+    setTimeout(() => {
+      window.location.href = currentPlan.redirectUrl + '?paid=true&email=' + encodeURIComponent(email);
+    }, 3000);
+    
+  } catch (error) {
+    console.error('Error:', error);
+    const errorElement = document.getElementById('card-errors');
+    errorElement.textContent = '決済に失敗しました: ' + (error.message || '不明なエラー');
+    errorElement.classList.add('active');
+  } finally {
+    submitButton.disabled = false;
+    loading.classList.remove('active');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', createStars);
+</script>
+</body>
+</html>
