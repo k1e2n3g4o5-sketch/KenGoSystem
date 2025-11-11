@@ -2,254 +2,103 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Beyond Time - 時空を超えた診断</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0.01 - 最小の一歩が、全てを変える</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Noto Sans JP','Orbitron',sans-serif;background:#000;min-height:100vh;color:#fff;overflow-x:hidden;touch-action:manipulation}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#1a0a3a 0%,#000 100%);z-index:-2}
-.stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
-.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
-@keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
-.container{max-width:900px;margin:0 auto;padding:20px;position:relative;z-index:1}
-.header{text-align:center;margin-bottom:40px;padding:40px 20px;background:rgba(122,92,255,.1);border-radius:20px;border:2px solid rgba(122,92,255,.4)}
-.logo{font-size:clamp(2.5rem,8vw,4rem);background:linear-gradient(135deg,#7a5cff 0%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;margin-bottom:20px;letter-spacing:2px}
-.tagline{font-size:clamp(1rem,3vw,1.3rem);color:rgba(255,255,255,.8);font-weight:400;line-height:1.8}
-.quiz-section{background:rgba(0,0,0,.8);padding:30px;border-radius:20px;margin:30px 0;border:2px solid rgba(122,92,255,.5)}
-.q-title{font-size:clamp(1.2rem,4vw,1.6rem);color:#7a5cff;font-weight:900;margin-bottom:25px;text-align:center;line-height:1.6}
-.options{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:30px}
-.opt{background:rgba(122,92,255,.15);border:2px solid rgba(122,92,255,.4);padding:18px 20px;border-radius:12px;cursor:pointer;transition:all .3s;font-size:clamp(0.9rem,2.5vw,1.05rem);color:rgba(255,255,255,.9);font-weight:600;text-align:left;width:100%;display:block;-webkit-user-select:none;user-select:none}
-.opt:hover{background:rgba(122,92,255,.3);border-color:rgba(122,92,255,.7);transform:translateX(5px)}
-.opt.selected{background:rgba(0,212,255,.3);border-color:#00d4ff;box-shadow:0 0 20px rgba(0,212,255,.5)}
-.btn-submit{background:linear-gradient(135deg,#7a5cff 0%,#00d4ff 100%);color:#fff;border:none;padding:20px;border-radius:15px;font-size:clamp(1.1rem,3vw,1.3rem);font-weight:900;cursor:pointer;width:100%;margin-top:20px;transition:all .3s;box-shadow:0 5px 30px rgba(122,92,255,.6)}
-.btn-submit:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(122,92,255,.8)}
-.btn-submit:disabled{opacity:.5;cursor:not-allowed}
-.diagnosis-grid{display:grid;grid-template-columns:1fr;gap:20px;margin:40px 0}
-@media(min-width:700px){.diagnosis-grid{grid-template-columns:repeat(3,1fr)}}
-.diagnosis-card{background:rgba(0,0,0,.9);padding:30px;border-radius:15px;border:2px solid rgba(122,92,255,.4);text-align:center;transition:all .3s;cursor:pointer}
-.diagnosis-card:hover{transform:translateY(-5px);border-color:rgba(122,92,255,.7);box-shadow:0 10px 40px rgba(122,92,255,.5)}
-.card-icon{font-size:3rem;margin-bottom:15px}
-.card-title{font-size:1.4rem;color:#7a5cff;font-weight:900;margin-bottom:10px}
-.card-price{font-size:2rem;color:#00d4ff;font-weight:900;margin:15px 0}
-.card-desc{font-size:.95rem;color:rgba(255,255,255,.7);line-height:1.7}
-.btn-diag{background:linear-gradient(135deg,#7a5cff 0%,#00d4ff 100%);color:#fff;border:none;padding:15px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;margin-top:15px;transition:all .3s}
-.btn-diag:hover{transform:translateY(-2px)}
-.results{display:none;background:rgba(0,0,0,.95);padding:35px;border-radius:20px;margin-top:30px;border:2px solid rgba(0,212,255,.6)}
-.result-title{font-size:clamp(1.5rem,4vw,2rem);color:#00d4ff;font-weight:900;margin-bottom:25px;text-align:center}
-.result-item{background:rgba(122,92,255,.1);padding:20px;border-radius:12px;margin:15px 0;border-left:4px solid #7a5cff}
-.result-label{font-size:1.1rem;color:#7a5cff;font-weight:700;margin-bottom:8px}
-.result-text{font-size:1rem;color:rgba(255,255,255,.9);line-height:1.8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:sans-serif;background:#000;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.container{max-width:900px;margin:0 auto;text-align:center}
+.hero{padding:60px 30px}
+.title{font-size:clamp(4rem,15vw,8rem);font-weight:900;color:#00d4ff;margin-bottom:20px;letter-spacing:.05em;animation:glow 3s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 40px rgba(0,212,255,.8),0 0 80px rgba(0,212,255,.5)}50%{text-shadow:0 0 60px rgba(0,212,255,1),0 0 120px rgba(0,212,255,.8)}}
+.tagline{font-size:clamp(1rem,3vw,1.4rem);color:rgba(255,255,255,.8);margin-bottom:40px;line-height:1.8}
+.drills{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:50px 0}
+.drill-card{background:linear-gradient(135deg,rgba(138,43,226,.2),rgba(255,0,255,.15));padding:35px 25px;border-radius:20px;border:2px solid rgba(138,43,226,.5);cursor:pointer;transition:all .3s;text-decoration:none;color:#fff;display:block}
+.drill-card:hover{transform:translateY(-5px);border-color:#ff00ff;box-shadow:0 10px 40px rgba(255,0,255,.5)}
+.drill-icon{font-size:3rem;margin-bottom:15px}
+.drill-price{font-size:2rem;color:#ffd700;font-weight:900;margin-bottom:10px}
+.drill-desc{font-size:.95rem;line-height:1.7;color:rgba(255,255,255,.7);margin-top:10px}
+.secret{margin-top:80px;padding:40px 30px;background:rgba(0,0,0,.5);border-radius:20px;border:2px solid rgba(138,43,226,.3)}
+.secret-title{font-size:1.1rem;color:rgba(255,255,255,.5);margin-bottom:20px}
+.password-box{display:flex;gap:10px;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.password-box input{flex:1;min-width:200px;padding:15px;background:rgba(0,0,0,.8);border:2px solid rgba(138,43,226,.5);border-radius:10px;color:#fff;font-size:1.1rem;text-align:center}
+.password-box input:focus{outline:none;border-color:#ff00ff;box-shadow:0 0 20px rgba(255,0,255,.4)}
+.password-box button{padding:15px 30px;background:linear-gradient(135deg,#ff00ff,#8a2be2);border:none;border-radius:10px;color:#fff;font-weight:900;cursor:pointer;transition:all .3s}
+.password-box button:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(255,0,255,.6)}
+.hint{margin-top:15px;font-size:.85rem;color:rgba(255,255,255,.4)}
+.footer{margin-top:60px;padding:30px;border-top:1px solid rgba(255,255,255,.1)}
+.footer-text{font-size:.9rem;color:rgba(255,255,255,.4);line-height:1.8}
 </style>
 </head>
 <body>
-<div class="stars" id="stars"></div>
-
 <div class="container">
-<header class="header">
-<h1 class="logo">BEYOND TIME</h1>
-<p class="tagline">
-時空を超えた診断 | あなたの存在コードを解読<br>
-AIと量子物理学が織りなす、未知の自己発見
-</p>
-</header>
 
-<section class="quiz-section" id="quizSection">
-<h2 class="q-title">🌌 無料簡易診断（3問）</h2>
-
-<div class="q-block">
-<p class="q-title">Q1: 大切な決断をする時、あなたは？</p>
-<div class="options">
-<button class="opt" data-q="1" data-v="1">直感を最優先する</button>
-<button class="opt" data-q="1" data-v="2">論理的に分析する</button>
-<button class="opt" data-q="1" data-v="3">他者の意見を聞く</button>
+<div class="hero">
+<div class="title">0.01</div>
+<div class="tagline">
+最小の一歩が、全てを変える<br>
+The smallest step changes everything
 </div>
 </div>
 
-<div class="q-block">
-<p class="q-title">Q2: 困難に直面した時、あなたの反応は？</p>
-<div class="options">
-<button class="opt" data-q="2" data-v="1">正面から挑戦する</button>
-<button class="opt" data-q="2" data-v="2">別の方法を探す</button>
-<button class="opt" data-q="2" data-v="3">立ち止まって考える</button>
+<div class="drills">
+
+<a href="drill-100.html" class="drill-card">
+<div class="drill-icon">🌊</div>
+<div class="drill-price">¥100</div>
+<div style="font-size:1.3rem;color:#00d4ff;font-weight:700">基本ドリル</div>
+<div class="drill-desc">ランダムに実験を体験<br>最初のヒントが隠されている</div>
+</a>
+
+<a href="drill-980.html" class="drill-card">
+<div class="drill-icon">🔥</div>
+<div class="drill-price">¥980</div>
+<div style="font-size:1.3rem;color:#00d4ff;font-weight:700">座標ドリル</div>
+<div class="drill-desc">誕生日から座標を計算<br>今日に最適な実験が届く</div>
+</a>
+
+<a href="drill-2980.html" class="drill-card">
+<div class="drill-icon">💎</div>
+<div class="drill-price">¥2,980</div>
+<div style="font-size:1.3rem;color:#00d4ff;font-weight:700">プレミアムドリル</div>
+<div class="drill-desc">全実験にアクセス<br>複数タイプ判定</div>
+</a>
+
+<a href="drill-29800.html" class="drill-card">
+<div class="drill-icon">⚡</div>
+<div class="drill-price">¥29,800</div>
+<div style="font-size:1.3rem;color:#00d4ff;font-weight:700">アルティメットドリル</div>
+<div class="drill-desc">50問の超詳細診断<br>究極のAI説明書</div>
+</a>
+
+</div>
+
+<div class="secret">
+<div class="secret-title">全てを解放する</div>
+<div class="password-box">
+<input type="text" id="passwordInput" placeholder="パスワードを入力">
+<button onclick="checkPassword()">解放</button>
+</div>
+<div class="hint">ヒント: 最小の一歩</div>
+</div>
+
+<div class="footer">
+<div class="footer-text">
+0.01 - Escape Game Platform<br>
+Created by 荒井健吾
 </div>
 </div>
 
-<div class="q-block">
-<p class="q-title">Q3: 理想の未来とは？</p>
-<div class="options">
-<button class="opt" data-q="3" data-v="1">自由で創造的な人生</button>
-<button class="opt" data-q="3" data-v="2">安定と成長の両立</button>
-<button class="opt" data-q="3" data-v="3">人々と深い繋がりを持つ</button>
-</div>
-</div>
-
-<button class="btn-submit" id="btnSubmit" onclick="showResults()">🔮 診断結果を見る</button>
-</section>
-
-<div class="results" id="results">
-<h2 class="result-title">✨ あなたの存在タイプ</h2>
-<div id="resultContent"></div>
-</div>
-
-<section style="margin-top:60px">
-<h2 class="result-title" style="color:#7a5cff;margin-bottom:30px">🎯 有料診断メニュー</h2>
-<div class="diagnosis-grid">
-
-<div class="diagnosis-card">
-<div class="card-icon">🎂</div>
-<h3 class="card-title">誕生日診断</h3>
-<div class="card-price">¥100</div>
-<p class="card-desc">
-生年月日から運命数を算出。<br>
-才能・相性・パラレルワールド分析
-</p>
-<button class="btn-diag" onclick="location.href='birthday-diagnosis.html'">診断する</button>
-</div>
-
-<div class="diagnosis-card">
-<div class="card-icon">🔮</div>
-<h3 class="card-title">Premium診断</h3>
-<div class="card-price">¥980</div>
-<p class="card-desc">
-15問+詳細分析。存在コード・<br>
-3つのパラレルワールド完全解読
-</p>
-<button class="btn-diag" onclick="location.href='payment.html?plan=premium'">診断する</button>
-</div>
-
-<div class="diagnosis-card">
-<div class="card-icon">⚡</div>
-<h3 class="card-title">Restoration</h3>
-<div class="card-price">¥29,800</div>
-<p class="card-desc">
-究極の自己修復プログラム。<br>
-全12項目+完全カスタム分析
-</p>
-<button class="btn-diag" onclick="location.href='payment.html?plan=restoration'">診断する</button>
-</div>
-
-</div>
-</section>
 </div>
 
 <script>
-const ans = {};
-
-function createStars(){
-  const container = document.getElementById('stars');
-  for(let i=0; i<150; i++){
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.animationDelay = Math.random() * 3 + 's';
-    container.appendChild(star);
-  }
-}
-
-// 🔥 強化版：選択肢のクリックイベント
-document.addEventListener('DOMContentLoaded', function(){
-  console.log('🔥 イベント初期化開始');
-  
-  const allOptions = document.querySelectorAll('.opt');
-  console.log('📋 選択肢数:', allOptions.length);
-  
-  allOptions.forEach((btn, index) => {
-    console.log(`🎯 ボタン${index+1}設定中`);
-    
-    // すべてのイベントをクリア
-    btn.onclick = null;
-    btn.ontouchstart = null;
-    btn.ontouchend = null;
-    
-    // 新しいクリックイベント
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const q = this.getAttribute('data-q');
-      const v = parseInt(this.getAttribute('data-v'));
-      
-      console.log(`✅ Q${q} = ${v} クリック検出`);
-      
-      ans['q'+q] = v;
-      
-      // 同じ質問の他の選択肢を解除
-      const parentOptions = this.closest('.options');
-      const siblings = parentOptions.querySelectorAll('.opt');
-      siblings.forEach(s => s.classList.remove('selected'));
-      
-      // 選択状態に
-      this.classList.add('selected');
-      
-      console.log('✅ 選択完了', ans);
-      
-      // ボタン有効化チェック
-      checkSubmitButton();
-    });
-    
-    // タッチイベント
-    btn.addEventListener('touchstart', function(e){
-      e.preventDefault();
-      this.click();
-    });
-  });
-  
-  console.log('✅ 初期化完了');
-  createStars();
-});
-
-function checkSubmitButton(){
-  const btn = document.getElementById('btnSubmit');
-  if(ans.q1 && ans.q2 && ans.q3){
-    btn.disabled = false;
-    btn.style.opacity = '1';
-    console.log('✅ 送信ボタン有効化');
-  } else {
-    btn.disabled = true;
-    btn.style.opacity = '0.5';
-  }
-}
-
-function showResults(){
-  if(!ans.q1 || !ans.q2 || !ans.q3){
-    alert('すべての質問に答えてください');
-    return;
-  }
-  
-  console.log('📊 結果表示:', ans);
-  
-  const score = ans.q1 + ans.q2 + ans.q3;
-  let type, desc;
-  
-  if(score <= 4){
-    type = '🔥 創造者タイプ';
-    desc = '直感と創造性に富み、新しい道を切り開く力を持っています。芸術や革新的なプロジェクトで真価を発揮します。';
-  } else if(score <= 6){
-    type = '🌟 調和者タイプ';
-    desc = 'バランス感覚に優れ、人々を繋ぐ架け橋となる存在。チームワークや調整役で輝きます。';
-  } else {
-    type = '💎 探求者タイプ';
-    desc = '深い思考と分析力で真実を追求する。研究や専門分野で卓越した成果を出す素質があります。';
-  }
-  
-  document.getElementById('resultContent').innerHTML = `
-    <div class="result-item">
-      <div class="result-label">${type}</div>
-      <div class="result-text">${desc}</div>
-    </div>
-    <div class="result-item">
-      <div class="result-label">🎯 あなたへの提案</div>
-      <div class="result-text">
-        さらに詳しく知りたい方は、<strong>Premium診断（¥980）</strong>または<strong>誕生日診断（¥100）</strong>をお試しください。
-        あなたの存在コードと3つのパラレルワールドが明らかになります。
-      </div>
-    </div>
-  `;
-  
-  document.getElementById('results').style.display = 'block';
-  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+function checkPassword() {
+    const input = document.getElementById('passwordInput').value;
+    if (input === '0.01') {
+        window.location.href = 'restoration.html?unlock=true';
+    } else {
+        alert('パスワードが違います');
+    }
 }
 </script>
 </body>
